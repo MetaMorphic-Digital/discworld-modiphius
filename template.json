@@ -2,5 +2,9 @@
   "Actor": {
     "types": ["character"],
     "character": {}
+  },
+  "Item": {
+    "types": ["trait"],
+    "trait": {}
   }
 }

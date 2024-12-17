@@ -1,3 +1,17 @@
 {
-  "TYPES.Actor.character": "Character"
+  "DISCWORLD.trait.severity.inconsequential": "Inconsequential",
+  "DISCWORLD.trait.severity.minor": "Minor",
+  "DISCWORLD.trait.severity.major": "Major",
+  "DISCWORLD.trait.severity.exceptional": "Exceptional",
+
+  "DISCWORLD.trait.type.background": "Background",
+  "DISCWORLD.trait.type.consequences": "Consequences",
+  "DISCWORLD.trait.type.core": "Core",
+  "DISCWORLD.trait.type.niche": "Niche",
+  "DISCWORLD.trait.type.organization": "Organization",
+  "DISCWORLD.trait.type.quirks": "Quirks",
+  "DISCWORLD.trait.type.uncategorized": "Uncategorized",
+
+  "TYPES.Actor.character": "Character",
+  "TYPES.Item.trait": "Trait"
 }
