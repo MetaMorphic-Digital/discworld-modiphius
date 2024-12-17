@@ -1,0 +1,36 @@
+{
+  "id": "discworld",
+  "title": "Discworld - Quickstart",
+  "description": "Terry Pratchett's Discworld - Adventures in Ankh-Morpork - Quickstart",
+  "version": "0.0.0",
+  "license": "",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12",
+    "maximum": "12"
+  },
+  "authors": [
+    {
+      "name": "Jalen Michals Levy"
+    }
+  ],
+  "esmodules": ["modules/discworld.js"],
+  "styles": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "socket": false,
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "hbs", "json"],
+      "paths": ["styles", "templates", "lang"]
+    }
+  },
+  "url": "",
+  "manifest": "",
+  "download": ""
+}
