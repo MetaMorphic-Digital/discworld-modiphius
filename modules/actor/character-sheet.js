@@ -8,6 +8,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       width: 600,
       height: "auto",
     },
+    actions: {
+      editTrait: CharacterSheet.#editTrait,
+    },
   };
 
   static PARTS = {
@@ -15,4 +18,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       template: "systems/discworld/templates/character-sheet.hbs",
     },
   };
+
+  static #editTrait(event) {
+    const item = this.actor.items.get(event.target.dataset.itemId);
+    item.sheet.render(true);
+  }
 }
