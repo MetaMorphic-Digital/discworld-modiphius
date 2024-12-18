@@ -1,8 +1,8 @@
-import CharacterSheet from "./actor/character-sheet.js";
-import Character from "./actor/character.js";
+import CharacterSheet from "./sheets/character-sheet.js";
+import Character from "./documents/character.js";
 import CharacterDataModel from "./datamodels/character-schema.js";
 import TraitDataModel from "./datamodels/trait-schema.js";
-import TraitSheet from "./item/trait-sheet.js";
+import TraitSheet from "./sheets/trait-sheet.js";
 import registerHelpers from "./utils/handlebars-helpers.js";
 
 Hooks.on("init", () => {
