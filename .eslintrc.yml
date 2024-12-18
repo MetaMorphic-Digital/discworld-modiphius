@@ -48,6 +48,7 @@ globals:
   ActiveEffectConfig: readonly
   Actor: readonly
   ActorSheet: readonly
+  ActorSheetV2: readonly
   Actors: readonly
   CONFIG: readonly
   ChatLog: readonly
@@ -58,6 +59,8 @@ globals:
   DiceTerm: readonly
   Die: readonly
   DocumentSheetConfig: readonly
+  DragDrop: readonly
+  FilePicker: readonly
   FormDataExtended: readonly
   Handlebars: readonly
   Hooks: readonly
@@ -69,6 +72,7 @@ globals:
   canvas: readonly
   duplicate: readonly
   foundry: readonly
+  fromUuid: readonly
   fromUuidSync: readonly
   game: readonly
   globals: readonly
