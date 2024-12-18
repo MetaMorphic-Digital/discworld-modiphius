@@ -1,0 +1,31 @@
+<form>
+  <section class="sheet-header">
+      <img
+        class="portrait"
+        src="{{actor.img}}"
+        data-edit="img"
+        data-action="editImage"
+        title="{{actor.name}}"
+        width="75"
+      />
+    <div class="flexrow">
+      <label>Name: </label>
+      <input name="name" type="text" class="" value="{{actor.name}}" />
+    </div>
+  </section>
+  <section class="sheet-body">
+    {{#each (getConfigObject "traitTypes") as |traitI18nString traitType|}}
+      <div class="flexrow">
+        <label>{{localize traitI18nString}}</label>
+        <div>
+          {{#each (getTraits ../actor traitType) as |trait|}}
+            <a data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
+              {{trait.name~}}
+            </a>
+            {{~#unless @last}}, {{/unless}}
+          {{/each}}
+        </div>
+      </div>
+    {{/each}}
+  </section>
+</form>

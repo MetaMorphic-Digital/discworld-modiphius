@@ -13,5 +13,6 @@
   "DISCWORLD.trait.type.uncategorized": "Uncategorized",
 
   "TYPES.Actor.character": "Character",
-  "TYPES.Item.trait": "Trait"
+  "TYPES.Item.trait": "Trait",
+  "discworld.CharacterSheet": "Discworld Character Sheet"
 }
