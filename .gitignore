@@ -1,2 +1,4 @@
 # Ignore npm modules
 node_modules
+
+styles/main.css
