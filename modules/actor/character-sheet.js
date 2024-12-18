@@ -1,13 +1,13 @@
-import DiscworldActorSheet from "../sheets/base-actor-sheet.js";
+import DiscworldSheetMixin from "../sheets/base-document-sheet.js";
 
-class CharacterSheet extends DiscworldActorSheet {
+const { ActorSheetV2 } = foundry.applications.sheets;
+
+export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
-    classes: ["discworld"],
     position: {
       width: 600,
-      height: 800,
+      height: "auto",
     },
-    window: { resizable: true },
   };
 
   static PARTS = {
@@ -15,14 +15,4 @@ class CharacterSheet extends DiscworldActorSheet {
       template: "systems/discworld/templates/character-sheet.hbs",
     },
   };
-
-  _prepareContext(options) {
-    const context = super._prepareContext(options);
-    return {
-      ...context,
-      actor: this.actor,
-    };
-  }
 }
-
-export default CharacterSheet;

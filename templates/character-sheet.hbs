@@ -1,16 +1,16 @@
-<form>
+<div>
   <section class="sheet-header">
       <img
         class="portrait"
-        src="{{actor.img}}"
+        src="{{document.img}}"
         data-edit="img"
         data-action="editImage"
-        title="{{actor.name}}"
+        title="{{document.name}}"
         width="75"
       />
     <div class="flexrow">
       <label>Name: </label>
-      <input name="name" type="text" class="" value="{{actor.name}}" />
+      <input name="name" type="text" class="" value="{{document.name}}" />
     </div>
   </section>
   <section class="sheet-body">
@@ -18,7 +18,7 @@
       <div class="flexrow">
         <label>{{localize traitI18nString}}</label>
         <div>
-          {{#each (getTraits ../actor traitType) as |trait|}}
+          {{#each (getTraits ../document traitType) as |trait|}}
             <a data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
               {{trait.name~}}
             </a>
@@ -28,4 +28,4 @@
       </div>
     {{/each}}
   </section>
-</form>
+</div>
