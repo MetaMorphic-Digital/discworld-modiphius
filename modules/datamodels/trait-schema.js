@@ -16,6 +16,7 @@ export default class TraitDataModel extends foundry.abstract.TypeDataModel {
         initial: "minor",
         choices: Object.keys(DISCWORLD.consequenceSeverity),
       }),
+      notes: new fields.StringField({ required: false, initial: "" }),
     };
   }
 }

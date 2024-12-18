@@ -1,0 +1,50 @@
+<div>
+  <section class="sheet-header">
+    <img
+      class="portrait"
+      src="{{document.img}}"
+      data-edit="img"
+      data-action="editImage"
+      title="{{document.name}}"
+      width="75"
+    />
+    <div class="flexrow">
+      <label>Name: </label>
+      <input name="name" type="text" class="" value="{{document.name}}" />
+    </div>
+  </section>
+  <section class="sheet-body">
+    <div class="flexrow">
+      <label>Type:</label>
+      <select name="system.type">
+        {{selectOptions
+          (getConfigObject "traitTypes")
+          selected=document.system.type
+          localize=true
+        }}
+      </select>
+    </div>
+    {{#compare document.system.type "consequences"}}
+      <div class="flexrow">
+        <label>Severity:</label>
+        <select name="system.severity">
+          {{selectOptions
+            (getConfigObject "consequenceSeverity")
+            selected=document.system.severity
+            localize=true
+          }}
+        </select>
+      </div>
+    {{/compare}}
+
+    <div class="flexrow">
+      <label>Notes:</label>
+      <input
+        name="system.notes"
+        type="text"
+        class=""
+        value="{{document.system.notes}}"
+      />
+    </div>
+  </section>
+</div>

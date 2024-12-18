@@ -2,6 +2,7 @@ import CharacterSheet from "./actor/character-sheet.js";
 import Character from "./actor/character.js";
 import CharacterDataModel from "./datamodels/character-schema.js";
 import TraitDataModel from "./datamodels/trait-schema.js";
+import TraitSheet from "./item/trait-sheet.js";
 import registerHelpers from "./utils/handlebars-helpers.js";
 
 Hooks.on("init", () => {
@@ -12,8 +13,11 @@ Hooks.on("init", () => {
     makeDefault: true,
   });
 
-  // Register Item data models.
+  // Register Item classes.
   CONFIG.Item.dataModels.trait = TraitDataModel;
+  Items.registerSheet("discworld", TraitSheet, {
+    makeDefault: true,
+  });
 
   // Run various utils.
   registerHelpers();
