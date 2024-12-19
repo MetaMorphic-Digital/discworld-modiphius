@@ -1,23 +1,42 @@
 <div>
-  <section class="sheet-header">
-      <img
-        class="portrait"
-        src="{{document.img}}"
-        data-edit="img"
-        data-action="editImage"
-        title="{{document.name}}"
-        width="75"
-      />
-    <div class="flexrow">
+  <header class="sheet-header flexrow">
+    <img
+      class="portrait"
+      src="{{document.img}}"
+      data-edit="img"
+      data-action="editImage"
+      title="{{document.name}}"
+    />
+    <div class="name flexcol">
       <label>Name: </label>
       <input name="name" type="text" class="" value="{{document.name}}" />
     </div>
-  </section>
+    <div class="luck-box flexcol">
+      <label>Luck:</label>
+      <div class="flexrow">
+        <input
+          name="system.luck.value"
+          type="number"
+          class=""
+          value="{{document.system.luck.value}}"
+        />
+        /
+        <input
+          name="system.luck.max"
+          type="number"
+          class=""
+          value="{{document.system.luck.max}}"
+        />
+      </span>
+    </div>
+  </header>
+  <hr>
+
   <section class="sheet-body">
     {{#each (getConfigObject "traitTypes") as |traitI18nString traitType|}}
-      <div class="flexrow">
-        <label>{{localize traitI18nString}}</label>
-        <div>
+      <div class="trait-type flexrow">
+        <label>{{localize traitI18nString}}:</label>
+        <div class="trait-list">
           {{#each (getTraits ../document traitType) as |trait|}}
             <a data-action="rollTrait" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
               {{trait.name~}}
@@ -26,6 +45,14 @@
           {{/each}}
         </div>
       </div>
+      <hr>
     {{/each}}
   </section>
+  <footer class="sheet-footer">
+    <div class="description-container">
+      <div class="description">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, totam debitis! Minima tempore adipisci dolorum tempora corporis ratione saepe rerum eligendi repellat iure id consequuntur quae reprehenderit sed repellendus praesentium fuga, odit nihil sit porro asperiores in voluptate. Assumenda sunt deleniti voluptatem dignissimos ullam nemo quasi sapiente eveniet, est voluptatibus nihil dolorum blanditiis ipsa aspernatur corrupti nesciunt ipsam. Tenetur eaque eum reprehenderit soluta dolores eos perspiciatis eveniet? At sint praesentium aspernatur, sapiente fuga nulla eos totam tempora consequuntur iure, autem blanditiis delectus illum! Odio consequuntur nobis, aut adipisci hic provident labore repellat non. Facilis laboriosam soluta excepturi. Ratione, dolorum corporis!
+      </div>
+    </div>
+  </footer>
 </div>

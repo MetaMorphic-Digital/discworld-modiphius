@@ -1,0 +1,82 @@
+.application.discworld {
+  $header-height: 100px;
+
+  label {
+    font-weight: bold;
+  }
+
+  hr {
+    color: #7e4839;
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #7e4839 50%,
+      transparent 100%
+    );
+  }
+
+  header.sheet-header {
+    height: $header-height;
+
+    > * {
+      height: 100%;
+      justify-content: center;
+
+      font-size: 1rem;
+    }
+
+    img.portrait {
+      flex: 0 0 $header-height;
+      border: unset;
+      margin-right: unset;
+    }
+
+    input {
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .name {
+      flex: 3;
+
+      padding: 0 0.5rem;
+    }
+
+    .luck-box {
+      flex: 0.75;
+
+      padding: 0.25rem;
+
+      border-style: solid;
+      border-radius: 0.25rem;
+      border-color: #7e4839;
+      border-width: 1px;
+    }
+
+    label {
+      align-self: center;
+
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  section.sheet-body {
+    .trait-type {
+      label {
+        align-self: flex-start;
+      }
+    }
+
+    .trait-list {
+      flex: 3;
+
+      padding: 0 0.25rem;
+    }
+  }
+
+  footer.sheet-footer {
+    gap: 0.5rem;
+    line-height: unset;
+    height: 100%;
+  }
+}

@@ -4,13 +4,13 @@
 
 const DISCWORLD = {
   traitTypes: {
-    background: "DISCWORLD.trait.type.background",
-    consequences: "DISCWORLD.trait.type.consequences",
-    core: "DISCWORLD.trait.type.core",
-    niche: "DISCWORLD.trait.type.niche",
     organization: "DISCWORLD.trait.type.organization",
+    background: "DISCWORLD.trait.type.background",
+    niche: "DISCWORLD.trait.type.niche",
+    core: "DISCWORLD.trait.type.core",
     quirks: "DISCWORLD.trait.type.quirks",
     uncategorized: "DISCWORLD.trait.type.uncategorized",
+    consequences: "DISCWORLD.trait.type.consequences",
   },
 
   consequenceSeverity: {
