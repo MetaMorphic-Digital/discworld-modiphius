@@ -1,0 +1,28 @@
+dialog.discworld {
+  button {
+    min-width: unset !important;
+
+    span {
+      display: flex;
+      align-items: center;
+    }
+
+    img {
+      border: none;
+      width: 48px;
+    }
+  }
+
+  q {
+    display: block;
+  }
+
+  .dialog-content {
+    quotes: "“ " ". ”";
+    text-align: center;
+
+    cite::before {
+      content: "— ";
+    }
+  }
+}

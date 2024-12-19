@@ -15,7 +15,7 @@
     }
   ],
   "esmodules": ["modules/discworld.js"],
-  "styles": [],
+  "styles": ["styles/main.css"],
   "languages": [
     {
       "lang": "en",
