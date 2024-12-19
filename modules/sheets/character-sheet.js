@@ -54,6 +54,17 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     if (!dialogResult) return;
 
     const roll = await new Roll(dialogResult).evaluate();
-    roll.toMessage({ flavor: trait.name });
+
+    const messageData = {
+      result: roll.result,
+      term: dialogResult,
+      actor: this.actor,
+      trait,
+    };
+    const messageTemplate = await renderTemplate(
+      "systems/discworld/templates/roll-card.hbs",
+      messageData,
+    );
+    await roll.toMessage({ content: messageTemplate, flavor: "Trait Roll" });
   }
 }

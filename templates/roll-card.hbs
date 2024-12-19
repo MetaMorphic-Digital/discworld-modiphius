@@ -1,0 +1,29 @@
+<div>
+  <header class="flexcol trait-quote">
+    <q>{{trait.name}}</q>
+    <cite>{{actor.name}}</cite>
+  </header>
+
+  <!-- From Foundry -->
+  <div class="dice-roll">
+    <div class="dice-result">
+      <div class="dice-formula">{{term}}</div>
+      <div class="dice-tooltip" style="display: none;">
+        <section class="tooltip-part">
+          <div class="dice">
+            <header class="part-header flexrow">
+              <span class="part-formula">{{term}}</span>
+              <span class="part-total">{{result}}</span>
+            </header>
+            <ol class="dice-rolls">
+              <li class="roll die {{term}}">{{result}}</li>
+            </ol>
+          </div>
+        </section>
+      </div>
+
+      <h4 class="dice-total">{{result}}</h4>
+    </div>
+  </div>
+
+</div>

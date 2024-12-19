@@ -1,0 +1,8 @@
+.trait-quote {
+  quotes: "“ " ". ”";
+  text-align: center;
+
+  cite::before {
+    content: "— ";
+  }
+}

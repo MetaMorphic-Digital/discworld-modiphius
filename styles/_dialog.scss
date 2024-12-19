@@ -12,17 +12,4 @@ dialog.discworld {
       width: 48px;
     }
   }
-
-  q {
-    display: block;
-  }
-
-  .dialog-content {
-    quotes: "“ " ". ”";
-    text-align: center;
-
-    cite::before {
-      content: "— ";
-    }
-  }
 }
