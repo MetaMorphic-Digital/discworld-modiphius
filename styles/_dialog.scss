@@ -2,14 +2,33 @@ dialog.discworld {
   button {
     min-width: unset !important;
 
-    span {
-      display: flex;
-      align-items: center;
+    @mixin button-background {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 36px 36px;
     }
 
-    img {
-      border: none;
-      width: 48px;
+    @include button-background;
+
+    color: #000;
+    font-weight: bold;
+
+    &:hover {
+      @include button-background;
+    }
+
+    &.d4 {
+      background-image: url("/icons/svg/d4-grey.svg");
+    }
+    &.d6 {
+      background-image: url("/icons/svg/d6-grey.svg");
+    }
+
+    &.d10 {
+      background-image: url("/icons/svg/d10-grey.svg");
+    }
+    &.d12 {
+      background-image: url("/icons/svg/d12-grey.svg");
     }
   }
 }

@@ -38,15 +38,30 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     );
     const dialogResult = await DialogV2.wait({
       classes: ["discworld"],
-      position: { width: "auto", height: "auto" },
+      position: { width: 400, height: "auto" },
       window: { title: "Rolling a Trait!" },
       content,
       buttons: [
-        { label: "<img src='icons/dice/d4black.svg' /> d4", action: "d4" },
-        { label: "<i class='fas fa-xl fa-dice-d6'></i> d6", action: "d6" },
-        // { label: "<img src='icons/dice/d8black.svg' /> d10d8", action: "d8" },
-        { label: "<img src='icons/dice/d10black.svg' /> d10", action: "d10" },
-        { label: "<img src='icons/dice/d12black.svg' /> d12", action: "d12" },
+        {
+          class: ["d4"],
+          label: "d4",
+          action: "d4",
+        },
+        {
+          class: ["d6"],
+          label: "d6",
+          action: "d6",
+        },
+        {
+          class: ["d10"],
+          label: "d10",
+          action: "d10",
+        },
+        {
+          class: ["d12"],
+          label: "d12",
+          action: "d12",
+        },
       ],
       rejectClose: false,
     });
