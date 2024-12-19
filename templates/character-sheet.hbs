@@ -19,7 +19,7 @@
         <label>{{localize traitI18nString}}</label>
         <div>
           {{#each (getTraits ../document traitType) as |trait|}}
-            <a data-action="editTrait" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
+            <a data-action="rollTrait" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
               {{trait.name~}}
             </a>
             {{~#unless @last}}, {{/unless}}
