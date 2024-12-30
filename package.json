@@ -16,7 +16,9 @@
     "url": ""
   },
   "homepage": "",
-  "dependencies": {},
+  "dependencies": {
+    "vite": "^6.0.6"
+  },
   "devDependencies": {
     "eslint": "^8.50.0",
     "eslint-config-airbnb-base": "^15.0.0",
