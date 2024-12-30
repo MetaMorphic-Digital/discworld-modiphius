@@ -13,15 +13,25 @@ const DiscworldSheetMixin = (Base) => {
       window: { resizable: true },
       actions: {
         editImage: DiscworldDocumentSheet.#onEditImage,
+        toggleSheetMode: DiscworldDocumentSheet.#onToggleSheetMode,
       },
       form: { submitOnChange: true },
     };
+
+    static SHEET_MODES = { EDIT: 0, PLAY: 1 };
+
+    _sheetMode = this.constructor.SHEET_MODES.PLAY;
+
+    get isEditMode() {
+      return this._sheetMode === this.constructor.SHEET_MODES.EDIT;
+    }
 
     async _prepareContext(options) {
       const context = await super._prepareContext(options);
       return {
         ...context,
         document: this.document,
+        isEditMode: this.isEditMode,
       };
     }
 
@@ -195,6 +205,21 @@ const DiscworldSheetMixin = (Base) => {
         left: this.position.left + 10,
       });
       fp.browse();
+    }
+
+    /**
+     * Handle toggling the sheet between edit and play modes.
+     *
+     * @param {Event} event
+     * @param {HTMLElement} target
+     * @returns
+     */
+    static #onToggleSheetMode(event, target) {
+      if (!this.isEditable) return; // Permissions, not our own internal edit mode.
+
+      const modes = this.constructor.SHEET_MODES;
+      this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT;
+      this.render();
     }
   };
 };

@@ -8,7 +8,7 @@
       title="{{document.name}}"
     />
     <div class="name flexcol">
-      <label>Name: </label>
+      <label>Name: <a data-action="toggleSheetMode">Toggle Sheet Mode: {{isEditMode}}</a></label>
       <input name="name" type="text" class="" value="{{document.name}}" />
     </div>
     <div class="luck-box flexcol">
@@ -38,9 +38,13 @@
         <label>{{localize traitI18nString}}:</label>
         <div class="trait-list">
           {{#each (getTraits ../document traitType) as |trait|}}
-            <a data-action="traitAction" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
-              {{trait.name~}}
-            </a>
+            {{#if ../../isEditMode}}
+              <input name="name" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}" value="{{trait.name}}" />
+            {{else}}
+              <a data-action="traitAction" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
+                {{trait.name~}}
+              </a>
+            {{/if}}
             {{~#unless @last}}, {{/unless}}
           {{/each}}
         </div>
