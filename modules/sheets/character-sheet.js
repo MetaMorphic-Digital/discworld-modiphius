@@ -9,6 +9,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       height: 700,
     },
     actions: {
+      traitAction: CharacterSheet.#traitAction,
       editTrait: CharacterSheet.#editTrait,
       rollTrait: CharacterSheet.#rollTrait,
     },
@@ -20,9 +21,31 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
+  static #traitAction(event) {
+    const ctrlKey = keyboard.isModifierActive("Control");
+    const shiftKey = keyboard.isModifierActive("Shift");
+
+    if (ctrlKey) {
+      CharacterSheet.#editTrait.call(this, event);
+      return;
+    }
+
+    if (shiftKey) {
+      CharacterSheet.#deleteTrait.call(this, event);
+      return;
+    }
+
+    CharacterSheet.#rollTrait.call(this, event);
+  }
+
   static #editTrait(event) {
     const trait = this.actor.items.get(event.target.dataset.itemId);
     trait.sheet.render(true);
+  }
+
+  static #deleteTrait(event) {
+    const trait = this.actor.items.get(event.target.dataset.itemId);
+    trait.delete();
   }
 
   static async #rollTrait(event) {

@@ -38,7 +38,7 @@
         <label>{{localize traitI18nString}}:</label>
         <div class="trait-list">
           {{#each (getTraits ../document traitType) as |trait|}}
-            <a data-action="rollTrait" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
+            <a data-action="traitAction" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
               {{trait.name~}}
             </a>
             {{~#unless @last}}, {{/unless}}
@@ -51,7 +51,14 @@
   <footer class="sheet-footer">
     <div class="description-container">
       <div class="description">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem, totam debitis! Minima tempore adipisci dolorum tempora corporis ratione saepe rerum eligendi repellat iure id consequuntur quae reprehenderit sed repellendus praesentium fuga, odit nihil sit porro asperiores in voluptate. Assumenda sunt deleniti voluptatem dignissimos ullam nemo quasi sapiente eveniet, est voluptatibus nihil dolorum blanditiis ipsa aspernatur corrupti nesciunt ipsam. Tenetur eaque eum reprehenderit soluta dolores eos perspiciatis eveniet? At sint praesentium aspernatur, sapiente fuga nulla eos totam tempora consequuntur iure, autem blanditiis delectus illum! Odio consequuntur nobis, aut adipisci hic provident labore repellat non. Facilis laboriosam soluta excepturi. Ratione, dolorum corporis!
+        As a troll, Constable Cliff has heard all the jokes. People think trolls
+        are stupid, violent and cruel. The fact that it is usually stupid, violent
+        and cruel people that think this is little consolation. Cliff doesn’t
+        mind though, he approaches every person with a diamond-toothed
+        smile and a determination to meet everyone halfway.
+        His efforts have made him the face of the
+        Watch to many of Ankh-Morpork’s residents
+        who have heard of him. Which is some of them.
       </div>
     </div>
   </footer>
