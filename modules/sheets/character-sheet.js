@@ -10,8 +10,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
     actions: {
       traitAction: CharacterSheet.#traitAction,
-      editTrait: CharacterSheet.#editTrait,
-      rollTrait: CharacterSheet.#rollTrait,
     },
   };
 
@@ -32,6 +30,13 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     const trait = this.actor.items.get(itemId);
 
     switch (actionType) {
+      case "add":
+        {
+          const { traitType } = target.dataset;
+          CharacterSheet.#addTrait.call(this, traitType);
+        }
+        break;
+
       case "edit":
         CharacterSheet.#editTrait.call(this, trait);
         break;
@@ -44,6 +49,27 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
         CharacterSheet.#rollTrait.call(this, trait);
         break;
     }
+  }
+
+  static async #addTrait(traitType) {
+    const localizedTrait = game.i18n.localize(
+      `DISCWORLD.trait.type.${traitType}`,
+    );
+    const name = `New ${localizedTrait}`;
+    const [newTrait] = await this.actor.createEmbeddedDocuments("Item", [
+      {
+        type: "trait",
+        name,
+        system: { type: traitType },
+      },
+    ]);
+
+    const { sheet } = newTrait;
+    await sheet.render(true);
+
+    const nameField = sheet.element.querySelector("input[name='name']");
+    nameField.focus();
+    nameField.select();
   }
 
   static #editTrait(trait) {
