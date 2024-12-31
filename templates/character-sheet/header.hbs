@@ -1,13 +1,7 @@
 <header class="sheet-header flexrow">
   <div class="name flexcol">
     <label>Sheet Mode: </label>
-    <a
-      class="toggle {{#if isEditMode}}toggled{{/if}}"
-      data-action="toggleSheetMode"
-      name="isEditMode"
-      type="checkbox"
-    >
-    </a>
+    {{> (systemFilePath "templates/mixins/toggle-switch.hbs")}}
   </div>
   <img
     class="portrait"

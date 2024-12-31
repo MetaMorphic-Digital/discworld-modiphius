@@ -1,6 +1,26 @@
 import DISCWORLD from "../config.js";
 
-export default function registerHelpers() {
+/**
+ * Define a set of template paths to pre-load
+ * Pre-loaded templates are compiled and cached for fast access when rendering
+ * @return {Promise}
+ */
+export default async function preloadTemplates() {
+  return loadTemplates([
+    // Mixins
+    `systems/${game.system.id}/templates/mixins/toggle-switch.hbs`,
+  ]);
+}
+
+export function registerHelpers() {
+  /**
+   * Returns the path to a system file
+   */
+  Handlebars.registerHelper(
+    "systemFilePath",
+    (string) => `systems/${game.system.id}/${string}`,
+  );
+
   /**
    * Compares two values with the given operator. If no operator is provided,
    * '===' is used by default.

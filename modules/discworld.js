@@ -3,7 +3,7 @@ import Character from "./documents/character.js";
 import CharacterDataModel from "./datamodels/character-schema.js";
 import TraitDataModel from "./datamodels/trait-schema.js";
 import TraitSheet from "./sheets/trait-sheet.js";
-import registerHelpers from "./utils/handlebars-helpers.js";
+import preloadTemplates, { registerHelpers } from "./utils/handlebars.js";
 
 Hooks.on("init", () => {
   // Register Actor classes.
@@ -21,4 +21,5 @@ Hooks.on("init", () => {
 
   // Run various utils.
   registerHelpers();
+  preloadTemplates();
 });
