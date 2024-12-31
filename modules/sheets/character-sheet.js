@@ -50,7 +50,11 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     trait.sheet.render(true);
   }
 
-  static #deleteTrait(trait) {
+  static async #deleteTrait(trait) {
+    const promptResult = await Dialog.confirm({
+      content: `Are you sure you want to delete the trait, "${trait.name}"?`,
+    });
+    if (!promptResult) return;
     trait.delete();
   }
 
