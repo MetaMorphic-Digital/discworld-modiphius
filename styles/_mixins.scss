@@ -7,11 +7,11 @@
   $height: calc($width / 2);
   $dot-height: calc($height - ($padding * 2));
 
-  .toggle {
+  .toggle-container {
     align-self: center;
   }
 
-  .toggle a {
+  .toggle-container a.toggle-switch {
     height: auto;
 
     & {

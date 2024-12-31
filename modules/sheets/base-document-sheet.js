@@ -224,8 +224,9 @@ const DiscworldSheetMixin = (Base) => {
       const modes = this.constructor.SHEET_MODES;
       this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT;
 
-      target.classList.toggle("toggled");
-      target.addEventListener("transitionend", () => {
+      const toggleSwitch = this.element.querySelector(".toggle-switch");
+      toggleSwitch.classList.toggle("toggled");
+      toggleSwitch.addEventListener("transitionend", () => {
         this.render();
       });
     }

@@ -1,11 +1,9 @@
-<div class="toggle">
-  <i class="fas fa-sm fa-lock"></i>
+<div class="toggle-container" data-action="toggleSheetMode" >
+    <i class="fas fa-sm fa-lock"></i>
   <a
-    class="toggle {{#if isEditMode}}toggled{{/if}}"
-    data-action="toggleSheetMode"
-    name="isEditMode"
-    type="checkbox"
+    class="toggle-switch {{#if isEditMode}}toggled{{/if}}"
+
   >
   </a>
-  <i class="fas fa-sm fa-edit"></i>
+    <i class="fas fa-sm fa-edit"></i>
 </div>
