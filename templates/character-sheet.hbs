@@ -1,5 +1,14 @@
 <div>
   <header class="sheet-header flexrow">
+    <div class="name flexcol">
+      <label>Sheet Mode: </label>
+      <input
+        class="toggle"
+        data-action="toggleSheetMode"
+        name="isEditMode"
+        type="checkbox"
+        {{checked isEditMode}}>
+    </div>
     <img
       class="portrait"
       src="{{document.img}}"
@@ -8,7 +17,7 @@
       title="{{document.name}}"
     />
     <div class="name flexcol">
-      <label>Name: <a data-action="toggleSheetMode">Toggle Sheet Mode: {{isEditMode}}</a></label>
+      <label>Name: </label>
       <input name="name" type="text" class="" value="{{document.name}}" />
     </div>
     <div class="luck-box flexcol">

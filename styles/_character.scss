@@ -1,5 +1,9 @@
+@use "mixins" as *;
+
 .application.discworld {
   $header-height: 100px;
+
+  @include toggle-switch();
 
   label {
     font-weight: bold;

@@ -1,0 +1,48 @@
+@mixin toggle-switch(
+  $width: 1.875rem,
+  $padding: 0.063rem,
+  $colorChecked: #444444,
+  $colorUnchecked: #b90202
+) {
+  $height: calc($width / 2);
+  $dot-height: calc(var($height) - (var($padding) * 2));
+
+  input.toggle {
+    & {
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      width: $width;
+      height: $height;
+      border-radius: $height;
+      background-color: #444444; // Initial background color when unchecked
+      transition: background-color 0.3s;
+
+      &:before {
+        content: "";
+        display: block;
+        width: $dot-height;
+        height: $dot-height;
+        border-radius: 50%; // Round border for the dot
+        background-color: white; // Dot color
+        transition: transform 0.3s;
+        position: absolute;
+        top: $padding;
+        left: $padding;
+      }
+
+      &:checked:before {
+        content: "";
+        transform: translateX($height);
+      }
+
+      &:checked:after {
+        content: "";
+      }
+
+      &:checked {
+        background-color: #b90202; // Change background color when checked
+      }
+    }
+  }
+}
