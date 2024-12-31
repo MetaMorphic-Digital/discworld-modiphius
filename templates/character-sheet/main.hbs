@@ -4,11 +4,15 @@
       <label>{{localize traitI18nString}}:</label>
       <div class="trait-list">
         {{#each (getTraits ../document traitType) as |trait|}}
-          {{#if ../../isEditMode}}
-            <input name="name" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}" value="{{trait.name}}" />
-          {{else}}
             <a data-action="traitAction" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
               {{trait.name~}}
+            </a>
+          {{~#if ../../isEditMode}}
+            <a data-action="traitAction" data-action-type="edit" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
+              <i class="fas fa-edit"></i>
+            </a>
+            <a data-action="traitAction" data-action-type="delete" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
+              <i class="fas fa-trash"></i>
             </a>
           {{/if}}
           {{~#unless @last}}, {{/unless}}

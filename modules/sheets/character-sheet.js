@@ -27,36 +27,34 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
-  static #traitAction(event) {
-    const ctrlKey = keyboard.isModifierActive("Control");
-    const shiftKey = keyboard.isModifierActive("Shift");
+  static #traitAction(event, target) {
+    const { actionType, itemId } = target.dataset;
+    const trait = this.actor.items.get(itemId);
 
-    if (ctrlKey) {
-      CharacterSheet.#editTrait.call(this, event);
-      return;
+    switch (actionType) {
+      case "edit":
+        CharacterSheet.#editTrait.call(this, trait);
+        break;
+
+      case "delete":
+        CharacterSheet.#deleteTrait.call(this, trait);
+        break;
+
+      default:
+        CharacterSheet.#rollTrait.call(this, trait);
+        break;
     }
-
-    if (shiftKey) {
-      CharacterSheet.#deleteTrait.call(this, event);
-      return;
-    }
-
-    CharacterSheet.#rollTrait.call(this, event);
   }
 
-  static #editTrait(event) {
-    const trait = this.actor.items.get(event.target.dataset.itemId);
+  static #editTrait(trait) {
     trait.sheet.render(true);
   }
 
-  static #deleteTrait(event) {
-    const trait = this.actor.items.get(event.target.dataset.itemId);
+  static #deleteTrait(trait) {
     trait.delete();
   }
 
-  static async #rollTrait(event) {
-    const trait = this.actor.items.get(event.target.dataset.itemId);
-
+  static async #rollTrait(trait) {
     const { DialogV2 } = foundry.applications.api;
     const content = await renderTemplate(
       "systems/discworld/templates/roll-trait-prompt.hbs",
