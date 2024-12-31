@@ -5,9 +5,11 @@
   $colorUnchecked: #b90202
 ) {
   $height: calc($width / 2);
-  $dot-height: calc(var($height) - (var($padding) * 2));
+  $dot-height: calc($height - ($padding * 2));
 
-  input.toggle {
+  a.toggle {
+    height: auto;
+
     & {
       display: inline-block;
       vertical-align: middle;
@@ -16,7 +18,7 @@
       height: $height;
       border-radius: $height;
       background-color: #444444; // Initial background color when unchecked
-      transition: background-color 0.3s;
+      transition: background-color 0.2s;
 
       &:before {
         content: "";
@@ -25,22 +27,22 @@
         height: $dot-height;
         border-radius: 50%; // Round border for the dot
         background-color: white; // Dot color
-        transition: transform 0.3s;
+        transition: transform 0.2s;
         position: absolute;
         top: $padding;
         left: $padding;
       }
 
-      &:checked:before {
+      &.toggled:before {
         content: "";
         transform: translateX($height);
       }
 
-      &:checked:after {
+      &.toggled:after {
         content: "";
       }
 
-      &:checked {
+      &.toggled {
         background-color: #b90202; // Change background color when checked
       }
     }

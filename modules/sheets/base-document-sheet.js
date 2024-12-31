@@ -37,8 +37,12 @@ const DiscworldSheetMixin = (Base) => {
 
     _onRender(context, options) {
       super._onRender(context, options);
+      if (!this.isEditable) return;
 
+      // Set up drag-and-drop
       this._setupDragAndDrop();
+
+      // const
     }
 
     /* -------------------------------- */
@@ -219,7 +223,11 @@ const DiscworldSheetMixin = (Base) => {
 
       const modes = this.constructor.SHEET_MODES;
       this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT;
-      this.render();
+
+      target.classList.toggle("toggled");
+      target.addEventListener("transitionend", () => {
+        this.render();
+      });
     }
   };
 };

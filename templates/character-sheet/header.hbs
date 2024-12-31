@@ -1,13 +1,13 @@
 <header class="sheet-header flexrow">
   <div class="name flexcol">
     <label>Sheet Mode: </label>
-    <input
-      class="toggle"
+    <a
+      class="toggle {{#if isEditMode}}toggled{{/if}}"
       data-action="toggleSheetMode"
       name="isEditMode"
       type="checkbox"
-      {{checked isEditMode}}
-    />
+    >
+    </a>
   </div>
   <img
     class="portrait"
