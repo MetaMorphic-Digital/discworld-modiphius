@@ -1,0 +1,20 @@
+<section class="sheet-body">
+  {{#each (getConfigObject "traitTypes") as |traitI18nString traitType|}}
+    <div class="trait-type flexrow">
+      <label>{{localize traitI18nString}}:</label>
+      <div class="trait-list">
+        {{#each (getTraits ../document traitType) as |trait|}}
+          {{#if ../../isEditMode}}
+            <input name="name" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}" value="{{trait.name}}" />
+          {{else}}
+            <a data-action="traitAction" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
+              {{trait.name~}}
+            </a>
+          {{/if}}
+          {{~#unless @last}}, {{/unless}}
+        {{/each}}
+      </div>
+    </div>
+    <hr>
+  {{/each}}
+</section>

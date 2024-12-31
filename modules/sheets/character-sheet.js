@@ -16,8 +16,14 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   };
 
   static PARTS = {
+    header: {
+      template: "systems/discworld/templates/character-sheet/header.hbs",
+    },
     main: {
-      template: "systems/discworld/templates/character-sheet.hbs",
+      template: "systems/discworld/templates/character-sheet/main.hbs",
+    },
+    footer: {
+      template: "systems/discworld/templates/character-sheet/footer.hbs",
     },
   };
 
