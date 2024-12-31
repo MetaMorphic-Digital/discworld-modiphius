@@ -51,6 +51,7 @@ globals:
   ActorSheetV2: readonly
   Actors: readonly
   CONFIG: readonly
+  CONST: readonly
   ChatLog: readonly
   ChatMessage: readonly
   Combat: readonly

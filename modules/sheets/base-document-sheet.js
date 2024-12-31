@@ -2,7 +2,8 @@
  * Adds basic sheet methods that all actor sheets should have,
  * e.g. drag-and-drop support, image editing, etc.
  *
- * Credit: all taken from Zhell's Artichron code
+ * Credit: Much of the drag-and-drop and editMode logic is
+ * taken and inspired from Zhell's Artichron code.
  */
 
 const DiscworldSheetMixin = (Base) => {
@@ -13,7 +14,7 @@ const DiscworldSheetMixin = (Base) => {
       window: { resizable: true },
       actions: {
         editImage: DiscworldDocumentSheet.#onEditImage,
-        toggleSheetMode: DiscworldDocumentSheet.#onToggleSheetMode,
+        toggleSheetMode: DiscworldDocumentSheet.onToggleSheetMode,
       },
       form: { submitOnChange: true },
     };
@@ -41,8 +42,6 @@ const DiscworldSheetMixin = (Base) => {
 
       // Set up drag-and-drop
       this._setupDragAndDrop();
-
-      // const
     }
 
     /* -------------------------------- */
@@ -214,11 +213,13 @@ const DiscworldSheetMixin = (Base) => {
     /**
      * Handle toggling the sheet between edit and play modes.
      *
+     * Not private because this is called outside the class.
+     *
      * @param {Event} event
      * @param {HTMLElement} target
      * @returns
      */
-    static #onToggleSheetMode(event, target) {
+    static onToggleSheetMode(event, target) {
       if (!this.isEditable) return; // Permissions, not our own internal edit mode.
 
       const modes = this.constructor.SHEET_MODES;
