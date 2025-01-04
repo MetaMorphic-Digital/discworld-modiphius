@@ -3,6 +3,18 @@
  */
 
 const DISCWORLD = {
+  consequenceSeverity: {
+    inconsequential: "DISCWORLD.trait.severity.inconsequential",
+    minor: "DISCWORLD.trait.severity.minor",
+    major: "DISCWORLD.trait.severity.major",
+    exceptional: "DISCWORLD.trait.severity.exceptional",
+  },
+
+  rollers: {
+    player: "DISCWORLD.rollers.player",
+    narrativium: "DISCWORLD.rollers.narrativium",
+  },
+
   traitTypes: {
     organization: "DISCWORLD.trait.type.organization",
     background: "DISCWORLD.trait.type.background",
@@ -11,13 +23,6 @@ const DISCWORLD = {
     quirks: "DISCWORLD.trait.type.quirks",
     uncategorized: "DISCWORLD.trait.type.uncategorized",
     consequences: "DISCWORLD.trait.type.consequences",
-  },
-
-  consequenceSeverity: {
-    inconsequential: "DISCWORLD.trait.severity.inconsequential",
-    minor: "DISCWORLD.trait.severity.minor",
-    major: "DISCWORLD.trait.severity.major",
-    exceptional: "DISCWORLD.trait.severity.exceptional",
   },
 };
 

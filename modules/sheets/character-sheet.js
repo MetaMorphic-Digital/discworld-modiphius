@@ -1,3 +1,4 @@
+import DISCWORLD from "../config.js";
 import DiscworldSheetMixin from "./base-document-sheet.js";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -132,6 +133,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       term: dialogResult,
       actor: this.actor,
       trait,
+      rollers: DISCWORLD.rollers,
     };
     const messageTemplate = await renderTemplate(
       "systems/discworld/templates/roll-card.hbs",

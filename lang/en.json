@@ -1,4 +1,7 @@
 {
+  "DISCWORLD.rollers.narrativium": "Narrativium",
+  "DISCWORLD.rollers.player": "Player",
+
   "DISCWORLD.trait.severity.inconsequential": "Inconsequential",
   "DISCWORLD.trait.severity.minor": "Minor",
   "DISCWORLD.trait.severity.major": "Major",
