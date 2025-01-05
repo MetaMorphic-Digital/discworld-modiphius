@@ -1,6 +1,7 @@
 import CharacterSheet from "./sheets/character-sheet.js";
 import Character from "./documents/character.js";
 import CharacterDataModel from "./datamodels/character-schema.js";
+import DiscworldChatLog from "./chat/chat.js";
 import TraitDataModel from "./datamodels/trait-schema.js";
 import TraitSheet from "./sheets/trait-sheet.js";
 import preloadTemplates, { registerHelpers } from "./utils/handlebars.js";
@@ -20,6 +21,9 @@ Hooks.on("init", () => {
   Items.registerSheet("discworld", TraitSheet, {
     makeDefault: true,
   });
+
+  // Register Chat Log
+  CONFIG.ui.chat = DiscworldChatLog;
 
   // Register Dice
   CONFIG.Dice.rolls.push(DiscworldRoll);

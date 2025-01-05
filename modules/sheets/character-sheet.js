@@ -126,6 +126,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
     if (!dialogResult) return;
 
-    DiscworldRoll.createRoll(dialogResult, { actor: this.actor, trait });
+    DiscworldRoll.createBaseRoll(dialogResult, { actor: this.actor, trait });
   }
 }
