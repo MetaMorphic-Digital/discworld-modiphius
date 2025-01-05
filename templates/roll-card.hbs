@@ -3,32 +3,34 @@
     <q>{{trait.name}}</q>
     <cite>{{actor.name}}</cite>
   </header>
-  <!-- From Foundry -->
-  <div class="flexrow dice-roll">
-    {{#each postRollActions as |actionI18nString action| }}
-      <div class="dice-result">
-        <button class="{{action}}">
-          {{localize actionI18nString}}
-          <i class="fas fa-dice"></i>
-        </button>
-        <div class="dice-formula">{{../term}}</div>
-        {{!-- djlint:off H021 --}}
-        <div class="dice-tooltip" style="display: none;">
-          {{!-- djlint:on --}}
-          <section class="tooltip-part">
-            <div class="dice">
-              <header class="part-header flexrow">
-                <span class="part-formula">{{../term}}</span>
-                <span class="part-total">{{../result}}</span>
-              </header>
-              <ol class="dice-rolls">
-                <li class="roll die {{../term}}">{{../result}}</li>
-              </ol>
-            </div>
-          </section>
-        </div>
-        <h4 class="dice-total">{{../result}}</h4>
+  <div class="flexrow dice-rolls">
+    <!-- Player Results -->
+    <div class="result-container">
+      <button class="help">
+        {{localize "DISCWORLD.chat.postRollActions.help"}}
+        <i class="fas fa-dice"></i>
+      </button>
+
+      <div class="result {{term}}">
+        <span>{{result}}</span>
       </div>
-    {{/each}}
+    </div>
+    <!-- Narrativium Results -->
+    <div class="result-container">
+      <button class="narrativium">
+        {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
+        <i class="fas fa-dice"></i>
+      </button>
+
+      <div class="result d8">
+        <span>
+          {{#if gmResult }}
+            {{gmResult}}
+          {{else}}
+            ?
+          {{/if}}
+        </span>
+      </div>
+    </div>
   </div>
 </div>
