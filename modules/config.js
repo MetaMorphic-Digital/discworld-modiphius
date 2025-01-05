@@ -10,11 +10,6 @@ const DISCWORLD = {
     exceptional: "DISCWORLD.trait.severity.exceptional",
   },
 
-  postRollActions: {
-    help: "DISCWORLD.chat.postRollActions.help",
-    narrativium: "DISCWORLD.chat.postRollActions.narrativium",
-  },
-
   traitTypes: {
     organization: "DISCWORLD.trait.type.organization",
     background: "DISCWORLD.trait.type.background",
