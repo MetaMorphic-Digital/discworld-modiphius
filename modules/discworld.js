@@ -5,6 +5,7 @@ import TraitDataModel from "./datamodels/trait-schema.js";
 import TraitSheet from "./sheets/trait-sheet.js";
 import preloadTemplates, { registerHelpers } from "./utils/handlebars.js";
 import registerKeybindings from "./utils/keybindings.js";
+import DiscworldRoll from "./rolls/rolls.js";
 
 Hooks.on("init", () => {
   // Register Actor classes.
@@ -19,6 +20,9 @@ Hooks.on("init", () => {
   Items.registerSheet("discworld", TraitSheet, {
     makeDefault: true,
   });
+
+  // Register Dice
+  CONFIG.Dice.rolls.push(DiscworldRoll);
 
   // Run various utils.
   registerKeybindings();
