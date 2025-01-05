@@ -18,26 +18,39 @@
         line-height: unset;
       }
 
-      .result {
+      ol.result {
+        list-style: none;
+
+        display: flex;
+        justify-content: center;
+
         text-align: center;
         font-weight: bold;
         font-size: 1.25rem;
+
+        margin: 0;
+        padding: 0.125rem 0;
 
         background: rgba(0, 0, 0, 0.1);
         border: 1px solid var(--color-border-light-2);
         border-radius: 3px;
         box-shadow: 0 0 2px #fff inset;
 
-        padding: 0.3rem 0;
+        li {
+          $height: 2.25rem;
+          height: $height;
+          width: $height;
+          align-items: center;
 
-        // Move the d4 result down a bit to better align with the dice icon.
-        &.d4 span {
-          display: inline-block;
-          transform: translateY(0.125rem);
+          // Move the d4 result down a bit to better align with the dice icon.
+          &.d4 span {
+            display: inline-block;
+            transform: translateY(0.125rem);
+          }
+
+          @include button-background;
+          @include dice-backgrounds;
         }
-
-        @include button-background;
-        @include dice-backgrounds;
       }
     }
   }

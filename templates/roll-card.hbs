@@ -11,9 +11,17 @@
         <i class="fas fa-dice"></i>
       </button>
 
-      <div class="result {{term}}">
-        <span>{{result}}</span>
-      </div>
+      <ol class="result {{term}}">
+        <li class="playerResult {{term}} flexrow">
+          <span>{{result}}</span>
+        </li>
+
+        {{#if helpTerm }}
+          <li class="helpResult {{helpTerm}} flexrow">
+            <span>{{helpResult}}</span>
+          </li>
+        {{/if}}
+      </ol>
     </div>
     <!-- Narrativium Results -->
     <div class="result-container">
@@ -22,15 +30,22 @@
         <i class="fas fa-dice"></i>
       </button>
 
-      <div class="result d8">
-        <span>
-          {{#if gmResult }}
-            {{gmResult}}
-          {{else}}
-            ?
-          {{/if}}
-        </span>
-      </div>
+      <ol class="result">
+        <li class="gmResult d8 flexrow">
+          <span>
+            {{#if gmResult }}
+              {{gmResult}}
+            {{else}}
+              ?
+            {{/if}}
+          </span>
+        </li>
+        {{#if gmRerollResult }}
+          <li class="gmRerollResult d8 flexrow">
+            <span>{{gmRerollResult}}</span>
+          </li>
+        {{/if}}
+      </ol>
     </div>
   </div>
 </div>

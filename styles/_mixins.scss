@@ -54,9 +54,10 @@
 }
 
 @mixin button-background {
+  $height: 36px;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 36px 36px;
+  background-size: $height $height;
 }
 
 @mixin dice-backgrounds {
