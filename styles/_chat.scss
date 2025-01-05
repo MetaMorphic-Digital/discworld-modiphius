@@ -1,12 +1,14 @@
+@use "mixins" as *;
+
 .chat-message .discworld {
   header {
     margin: 0.25rem 0;
   }
 
-  .dice-roll {
+  .dice-rolls {
     gap: 0.25rem;
 
-    .dice-result {
+    .result-container {
       flex: 1;
 
       text-align: center;
@@ -14,6 +16,28 @@
       button {
         margin: 0.25rem 0;
         line-height: unset;
+      }
+
+      .result {
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.25rem;
+
+        background: rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--color-border-light-2);
+        border-radius: 3px;
+        box-shadow: 0 0 2px #fff inset;
+
+        padding: 0.3rem 0;
+
+        // Move the d4 result down a bit to better align with the dice icon.
+        &.d4 span {
+          display: inline-block;
+          transform: translateY(0.125rem);
+        }
+
+        @include button-background;
+        @include dice-backgrounds;
       }
     }
   }

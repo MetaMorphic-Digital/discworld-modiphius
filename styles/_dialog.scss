@@ -4,12 +4,6 @@ dialog.discworld {
   button {
     min-width: unset !important;
 
-    @mixin button-background {
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 36px 36px;
-    }
-
     @include button-background;
 
     color: #000;

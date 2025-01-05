@@ -53,6 +53,12 @@
   }
 }
 
+@mixin button-background {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 36px 36px;
+}
+
 @mixin dice-backgrounds {
   $dice-types: d4, d6, d8, d10, d12;
 
