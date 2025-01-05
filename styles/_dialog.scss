@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 dialog.discworld {
   button {
     min-width: unset !important;
@@ -17,19 +19,6 @@ dialog.discworld {
       @include button-background;
     }
 
-    &.d4 {
-      background-image: url("/icons/svg/d4-grey.svg");
-      background-position: left 50% top calc(50% + 0.125rem);
-    }
-    &.d6 {
-      background-image: url("/icons/svg/d6-grey.svg");
-    }
-
-    &.d10 {
-      background-image: url("/icons/svg/d10-grey.svg");
-    }
-    &.d12 {
-      background-image: url("/icons/svg/d12-grey.svg");
-    }
+    @include dice-backgrounds;
   }
 }
