@@ -133,7 +133,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       term: dialogResult,
       actor: this.actor,
       trait,
-      rollers: DISCWORLD.rollers,
+      postRollActions: DISCWORLD.postRollActions,
     };
     const messageTemplate = await renderTemplate(
       "systems/discworld/templates/roll-card.hbs",

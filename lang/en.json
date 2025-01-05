@@ -1,6 +1,6 @@
 {
-  "DISCWORLD.rollers.narrativium": "Narrativium",
-  "DISCWORLD.rollers.player": "Player",
+  "DISCWORLD.chat.postRollActions.narrativium": "Narrativium",
+  "DISCWORLD.chat.postRollActions.help": "Help",
 
   "DISCWORLD.trait.severity.inconsequential": "Inconsequential",
   "DISCWORLD.trait.severity.minor": "Minor",

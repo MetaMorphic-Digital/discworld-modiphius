@@ -5,14 +5,10 @@
   </header>
   <!-- From Foundry -->
   <div class="flexrow dice-roll">
-    {{#each rollers as |rollerI18nString roller| }}
+    {{#each postRollActions as |actionI18nString action| }}
       <div class="dice-result">
-        <button class="{{roller}}">
-          {{#compare roller "player" }}
-            {{localize "Help"}}
-          {{else}}
-            {{localize rollerI18nString}}
-          {{/compare}}
+        <button class="{{action}}">
+          {{localize actionI18nString}}
           <i class="fas fa-dice"></i>
         </button>
         <div class="dice-formula">{{../term}}</div>
