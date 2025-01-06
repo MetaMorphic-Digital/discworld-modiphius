@@ -41,25 +41,29 @@
           height: $height;
           width: $height;
           align-items: center;
-          filter: opacity(1);
+          opacity: 1;
           transform: translateX(0);
 
           $anim: ease-in-out 0.5s;
           transition:
-            filter $anim,
+            opacity $anim,
             transform $anim;
 
           @include button-background;
           @include dice-backgrounds;
 
-          span {
-            opacity: 1;
-            transition: opacity $anim;
-
+          @mixin not-visible {
             &.not-visible {
               opacity: 0;
               transition: opacity $anim;
             }
+          }
+
+          span {
+            opacity: 1;
+            transition: opacity $anim;
+
+            @include not-visible;
           }
 
           // Move the d4 result text down a bit to better align with the dice icon.
@@ -72,9 +76,7 @@
             transform: translateX(calc($height / 2));
           }
 
-          &.not-visible {
-            filter: opacity(0);
-          }
+          @include not-visible;
         }
       }
     }
