@@ -4,13 +4,11 @@ dialog.discworld {
   button {
     min-width: unset !important;
 
-    @include button-background;
-
     color: #000;
     font-weight: bold;
 
     &:hover {
-      @include button-background;
+      @include dice-backgrounds(false);
     }
 
     @include dice-backgrounds;

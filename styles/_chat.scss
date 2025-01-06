@@ -41,23 +41,26 @@
           height: $height;
           width: $height;
           align-items: center;
+
+          // Animation Properties
+          $anim: ease-in-out 0.5s;
           opacity: 1;
           transform: translateX(0);
-
-          $anim: ease-in-out 0.5s;
           transition:
             opacity $anim,
             transform $anim;
 
-          @include button-background;
           @include dice-backgrounds;
 
+          // Mixin applied to either the whole <li>, or the enclosed <span>
           @mixin not-visible {
             &.not-visible {
               opacity: 0;
               transition: opacity $anim;
             }
           }
+
+          @include not-visible;
 
           span {
             opacity: 1;
@@ -75,8 +78,6 @@
           &.move-right {
             transform: translateX(calc($height / 2));
           }
-
-          @include not-visible;
         }
       }
     }
