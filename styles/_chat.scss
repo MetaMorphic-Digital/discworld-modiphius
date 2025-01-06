@@ -41,26 +41,46 @@
           height: $height;
           width: $height;
           align-items: center;
+          filter: opacity(1);
+          transform: translateX(0);
+
+          $anim: ease-in-out 0.5s;
+          transition:
+            filter $anim,
+            transform $anim;
 
           @include button-background;
           @include dice-backgrounds;
 
-          // Move the d4 result down a bit to better align with the dice icon.
+          span {
+            opacity: 1;
+            transition: opacity $anim;
+
+            &.not-visible {
+              opacity: 0;
+              transition: opacity $anim;
+            }
+          }
+
+          // Move the d4 result text down a bit to better align with the dice icon.
           &.d4 span {
             display: inline-block;
             transform: translateY(0.125rem);
           }
 
-          &.move-left {
-            transition: transform ease-in-out 0.5s;
-            transform: translateX(calc($height / -2));
+          &.move-right {
+            transform: translateX(calc($height / 2));
+          }
+
+          &.not-visible {
+            filter: opacity(0);
           }
         }
       }
     }
-  }
 
-  .dice-roll + .dice-roll {
-    margin-top: unset;
+    .dice-roll + .dice-roll {
+      margin-top: unset;
+    }
   }
 }

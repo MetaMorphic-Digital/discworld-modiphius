@@ -35,7 +35,9 @@
       </button>
 
       <ol class="result">
-        <li class="gmResult d8 flexrow">
+        <li class="gmResult d8 flexrow
+                   {{#unless gmRerollResult }}
+                     move-right{{/unless }}">
           <span>
             {{#if gmResult }}
               {{gmResult}}
@@ -44,11 +46,12 @@
             {{/if}}
           </span>
         </li>
-        {{#if gmRerollResult }}
-          <li class="gmRerollResult d8 flexrow">
-            <span>{{gmRerollResult}}</span>
-          </li>
-        {{/if}}
+
+        <li class="gmRerollResult d8 flexrow
+                   {{#unless gmRerollResult }}
+                     not-visible {{/unless }}">
+          <span>{{gmRerollResult}}</span>
+        </li>
       </ol>
     </div>
   </div>

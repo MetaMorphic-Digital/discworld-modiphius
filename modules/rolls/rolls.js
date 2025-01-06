@@ -1,3 +1,5 @@
+import transitionClass from "../utils/animations.js";
+
 export default class DiscworldRoll extends Roll {
   constructor(formula, data, options = {}) {
     super(formula, data, options);
@@ -48,15 +50,23 @@ export default class DiscworldRoll extends Roll {
 
     if (reroll) {
       const gmResultLi = element.querySelector("li.gmResult");
-      gmResultLi.classList.add("move-left");
-      gmResultLi.addEventListener(
-        "transitionend",
-        () => {
-          message.update({ content, rolls: [previousRoll] });
-        },
-        { once: true },
-      );
-      return;
+      await transitionClass(gmResultLi, ["move-right"], {
+        remove: true,
+      });
+
+      const gmRerollResultLi = element.querySelector("li.gmRerollResult");
+      const rerollResultText = gmRerollResultLi.querySelector("span");
+      rerollResultText.textContent = roll.result;
+      await transitionClass(gmRerollResultLi, ["not-visible"], {
+        remove: true,
+      });
+    }
+
+    if (!reroll) {
+      const gmResultSpan = element.querySelector("li.gmResult span");
+      await transitionClass(gmResultSpan, ["not-visible"]);
+      gmResultSpan.textContent = roll.result;
+      await transitionClass(gmResultSpan, ["not-visible"], { remove: true });
     }
 
     message.update({ content, rolls: [previousRoll] });
