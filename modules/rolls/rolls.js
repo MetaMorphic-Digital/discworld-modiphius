@@ -1,4 +1,4 @@
-import transitionClass from "../utils/animations.js";
+import { ChatAnimations } from "../chat/chat.js";
 
 export default class DiscworldRoll extends Roll {
   constructor(formula, data, options = {}) {
@@ -48,25 +48,16 @@ export default class DiscworldRoll extends Roll {
     const chatData = previousRoll.prepareChatMessageData();
     const content = await renderTemplate(previousRoll.template, chatData);
 
-    if (reroll) {
-      const gmResultLi = element.querySelector("li.gmResult");
-      await transitionClass(gmResultLi, ["move-right"], {
-        remove: true,
-      });
-
-      const gmRerollResultLi = element.querySelector("li.gmRerollResult");
-      const rerollResultText = gmRerollResultLi.querySelector("span");
-      rerollResultText.textContent = roll.result;
-      await transitionClass(gmRerollResultLi, ["not-visible"], {
-        remove: true,
-      });
+    if (!reroll) {
+      // Fade question mark out / new result in.
+      await ChatAnimations.fadeTextInOut(element, "gmResult", roll.result);
     }
 
-    if (!reroll) {
-      const gmResultSpan = element.querySelector("li.gmResult span");
-      await transitionClass(gmResultSpan, ["not-visible"]);
-      gmResultSpan.textContent = roll.result;
-      await transitionClass(gmResultSpan, ["not-visible"], { remove: true });
+    if (reroll) {
+      // Slide previous roll icon left. (We're technically sliding it back from the right).
+      await ChatAnimations.slideDiceIcon(element, "gmResult");
+      // Fade in reroll result/icon.
+      await ChatAnimations.fadeDiceIcon(element, "gmRerollResult", roll.result); // Fade result
     }
 
     message.update({ content, rolls: [previousRoll] });
