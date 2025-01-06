@@ -5,10 +5,6 @@ export default class DiscworldChatLog extends ChatLog {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.on("click", "button.help", (event) => {
-      console.log("Help Button Clicked");
-    });
-
     html.on("click", "button.narrativium", (event) => {
       DiscworldChatLog.#onRollNarrativium.call(this, event);
     });
@@ -16,10 +12,21 @@ export default class DiscworldChatLog extends ChatLog {
 
   static #onRollNarrativium(event) {
     if (!game.user.isGM) return;
+    const message = DiscworldChatLog.getClickedMessage(event);
+    const element = event.currentTarget.closest(".message");
+    const reroll = event.currentTarget.classList.contains("reroll");
+
+    DiscworldRoll.createNarrativiumRoll(message, {
+      reroll,
+      element,
+    });
+  }
+
+  static getClickedMessage(event) {
     const { currentTarget } = event;
     const message = game.messages.get(
       currentTarget.closest(".message").dataset.messageId,
     );
-    DiscworldRoll.createNarrativiumRoll(message);
+    return message;
   }
 }

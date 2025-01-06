@@ -2,12 +2,16 @@ export default class DiscworldRoll extends Roll {
   constructor(formula, data, options = {}) {
     super(formula, data, options);
 
-    const { actor, trait, gmResult } = options;
+    const { actor, trait, gmResult, gmRerollResult, helpResult, helpTerm } =
+      options;
     this.actor = actor;
     this.trait = trait;
     this.template = "systems/discworld/templates/roll-card.hbs";
 
     this.gmResult = gmResult || null;
+    this.gmRerollResult = gmRerollResult || null;
+    this.helpResult = helpResult || null;
+    this.helpTerm = helpTerm || null;
   }
 
   static async createBaseRoll(formula, rollData) {
@@ -21,20 +25,40 @@ export default class DiscworldRoll extends Roll {
     });
   }
 
-  static async createNarrativiumRoll(message) {
+  static async createNarrativiumRoll(
+    message,
+    { reroll = false, element } = {},
+  ) {
+    // Determine the type of narrativium roll (regular or reroll).
+    const rollKey = reroll ? "gmRerollResult" : "gmResult";
+
     const [previousRoll] = message.rolls;
-    if (previousRoll.gmResult) return;
+    if (previousRoll[rollKey]) return;
     // Create Narrativium roll and show 3d dice if DSN installed.
     const roll = await new Roll("d8").evaluate();
     if (game.dice3d) await game.dice3d.showForRoll(roll, game.user, true); // Roll Dice So Nice if present.
 
     // Get the previous roll and update it with the Narrativium result.
-    [previousRoll.options.gmResult] = roll.result;
-    [previousRoll.gmResult] = roll.result;
+    [previousRoll.options[rollKey]] = roll.result;
+    [previousRoll[rollKey]] = roll.result;
 
     // Prepare chat data with updated info.
     const chatData = previousRoll.prepareChatMessageData();
     const content = await renderTemplate(previousRoll.template, chatData);
+
+    if (reroll) {
+      const gmResultLi = element.querySelector("li.gmResult");
+      gmResultLi.classList.add("move-left");
+      gmResultLi.addEventListener(
+        "transitionend",
+        () => {
+          message.update({ content, rolls: [previousRoll] });
+        },
+        { once: true },
+      );
+      return;
+    }
+
     message.update({ content, rolls: [previousRoll] });
   }
 
@@ -42,6 +66,9 @@ export default class DiscworldRoll extends Roll {
     return {
       actor: this.actor,
       gmResult: this.gmResult,
+      gmRerollResult: this.gmRerollResult,
+      helpResult: this.helpResult,
+      helpTerm: this.helpTerm,
       result: this.result,
       term: this.dice[0].denomination,
       trait: this.trait,

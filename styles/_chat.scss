@@ -42,14 +42,19 @@
           width: $height;
           align-items: center;
 
+          @include button-background;
+          @include dice-backgrounds;
+
           // Move the d4 result down a bit to better align with the dice icon.
           &.d4 span {
             display: inline-block;
             transform: translateY(0.125rem);
           }
 
-          @include button-background;
-          @include dice-backgrounds;
+          &.move-left {
+            transition: transform ease-in-out 0.5s;
+            transform: translateX(calc($height / -2));
+          }
         }
       }
     }

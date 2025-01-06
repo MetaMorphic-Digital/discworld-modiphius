@@ -25,8 +25,12 @@
     </div>
     <!-- Narrativium Results -->
     <div class="result-container">
-      <button class="narrativium">
-        {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
+      <button class="narrativium {{#if gmResult }}reroll{{/if }}">
+        {{#unless gmResult}}
+          {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
+        {{else}}
+          {{localize "DISCWORLD.chat.postRollActions.reroll"}}
+        {{/unless}}
         <i class="fas fa-dice"></i>
       </button>
 

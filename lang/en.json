@@ -1,6 +1,7 @@
 {
-  "DISCWORLD.chat.postRollActions.narrativium": "Narrativium",
   "DISCWORLD.chat.postRollActions.help": "Help",
+  "DISCWORLD.chat.postRollActions.narrativium": "Narrativium",
+  "DISCWORLD.chat.postRollActions.reroll": "GM Reroll",
 
   "DISCWORLD.trait.severity.inconsequential": "Inconsequential",
   "DISCWORLD.trait.severity.minor": "Minor",
