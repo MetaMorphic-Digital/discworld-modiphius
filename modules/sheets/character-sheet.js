@@ -73,8 +73,12 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     nameField.select();
   }
 
-  static #editTrait(trait) {
-    trait.sheet.render(true);
+  static async #editTrait(trait) {
+    const { sheet } = trait;
+    await sheet.render(true);
+    const nameField = sheet.element.querySelector("input[name='name']");
+    nameField.focus();
+    nameField.select();
   }
 
   static async #deleteTrait(trait) {
