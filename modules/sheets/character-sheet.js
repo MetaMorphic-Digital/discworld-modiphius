@@ -29,6 +29,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   isHelpMode = false;
 
+  helpPromise = {};
+
   _onRender() {
     super._onRender();
 
@@ -37,7 +39,20 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   async close() {
     super.close();
-    this.isHelpMode = false;
+
+    this.isHelpMode = false; // reset
+    this.helpPromise.reject?.();
+    this.helpPromise = {}; // reset
+  }
+
+  async resolveHelpMode() {
+    this.isHelpMode = true;
+    await this.render(true);
+
+    return new Promise((resolve) => {
+      this.helpPromise.resolve = (trait) => resolve(trait);
+      this.helpPromise.reject = () => resolve(false);
+    });
   }
 
   static #traitAction(event, target) {
@@ -105,7 +120,11 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   static async #rollTrait(trait) {
     // A help roll will handle its own dialog/roll.
-    if (this.isHelpMode) return;
+    if (this.isHelpMode) {
+      this.helpPromise.resolve(trait);
+      this.close();
+      return;
+    }
 
     const dialogResult = await rollTraitDialog(this.actor, trait);
     if (!dialogResult) return;

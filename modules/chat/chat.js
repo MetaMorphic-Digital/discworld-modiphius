@@ -31,28 +31,8 @@ export default class DiscworldChatLog extends ChatLog {
       actor = game.user.character;
     }
 
-    const { sheet } = actor;
-    sheet.isHelpMode = true;
-    await sheet.render(true);
-
     // Wait for a Trait to be clicked.
-    const trait = await new Promise((resolve, reject) => {
-      sheet.element.addEventListener("click", (e) => {
-        const { target } = e;
-        const traitClicked =
-          target.getAttribute("data-action") === "traitAction";
-        const closeClicked = target.getAttribute("data-action") === "close";
-
-        // Early return if neither a Trait nor the Close button is clicked.
-        if (!(traitClicked || closeClicked)) return;
-
-        const traitId = target.dataset.itemId;
-        if (traitClicked) resolve(actor.items.get(traitId));
-        if (closeClicked) reject();
-
-        sheet.close();
-      });
-    });
+    const trait = await actor.sheet.resolveHelpMode();
     if (!trait) return;
 
     const dialogResult = await rollTraitDialog(actor, trait);
@@ -60,7 +40,7 @@ export default class DiscworldChatLog extends ChatLog {
 
     const message = DiscworldChatLog.getClickedMessage(event);
     const element = event.currentTarget.closest(".message");
-    DiscworldRoll.createHelpRoll(message, { element });
+    DiscworldRoll.createHelpRoll(message, dialogResult, { element });
   }
 
   static #onRollNarrativium(event) {

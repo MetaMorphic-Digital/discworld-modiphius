@@ -63,11 +63,11 @@ export default class DiscworldRoll extends Roll {
     message.update({ content, rolls: [previousRoll] });
   }
 
-  static async createHelpRoll(message, { element } = {}) {
+  static async createHelpRoll(message, diceTerm, { element } = {}) {
     const [parentRoll] = message.rolls;
     if (parentRoll.helpResult) return;
 
-    const helpRoll = await new Roll("d4").evaluate();
+    const helpRoll = await new Roll(diceTerm).evaluate();
     if (game.dice3d) await game.dice3d.showForRoll(helpRoll, game.user, true); // Roll Dice So Nice if present.
 
     // Get the previous roll and update it with the Narrativium result.
