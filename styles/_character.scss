@@ -1,7 +1,21 @@
 @use "mixins" as *;
 
 .application.discworld {
-  $header-height: 100px;
+  &.help-mode .window-content {
+    animation: flash 3s ease-in-out infinite;
+
+    @keyframes flash {
+      0% {
+        box-shadow: inset 0px 0px 20px 5px #671a46;
+      }
+      50% {
+        box-shadow: inset 0px 0px 20px 8px #671a46;
+      }
+      100% {
+        box-shadow: inset 0px 0px 20px 5px #671a46;
+      }
+    }
+  }
 
   @include toggle-switch();
 
@@ -20,6 +34,7 @@
   }
 
   header.sheet-header {
+    $header-height: 100px;
     height: $header-height;
     margin-bottom: 0.5rem;
 

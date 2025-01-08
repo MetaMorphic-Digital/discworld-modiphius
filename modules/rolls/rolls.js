@@ -29,7 +29,7 @@ export default class DiscworldRoll extends Roll {
 
   static async createNarrativiumRoll(
     message,
-    { reroll = false, element } = {},
+    { element, reroll = false } = {},
   ) {
     // Determine the type of narrativium roll (regular or reroll).
     const rollKey = reroll ? "gmRerollResult" : "gmResult";
@@ -61,6 +61,38 @@ export default class DiscworldRoll extends Roll {
     }
 
     message.update({ content, rolls: [previousRoll] });
+  }
+
+  static async createHelpRoll(message, { element } = {}) {
+    const [parentRoll] = message.rolls;
+    if (parentRoll.helpResult) return;
+
+    const helpRoll = await new Roll("d4").evaluate();
+    if (game.dice3d) await game.dice3d.showForRoll(helpRoll, game.user, true); // Roll Dice So Nice if present.
+
+    // Get the previous roll and update it with the Narrativium result.
+    const helpResult = helpRoll.result;
+    [parentRoll.options.helpResult] = helpResult;
+    [parentRoll.helpResult] = helpResult;
+    const helpTerm = helpRoll.dice[0].denomination;
+    parentRoll.options.helpTerm = helpTerm;
+    parentRoll.helpTerm = helpTerm;
+
+    // Prepare chat data with updated info.
+    const chatData = parentRoll.prepareChatMessageData();
+    const content = await renderTemplate(parentRoll.template, chatData);
+
+    // Slide previous roll icon left. (We're technically sliding it back from the right).
+    await ChatAnimations.slideDiceIcon(element, "playerResult");
+    // Fade in reroll result/icon.
+    await ChatAnimations.fadeDiceIcon(
+      element,
+      "helpResult",
+      helpResult,
+      helpTerm,
+    );
+
+    message.update({ content, rolls: [parentRoll] });
   }
 
   prepareChatMessageData() {

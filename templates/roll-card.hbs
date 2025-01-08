@@ -12,15 +12,17 @@
       </button>
 
       <ol class="result">
-        <li class="playerResult {{term}} flexrow">
+        <li class="playerResult {{term}} flexrow
+                   {{#unless helpResult }}
+                     move-right{{/unless }}">
           <span>{{result}}</span>
         </li>
 
-        {{#if helpTerm }}
-          <li class="helpResult {{helpTerm}} flexrow">
-            <span>{{helpResult}}</span>
-          </li>
-        {{/if}}
+        <li class="helpResult {{helpTerm}} flexrow
+                   {{#unless helpResult }}
+                     not-visible {{/unless }}">
+          <span>{{helpResult}}</span>
+        </li>
       </ol>
     </div>
     <!-- Narrativium Results -->

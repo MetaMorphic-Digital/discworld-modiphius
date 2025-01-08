@@ -27,6 +27,19 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
+  isHelpMode = false;
+
+  _onRender() {
+    super._onRender();
+
+    if (this.isHelpMode) this.element.classList.add("help-mode");
+  }
+
+  async close() {
+    super.close();
+    this.isHelpMode = false;
+  }
+
   static #traitAction(event, target) {
     const { actionType, itemId } = target.dataset;
     const trait = this.actor.items.get(itemId);
@@ -91,6 +104,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   static async #rollTrait(trait) {
+    // A help roll will handle its own dialog/roll.
+    if (this.isHelpMode) return;
+
     const dialogResult = await rollTraitDialog(this.actor, trait);
     if (!dialogResult) return;
 
