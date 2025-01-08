@@ -2,6 +2,10 @@
   <header class="flexcol trait-quote">
     <q>{{trait.name}}</q>
     <cite>{{actor.name}}</cite>
+    {{#if helpTrait }}
+      <q>{{helpTrait.name}}</q>
+      <cite>{{helpTrait.actor.name}}</cite>
+    {{/if}}
   </header>
   <div class="flexrow dice-rolls">
     <!-- Player Results -->

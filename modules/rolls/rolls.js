@@ -4,8 +4,16 @@ export default class DiscworldRoll extends Roll {
   constructor(formula, data, options = {}) {
     super(formula, data, options);
 
-    const { actor, trait, gmResult, gmRerollResult, helpResult, helpTerm } =
-      options;
+    const {
+      actor,
+      trait,
+      gmResult,
+      gmRerollResult,
+      helpResult,
+      helpTerm,
+      helpTrait,
+    } = options;
+
     this.actor = actor;
     this.trait = trait;
     this.template = "systems/discworld/templates/roll-card.hbs";
@@ -14,6 +22,7 @@ export default class DiscworldRoll extends Roll {
     this.gmRerollResult = gmRerollResult || null;
     this.helpResult = helpResult || null;
     this.helpTerm = helpTerm || null;
+    this.helpTrait = helpTrait || null;
   }
 
   static async createBaseRoll(formula, rollData) {
@@ -64,7 +73,7 @@ export default class DiscworldRoll extends Roll {
     message.update({ content, rolls: [parentRoll] });
   }
 
-  static async createHelpRoll({ diceTerm, message, element } = {}) {
+  static async createHelpRoll({ diceTerm, trait, message, element } = {}) {
     const [parentRoll] = message.rolls;
     if (parentRoll.helpResult) return;
 
@@ -78,6 +87,8 @@ export default class DiscworldRoll extends Roll {
     const helpTerm = helpRoll.dice[0].denomination;
     parentRoll.options.helpTerm = helpTerm;
     parentRoll.helpTerm = helpTerm;
+    parentRoll.options.helpTrait = trait;
+    parentRoll.helpTrait = trait;
 
     // Prepare chat data with updated info.
     const chatData = parentRoll.prepareChatMessageData();
@@ -106,6 +117,7 @@ export default class DiscworldRoll extends Roll {
       result: this.result,
       term: this.dice[0].denomination,
       trait: this.trait,
+      helpTrait: this.helpTrait,
       cssClass: {
         playerResult: this.helpResult ? null : "shift-center",
         helpResult: this.helpResult ? null : "not-visible",
