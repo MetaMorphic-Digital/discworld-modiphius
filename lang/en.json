@@ -5,6 +5,11 @@
 
   "DISCWORLD.dialog.rollTrait.title": "Rolling a Trait!",
 
+  "DISCWORLD.sheet.character.leaveHelpMode": "Leave Help Mode",
+  "DISCWORLD.sheet.character.luck": "Luck",
+  "DISCWORLD.sheet.character.name": "Name",
+  "DISCWORLD.sheet.character.sheetMode": "Sheet Mode",
+
   "DISCWORLD.trait.severity.inconsequential": "Inconsequential",
   "DISCWORLD.trait.severity.minor": "Minor",
   "DISCWORLD.trait.severity.major": "Major",

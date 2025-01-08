@@ -12,6 +12,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
     actions: {
       traitAction: CharacterSheet.#traitAction,
+      leaveHelpMode: CharacterSheet.#leaveHelpMode,
     },
   };
 
@@ -31,17 +32,29 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   helpPromise = {};
 
+  async _prepareContext() {
+    const context = await super._prepareContext();
+
+    context.helpMode = this.isHelpMode;
+
+    return context;
+  }
+
   _onRender() {
     super._onRender();
 
-    if (this.isHelpMode) this.element.classList.add("help-mode");
+    if (this.isHelpMode) {
+      this.element.classList.add("help-mode");
+    } else {
+      this.element.classList.remove("help-mode");
+    }
   }
 
   async close() {
     super.close();
 
-    this.isHelpMode = false; // reset
     this.helpPromise.reject?.();
+    this.isHelpMode = false; // reset
     this.helpPromise = {}; // reset
   }
 
@@ -53,6 +66,13 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       this.helpPromise.resolve = (trait) => resolve(trait);
       this.helpPromise.reject = () => resolve(false);
     });
+  }
+
+  static #leaveHelpMode() {
+    this.helpPromise.reject?.();
+    this.isHelpMode = false;
+    this.helpPromise = {};
+    this.render();
   }
 
   static #traitAction(event, target) {

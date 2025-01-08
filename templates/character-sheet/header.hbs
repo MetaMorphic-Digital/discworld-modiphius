@@ -1,39 +1,39 @@
 <header class="sheet-header flexrow">
   <div class="name flexcol">
-    <label>Sheet Mode: </label>
+    <label>{{localize "DISCWORLD.sheet.character.sheetMode"}}:</label>
     {{> (systemFilePath "templates/mixins/toggle-switch.hbs")}}
   </div>
-  <img
-    class="portrait"
-    src="{{document.img}}"
-    data-edit="img"
-    data-action="editImage"
-    title="{{document.name}}"
-  />
+  <img class="portrait"
+       src="{{document.img}}"
+       data-edit="img"
+       data-action="editImage"
+       title="{{document.name}}" />
   <div class="name flexcol">
-    <label>Name: </label>
+    <label>{{localize "DISCWORLD.sheet.character.name"}}:</label>
     <input name="name" type="text" class="" value="{{document.name}}" />
   </div>
   <div class="luck-box flexcol">
-    <label>Luck:</label>
+    <label>{{localize "DISCWORLD.sheet.character.luck"}}:</label>
     <div class="flexrow">
-      <input
-        name="system.luck.value"
-        type="number"
-        class=""
-        value="{{document.system.luck.value}}"
-      />
+      <input name="system.luck.value"
+             type="number"
+             value="{{document.system.luck.value}}" />
       /
-      {{#if isEditMode}}
-        <input
-          name="system.luck.max"
-          type="number"
-          class=""
-          value="{{document.system.luck.max}}"
-        />
+      {{#if isEditMode }}
+        <input name="system.luck.max"
+               type="number"
+               value="{{document.system.luck.max}}" />
       {{else}}
         {{document.system.luck.max}}
       {{/if}}
     </div>
   </div>
+  {{#if helpMode }}
+    <aside class="help-aside">
+      <a data-action="leaveHelpMode">
+        <i class="fas fa-x"></i>
+        {{localize "DISCWORLD.sheet.character.leaveHelpMode"}}
+      </a>
+    </aside>
+  {{/if}}
 </header>

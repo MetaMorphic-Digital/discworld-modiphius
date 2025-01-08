@@ -34,6 +34,8 @@
   }
 
   header.sheet-header {
+    position: relative;
+
     $header-height: 100px;
     height: $header-height;
     margin-bottom: 0.5rem;
@@ -77,6 +79,12 @@
       align-self: center;
 
       padding-bottom: 0.5rem;
+    }
+
+    aside.help-aside {
+      position: absolute;
+      height: unset;
+      inset: 0.125rem;
     }
   }
 
