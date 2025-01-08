@@ -40,7 +40,7 @@ export default class DiscworldChatLog extends ChatLog {
 
     const message = DiscworldChatLog.getClickedMessage(event);
     const element = event.currentTarget.closest(".message");
-    DiscworldRoll.createHelpRoll(message, dialogResult, { element });
+    DiscworldRoll.createHelpRoll({ diceTerm: dialogResult, message, element });
   }
 
   static #onRollNarrativium(event) {
@@ -49,10 +49,7 @@ export default class DiscworldChatLog extends ChatLog {
     const element = event.currentTarget.closest(".message");
     const reroll = event.currentTarget.classList.contains("reroll");
 
-    DiscworldRoll.createNarrativiumRoll(message, {
-      reroll,
-      element,
-    });
+    DiscworldRoll.createNarrativiumRoll({ message, element, reroll });
   }
 
   static getClickedMessage(event) {
