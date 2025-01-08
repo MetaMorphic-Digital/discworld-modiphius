@@ -67,7 +67,7 @@ export default class DiscworldChatLog extends ChatLog {
 export class ChatAnimations {
   static async slideDiceIcon(element, rollClass) {
     const dieListItem = element.querySelector(`li.${rollClass}`);
-    return transitionClass(dieListItem, ["move-right"], {
+    return transitionClass(dieListItem, ["shift-center"], {
       remove: true,
     });
   }

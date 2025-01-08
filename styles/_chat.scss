@@ -75,7 +75,7 @@
             transform: translateY(0.125rem);
           }
 
-          &.move-right {
+          &.shift-center {
             transform: translateX(calc($height / 2));
           }
         }
