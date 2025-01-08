@@ -2,6 +2,8 @@
   "DISCWORLD.chat.postRollActions.help": "Help",
   "DISCWORLD.chat.postRollActions.narrativium": "Narrativium",
   "DISCWORLD.chat.postRollActions.reroll": "GM Reroll",
+  "DISCWORLD.chat.warning.actorNotFound": "No token selected and no character assigned to User. Cannot determine Actor to help.",
+  "DISCWORLD.chat.warning.singleTokenSelect": "You must select a single token to roll for.",
 
   "DISCWORLD.dialog.rollTrait.title": "Rolling a Trait!",
 

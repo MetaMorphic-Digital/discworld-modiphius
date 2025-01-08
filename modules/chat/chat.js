@@ -19,8 +19,10 @@ export default class DiscworldChatLog extends ChatLog {
 
   static async #onHelp(event) {
     const controlledTokens = canvas.tokens.controlled;
-    if (!controlledTokens.length > 1) {
-      ui.notifications.warn("You must select a single token to roll for.");
+    if (controlledTokens.length > 1) {
+      ui.notifications.warn(
+        game.i18n.localize("DISCWORLD.chat.warning.singleTokenSelect"),
+      );
       return;
     }
 
@@ -29,6 +31,13 @@ export default class DiscworldChatLog extends ChatLog {
     let { actor } = token || {};
     if (!actor) {
       actor = game.user.character;
+    }
+
+    if (!actor) {
+      ui.notifications.warn(
+        game.i18n.localize("DISCWORLD.chat.warning.actorNotFound"),
+      );
+      return;
     }
 
     // Wait for a Trait to be clicked.
