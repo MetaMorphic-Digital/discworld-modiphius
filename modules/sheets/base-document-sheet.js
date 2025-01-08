@@ -160,7 +160,7 @@ const DiscworldSheetMixin = (Base) => {
 
     /**
      * Handle dropping a single item onto the sheet.
-     * @param {ItemArtichron} document      The item being dropped.
+     * @param {Item} document               The item being dropped.
      * @param {HTMLElement} target          The direct target dropped onto.
      * @param {object} changes              Object of changes to be made to this document.
      */
@@ -190,6 +190,8 @@ const DiscworldSheetMixin = (Base) => {
       const itemData = game.items.fromCompendium(document);
       changes.items.push(itemData);
     }
+
+    /* COMMON SHEET HANDLERS */
 
     /**
      * Handle editing the document's image.

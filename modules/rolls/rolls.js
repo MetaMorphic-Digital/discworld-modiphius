@@ -21,7 +21,7 @@ export default class DiscworldRoll extends Roll {
 
     await roll.evaluate();
 
-    await roll.toMessage({
+    return roll.toMessage({
       speaker: ChatMessage.getSpeaker(),
       flavor: "Trait Roll",
     });
