@@ -3,6 +3,8 @@
   "DISCWORLD.chat.postRollActions.narrativium": "Narrativium",
   "DISCWORLD.chat.postRollActions.reroll": "GM Reroll",
 
+  "DISCWORLD.dialog.rollTrait.title": "Rolling a Trait!",
+
   "DISCWORLD.trait.severity.inconsequential": "Inconsequential",
   "DISCWORLD.trait.severity.minor": "Minor",
   "DISCWORLD.trait.severity.major": "Major",
