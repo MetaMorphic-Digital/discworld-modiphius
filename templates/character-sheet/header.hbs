@@ -1,17 +1,36 @@
 <header class="sheet-header flexrow">
-  <div class="name flexcol">
-    <label>{{localize "DISCWORLD.sheet.character.sheetMode"}}:</label>
-    {{> (systemFilePath "templates/mixins/toggle-switch.hbs")}}
-  </div>
   <img class="portrait"
        src="{{document.img}}"
        data-edit="img"
        data-action="editImage"
        title="{{document.name}}" />
-  <div class="name flexcol">
-    <label>{{localize "DISCWORLD.sheet.character.name"}}:</label>
-    <input name="name" type="text" class="" value="{{document.name}}" />
+
+  <div class="name-pronouns-container flexcol">
+    <h1 class="name flexrow">
+      <input name="name"
+             type="text"
+             value="{{document.name}}"
+             placeholder="{{localize "DISCWORLD.sheet.character.name"}}" />
+    </h1>
+
+    <div class="pronouns-subrow flexrow">
+      <div data-tooltip="{{localize "DISCWORLD.sheet.character.toggleSheetMode"}}">
+        {{> (systemFilePath "templates/mixins/toggle-switch.hbs")}}
+      </div>
+
+      <div class="pronouns">
+        {{#if isEditMode }}
+          <input name="system.pronouns"
+                 type="text"
+                 value="{{document.system.pronouns}}"
+                 placeholder="{{localize "DISCWORLD.sheet.character.pronouns"}}" />
+        {{else}}
+          {{document.system.pronouns}}
+        {{/if}}
+      </div>
+    </div>
   </div>
+
   <div class="luck-box flexcol">
     <label>{{localize "DISCWORLD.sheet.character.luck"}}:</label>
     <div class="flexrow">
@@ -28,6 +47,7 @@
       {{/if}}
     </div>
   </div>
+
   {{#if helpMode }}
     <aside class="help-aside">
       <a data-action="leaveHelpMode">

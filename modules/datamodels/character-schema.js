@@ -19,6 +19,7 @@ export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
           initial: 4,
         }),
       }),
+      pronouns: new fields.StringField({ required: false, initial: "" }),
     };
   }
 }
