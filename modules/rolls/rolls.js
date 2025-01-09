@@ -30,9 +30,10 @@ export default class DiscworldRoll extends Roll {
 
     await roll.evaluate();
 
+    const flavor = game.i18n.localize("DISCWORLD.roll.traitRoll");
     return roll.toMessage({
       speaker: ChatMessage.getSpeaker(),
-      flavor: "Trait Roll",
+      flavor,
     });
   }
 
