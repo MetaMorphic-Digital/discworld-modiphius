@@ -11,6 +11,7 @@
   "DISCWORLD.sheet.character.luck": "Luck",
   "DISCWORLD.sheet.character.name": "Name",
   "DISCWORLD.sheet.character.sheetMode": "Sheet Mode",
+  "DISCWORLD.sheet.character.deletePrompt": "Are you sure you want to delete the trait, '{traitName}'?",
 
   "DISCWORLD.trait.severity.inconsequential": "Inconsequential",
   "DISCWORLD.trait.severity.minor": "Minor",

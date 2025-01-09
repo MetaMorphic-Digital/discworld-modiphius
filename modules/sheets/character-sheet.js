@@ -131,9 +131,10 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   static async #deleteTrait(trait) {
-    const promptResult = await Dialog.confirm({
-      content: `Are you sure you want to delete the trait, "${trait.name}"?`,
+    const content = game.i18n.format("DISCWORLD.sheet.character.deletePrompt", {
+      traitName: trait.name,
     });
+    const promptResult = await Dialog.confirm({ content });
     if (!promptResult) return;
     trait.delete();
   }
