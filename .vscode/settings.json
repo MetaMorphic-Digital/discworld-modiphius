@@ -1,0 +1,10 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  "[handlebars]": {
+    "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "monosans.djlint",
+    "djlint.enableLinting": true
+  }
+}
