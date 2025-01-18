@@ -1,5 +1,3 @@
-import { ChatAnimations } from "../chat/chat.js";
-
 export default class DiscworldRoll extends Roll {
   constructor(formula, data, options = {}) {
     super(formula, data, options);
@@ -44,16 +42,12 @@ export default class DiscworldRoll extends Roll {
    * @param {object} [options]
    * @returns {Promise<ChatMessage>}      A promise that resolves to the updated chat message.
    */
-  static async createNarrativiumRoll({
-    message,
-    element,
-    reroll = false,
-  } = {}) {
+  static async createNarrativiumRoll({ message, reroll = false } = {}) {
     // Determine the type of narrativium roll (regular or reroll).
     const rollKey = reroll ? "gmRerollResult" : "gmResult";
 
     const [parentRoll] = message.rolls;
-    if (parentRoll[rollKey]) return;
+    if (parentRoll[rollKey]) return null;
     // Create Narrativium roll and show 3d dice if DSN installed.
     const roll = await new Roll("d8").evaluate();
     if (game.dice3d) await game.dice3d.showForRoll(roll, game.user, true); // Roll Dice So Nice if present.
@@ -68,22 +62,22 @@ export default class DiscworldRoll extends Roll {
 
     if (!reroll) {
       // Fade question mark out / new result in.
-      await ChatAnimations.fadeTextInOut(element, "gmResult", roll.result);
+      await message.fadeTextInOut("gmResult", roll.result);
     }
 
     if (reroll) {
       // Slide parent roll icon left. (We're technically sliding it back from the right).
-      await ChatAnimations.slideDiceIcon(element, "gmResult");
+      await message.slideDiceIcon("gmResult");
       // Fade in reroll result/icon.
-      await ChatAnimations.fadeDiceIcon(element, "gmRerollResult", roll.result); // Fade result
+      await message.fadeDiceIcon("gmRerollResult", roll.result); // Fade result
     }
 
     return message.update({ content, rolls: [parentRoll] });
   }
 
-  static async createHelpRoll({ diceTerm, trait, message, element } = {}) {
+  static async createHelpRoll({ diceTerm, trait, message } = {}) {
     const [parentRoll] = message.rolls;
-    if (parentRoll.helpResult) return;
+    if (parentRoll.helpResult) return null;
 
     const helpRoll = await new Roll(diceTerm).evaluate();
     if (game.dice3d) await game.dice3d.showForRoll(helpRoll, game.user, true); // Roll Dice So Nice if present.
@@ -103,16 +97,11 @@ export default class DiscworldRoll extends Roll {
     const content = await renderTemplate(parentRoll.template, chatData);
 
     // Slide parent roll icon left. (We're technically sliding it back from the right).
-    await ChatAnimations.slideDiceIcon(element, "playerResult");
+    await message.slideDiceIcon("playerResult");
     // Fade in reroll result/icon.
-    await ChatAnimations.fadeDiceIcon(
-      element,
-      "helpResult",
-      helpResult,
-      helpTerm,
-    );
+    await message.fadeDiceIcon("helpResult", helpResult, helpTerm);
 
-    message.update({ content, rolls: [parentRoll] });
+    return message.update({ content, rolls: [parentRoll] });
   }
 
   prepareChatMessageData() {
