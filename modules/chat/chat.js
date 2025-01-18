@@ -2,6 +2,10 @@
 import rollTraitDialog from "../dialog/roll-trait-dialog.js";
 import DiscworldRoll from "../rolls/rolls.js";
 
+/**
+ * The Discworld Chat Log.
+ * We extend this class to add custom button listeners.
+ */
 export default class DiscworldChatLog extends (foundry.applications?.sidebar
   ?.tabs?.ChatLog ?? ChatLog) {
   /** @override */
@@ -30,6 +34,16 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
 
   /* -------------------------------------------------- */
 
+  /**
+   * Respond to a user clicking the "Help" button by:
+   *   1. Opening the user's character sheet in "help mode".
+   *   2. Waiting for a Trait to be clicked.
+   *   3. Creating the Trait help roll.
+   *
+   * @param {Event} event - The originating click event.
+   * @param {HTMLElement} target - The target element of the event.
+   * @returns {void}
+   */
   static async #onHelp(event, target) {
     const controlledTokens = canvas.tokens.controlled;
     if (controlledTokens.length > 1) {
@@ -57,13 +71,7 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
     const dialogResult = await rollTraitDialog(actor, trait);
     if (!dialogResult) return;
 
-    // TODO: Simplify when v12 support is dropped.
-    const message =
-      game.release.generation < 13
-        ? game.messages.get(
-            event.currentTarget.closest(".message").dataset.messageId,
-          )
-        : target.closest(".message");
+    const { message } = DiscworldChatLog.getClickedMessageData(event, target);
     DiscworldRoll.createHelpRoll({
       diceTerm: dialogResult,
       trait,
@@ -71,28 +79,39 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
     });
   }
 
+  /**
+   * Respond to the GM clicking the "Narrativium" button
+   * by creating a Narrativium (d8) Roll.
+   *
+   * @param {Event} event - The originating click event.
+   * @param {HTMLElement} target - The target element of the event.
+   * @returns {void}
+   */
   static #onRollNarrativium(event, target) {
     if (!game.user.isGM) return;
 
-    let message;
-    let reroll;
-
-    if (game.release.generation < 13) {
-      message = DiscworldChatLog.getClickedMessage(event);
-      reroll = event.currentTarget.classList.contains("reroll");
-    } else {
-      message = game.messages.get(target.closest(".message").dataset.messageId);
-      reroll = target.classList.contains("reroll");
-    }
-
-    DiscworldRoll.createNarrativiumRoll({ message, reroll });
+    const messageData = DiscworldChatLog.getClickedMessageData(event, target);
+    DiscworldRoll.createNarrativiumRoll(messageData);
   }
 
-  static getClickedMessage(event) {
-    const { currentTarget } = event;
+  /**
+   * Retrieve message data from a clicked chat message element,
+   * accounting for the current generation of Foundry.
+   *
+   * @param {Event} event - The originating click event.
+   * @param {HTMLElement} target - The target element of the event.
+   * @returns {Object} An object containing the chat message and reroll status.
+   * @returns {ChatMessage} return.message - The clicked chat message.
+   * @returns {boolean} return.reroll - Whether the message was marked as a reroll.
+   */
+  static getClickedMessageData(event, target) {
+    // TODO: Remove once v12 support is dropped.
+    const elem = game.release.generation < 13 ? event.currentTarget : target;
+
     const message = game.messages.get(
-      currentTarget.closest(".message").dataset.messageId,
+      elem.closest(".message").dataset.messageId,
     );
-    return message;
+    const reroll = elem.classList.contains("reroll");
+    return { message, reroll };
   }
 }
