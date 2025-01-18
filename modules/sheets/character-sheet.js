@@ -60,7 +60,10 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   async resolveHelpMode() {
     this.isHelpMode = true;
-    await this.render(true);
+
+    // TODO: Remove this once v12 support is dropped.
+    if (game.release.generation < 13) await this.render(true);
+    else await this.render({ force: true });
 
     return new Promise((resolve) => {
       this.helpPromise.resolve = (trait) => resolve(trait);
@@ -76,25 +79,19 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   static #traitAction(event, target) {
-    const { actionType, itemId } = target.dataset;
+    const { actionType, itemId, traitType } = target.dataset;
     const trait = this.actor.items.get(itemId);
 
     switch (actionType) {
       case "add":
-        {
-          const { traitType } = target.dataset;
-          CharacterSheet.#addTrait.call(this, traitType);
-        }
+        CharacterSheet.#addTrait.call(this, traitType);
         break;
-
       case "edit":
         CharacterSheet.#editTrait.call(this, trait);
         break;
-
       case "delete":
         CharacterSheet.#deleteTrait.call(this, trait);
         break;
-
       default:
         CharacterSheet.#rollTrait.call(this, trait);
         break;
@@ -102,18 +99,19 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   static async #addTrait(traitType) {
-    const localizedTrait = game.i18n.localize(
-      `DISCWORLD.trait.type.${traitType}`,
-    );
-    const name = `New ${localizedTrait}`;
-    const [newTrait] = await this.actor.createEmbeddedDocuments("Item", [
+    // eslint-disable-next-line no-undef
+    const newTrait = await getDocumentClass("Item").create(
       {
         type: "trait",
-        name,
+        name: game.i18n.format("DOCUMENT.New", {
+          type: game.i18n.localize(`DISCWORLD.trait.type.${traitType}`),
+        }),
         system: { type: traitType },
       },
-    ]);
+      { parent: this.document, renderSheet: true },
+    );
 
+    // TODO: This remaining code can be removed (see comment regarding autofocus).
     const { sheet } = newTrait;
     await sheet.render(true);
 
@@ -125,6 +123,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static async #editTrait(trait) {
     const { sheet } = trait;
     await sheet.render(true);
+    // TODO: This remaining code can be removed (see comment regarding autofocus).
     const nameField = sheet.element.querySelector("input[name='name']");
     nameField.focus();
     nameField.select();
@@ -134,9 +133,15 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     const content = game.i18n.format("DISCWORLD.sheet.character.deletePrompt", {
       traitName: trait.name,
     });
-    const promptResult = await Dialog.confirm({ content });
-    if (!promptResult) return;
-    trait.delete();
+
+    // TODO: remove this when v12 support is dropped.
+    if (game.release.generation < 13) {
+      const promptResult = await Dialog.confirm({ content });
+      if (!promptResult) return;
+      trait.delete();
+    } else {
+      trait.deleteDialog({ content: `<p>${content}</p>` });
+    }
   }
 
   static async #rollTrait(trait) {
