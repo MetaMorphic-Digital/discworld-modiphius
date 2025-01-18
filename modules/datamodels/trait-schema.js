@@ -1,22 +1,26 @@
 import DISCWORLD from "../config.js";
 
+const { HTMLField, StringField } = foundry.data.fields;
+
 export default class TraitDataModel extends foundry.abstract.TypeDataModel {
   static defineSchema() {
-    const { fields } = foundry.data;
-
     return {
-      type: new fields.StringField({
+      type: new StringField({
         required: true,
-        choices: Object.keys(DISCWORLD.traitTypes),
+        choices: DISCWORLD.traitTypes,
         initial: "uncategorized",
       }),
-      severity: new fields.StringField({
+      severity: new StringField({
         required: true,
-        nullable: false,
         initial: "minor",
-        choices: Object.keys(DISCWORLD.consequenceSeverity),
+        choices: DISCWORLD.consequenceSeverity,
       }),
-      notes: new fields.StringField({ required: false, initial: "" }),
+      notes: new HTMLField({ required: true }),
     };
   }
+
+  /* -------------------------------------------------- */
+
+  /** @override */
+  static LOCALIZATION_PREFIXES = ["DISCWORLD.trait"];
 }

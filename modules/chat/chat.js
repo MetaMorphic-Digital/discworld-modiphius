@@ -3,9 +3,21 @@ import rollTraitDialog from "../dialog/roll-trait-dialog.js";
 import DiscworldRoll from "../rolls/rolls.js";
 import transitionClass from "../utils/animations.js";
 
-export default class DiscworldChatLog extends ChatLog {
+export default class DiscworldChatLog extends (foundry.applications?.sidebar
+  ?.tabs?.ChatLog ?? ChatLog) {
+  /** @override */
+  static DEFAULT_OPTIONS = {
+    actions: {
+      narrativium: DiscworldChatLog.#onRollNarrativium,
+      help: DiscworldChatLog.#onHelp,
+    },
+  };
+
+  /* -------------------------------------------------- */
+
   /** @override */
   activateListeners(html) {
+    // TODO: Remove once v12 support is dropped.
     super.activateListeners(html);
 
     html.on("click", "button.narrativium", (event) => {
@@ -17,26 +29,25 @@ export default class DiscworldChatLog extends ChatLog {
     });
   }
 
-  static async #onHelp(event) {
+  /* -------------------------------------------------- */
+
+  static async #onHelp(event, target) {
     const controlledTokens = canvas.tokens.controlled;
     if (controlledTokens.length > 1) {
-      ui.notifications.warn(
-        game.i18n.localize("DISCWORLD.chat.warning.singleTokenSelect"),
-      );
+      ui.notifications.warn("DISCWORLD.chat.warning.singleTokenSelect", {
+        localize: true,
+      });
       return;
     }
 
     // Get the Actor from either the selected Token, or the User's character.
     const [token] = controlledTokens;
-    let { actor } = token || {};
-    if (!actor) {
-      actor = game.user.character;
-    }
+    const actor = token?.actor ?? game.user.character;
 
     if (!actor) {
-      ui.notifications.warn(
-        game.i18n.localize("DISCWORLD.chat.warning.actorNotFound"),
-      );
+      ui.notifications.warn("DISCWORLD.chat.warning.actorNotFound", {
+        localize: true,
+      });
       return;
     }
 
@@ -47,8 +58,17 @@ export default class DiscworldChatLog extends ChatLog {
     const dialogResult = await rollTraitDialog(actor, trait);
     if (!dialogResult) return;
 
-    const message = DiscworldChatLog.getClickedMessage(event);
-    const element = event.currentTarget.closest(".message");
+    // TODO: Simplify when v12 support is dropped.
+    const message =
+      game.release.generation < 13
+        ? game.messages.get(
+            event.currentTarget.closest(".message").dataset.messageId,
+          )
+        : target.closest(".message");
+    const element =
+      game.release.generation < 13
+        ? event.currentTarget.closest(".message")
+        : target.closest(".message");
     DiscworldRoll.createHelpRoll({
       diceTerm: dialogResult,
       trait,
@@ -57,11 +77,22 @@ export default class DiscworldChatLog extends ChatLog {
     });
   }
 
-  static #onRollNarrativium(event) {
+  static #onRollNarrativium(event, target) {
     if (!game.user.isGM) return;
-    const message = DiscworldChatLog.getClickedMessage(event);
-    const element = event.currentTarget.closest(".message");
-    const reroll = event.currentTarget.classList.contains("reroll");
+
+    let message;
+    let element;
+    let reroll;
+
+    if (game.release.generation < 13) {
+      message = DiscworldChatLog.getClickedMessage(event);
+      element = event.currentTarget.closest(".message");
+      reroll = event.currentTarget.classList.contains("reroll");
+    } else {
+      message = game.messages.get(target.closest(".message").dataset.messageId);
+      element = target.closest(".message");
+      reroll = target.classList.contains("reroll");
+    }
 
     DiscworldRoll.createNarrativiumRoll({ message, element, reroll });
   }
@@ -76,6 +107,7 @@ export default class DiscworldChatLog extends ChatLog {
 }
 
 export class ChatAnimations {
+  // TODO: Consider moving these methods into the ChatMessage document class.
   static async slideDiceIcon(element, rollClass) {
     const dieListItem = element.querySelector(`li.${rollClass}`);
     return transitionClass(dieListItem, ["shift-center"], {

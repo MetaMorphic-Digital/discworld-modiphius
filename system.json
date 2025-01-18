@@ -6,8 +6,8 @@
   "license": "",
   "compatibility": {
     "minimum": "12",
-    "verified": "12",
-    "maximum": "12"
+    "verified": "13",
+    "maximum": "13"
   },
   "authors": [
     {
@@ -28,6 +28,18 @@
     "hotReload": {
       "extensions": ["css", "hbs", "json"],
       "paths": ["styles", "templates", "lang"]
+    }
+  },
+  "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": ["description"]
+      }
+    },
+    "Item": {
+      "trait": {
+        "htmlFields": ["notes"]
+      }
     }
   },
   "url": "",

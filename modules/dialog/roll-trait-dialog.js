@@ -1,3 +1,4 @@
+// TODO: Make this a class that extends `ApplicationV2` or `DialogV2`.
 export default async function rollTraitDialog(actor, trait) {
   const { DialogV2 } = foundry.applications.api;
   const content = await renderTemplate(
@@ -16,6 +17,6 @@ export default async function rollTraitDialog(actor, trait) {
     window: { title: "DISCWORLD.dialog.rollTrait.title" },
     content,
     buttons,
-    rejectClose: false,
+    rejectClose: false, // TODO: Redundant with v13.
   });
 }

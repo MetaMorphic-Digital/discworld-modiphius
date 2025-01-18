@@ -4,6 +4,7 @@ export default class DiscworldRoll extends Roll {
   constructor(formula, data, options = {}) {
     super(formula, data, options);
 
+    // TODO: Simplify this using getters and perhaps `mergeObject` with an object of defaults.
     const {
       actor,
       trait,
@@ -25,18 +26,24 @@ export default class DiscworldRoll extends Roll {
     this.helpTrait = helpTrait || null;
   }
 
-  static async createBaseRoll(formula, rollData) {
-    const roll = new DiscworldRoll(formula, {}, rollData);
-
-    await roll.evaluate();
+  static async createBaseRoll(formula, options) {
+    const rollData = options.actor?.getRollData() ?? {};
+    const roll = new DiscworldRoll(formula, rollData, options);
 
     const flavor = game.i18n.localize("DISCWORLD.roll.traitRoll");
     return roll.toMessage({
-      speaker: ChatMessage.getSpeaker(),
+      // eslint-disable-next-line no-undef
+      speaker: getDocumentClass("ChatMessage").getSpeaker(),
       flavor,
     });
   }
 
+  /* -------------------------------------------------- */
+
+  /**
+   * @param {object} [options]
+   * @returns {Promise<ChatMessage>}      A promise that resolves to the updated chat message.
+   */
   static async createNarrativiumRoll({
     message,
     element,
@@ -71,7 +78,7 @@ export default class DiscworldRoll extends Roll {
       await ChatAnimations.fadeDiceIcon(element, "gmRerollResult", roll.result); // Fade result
     }
 
-    message.update({ content, rolls: [parentRoll] });
+    return message.update({ content, rolls: [parentRoll] });
   }
 
   static async createHelpRoll({ diceTerm, trait, message, element } = {}) {
@@ -129,15 +136,18 @@ export default class DiscworldRoll extends Roll {
   }
 
   async toMessage(messageData = {}, { rollMode, create = true } = {}) {
+    if (!this._evaluated) await this.evaluate();
+
     const chatData = this.prepareChatMessageData();
     const content = await renderTemplate(this.template, chatData);
 
     // Assign content if not already defined in the messageData.
-    if (content && !messageData.content) messageData.content = content;
+    if (content && !messageData.content) {
+      // Avoid mutating parameter.
+      // eslint-disable-next-line no-param-reassign
+      messageData = { ...messageData, content };
+    }
 
-    return super.toMessage(messageData, {
-      rollMode,
-      create,
-    });
+    return super.toMessage(messageData, { rollMode, create });
   }
 }

@@ -8,43 +8,13 @@
       title="{{document.name}}"
       width="75"
     />
-    <div class="flexrow">
-      <label>Name: </label>
-      <input name="name" type="text" class="" value="{{document.name}}" />
-    </div>
+    {{formGroup fields.name.field value=fields.name.value label=fields.name.label}}
   </section>
   <section class="sheet-body">
-    <div class="flexrow">
-      <label>Type:</label>
-      <select name="system.type">
-        {{selectOptions
-          (getConfigObject "traitTypes")
-          selected=document.system.type
-          localize=true
-        }}
-      </select>
-    </div>
-    {{#compare document.system.type "consequences"}}
-      <div class="flexrow">
-        <label>Severity:</label>
-        <select name="system.severity">
-          {{selectOptions
-            (getConfigObject "consequenceSeverity")
-            selected=document.system.severity
-            localize=true
-          }}
-        </select>
-      </div>
-    {{/compare}}
-
-    <div class="flexrow">
-      <label>Notes:</label>
-      <input
-        name="system.notes"
-        type="text"
-        class=""
-        value="{{document.system.notes}}"
-      />
-    </div>
+    {{formGroup fields.type.field value=fields.type.value}}
+    {{#if fields.severity.show}}
+    {{formGroup fields.severity.field value=fields.severity.value}}
+    {{/if}}
+    {{formGroup fields.notes.field value=fields.notes.value enriched=fields.notes.enriched height=300 toggled=true}}
   </section>
 </div>
