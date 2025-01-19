@@ -61,4 +61,28 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
 
     return context;
   }
+
+  /**
+   * A user is most likely going to be editing the name field
+   * when opening the trait sheet from a character sheet.
+   * So, we override this method to add a new option to autofocus
+   * that field.
+   *
+   * @override
+   * @param {Object} options
+   * @param {boolean} options.autofocus - Whether to autofocus the name field
+   * @returns {Promise<ApplicationV2>} - See Foundry API docs.
+   */
+  async render(options) {
+    const renderedApp = await super.render(options);
+    const { autofocus } = options;
+
+    if (autofocus) {
+      const nameField = this.element.querySelector("input[name='name']");
+      nameField.focus();
+      nameField.select();
+    }
+
+    return renderedApp;
+  }
 }

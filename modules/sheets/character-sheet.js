@@ -132,22 +132,11 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       { parent: this.document, renderSheet: true },
     );
 
-    // TODO: This remaining code can be removed (see comment regarding autofocus).
-    const { sheet } = newTrait;
-    await sheet.render(true);
-
-    const nameField = sheet.element.querySelector("input[name='name']");
-    nameField.focus();
-    nameField.select();
+    await newTrait.sheet.render({ force: true, autofocus: true });
   }
 
   static async #editTrait(trait) {
-    const { sheet } = trait;
-    await sheet.render(true);
-    // TODO: This remaining code can be removed (see comment regarding autofocus).
-    const nameField = sheet.element.querySelector("input[name='name']");
-    nameField.focus();
-    nameField.select();
+    await trait.sheet.render({ force: true, autofocus: true });
   }
 
   static async #deleteTrait(trait) {
