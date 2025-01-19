@@ -1,5 +1,4 @@
 import CharacterSheet from "./sheets/character-sheet.js";
-import Character from "./documents/character.js";
 import CharacterDataModel from "./datamodels/character-schema.js";
 import DiscworldChatLog from "./chat/chat.js";
 import TraitDataModel from "./datamodels/trait-schema.js";
@@ -12,7 +11,6 @@ import DiscworldMessage from "./chat/chat-message.js";
 
 Hooks.once("init", () => {
   // Register Actor classes.
-  CONFIG.Actor.documentClass = Character;
   CONFIG.Actor.dataModels.character = CharacterDataModel;
   Actors.registerSheet("discworld", CharacterSheet, {
     makeDefault: true,

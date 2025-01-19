@@ -1,6 +1,7 @@
 import DiscworldRoll from "../rolls/rolls.js";
 import DiscworldSheetMixin from "./base-document-sheet.js";
 import rollTraitDialog from "../dialog/roll-trait-dialog.js";
+import DISCWORLD from "../config.js";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
 
@@ -32,14 +33,27 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   helpPromise = {};
 
+  /** @override */
   async _prepareContext() {
     const context = await super._prepareContext();
 
     context.helpMode = this.isHelpMode;
 
+    // Construct arrays of traits, filtered by category.
+    context.traitGroups = {};
+    for (const traitType of Object.keys(DISCWORLD.traitTypes)) {
+      context.traitGroups[traitType] = this.actor.items.filter(
+        (item) => item.system.type === traitType,
+      );
+    }
+
+    // Translation of trait types.
+    context.traitTypeTranslationMap = DISCWORLD.traitTypes;
+
     return context;
   }
 
+  /** @override */
   _onRender() {
     super._onRender();
 
@@ -50,6 +64,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     }
   }
 
+  /** @override */
   async close() {
     super.close();
 

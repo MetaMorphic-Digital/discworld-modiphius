@@ -1,5 +1,5 @@
 <section class="sheet-body">
-  {{#each (getConfigObject "traitTypes") as |traitI18nString traitType| }}
+  {{#each traitGroups as |traits traitType| }}
     <div class="trait-type flexrow">
       <div class="trait-category">
         {{#if ../isEditMode }}
@@ -9,10 +9,10 @@
             <i class="fas fa-circle-plus"></i>
           </a>
         {{/if}}
-        <label>{{localize traitI18nString}}:</label>
+        <label>{{lookup ../traitTypeTranslationMap traitType}}:</label>
       </div>
       <div class="trait-list">
-        {{#each (getTraits ../document traitType) as |trait| }}
+        {{#each traits as |trait| }}
           <a data-action="traitAction"
              data-item-id="{{trait.id}}"
              data-item-uuid="{{trait.uuid}}">{{trait.name~}}</a>
