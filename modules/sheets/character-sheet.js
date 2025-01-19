@@ -1,6 +1,5 @@
 import DiscworldRoll from "../rolls/rolls.js";
 import DiscworldSheetMixin from "./base-document-sheet.js";
-import rollTraitDialog from "../dialog/roll-trait-dialog.js";
 import DISCWORLD from "../config.js";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -167,9 +166,31 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       return;
     }
 
-    const dialogResult = await rollTraitDialog(this.actor, trait);
+    const dialogResult = await this.rollTraitDialog(trait);
     if (!dialogResult) return;
 
     DiscworldRoll.createBaseRoll(dialogResult, { actor: this.actor, trait });
+  }
+
+  async rollTraitDialog(trait) {
+    const { DialogV2 } = foundry.applications.api;
+    const content = await renderTemplate(
+      "systems/discworld/templates/roll-trait-prompt.hbs",
+      { trait, actor: this.actor },
+    );
+
+    const playerDice = ["d4", "d6", "d10", "d12"];
+    const buttons = playerDice.map((die) => {
+      return { class: [die], label: die, action: die };
+    });
+
+    return DialogV2.wait({
+      classes: ["discworld"],
+      position: { width: 400, height: "auto" },
+      window: { title: "DISCWORLD.dialog.rollTrait.title" },
+      content,
+      buttons,
+      rejectClose: false, // TODO: Redundant with v13.
+    });
   }
 }

@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */
-import rollTraitDialog from "../dialog/roll-trait-dialog.js";
 import DiscworldRoll from "../rolls/rolls.js";
 
 /**
@@ -82,10 +80,11 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
     }
 
     // Wait for a Trait to be clicked.
-    const trait = await actor.sheet.resolveHelpMode();
+    const { sheet } = actor;
+    const trait = await sheet.resolveHelpMode();
     if (!trait) return;
 
-    const dialogResult = await rollTraitDialog(actor, trait);
+    const dialogResult = await sheet.rollTraitDialog(trait);
     if (!dialogResult) return;
 
     const { message } = DiscworldChatLog.getClickedMessageData(event, target);
