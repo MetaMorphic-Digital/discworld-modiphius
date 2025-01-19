@@ -181,7 +181,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
     const playerDice = ["d4", "d6", "d10", "d12"];
     const buttons = playerDice.map((die) => {
-      return { class: [die], label: die, action: die };
+      return { class: [die], label: die, action: die, default: die === "d6" };
     });
 
     return DialogV2.wait({
