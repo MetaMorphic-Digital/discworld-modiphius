@@ -3,8 +3,7 @@ import rollTraitDialog from "../dialog/roll-trait-dialog.js";
 import DiscworldRoll from "../rolls/rolls.js";
 
 /**
- * The Discworld Chat Log.
- * We extend this class to add custom button listeners.
+ * The Discworld Chat Log. We extend this class to add custom button listeners.
  */
 export default class DiscworldChatLog extends (foundry.applications?.sidebar
   ?.tabs?.ChatLog ?? ChatLog) {
@@ -18,17 +17,35 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
 
   /* -------------------------------------------------- */
 
-  /** @override */
+  /**
+   * Add custom button listeners to the chat log.
+   *
+   * @override
+   * @param {jQuery} html - The jQuery object that represents the chat log.
+   * @returns {void}
+   */
   activateListeners(html) {
     // TODO: Remove once v12 support is dropped.
     super.activateListeners(html);
 
-    html.on("click", "button.narrativium", (event) => {
-      DiscworldChatLog.#onRollNarrativium.call(this, event);
-    });
+    const [chatLog] = html;
+    chatLog.addEventListener("click", (event) => {
+      // Delegate event handling based on the closest button clicked
+      switch (true) {
+        // Handle clicks on "narrativium" button
+        case !!event.target.closest("button.narrativium"):
+          DiscworldChatLog.#onRollNarrativium.call(this, event);
+          break;
 
-    html.on("click", "button.help", (event) => {
-      DiscworldChatLog.#onHelp.call(this, event);
+        // Handle clicks on "help" button
+        case !!event.target.closest("button.help"):
+          DiscworldChatLog.#onHelp.call(this, event);
+          break;
+
+        // Otherwise, do nada.
+        default:
+          break;
+      }
     });
   }
 
@@ -106,12 +123,12 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
    */
   static getClickedMessageData(event, target) {
     // TODO: Remove once v12 support is dropped.
-    const elem = game.release.generation < 13 ? event.currentTarget : target;
+    const targetElem = game.release.generation < 13 ? event.target : target;
+    const messageElem = targetElem.closest(".message");
+    const buttonElem = targetElem.closest("button");
 
-    const message = game.messages.get(
-      elem.closest(".message").dataset.messageId,
-    );
-    const reroll = elem.classList.contains("reroll");
+    const message = game.messages.get(messageElem.dataset.messageId);
+    const reroll = buttonElem.classList.contains("reroll");
     return { message, reroll };
   }
 }
