@@ -83,16 +83,22 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   /**
    * Enable help mode and render the character sheet, which awaits a trait roll.
    *
+   * @param {boolean} currentlyRendered - Whether the character sheet is currently
+   *                                      rendered.
    * @returns {Promise<Item|null>} A promise that resolves to the selected trait,
    *                               or null if help mode is cancelled.
    */
-  async resolveHelpMode() {
+  async resolveHelpMode(currentlyRendered) {
     this.isHelpMode = true;
 
     await this.render({ force: true });
 
     return new Promise((resolve) => {
-      this.helpPromise.resolve = (trait) => resolve(trait);
+      this.helpPromise.resolve = (trait) => {
+        resolve(trait);
+        // Close the sheet if it wasn't already opened.
+        if (!currentlyRendered) this.close();
+      };
       this.helpPromise.reject = () => resolve(null);
     });
   }
@@ -212,7 +218,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     // A help roll will handle its own dialog/roll.
     if (this.isHelpMode) {
       this.helpPromise.resolve(trait);
-      this.close();
       return;
     }
 
