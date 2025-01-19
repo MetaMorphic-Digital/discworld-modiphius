@@ -8,6 +8,7 @@ import preloadTemplates, { registerHelpers } from "./utils/handlebars.js";
 import registerKeybindings from "./utils/keybindings.js";
 import DiscworldRoll from "./rolls/rolls.js";
 import DISCWORLD from "./config.js";
+import DiscworldMessage from "./chat/chat-message.js";
 
 Hooks.once("init", () => {
   // Register Actor classes.
@@ -23,8 +24,9 @@ Hooks.once("init", () => {
     makeDefault: true,
   });
 
-  // Register Chat Log
+  // Register Chat classes.
   CONFIG.ui.chat = DiscworldChatLog;
+  CONFIG.ChatMessage.documentClass = DiscworldMessage;
 
   // Register Dice
   CONFIG.Dice.rolls.push(DiscworldRoll);

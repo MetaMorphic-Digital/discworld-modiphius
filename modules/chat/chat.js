@@ -1,8 +1,10 @@
 /* eslint-disable max-classes-per-file */
 import rollTraitDialog from "../dialog/roll-trait-dialog.js";
 import DiscworldRoll from "../rolls/rolls.js";
-import transitionClass from "../utils/animations.js";
 
+/**
+ * The Discworld Chat Log. We extend this class to add custom button listeners.
+ */
 export default class DiscworldChatLog extends (foundry.applications?.sidebar
   ?.tabs?.ChatLog ?? ChatLog) {
   /** @override */
@@ -15,22 +17,50 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
 
   /* -------------------------------------------------- */
 
-  /** @override */
+  /**
+   * Add custom button listeners to the chat log.
+   *
+   * @override
+   * @param {jQuery} html - The jQuery object that represents the chat log.
+   * @returns {void}
+   */
   activateListeners(html) {
     // TODO: Remove once v12 support is dropped.
     super.activateListeners(html);
 
-    html.on("click", "button.narrativium", (event) => {
-      DiscworldChatLog.#onRollNarrativium.call(this, event);
-    });
+    const [chatLog] = html;
+    chatLog.addEventListener("click", (event) => {
+      // Delegate event handling based on the closest button clicked
+      switch (true) {
+        // Handle clicks on "narrativium" button
+        case !!event.target.closest("button.narrativium"):
+          DiscworldChatLog.#onRollNarrativium.call(this, event);
+          break;
 
-    html.on("click", "button.help", (event) => {
-      DiscworldChatLog.#onHelp.call(this, event);
+        // Handle clicks on "help" button
+        case !!event.target.closest("button.help"):
+          DiscworldChatLog.#onHelp.call(this, event);
+          break;
+
+        // Otherwise, do nada.
+        default:
+          break;
+      }
     });
   }
 
   /* -------------------------------------------------- */
 
+  /**
+   * Respond to a user clicking the "Help" button by:
+   *   1. Opening the user's character sheet in "help mode".
+   *   2. Waiting for a Trait to be clicked.
+   *   3. Creating the Trait help roll.
+   *
+   * @param {Event} event - The originating click event.
+   * @param {HTMLElement} target - The target element of the event.
+   * @returns {void}
+   */
   static async #onHelp(event, target) {
     const controlledTokens = canvas.tokens.controlled;
     if (controlledTokens.length > 1) {
@@ -58,79 +88,47 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
     const dialogResult = await rollTraitDialog(actor, trait);
     if (!dialogResult) return;
 
-    // TODO: Simplify when v12 support is dropped.
-    const message =
-      game.release.generation < 13
-        ? game.messages.get(
-            event.currentTarget.closest(".message").dataset.messageId,
-          )
-        : target.closest(".message");
-    const element =
-      game.release.generation < 13
-        ? event.currentTarget.closest(".message")
-        : target.closest(".message");
+    const { message } = DiscworldChatLog.getClickedMessageData(event, target);
     DiscworldRoll.createHelpRoll({
       diceTerm: dialogResult,
       trait,
       message,
-      element,
     });
   }
 
+  /**
+   * Respond to the GM clicking the "Narrativium" button
+   * by creating a Narrativium (d8) Roll.
+   *
+   * @param {Event} event - The originating click event.
+   * @param {HTMLElement} target - The target element of the event.
+   * @returns {void}
+   */
   static #onRollNarrativium(event, target) {
     if (!game.user.isGM) return;
 
-    let message;
-    let element;
-    let reroll;
-
-    if (game.release.generation < 13) {
-      message = DiscworldChatLog.getClickedMessage(event);
-      element = event.currentTarget.closest(".message");
-      reroll = event.currentTarget.classList.contains("reroll");
-    } else {
-      message = game.messages.get(target.closest(".message").dataset.messageId);
-      element = target.closest(".message");
-      reroll = target.classList.contains("reroll");
-    }
-
-    DiscworldRoll.createNarrativiumRoll({ message, element, reroll });
+    const messageData = DiscworldChatLog.getClickedMessageData(event, target);
+    DiscworldRoll.createNarrativiumRoll(messageData);
   }
 
-  static getClickedMessage(event) {
-    const { currentTarget } = event;
-    const message = game.messages.get(
-      currentTarget.closest(".message").dataset.messageId,
-    );
-    return message;
-  }
-}
+  /**
+   * Retrieve message data from a clicked chat message element,
+   * accounting for the current generation of Foundry.
+   *
+   * @param {Event} event - The originating click event.
+   * @param {HTMLElement} target - The target element of the event.
+   * @returns {Object} An object containing the chat message and reroll status.
+   * @returns {ChatMessage} return.message - The clicked chat message.
+   * @returns {boolean} return.reroll - Whether the message was marked as a reroll.
+   */
+  static getClickedMessageData(event, target) {
+    // TODO: Remove once v12 support is dropped.
+    const targetElem = game.release.generation < 13 ? event.target : target;
+    const messageElem = targetElem.closest(".message");
+    const buttonElem = targetElem.closest("button");
 
-export class ChatAnimations {
-  // TODO: Consider moving these methods into the ChatMessage document class.
-  static async slideDiceIcon(element, rollClass) {
-    const dieListItem = element.querySelector(`li.${rollClass}`);
-    return transitionClass(dieListItem, ["shift-center"], {
-      remove: true,
-    });
-  }
-
-  static async fadeDiceIcon(element, rollClass, rollResult, rollTerm = null) {
-    const dieListItem = element.querySelector(`li.${rollClass}`);
-    dieListItem.classList.add(rollTerm);
-    const rerollResultText = dieListItem.querySelector("span");
-    rerollResultText.textContent = rollResult;
-    return transitionClass(dieListItem, ["not-visible"], {
-      remove: true,
-    });
-  }
-
-  static async fadeTextInOut(element, rollClass, rollResult) {
-    const resultSpan = element.querySelector(`li.${rollClass} span`);
-    await transitionClass(resultSpan, ["not-visible"]);
-    resultSpan.textContent = rollResult;
-    return transitionClass(resultSpan, ["not-visible"], {
-      remove: true,
-    });
+    const message = game.messages.get(messageElem.dataset.messageId);
+    const reroll = buttonElem.classList.contains("reroll");
+    return { message, reroll };
   }
 }
