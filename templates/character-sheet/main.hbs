@@ -1,31 +1,39 @@
 <section class="sheet-body">
-  {{#each (getConfigObject "traitTypes") as |traitI18nString traitType|}}
+  {{#each (getConfigObject "traitTypes") as |traitI18nString traitType| }}
     <div class="trait-type flexrow">
       <div class="trait-category">
-        {{#if ../isEditMode}}
-          <a data-action="traitAction" data-action-type="add" data-trait-type="{{traitType}}">
+        {{#if ../isEditMode }}
+          <a data-action="traitAction"
+             data-action-type="add"
+             data-trait-type="{{traitType}}">
             <i class="fas fa-circle-plus"></i>
           </a>
         {{/if}}
         <label>{{localize traitI18nString}}:</label>
       </div>
       <div class="trait-list">
-        {{#each (getTraits ../document traitType) as |trait|}}
-            <a data-action="traitAction" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
-              {{trait.name~}}
-            </a>
+        {{#each (getTraits ../document traitType) as |trait| }}
+          <a data-action="traitAction"
+             data-item-id="{{trait.id}}"
+             data-item-uuid="{{trait.uuid}}">{{trait.name~}}</a>
           {{~#if ../../isEditMode}}
-            <a data-action="traitAction" data-action-type="edit" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
-              <i class="fas fa-edit"></i>
-            </a>
-            <a data-action="traitAction" data-action-type="delete" data-item-id="{{trait.id}}" data-item-uuid="{{trait.uuid}}">
-              <i class="fas fa-trash"></i>
-            </a>
-          {{/if}}
-          {{~#unless @last}}, {{/unless}}
-        {{/each}}
-      </div>
+          <a data-action="traitAction"
+             data-action-type="edit"
+             data-item-id="{{trait.id}}"
+             data-item-uuid="{{trait.uuid}}">
+            <i class="fas fa-edit"></i>
+          </a>
+          <a data-action="traitAction"
+             data-action-type="delete"
+             data-item-id="{{trait.id}}"
+             data-item-uuid="{{trait.uuid}}">
+            <i class="fas fa-trash"></i>
+          </a>
+        {{/if}}
+        {{~#unless @last}}, {{/unless}}
+      {{/each}}
     </div>
-    <hr>
-  {{/each}}
+  </div>
+  <hr>
+{{/each}}
 </section>
