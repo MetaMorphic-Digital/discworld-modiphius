@@ -26,7 +26,7 @@ const DiscworldSheetMixin = (Base) => {
     /**
      * Determines if the sheet is currently in edit mode.
      *
-     * @returns {boolean} True if the sheet is in edit mode, false otherwise.
+     * @type {boolean} True if the sheet is in edit mode, false otherwise.
      */
     get isEditMode() {
       return this._sheetMode === this.constructor.SHEET_MODES.EDIT;
