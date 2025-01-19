@@ -61,6 +61,13 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     } else {
       this.element.classList.remove("help-mode");
     }
+
+    // Select luck input fields on focus.
+    this.element
+      .querySelectorAll(".luck-container input")
+      .forEach((input) =>
+        input.addEventListener("focus", (event) => event.target.select()),
+      );
   }
 
   /** @override */
