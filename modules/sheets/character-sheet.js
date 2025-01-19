@@ -4,6 +4,9 @@ import DISCWORLD from "../config.js";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
 
+/**
+ * @extends ActorSheetV2
+ */
 export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
     position: {
@@ -79,6 +82,12 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     this.helpPromise = {}; // reset
   }
 
+  /**
+   * Enable help mode and render the character sheet, which awaits a trait roll.
+   *
+   * @returns {Promise<Item|null>} A promise that resolves to the selected trait,
+   *                               or null if help mode is cancelled.
+   */
   async resolveHelpMode() {
     this.isHelpMode = true;
 
@@ -86,10 +95,13 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
     return new Promise((resolve) => {
       this.helpPromise.resolve = (trait) => resolve(trait);
-      this.helpPromise.reject = () => resolve(false);
+      this.helpPromise.reject = () => resolve(null);
     });
   }
 
+  /**
+   * Leave help mode and re-render the character sheet.
+   */
   static #leaveHelpMode() {
     this.helpPromise.reject?.();
     this.isHelpMode = false;
@@ -97,6 +109,13 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     this.render();
   }
 
+  /**
+   * Handle clicks on trait actions (add, edit, delete, roll).
+   *
+   * @param {Event} event - The originating click event.
+   * @param {HTMLElement} target - The target element of the event.
+   * @returns {void}
+   */
   static #traitAction(event, target) {
     const { actionType, itemId, traitType } = target.dataset;
     const trait = this.actor.items.get(itemId);
@@ -117,6 +136,13 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     }
   }
 
+  /**
+   * Add a new trait of the given type to the character.
+   *
+   * @param {string} traitType - The type of trait to add. Must be one of the
+   *                             {@link DISCWORLD.traitTypes} constants.
+   * @returns {Promise<void>}
+   */
   static async #addTrait(traitType) {
     // eslint-disable-next-line no-undef
     const newTrait = await getDocumentClass("Item").create(
@@ -130,13 +156,25 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       { parent: this.document, renderSheet: true },
     );
 
-    await newTrait.sheet.render({ force: true, autofocus: true });
+    newTrait.sheet.render({ force: true, autofocus: true });
   }
 
+  /**
+   * Opens the Trait sheet for editing with autofocus enabled on the name field.
+   *
+   * @param {Item} trait - The trait item to be edited.
+   * @returns {Promise<void>}
+   */
   static async #editTrait(trait) {
-    await trait.sheet.render({ force: true, autofocus: true });
+    trait.sheet.render({ force: true, autofocus: true });
   }
 
+  /**
+   * Prompts the user for confirmation before deleting a Trait.
+   *
+   * @param {Item} trait - The trait item to be deleted.
+   * @returns {Promise<void>}
+   */
   static async #deleteTrait(trait) {
     const content = game.i18n.format("DISCWORLD.sheet.character.deletePrompt", {
       traitName: trait.name,
@@ -152,6 +190,14 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     }
   }
 
+  /**
+   * Handles the logic for rolling a trait from the character sheet.
+   * If help mode is enabled, the trait is passed to the help promise.
+   * Otherwise, a dialog is shown asking the user to select a die to roll.
+   *
+   * @param {Item} trait - The trait to be rolled.
+   * @returns {Promise<void>}
+   */
   static async #rollTrait(trait) {
     // A help roll will handle its own dialog/roll.
     if (this.isHelpMode) {
@@ -166,6 +212,12 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     DiscworldRoll.createBaseRoll(dialogResult, { actor: this.actor, trait });
   }
 
+  /**
+   * Displays a dialog to prompt the user to select a die to roll.
+   *
+   * @param {Item} trait - The trait to be rolled.
+   * @returns {Promise<string|null>} - A promise that resolves to the selected die, or null if the dialog is cancelled.
+   */
   async rollTraitDialog(trait) {
     const { DialogV2 } = foundry.applications.api;
     const content = await renderTemplate(

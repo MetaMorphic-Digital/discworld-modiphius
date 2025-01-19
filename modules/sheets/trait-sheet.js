@@ -2,6 +2,9 @@ import DiscworldSheetMixin from "./base-document-sheet.js";
 
 const { ItemSheetV2 } = foundry.applications.sheets;
 
+/**
+ * @extends ItemSheetV2
+ */
 export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
   static DEFAULT_OPTIONS = {
     position: {
