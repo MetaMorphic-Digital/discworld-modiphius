@@ -81,7 +81,7 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
 
     // Wait for a Trait to be clicked.
     const { sheet } = actor;
-    const trait = await sheet.resolveHelpMode(sheet.rendered);
+    const trait = await sheet.resolveHelpMode({ close: !sheet.rendered });
     if (!trait) return;
 
     const dialogResult = await sheet.rollTraitDialog(trait);
