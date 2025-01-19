@@ -23,10 +23,16 @@ const DiscworldSheetMixin = (Base) => {
 
     _sheetMode = this.constructor.SHEET_MODES.PLAY;
 
+    /**
+     * Determines if the sheet is currently in edit mode.
+     *
+     * @type {boolean} True if the sheet is in edit mode, false otherwise.
+     */
     get isEditMode() {
       return this._sheetMode === this.constructor.SHEET_MODES.EDIT;
     }
 
+    /** @override */
     async _prepareContext(options) {
       const context = await super._prepareContext(options);
       return {
@@ -36,6 +42,7 @@ const DiscworldSheetMixin = (Base) => {
       };
     }
 
+    /** @override */
     _onRender(context, options) {
       super._onRender(context, options);
       if (!this.isEditable) return;
@@ -115,22 +122,9 @@ const DiscworldSheetMixin = (Base) => {
 
       const changes = {
         items: [],
-        itemUpdates: [],
-        effects: [],
-        effectUpdates: [],
-        actorUpdates: {},
       };
 
       switch (item.documentName) {
-        // case "ActiveEffect":
-        //   await this._onDropActiveEffect(item, target, changes);
-        //   break;
-        // case "Actor":
-        //   await this._onDropActor(item, target, changes);
-        //   break;
-        // case "Folder":
-        //   await this._onDropFolder(item, target, changes);
-        //   break;
         case "Item":
           await this._onDropItem(item, target, changes);
           break;
@@ -138,23 +132,12 @@ const DiscworldSheetMixin = (Base) => {
           return;
       }
 
-      const { items, itemUpdates, effects, effectUpdates, actorUpdates } =
-        changes;
+      const { items } = changes;
 
       Promise.all([
-        foundry.utils.isEmpty(actorUpdates) ? null : actor.update(actorUpdates),
         foundry.utils.isEmpty(items)
           ? null
           : actor.createEmbeddedDocuments("Item", items),
-        foundry.utils.isEmpty(itemUpdates)
-          ? null
-          : actor.updateEmbeddedDocuments("Item", itemUpdates),
-        foundry.utils.isEmpty(effects)
-          ? null
-          : actor.createEmbeddedDocuments("ActiveEffect", effects),
-        foundry.utils.isEmpty(effectUpdates)
-          ? null
-          : actor.updateEmbeddedDocuments("ActiveEffect", effectUpdates),
       ]);
     }
 
@@ -170,28 +153,11 @@ const DiscworldSheetMixin = (Base) => {
         return;
       }
 
-      if (
-        document.system.identifier &&
-        document.system.schema.has("quantity")
-      ) {
-        const existing = this.document.itemTypes[document.type].find((item) => {
-          return item.system.identifier === document.system.identifier;
-        });
-        if (existing) {
-          changes.itemUpdates.push({
-            _id: existing.id,
-            "system.quantity.value":
-              existing.system.quantity.value + document.system.quantity.value,
-          });
-          return;
-        }
-      }
-
       const itemData = game.items.fromCompendium(document);
       changes.items.push(itemData);
     }
 
-    /* COMMON SHEET HANDLERS */
+    /* -------------- COMMON SHEET HANDLERS ------------- */
 
     /**
      * Handle editing the document's image.
