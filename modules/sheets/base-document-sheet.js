@@ -23,10 +23,16 @@ const DiscworldSheetMixin = (Base) => {
 
     _sheetMode = this.constructor.SHEET_MODES.PLAY;
 
+    /**
+     * Determines if the sheet is currently in edit mode.
+     *
+     * @returns {boolean} True if the sheet is in edit mode, false otherwise.
+     */
     get isEditMode() {
       return this._sheetMode === this.constructor.SHEET_MODES.EDIT;
     }
 
+    /** @override */
     async _prepareContext(options) {
       const context = await super._prepareContext(options);
       return {
@@ -36,6 +42,7 @@ const DiscworldSheetMixin = (Base) => {
       };
     }
 
+    /** @override */
     _onRender(context, options) {
       super._onRender(context, options);
       if (!this.isEditable) return;
