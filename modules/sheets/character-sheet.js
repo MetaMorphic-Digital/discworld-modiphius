@@ -82,9 +82,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   async resolveHelpMode() {
     this.isHelpMode = true;
 
-    // TODO: Remove this once v12 support is dropped.
-    if (game.release.generation < 13) await this.render(true);
-    else await this.render({ force: true });
+    await this.render({ force: true });
 
     return new Promise((resolve) => {
       this.helpPromise.resolve = (trait) => resolve(trait);
