@@ -75,11 +75,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /** @override */
   async close() {
-    super.close();
+    await super.close();
 
-    this.helpPromise.reject?.();
-    this.isHelpMode = false; // reset
-    this.helpPromise = {}; // reset
+    this.resetHelpMode();
   }
 
   /**
@@ -103,10 +101,22 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
    * Leave help mode and re-render the character sheet.
    */
   static #leaveHelpMode() {
+    this.resetHelpMode();
+    this.render();
+  }
+
+  /**
+   * Resets the help mode flag and rejects any pending help promises.
+   *
+   * This is called when the character sheet is closed, or when the help mode
+   * flag is explicitly toggled off.
+   *
+   * @returns {void}
+   */
+  resetHelpMode() {
     this.helpPromise.reject?.();
     this.isHelpMode = false;
     this.helpPromise = {};
-    this.render();
   }
 
   /**
