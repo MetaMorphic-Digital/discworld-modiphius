@@ -9,8 +9,22 @@ import DiscworldRoll from "./rolls/rolls.js";
 import DISCWORLD from "./config.js";
 import DiscworldMessage from "./chat/chat-message.js";
 import DiscworldCharacter from "./documents/character.js";
+import transitionClass from "./utils/animations.js";
+
+// Export globals.
+globalThis.discworld = {
+  config: DISCWORLD,
+  utils: {
+    transitionClass,
+    registerHelpers,
+    registerKeybindings,
+  },
+};
 
 Hooks.once("init", () => {
+  // Configuration.
+  CONFIG.Discworld = DISCWORLD;
+
   // Register Actor classes.
   CONFIG.Actor.documentClass = DiscworldCharacter;
   CONFIG.Actor.dataModels.character = CharacterDataModel;
