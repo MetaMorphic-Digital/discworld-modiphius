@@ -16,6 +16,11 @@
       button {
         margin: 0.25rem 0;
         line-height: unset;
+
+        &:disabled {
+          filter: blur(0.5px);
+          cursor: unset;
+        }
       }
 
       ol.result {
