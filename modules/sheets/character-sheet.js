@@ -31,9 +31,15 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
-  isHelpMode = false;
-
-  helpPromise = {};
+  /**
+   * Helper to check if the actor is currently in help mode.
+   *
+   * @type {boolean}
+   * @readonly
+   */
+  get isHelpMode() {
+    return this.actor.helpMode.enabled;
+  }
 
   /** @override */
   async _prepareContext() {
@@ -79,53 +85,15 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   async close() {
     await super.close();
 
-    this.resetHelpMode();
+    if (this.isHelpMode) this.actor.leaveHelpMode();
   }
 
   /**
-   * Enable help mode and render the character sheet, which awaits a trait roll.
-   *
-   * @param {Object} [options]
-   * @param {boolean} [options.close] - Whether the character sheet is currently
-   *                                      rendered.
-   * @returns {Promise<Item|null>} A promise that resolves to the selected trait,
-   *                               or null if help mode is cancelled.
-   */
-  async resolveHelpMode({ close = true } = {}) {
-    this.isHelpMode = true;
-
-    await this.render({ force: true });
-
-    return new Promise((resolve) => {
-      this.helpPromise.resolve = (trait) => {
-        resolve(trait);
-        // Close the sheet if it wasn't already opened.
-        if (close) this.close();
-      };
-      this.helpPromise.reject = () => resolve(null);
-    });
-  }
-
-  /**
-   * Leave help mode and re-render the character sheet.
+   * Leave help mode and re-render the character sheet,
+   * if open.
    */
   static #leaveHelpMode() {
-    this.resetHelpMode();
-    this.render();
-  }
-
-  /**
-   * Resets the help mode flag and rejects any pending help promises.
-   *
-   * This is called when the character sheet is closed, or when the help mode
-   * flag is explicitly toggled off.
-   *
-   * @returns {void}
-   */
-  resetHelpMode() {
-    this.helpPromise.reject?.();
-    this.isHelpMode = false;
-    this.helpPromise = {};
+    this.actor.leaveHelpMode();
   }
 
   /**
@@ -210,51 +178,13 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   /**
-   * Handles the logic for rolling a trait from the character sheet.
-   * If help mode is enabled, the trait is passed to the help promise.
-   * Otherwise, a dialog is shown asking the user to select a die to roll.
+   * Prompts the user to select a die to roll and then rolls the trait.
    *
    * @param {Item} trait - The trait to be rolled.
    * @returns {Promise<void>}
    */
   static async #rollTrait(trait) {
-    // A help roll will handle its own dialog/roll.
-    if (this.isHelpMode) {
-      this.helpPromise.resolve(trait);
-      return;
-    }
-
-    const dialogResult = await this.rollTraitDialog(trait);
-    if (!dialogResult) return;
-
-    DiscworldRoll.createBaseRoll(dialogResult, { actor: this.actor, trait });
-  }
-
-  /**
-   * Displays a dialog to prompt the user to select a die to roll.
-   *
-   * @param {Item} trait - The trait to be rolled.
-   * @returns {Promise<string|null>} - A promise that resolves to the selected die, or null if the dialog is cancelled.
-   */
-  async rollTraitDialog(trait) {
-    const { DialogV2 } = foundry.applications.api;
-    const content = await renderTemplate(
-      "systems/discworld/templates/roll-trait-prompt.hbs",
-      { trait, actor: this.actor },
-    );
-
-    const playerDice = ["d4", "d6", "d10", "d12"];
-    const buttons = playerDice.map((die) => {
-      return { class: [die], label: die, action: die, default: die === "d6" };
-    });
-
-    return DialogV2.wait({
-      classes: ["discworld"],
-      position: { width: 400, height: "auto" },
-      window: { title: "DISCWORLD.dialog.rollTrait.title" },
-      content,
-      buttons,
-      rejectClose: false, // TODO: Redundant with v13.
-    });
+    const { actor } = this;
+    actor.rollTrait(trait);
   }
 }

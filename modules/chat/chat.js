@@ -79,20 +79,10 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
       return;
     }
 
-    // Wait for a Trait to be clicked.
-    const { sheet } = actor;
-    const trait = await sheet.resolveHelpMode({ close: !sheet.rendered });
-    if (!trait) return;
-
-    const dialogResult = await sheet.rollTraitDialog(trait);
-    if (!dialogResult) return;
-
     const { message } = DiscworldChatLog.getClickedMessageData(event, target);
-    DiscworldRoll.createHelpRoll({
-      diceTerm: dialogResult,
-      trait,
-      message,
-    });
+
+    // Wait for a Trait to be rolled.
+    actor.resolveHelpMode(message);
   }
 
   /**

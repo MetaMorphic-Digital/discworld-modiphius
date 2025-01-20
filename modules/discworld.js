@@ -8,9 +8,11 @@ import registerKeybindings from "./utils/keybindings.js";
 import DiscworldRoll from "./rolls/rolls.js";
 import DISCWORLD from "./config.js";
 import DiscworldMessage from "./chat/chat-message.js";
+import DiscworldCharacter from "./documents/character.js";
 
 Hooks.once("init", () => {
   // Register Actor classes.
+  CONFIG.Actor.documentClass = DiscworldCharacter;
   CONFIG.Actor.dataModels.character = CharacterDataModel;
   Actors.registerSheet("discworld", CharacterSheet, {
     makeDefault: true,
