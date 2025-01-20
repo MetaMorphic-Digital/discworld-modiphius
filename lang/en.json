@@ -5,6 +5,7 @@
       "postRollActions.narrativium": "Narrativium",
       "postRollActions.reroll": "GM Reroll",
       "warning.actorNotFound": "No token selected and no character assigned to User. Cannot determine Actor to help.",
+      "warning.gmOnly": "Only GMs can roll Narrativium!",
       "warning.singleTokenSelect": "You must select a single token to roll for."
     },
 
