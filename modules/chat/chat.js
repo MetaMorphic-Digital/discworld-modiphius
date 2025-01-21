@@ -105,7 +105,12 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
    * @returns {void}
    */
   static #onRollNarrativium(event, target) {
-    if (!game.user.isGM) return;
+    if (!game.user.isGM) {
+      ui.notifications.warn("DISCWORLD.chat.warning.gmOnly", {
+        localize: true,
+      });
+      return;
+    }
 
     const messageData = DiscworldChatLog.getClickedMessageData(event, target);
     DiscworldRoll.createNarrativiumRoll(messageData);
