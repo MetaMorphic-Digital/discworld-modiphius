@@ -89,9 +89,7 @@ export function registerHelpers() {
     return options.inverse(this);
   });
 
-  /* ****************
-   * CONFIG HELPERS *
-   **************** */
+  /* ----------------- CONFIG HELPERS ----------------- */
 
   // Return the keys for a config object.
   Handlebars.registerHelper("getConfigKeys", (path) => {
@@ -109,14 +107,5 @@ export function registerHelpers() {
   Handlebars.registerHelper("getConfigObject", (path) => {
     const obj = foundry.utils.getProperty(DISCWORLD, path);
     return obj;
-  });
-
-  /* ****************
-   *  ACTOR HELPERS *
-   **************** */
-
-  // Get traits by type.
-  Handlebars.registerHelper("getTraits", (actor, traitType) => {
-    return actor.getTraits(traitType);
   });
 }

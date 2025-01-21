@@ -1,9 +1,12 @@
 import DiscworldRoll from "../rolls/rolls.js";
 import DiscworldSheetMixin from "./base-document-sheet.js";
-import rollTraitDialog from "../dialog/roll-trait-dialog.js";
+import DISCWORLD from "../config.js";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
 
+/**
+ * @extends ActorSheetV2
+ */
 export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
     position: {
@@ -28,18 +31,37 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
-  isHelpMode = false;
+  /**
+   * Helper to check if the actor is currently in help mode.
+   *
+   * @type {boolean}
+   * @readonly
+   */
+  get isHelpMode() {
+    return this.actor.helpMode.enabled;
+  }
 
-  helpPromise = {};
-
+  /** @override */
   async _prepareContext() {
     const context = await super._prepareContext();
 
     context.helpMode = this.isHelpMode;
 
+    // Construct arrays of traits, filtered by category.
+    context.traitGroups = {};
+    for (const traitType of Object.keys(DISCWORLD.traitTypes)) {
+      context.traitGroups[traitType] = this.actor.items.filter(
+        (item) => item.system.type === traitType,
+      );
+    }
+
+    // Translation of trait types.
+    context.traitTypeTranslationMap = DISCWORLD.traitTypes;
+
     return context;
   }
 
+  /** @override */
   _onRender() {
     super._onRender();
 
@@ -48,36 +70,39 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     } else {
       this.element.classList.remove("help-mode");
     }
+
+    // Select luck input fields on focus.
+    this.element
+      .querySelectorAll(".luck-container input")
+      .forEach((input) =>
+        input.addEventListener("focus", (event) =>
+          event.currentTarget.select(),
+        ),
+      );
   }
 
+  /** @override */
   async close() {
-    super.close();
+    await super.close();
 
-    this.helpPromise.reject?.();
-    this.isHelpMode = false; // reset
-    this.helpPromise = {}; // reset
+    if (this.isHelpMode) this.actor.leaveHelpMode();
   }
 
-  async resolveHelpMode() {
-    this.isHelpMode = true;
-
-    // TODO: Remove this once v12 support is dropped.
-    if (game.release.generation < 13) await this.render(true);
-    else await this.render({ force: true });
-
-    return new Promise((resolve) => {
-      this.helpPromise.resolve = (trait) => resolve(trait);
-      this.helpPromise.reject = () => resolve(false);
-    });
-  }
-
+  /**
+   * Leave help mode and re-render the character sheet,
+   * if open.
+   */
   static #leaveHelpMode() {
-    this.helpPromise.reject?.();
-    this.isHelpMode = false;
-    this.helpPromise = {};
-    this.render();
+    this.actor.leaveHelpMode();
   }
 
+  /**
+   * Handle clicks on trait actions (add, edit, delete, roll).
+   *
+   * @param {Event} event - The originating click event.
+   * @param {HTMLElement} target - The target element of the event.
+   * @returns {void}
+   */
   static #traitAction(event, target) {
     const { actionType, itemId, traitType } = target.dataset;
     const trait = this.actor.items.get(itemId);
@@ -98,6 +123,13 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     }
   }
 
+  /**
+   * Add a new trait of the given type to the character.
+   *
+   * @param {string} traitType - The type of trait to add. Must be one of the
+   *                             {@link DISCWORLD.traitTypes} constants.
+   * @returns {Promise<void>}
+   */
   static async #addTrait(traitType) {
     // eslint-disable-next-line no-undef
     const newTrait = await getDocumentClass("Item").create(
@@ -111,24 +143,25 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       { parent: this.document, renderSheet: true },
     );
 
-    // TODO: This remaining code can be removed (see comment regarding autofocus).
-    const { sheet } = newTrait;
-    await sheet.render(true);
-
-    const nameField = sheet.element.querySelector("input[name='name']");
-    nameField.focus();
-    nameField.select();
+    newTrait.sheet.render({ force: true, autofocus: true });
   }
 
+  /**
+   * Opens the Trait sheet for editing with autofocus enabled on the name field.
+   *
+   * @param {Item} trait - The trait item to be edited.
+   * @returns {Promise<void>}
+   */
   static async #editTrait(trait) {
-    const { sheet } = trait;
-    await sheet.render(true);
-    // TODO: This remaining code can be removed (see comment regarding autofocus).
-    const nameField = sheet.element.querySelector("input[name='name']");
-    nameField.focus();
-    nameField.select();
+    trait.sheet.render({ force: true, autofocus: true });
   }
 
+  /**
+   * Prompts the user for confirmation before deleting a Trait.
+   *
+   * @param {Item} trait - The trait item to be deleted.
+   * @returns {Promise<void>}
+   */
   static async #deleteTrait(trait) {
     const content = game.i18n.format("DISCWORLD.sheet.character.deletePrompt", {
       traitName: trait.name,
@@ -144,17 +177,14 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     }
   }
 
+  /**
+   * Prompts the user to select a die to roll and then rolls the trait.
+   *
+   * @param {Item} trait - The trait to be rolled.
+   * @returns {Promise<void>}
+   */
   static async #rollTrait(trait) {
-    // A help roll will handle its own dialog/roll.
-    if (this.isHelpMode) {
-      this.helpPromise.resolve(trait);
-      this.close();
-      return;
-    }
-
-    const dialogResult = await rollTraitDialog(this.actor, trait);
-    if (!dialogResult) return;
-
-    DiscworldRoll.createBaseRoll(dialogResult, { actor: this.actor, trait });
+    const { actor } = this;
+    actor.rollTrait(trait);
   }
 }
