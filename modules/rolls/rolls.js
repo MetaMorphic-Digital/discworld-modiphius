@@ -24,6 +24,25 @@ export default class DiscworldRoll extends Roll {
     this.helpTrait = helpTrait || null;
   }
 
+  /**
+   * Evaluate the outcome of a test as a result of a GM and/or player
+   * competing against each other.
+   *
+   * @returns {{ gm: boolean | null, player: boolean | null }}
+   *              - An object with `gm` and `player` properties, each
+   *                set to a boolean indicating whether that role won
+   *                the comparison.
+   */
+  get testOutcome() {
+    const { result, gmResult, gmRerollResult, helpResult } = this;
+    if (!gmResult) return { gm: null, player: null };
+    const gmWins = (gmRerollResult ?? gmResult) > (helpResult ?? result);
+    return {
+      gm: gmWins,
+      player: !gmWins,
+    };
+  }
+
   static async createBaseRoll(formula, options) {
     const rollData = options.actor?.getRollData() ?? {};
     const roll = new DiscworldRoll(formula, rollData, options);
@@ -57,7 +76,7 @@ export default class DiscworldRoll extends Roll {
     [parentRoll[rollKey]] = roll.result;
 
     // Prepare chat data with updated info.
-    const chatData = parentRoll.prepareChatMessageData();
+    const chatData = parentRoll.prepareChatMessageContext();
     const content = await renderTemplate(parentRoll.template, chatData);
 
     if (!reroll) {
@@ -93,7 +112,7 @@ export default class DiscworldRoll extends Roll {
     parentRoll.helpTrait = trait;
 
     // Prepare chat data with updated info.
-    const chatData = parentRoll.prepareChatMessageData();
+    const chatData = parentRoll.prepareChatMessageContext();
     const content = await renderTemplate(parentRoll.template, chatData);
 
     // Slide parent roll icon left. (We're technically sliding it back from the right).
@@ -104,8 +123,25 @@ export default class DiscworldRoll extends Roll {
     return message.update({ content, rolls: [parentRoll] });
   }
 
-  prepareChatMessageData() {
-    return {
+  prepareChatMessageContext() {
+    /**
+     * Get the class name for a given section of results.
+     *
+     * @param {"gm"|"player"} userRole - The user role to get the class for.
+     * @returns {"winner"|"loser"|null} - The class name for the winner,
+     *                                    or null if the role hasn't been evaluated.
+     */
+    const outcomeClass = (userRole) => {
+      if (this.testOutcome[userRole] === null) {
+        return null;
+      }
+      if (this.testOutcome[userRole]) {
+        return "winner";
+      }
+      return "loser";
+    };
+
+    const context = {
       actor: this.actor,
       gmResult: this.gmResult,
       gmRerollResult: this.gmRerollResult,
@@ -119,18 +155,22 @@ export default class DiscworldRoll extends Roll {
       narrativiumDisabled: this.gmRerollResult,
       cssClass: {
         narrativiumReroll: this.gmResult ? "reroll" : null,
-        playerResult: this.helpResult ? null : "shift-center",
+        playerResult: this.helpResult ? "inactive" : "shift-center",
         helpResult: this.helpResult ? null : "not-visible",
-        gmResult: this.gmRerollResult ? null : "shift-center",
+        gmResult: this.gmRerollResult ? "inactive" : "shift-center",
         gmRerollResult: this.gmRerollResult ? null : "not-visible",
+        playerOutcome: outcomeClass("player"),
+        gmOutcome: outcomeClass("gm"),
       },
     };
+
+    return context;
   }
 
   async toMessage(messageData = {}, { rollMode, create = true } = {}) {
     if (!this._evaluated) await this.evaluate();
 
-    const chatData = this.prepareChatMessageData();
+    const chatData = this.prepareChatMessageContext();
     const content = await renderTemplate(this.template, chatData);
 
     // Assign content if not already defined in the messageData.

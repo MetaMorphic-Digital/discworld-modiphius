@@ -41,6 +41,16 @@
         border-radius: 3px;
         box-shadow: 0 0 2px #fff inset;
 
+        &.winner {
+          color: #18520b;
+          filter: sepia(0.5) hue-rotate(60deg) drop-shadow(2px 4px 6px #18520b);
+        }
+
+        &.loser {
+          color: #aa0200;
+          filter: sepia(0.5) hue-rotate(-60deg) drop-shadow(2px 4px 6px #aa0200);
+        }
+
         li {
           $height: 2.25rem;
           height: $height;
@@ -82,6 +92,10 @@
 
           &.shift-center {
             transform: translateX(calc($height / 2));
+          }
+
+          &.inactive {
+            filter: contrast(0.5) blur(1px);
           }
         }
       }
