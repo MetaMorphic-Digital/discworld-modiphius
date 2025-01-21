@@ -47,6 +47,31 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
     context.helpMode = this.isHelpMode;
 
+    const { document } = this;
+    const { system } = document;
+
+    // Prepare input fields.
+    context.fields = {
+      name: {
+        field: document.schema.getField("name"),
+        placeholder: game.i18n.localize("Name"), // TODO: remove once v12 support is dropped
+        value: this.isEditMode ? document._source.name : document.name,
+      },
+      luckMax: {
+        field: system.schema.getField("luck").getField("max"),
+        value: this.isEditMode ? system._source.luck.max : system.luck.max,
+      },
+      luckValue: {
+        field: system.schema.getField("luck").getField("value"),
+        value: this.isEditMode ? system._source.luck.value : system.luck.value,
+      },
+      pronouns: {
+        field: system.schema.getField("pronouns"),
+        placeholder: game.i18n.localize("DISCWORLD.sheet.character.pronouns"),
+        value: this.isEditMode ? system._source.pronouns : system.pronouns,
+      },
+    };
+
     // Construct arrays of traits, filtered by category.
     context.traitGroups = {};
     for (const traitType of Object.keys(DISCWORLD.traitTypes)) {

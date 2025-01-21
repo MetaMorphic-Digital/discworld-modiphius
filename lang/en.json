@@ -21,7 +21,6 @@
       "character.deletePrompt": "Are you sure you want to delete the trait, '{traitName}'?",
       "character.leaveHelpMode": "Leave Help Mode",
       "character.luck": "Luck",
-      "character.name": "Name",
       "character.pronouns": "Pronouns",
       "character.toggleSheetMode": "Toggle Between Locked & Edit Mode"
     },

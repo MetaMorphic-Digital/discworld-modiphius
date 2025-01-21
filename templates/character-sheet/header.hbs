@@ -7,10 +7,7 @@
 
   <div class="name-pronouns-container flexcol">
     <h1 class="name flexrow">
-      <input name="name"
-             type="text"
-             value="{{document.name}}"
-             placeholder="{{localize "DISCWORLD.sheet.character.name"}}" />
+      {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
     </h1>
 
     <div class="pronouns-subrow flexrow">
@@ -20,10 +17,7 @@
 
       <div class="pronouns">
         {{#if isEditMode }}
-          <input name="system.pronouns"
-                 type="text"
-                 value="{{document.system.pronouns}}"
-                 placeholder="{{localize "DISCWORLD.sheet.character.pronouns"}}" />
+          {{formInput fields.pronouns.field value=fields.pronouns.value placeholder=fields.pronouns.placeholder}}
         {{else}}
           {{document.system.pronouns}}
         {{/if}}
@@ -34,14 +28,10 @@
   <div class="luck-container flexcol">
     <label>{{localize "DISCWORLD.sheet.character.luck"}}:</label>
     <div class="flexrow">
-      <input name="system.luck.value"
-             type="number"
-             value="{{document.system.luck.value}}" />
+      {{formInput fields.luckValue.field value=fields.luckValue.value}}
       /
       {{#if isEditMode }}
-        <input name="system.luck.max"
-               type="number"
-               value="{{document.system.luck.max}}" />
+        {{formInput fields.luckMax.field value=fields.luckMax.value}}
       {{else}}
         {{document.system.luck.max}}
       {{/if}}
