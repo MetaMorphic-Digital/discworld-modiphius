@@ -16,8 +16,6 @@ globalThis.discworld = {
   config: DISCWORLD,
   utils: {
     transitionClass,
-    registerHelpers,
-    registerKeybindings,
   },
 };
 
