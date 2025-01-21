@@ -57,6 +57,15 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
         placeholder: game.i18n.localize("Name"), // TODO: remove once v12 support is dropped
         value: this.isEditMode ? document._source.name : document.name,
       },
+      description: {
+        field: system.schema.getField("description"),
+        label: game.i18n.localize(
+          "DISCWORLD.sheet.character.pronouns.description",
+        ),
+        value: this.isEditMode
+          ? system._source.description
+          : system.description,
+      },
       luckMax: {
         field: system.schema.getField("luck").getField("max"),
         value: this.isEditMode ? system._source.luck.max : system.luck.max,
@@ -71,6 +80,15 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
         value: this.isEditMode ? system._source.pronouns : system.pronouns,
       },
     };
+
+    // Enrich the description field.
+    context.fields.description.enriched = await TextEditor.enrichHTML(
+      context.fields.description.value,
+      {
+        rollData: this.document.getRollData(),
+        relativeTo: this.document,
+      },
+    );
 
     // Construct arrays of traits, filtered by category.
     context.traitGroups = {};
