@@ -17,12 +17,21 @@
       "traitRoll": "Trait Roll"
     },
 
+    "character": {
+      "luck": "Luck",
+      "pronouns": "Pronouns",
+
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        }
+      }
+    },
+
     "sheet": {
-      "character.deletePrompt": "Are you sure you want to delete the trait, '{traitName}'?",
-      "character.leaveHelpMode": "Leave Help Mode",
-      "character.luck": "Luck",
-      "character.pronouns": "Pronouns",
-      "character.toggleSheetMode": "Toggle Between Locked & Edit Mode"
+      "deletePrompt": "Are you sure you want to delete the trait, '{traitName}'?",
+      "leaveHelpMode": "Leave Help Mode",
+      "toggleSheetMode": "Toggle Between Locked & Edit Mode"
     },
 
     "trait": {

@@ -59,9 +59,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       },
       description: {
         field: system.schema.getField("description"),
-        label: game.i18n.localize(
-          "DISCWORLD.sheet.character.pronouns.description",
-        ),
         value: this.isEditMode
           ? system._source.description
           : system.description,
@@ -76,7 +73,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       },
       pronouns: {
         field: system.schema.getField("pronouns"),
-        placeholder: game.i18n.localize("DISCWORLD.sheet.character.pronouns"),
+        placeholder: game.i18n.localize("DISCWORLD.character.pronouns"),
         value: this.isEditMode ? system._source.pronouns : system.pronouns,
       },
     };
@@ -206,7 +203,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
    * @returns {Promise<void>}
    */
   static async #deleteTrait(trait) {
-    const content = game.i18n.format("DISCWORLD.sheet.character.deletePrompt", {
+    const content = game.i18n.format("DISCWORLD.sheet.deletePrompt", {
       traitName: trait.name,
     });
 

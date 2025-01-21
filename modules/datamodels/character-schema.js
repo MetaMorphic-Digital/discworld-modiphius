@@ -30,4 +30,9 @@ export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
     super.prepareDerivedData();
     this.luck.value = Math.clamp(this.luck.value, 0, this.luck.max);
   }
+
+  /* -------------------------------------------------- */
+
+  /** @override */
+  static LOCALIZATION_PREFIXES = ["DISCWORLD.character"];
 }

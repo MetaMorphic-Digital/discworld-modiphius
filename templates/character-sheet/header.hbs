@@ -11,7 +11,7 @@
     </h1>
 
     <div class="pronouns-subrow flexrow">
-      <div data-tooltip="{{localize "DISCWORLD.sheet.character.toggleSheetMode"}}">
+      <div data-tooltip="{{localize "DISCWORLD.sheet.toggleSheetMode"}}">
         {{> (systemFilePath "templates/mixins/toggle-switch.hbs")}}
       </div>
 
@@ -26,7 +26,7 @@
   </div>
 
   <div class="luck-container flexcol">
-    <label>{{localize "DISCWORLD.sheet.character.luck"}}:</label>
+    <label>{{localize "DISCWORLD.character.luck"}}:</label>
     <div class="flexrow">
       {{formInput fields.luckValue.field value=fields.luckValue.value}}
       /
@@ -42,7 +42,7 @@
     <aside class="help-aside">
       <a data-action="leaveHelpMode">
         <i class="fas fa-x"></i>
-        {{localize "DISCWORLD.sheet.character.leaveHelpMode"}}
+        {{localize "DISCWORLD.sheet.leaveHelpMode"}}
       </a>
     </aside>
   {{/if}}
