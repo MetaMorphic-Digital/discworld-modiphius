@@ -79,6 +79,16 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
       return;
     }
 
+    // Warn and prevent roll if character has no luck remaining.
+    if (actor.system.luck.value === 0) {
+      ui.notifications.warn(
+        game.i18n.format("DISCWORLD.chat.warning.noLuck", {
+          actorName: actor.name,
+        }),
+      );
+      return;
+    }
+
     const { message } = DiscworldChatLog.getClickedMessageData(event, target);
 
     // Wait for a Trait to be rolled.

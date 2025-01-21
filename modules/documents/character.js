@@ -97,6 +97,11 @@ export default class DiscworldCharacter extends Actor {
       /* eslint-enable */
     }
 
+    // Deduct a luck point (we've already determined the character has at least one).
+    this.update({
+      "system.luck.value": this.system.luck.value - 1,
+    });
+
     // Close the sheet if it wasn't already opened.
     if (close) this.sheet.close();
 
