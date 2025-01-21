@@ -10,7 +10,7 @@
   <div class="flexrow dice-rolls">
     <!-- Player Results -->
     <div class="result-container">
-      <button data-action="help" class="help" {{disabled helpResult }}>
+      <button data-action="help" class="help" {{disabled helpDisabled }}>
         {{localize "DISCWORLD.chat.postRollActions.help"}}
         <i class="fas fa-dice"></i>
       </button>
@@ -29,7 +29,7 @@
     <div class="result-container">
       <button data-action="narrativium"
               class="narrativium {{cssClass.narrativiumReroll}}"
-              {{disabled gmRerollResult }}>
+              {{disabled narrativiumDisabled }}>
         {{#unless gmResult}}
           {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
         {{else}}

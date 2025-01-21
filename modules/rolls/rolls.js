@@ -115,6 +115,8 @@ export default class DiscworldRoll extends Roll {
       term: this.dice[0].denomination,
       trait: this.trait,
       helpTrait: this.helpTrait,
+      helpDisabled: this.helpResult,
+      narrativiumDisabled: this.gmRerollResult,
       cssClass: {
         narrativiumReroll: this.gmResult ? "reroll" : null,
         playerResult: this.helpResult ? null : "shift-center",
