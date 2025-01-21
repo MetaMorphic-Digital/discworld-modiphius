@@ -115,6 +115,15 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       CharacterSheet.#editTrait.call(this, trait);
     });
 
+    // Add Trait by double-clicking trait category label.
+    sheetBody.addEventListener("dblclick", (event) => {
+      const { traitType } = event.target.closest(".trait-category").dataset;
+      if (!traitType) return;
+
+      CharacterSheet.#addTrait.call(this, traitType);
+    });
+
+    // Add/remove class depending on Help Mode.
     if (this.isHelpMode) {
       this.element.classList.add("help-mode");
     } else {
@@ -154,13 +163,15 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
    * @returns {void}
    */
   static #traitAction(event, target) {
-    const { actionType, itemId, traitType } = target.dataset;
+    const { actionType, itemId } = target.dataset;
     const trait = this.actor.items.get(itemId);
 
     switch (actionType) {
-      case "add":
+      case "add": {
+        const { traitType } = target.closest(".trait-category").dataset;
         CharacterSheet.#addTrait.call(this, traitType);
         break;
+      }
       case "edit":
         CharacterSheet.#editTrait.call(this, trait);
         break;
