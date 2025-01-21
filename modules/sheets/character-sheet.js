@@ -203,13 +203,19 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
    * @returns {Promise<void>}
    */
   static async #deleteTrait(trait) {
-    const content = game.i18n.format("DISCWORLD.sheet.deletePrompt", {
+    const content = game.i18n.format("DISCWORLD.dialog.deleteTrait.content", {
       traitName: trait.name,
     });
 
     // TODO: remove this when v12 support is dropped.
     if (game.release.generation < 13) {
-      const promptResult = await Dialog.confirm({ content });
+      const { DialogV2 } = foundry.applications.api;
+      const promptResult = await DialogV2.confirm({
+        window: {
+          title: "DISCWORLD.dialog.deleteTrait.title",
+        },
+        content,
+      });
       if (!promptResult) return;
       trait.delete();
     } else {

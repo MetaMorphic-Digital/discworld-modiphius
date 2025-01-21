@@ -22,6 +22,9 @@
     },
 
     "dialog": {
+      "deleteTrait.content": "Are you sure you want to delete the trait, \"{traitName}\"?",
+      "deleteTrait.title": "Deleting a Trait!",
+
       "rollTrait.title": "Rolling a Trait!"
     },
 
@@ -30,7 +33,6 @@
     },
 
     "sheet": {
-      "deletePrompt": "Are you sure you want to delete the trait, '{traitName}'?",
       "leaveHelpMode": "Leave Help Mode",
       "toggleSheetMode": "Toggle Between Locked & Edit Mode"
     },
