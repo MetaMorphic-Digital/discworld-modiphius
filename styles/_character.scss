@@ -1,6 +1,11 @@
 @use "mixins" as *;
 
 .application.discworld {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: var(--sheet-background);
+
   &.help-mode .window-content {
     animation: flash 3s ease-in-out infinite;
 
