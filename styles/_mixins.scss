@@ -70,11 +70,7 @@
 
   @each $dice in $dice-types {
     &.#{$dice} {
-      background-image: url("/icons/svg/#{$dice}-grey.svg");
-
-      @if $dice == d4 {
-        background-position: left 50% top calc(50% + 0.125rem);
-      }
+      background-image: url("/systems/discworld/assets/dice/#{$dice}.svg");
     }
   }
 }
