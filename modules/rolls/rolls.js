@@ -1,4 +1,24 @@
+/**
+ * @extends Roll
+ */
 export default class DiscworldRoll extends Roll {
+  /**
+   * @typedef {"d4"|"d6"|"d10"|"d12"} DiceTermOptions
+   */
+  /**
+   * Creates a new DiscworldRoll instance.
+   *
+   * @param {DiceTermOptions} formula - The dice formula to evaluate.
+   * @param {object} data - An object the roll uses to evaluate (see Foundry docs).
+   * @param {object} options - An object with additional options.
+   * @param {DiscworldCharacter} options.actor - The Actor being rolled for.
+   * @param {Item} options.trait - The Item being rolled.
+   * @param {number} [options.gmResult] - The GM/Narrativium result.
+   * @param {number} [options.gmRerollResult] - The GM's rerolled result.
+   * @param {number} [options.helpResult] - The result of help.
+   * @param {DiceTermOptions} [options.helpTerm] - The dice term used to roll help.
+   * @param {Item} [options.helpTrait] - The Trait used to help.
+   */
   constructor(formula, data, options = {}) {
     super(formula, data, options);
 
@@ -25,8 +45,8 @@ export default class DiscworldRoll extends Roll {
   }
 
   /**
-   * Evaluate the outcome of a test as a result of a GM and/or player
-   * competing against each other.
+   * Evaluate the outcome of a test based on whether the
+   * player or GM/Narrativium won.
    *
    * @returns {{
    *             status: "tie" | "win" | null,
@@ -56,6 +76,14 @@ export default class DiscworldRoll extends Roll {
     };
   }
 
+  /**
+   * Create a base Trait roll.
+   *
+   * @param {DiceTermOptions} formula - The roll formula.
+   * @param {object} [options] - The options to pass to the `DiscworldRoll` constructor.
+   *                             See `constructor` above and the Foundry API.
+   * @returns {Promise<DiscworldMessage>} A promise that resolves to the chat message.
+   */
   static async createBaseRoll(formula, options) {
     const rollData = options.actor?.getRollData() ?? {};
     const roll = new DiscworldRoll(formula, rollData, options);
@@ -71,22 +99,27 @@ export default class DiscworldRoll extends Roll {
   /* -------------------------------------------------- */
 
   /**
-   * @param {object} [options]
-   * @returns {Promise<ChatMessage>}      A promise that resolves to the updated chat message.
+   * Create a Narrativium (GM) roll, and update the parent message
+   * with the result.
+   *
+   * @param {object} options
+   * @param {DiscworldMessage} options.message - The chat message to update.
+   * @param {boolean} [options.reroll=false] - Whether this is a reroll.
+   * @returns {Promise<DiscworldMessage|null>} A promise that resolves to the updated chat message.
    */
   static async createNarrativiumRoll({ message, reroll = false } = {}) {
     // Determine the type of narrativium roll (regular or reroll).
-    const rollKey = reroll ? "gmRerollResult" : "gmResult";
+    const resultKey = reroll ? "gmRerollResult" : "gmResult";
 
     const [parentRoll] = message.rolls;
-    if (parentRoll[rollKey]) return null;
+    if (parentRoll[resultKey]) return null;
     // Create Narrativium roll and show 3d dice if DSN installed.
     const roll = await new Roll("d8").evaluate();
     if (game.dice3d) await game.dice3d.showForRoll(roll, game.user, true); // Roll Dice So Nice if present.
 
     // Get the parent roll and update it with the Narrativium result.
-    [parentRoll.options[rollKey]] = roll.result;
-    [parentRoll[rollKey]] = roll.result;
+    [parentRoll.options[resultKey]] = roll.result;
+    [parentRoll[resultKey]] = roll.result;
 
     // Prepare chat data with updated info.
     const chatData = parentRoll.prepareChatMessageContext();
@@ -107,6 +140,15 @@ export default class DiscworldRoll extends Roll {
     return message.update({ content, rolls: [parentRoll] });
   }
 
+  /**
+   * Create a help roll, and update the parent message with the result.
+   *
+   * @param {object} options
+   * @param {DiceTermOptions} options.diceTerm - The term to be rolled.
+   * @param {Item} options.trait - The trait associated with this roll.
+   * @param {DiscworldMessage} options.message - The chat message to update.
+   * @returns {Promise<DiscworldMessage|null>} A promise that resolves to the updated chat message.
+   */
   static async createHelpRoll({ diceTerm, trait, message } = {}) {
     const [parentRoll] = message.rolls;
     if (parentRoll.helpResult) return null;
@@ -136,6 +178,32 @@ export default class DiscworldRoll extends Roll {
     return message.update({ content, rolls: [parentRoll] });
   }
 
+  /**
+   * @typedef {object} ChatMessageContext
+   * @prop {DiscworldCharacter} actor
+   * @prop {number} gmResult
+   * @prop {number} gmRerollResult
+   * @prop {number} helpResult
+   * @prop {DiceTermOptions} helpTerm
+   * @prop {number} result
+   * @prop {DiceTermOptions} term
+   * @prop {Item} trait
+   * @prop {Item} helpTrait
+   * @prop {boolean} helpDisabled
+   * @prop {boolean} narrativiumDisabled
+   * @prop {object} cssClass
+   * @prop {"reroll"|null} cssClass.narrativiumReroll
+   * @prop {"inactive"|"shift-center"} cssClass.playerResult
+   * @prop {"not-visible"|null} cssClass.helpResult
+   * @prop {"inactive"|"shift-center"} cssClass.gmResult
+   * @prop {"not-visible"|null} cssClass.gmRerollResult
+   * @prop {"winner"|"loser"|"tie"|null} cssClass.playerOutcome
+   * @prop {"winner"|"loser"|"tie"|null} cssClass.gmOutcome
+   */
+  /**
+   * Prepare data for chat message rendering.
+   * @returns {ChatMessageContext}
+   */
   prepareChatMessageContext() {
     /**
      * Get the class name for a given section of results.
@@ -179,6 +247,17 @@ export default class DiscworldRoll extends Roll {
     return context;
   }
 
+  /**
+   * Renders the chat message with an the specific context,
+   * derived from the roll data.
+   *
+   * @override
+   * @param {object} [messageData={}] - The message data to render.
+   * @param {object} [options={}] - Additional options to pass to the {@link Roll#toMessage} method.
+   * @param {string} [options.rollMode] - The roll mode to use for the message.
+   * @param {boolean} [options.create=true] - Whether to create a new message if one doesn't exist.
+   * @returns {Promise<DiscworldMessage>} The rendered chat message.
+   */
   async toMessage(messageData = {}, { rollMode, create = true } = {}) {
     if (!this._evaluated) await this.evaluate();
 
