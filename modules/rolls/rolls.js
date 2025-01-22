@@ -221,7 +221,7 @@ export default class DiscworldRoll extends Roll {
       return winner === userRole ? "winner" : "loser";
     };
 
-    const context = {
+    return {
       actor: this.actor,
       gmResult: this.gmResult,
       gmRerollResult: this.gmRerollResult,
@@ -243,8 +243,6 @@ export default class DiscworldRoll extends Roll {
         gmOutcome: outcomeClass("gm"),
       },
     };
-
-    return context;
   }
 
   /**
@@ -253,12 +251,10 @@ export default class DiscworldRoll extends Roll {
    *
    * @override
    * @param {object} [messageData={}] - The message data to render.
-   * @param {object} [options={}] - Additional options to pass to the {@link Roll#toMessage} method.
-   * @param {string} [options.rollMode] - The roll mode to use for the message.
-   * @param {boolean} [options.create=true] - Whether to create a new message if one doesn't exist.
+   * @param {object} [options={}] - Additional options to pass to the Roll#toMessage method.
    * @returns {Promise<DiscworldMessage>} The rendered chat message.
    */
-  async toMessage(messageData = {}, { rollMode, create = true } = {}) {
+  async toMessage(messageData = {}, options = {}) {
     if (!this._evaluated) await this.evaluate();
 
     const chatData = this.prepareChatMessageContext();
@@ -271,6 +267,6 @@ export default class DiscworldRoll extends Roll {
       messageData = { ...messageData, content };
     }
 
-    return super.toMessage(messageData, { rollMode, create });
+    return super.toMessage(messageData, options);
   }
 }
