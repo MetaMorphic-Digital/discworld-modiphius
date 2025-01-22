@@ -28,18 +28,31 @@ export default class DiscworldRoll extends Roll {
    * Evaluate the outcome of a test as a result of a GM and/or player
    * competing against each other.
    *
-   * @returns {{ gm: boolean | null, player: boolean | null }}
-   *              - An object with `gm` and `player` properties, each
-   *                set to a boolean indicating whether that role won
-   *                the comparison.
+   * @returns {{
+   *             status: "tie" | "win" | null,
+   *             winner: "gm" | "player" | null
+   *          }}
+   *        - An object with `status` and `winner` properties.
    */
-  get testOutcome() {
+  get outcome() {
     const { result, gmResult, gmRerollResult, helpResult } = this;
-    if (!gmResult) return { gm: null, player: null };
-    const gmWins = (gmRerollResult ?? gmResult) > (helpResult ?? result);
+
+    if (!gmResult) {
+      return { status: null, winner: null };
+    }
+
+    const finalGmResult = gmRerollResult ?? gmResult;
+    const finalPlayerResult = helpResult ?? result;
+
+    if (finalGmResult === finalPlayerResult) {
+      return { status: "tie", winner: null };
+    }
+
+    const gmWins = finalGmResult > finalPlayerResult;
+
     return {
-      gm: gmWins,
-      player: !gmWins,
+      status: "win",
+      winner: gmWins ? "gm" : "player",
     };
   }
 
@@ -128,17 +141,16 @@ export default class DiscworldRoll extends Roll {
      * Get the class name for a given section of results.
      *
      * @param {"gm"|"player"} userRole - The user role to get the class for.
-     * @returns {"winner"|"loser"|null} - The class name for the winner,
+     * @returns {"winner"|"loser"|"tie"|null} - The class name for the winner,
      *                                    or null if the role hasn't been evaluated.
      */
     const outcomeClass = (userRole) => {
-      if (this.testOutcome[userRole] === null) {
-        return null;
-      }
-      if (this.testOutcome[userRole]) {
-        return "winner";
-      }
-      return "loser";
+      const { status, winner } = this.outcome;
+
+      if (!status) return null; // Opposed roll hasn't been fully evaluated.
+
+      if (status === "tie") return "tie";
+      return winner === userRole ? "winner" : "loser";
     };
 
     const context = {

@@ -51,6 +51,10 @@
           filter: sepia(0.5) hue-rotate(-60deg) drop-shadow(2px 4px 6px #aa0200);
         }
 
+        &.tie {
+          filter: sepia(0.5) drop-shadow(2px 4px 6px #000000);
+        }
+
         li {
           $height: 2.25rem;
           height: $height;
