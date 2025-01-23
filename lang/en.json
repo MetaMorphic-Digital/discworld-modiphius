@@ -1,15 +1,31 @@
 {
   "DISCWORLD": {
+    "character": {
+      "luck": "Luck",
+      "pronouns": "Pronouns",
+
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        }
+      }
+    },
+
     "chat": {
       "postRollActions.help": "Help",
       "postRollActions.narrativium": "Narrativium",
       "postRollActions.reroll": "GM Reroll",
+
       "warning.actorNotFound": "No token selected and no character assigned to User. Cannot determine Actor to help.",
       "warning.gmOnly": "Only GMs can roll Narrativium!",
+      "warning.noLuck": "{actorName} has no luck remaining. Better luck next time!",
       "warning.singleTokenSelect": "You must select a single token to roll for."
     },
 
     "dialog": {
+      "deleteTrait.content": "Are you sure you want to delete the trait, \"{traitName}\"?",
+      "deleteTrait.title": "Deleting a Trait!",
+
       "rollTrait.title": "Rolling a Trait!"
     },
 
@@ -18,12 +34,8 @@
     },
 
     "sheet": {
-      "character.deletePrompt": "Are you sure you want to delete the trait, '{traitName}'?",
-      "character.leaveHelpMode": "Leave Help Mode",
-      "character.luck": "Luck",
-      "character.name": "Name",
-      "character.pronouns": "Pronouns",
-      "character.toggleSheetMode": "Toggle Between Locked & Edit Mode"
+      "leaveHelpMode": "Leave Help Mode",
+      "toggleSheetMode": "Toggle Between Locked & Edit Mode"
     },
 
     "trait": {

@@ -47,6 +47,46 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
     context.helpMode = this.isHelpMode;
 
+    const { document } = this;
+    const { system } = document;
+
+    // Prepare input fields.
+    context.fields = {
+      name: {
+        field: document.schema.getField("name"),
+        placeholder: game.i18n.localize("Name"), // TODO: remove once v12 support is dropped
+        value: this.isEditMode ? document._source.name : document.name,
+      },
+      description: {
+        field: system.schema.getField("description"),
+        value: this.isEditMode
+          ? system._source.description
+          : system.description,
+      },
+      luckMax: {
+        field: system.schema.getField("luck").getField("max"),
+        value: this.isEditMode ? system._source.luck.max : system.luck.max,
+      },
+      luckValue: {
+        field: system.schema.getField("luck").getField("value"),
+        value: this.isEditMode ? system._source.luck.value : system.luck.value,
+      },
+      pronouns: {
+        field: system.schema.getField("pronouns"),
+        placeholder: game.i18n.localize("DISCWORLD.character.pronouns"),
+        value: this.isEditMode ? system._source.pronouns : system.pronouns,
+      },
+    };
+
+    // Enrich the description field.
+    context.fields.description.enriched = await TextEditor.enrichHTML(
+      context.fields.description.value,
+      {
+        rollData: this.document.getRollData(),
+        relativeTo: this.document,
+      },
+    );
+
     // Construct arrays of traits, filtered by category.
     context.traitGroups = {};
     for (const traitType of Object.keys(DISCWORLD.traitTypes)) {
@@ -65,6 +105,25 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   _onRender() {
     super._onRender();
 
+    // Edit Trait by right-click.
+    const sheetBody = this.element.querySelector("section.sheet-body");
+    sheetBody.addEventListener("contextmenu", (event) => {
+      const { itemId } = event.target.dataset;
+      if (!itemId) return;
+
+      const trait = this.actor.items.get(itemId);
+      CharacterSheet.#editTrait.call(this, trait);
+    });
+
+    // Add Trait by double-clicking trait category label.
+    sheetBody.addEventListener("dblclick", (event) => {
+      const { traitType } = event.target.closest(".trait-category").dataset;
+      if (!traitType) return;
+
+      CharacterSheet.#addTrait.call(this, traitType);
+    });
+
+    // Add/remove class depending on Help Mode.
     if (this.isHelpMode) {
       this.element.classList.add("help-mode");
     } else {
@@ -104,13 +163,15 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
    * @returns {void}
    */
   static #traitAction(event, target) {
-    const { actionType, itemId, traitType } = target.dataset;
+    const { actionType, itemId } = target.dataset;
     const trait = this.actor.items.get(itemId);
 
     switch (actionType) {
-      case "add":
+      case "add": {
+        const { traitType } = target.closest(".trait-category").dataset;
         CharacterSheet.#addTrait.call(this, traitType);
         break;
+      }
       case "edit":
         CharacterSheet.#editTrait.call(this, trait);
         break;
@@ -163,13 +224,19 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
    * @returns {Promise<void>}
    */
   static async #deleteTrait(trait) {
-    const content = game.i18n.format("DISCWORLD.sheet.character.deletePrompt", {
+    const content = game.i18n.format("DISCWORLD.dialog.deleteTrait.content", {
       traitName: trait.name,
     });
 
     // TODO: remove this when v12 support is dropped.
     if (game.release.generation < 13) {
-      const promptResult = await Dialog.confirm({ content });
+      const { DialogV2 } = foundry.applications.api;
+      const promptResult = await DialogV2.confirm({
+        window: {
+          title: "DISCWORLD.dialog.deleteTrait.title",
+        },
+        content,
+      });
       if (!promptResult) return;
       trait.delete();
     } else {

@@ -1,11 +1,9 @@
 <section class="sheet-body">
   {{#each traitGroups as |traits traitType| }}
     <div class="trait-type flexrow">
-      <div class="trait-category">
+      <div class="trait-category" data-trait-type="{{traitType}}">
         {{#if ../isEditMode }}
-          <a data-action="traitAction"
-             data-action-type="add"
-             data-trait-type="{{traitType}}">
+          <a data-action="traitAction" data-action-type="add">
             <i class="fas fa-circle-plus"></i>
           </a>
         {{/if}}
