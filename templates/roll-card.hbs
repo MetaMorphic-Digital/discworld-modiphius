@@ -9,25 +9,25 @@
   </header>
   <div class="flexrow dice-rolls">
     <!-- Player Results -->
-    <div class="result-container">
+    <div class="outcome-container">
       <button data-action="help" class="help" {{disabled buttonDisabled.help }}>
         {{localize "DISCWORLD.chat.postRollActions.help"}}
         <i class="fas fa-dice"></i>
       </button>
 
-      <ol class="result {{cssClass.playerOutcome}}">
-        <li class="playerResult {{term}} flexrow {{cssClass.playerResult}}">
+      <ol class="result {{cssClass.outcome.player}}">
+        <li class="playerResult {{term}} flexrow {{cssClass.results.player}}">
           <span>{{results.player.primary}}</span>
         </li>
 
-        <li class="helpResult {{help.term}} flexrow {{cssClass.helpResult}}">
+        <li class="helpResult {{help.term}} flexrow {{cssClass.results.help}}">
           <span>{{results.player.help}}</span>
         </li>
       </ol>
     </div>
     {{log this}}
     <!-- Narrativium Results -->
-    <div class="result-container">
+    <div class="outcome-container">
       <button data-action="narrativium"
               class="narrativium {{cssClass.rerollButton}}"
               {{disabled buttonDisabled.narrativium }}>
@@ -39,8 +39,8 @@
         <i class="fas fa-dice"></i>
       </button>
 
-      <ol class="result {{cssClass.gmOutcome }}">
-        <li class="gmResult d8 flexrow {{cssClass.gmResult}}">
+      <ol class="result {{cssClass.outcome.gm }}">
+        <li class="gmResult d8 flexrow {{cssClass.results.gm}}">
           <span>
             {{#if results.gm.primary }}
               {{results.gm.primary}}
@@ -50,7 +50,7 @@
           </span>
         </li>
 
-        <li class="gmRerollResult d8 flexrow {{cssClass.gmRerollResult}}">
+        <li class="gmRerollResult d8 flexrow {{cssClass.results.gmReroll}}">
           <span>{{results.gm.reroll}}</span>
         </li>
       </ol>

@@ -222,12 +222,14 @@ export default class DiscworldRoll extends Roll {
    * @prop {boolean} buttonDisabled.narrativium
    * @prop {object} cssClass
    * @prop {"reroll"|null} cssClass.rerollButton
-   * @prop {"inactive"|"shift-center"} cssClass.playerResult
-   * @prop {"not-visible"|null} cssClass.helpResult
-   * @prop {"inactive"|"shift-center"} cssClass.gmResult
-   * @prop {"not-visible"|null} cssClass.gmRerollResult
-   * @prop {"winner"|"loser"|"tie"|null} cssClass.playerOutcome
-   * @prop {"winner"|"loser"|"tie"|null} cssClass.gmOutcome
+   * @prop {object} cssClass.results
+   * @prop {"inactive"|"shift-center"} cssClass.results.player
+   * @prop {"not-visible"|null} cssClass.results.help
+   * @prop {"inactive"|"shift-center"} cssClass.results.gm
+   * @prop {"not-visible"|null} cssClass.results.gmReroll
+   * @prop {object} cssClass.outcome
+   * @prop {"winner"|"loser"|"tie"|null} cssClass.outcome.player
+   * @prop {"winner"|"loser"|"tie"|null} cssClass.outcome.gm
    */
   /**
    * Prepare data for chat message rendering.
@@ -265,12 +267,16 @@ export default class DiscworldRoll extends Roll {
       },
       cssClass: {
         rerollButton: gm.primary ? "reroll" : null,
-        playerResult: player.help ? "inactive" : "shift-center",
-        helpResult: player.help ? null : "not-visible",
-        gmResult: gm.reroll ? "inactive" : "shift-center",
-        gmRerollResult: gm.reroll ? null : "not-visible",
-        playerOutcome: outcomeClass("player"),
-        gmOutcome: outcomeClass("gm"),
+        results: {
+          player: player.help ? "inactive" : "shift-center",
+          help: player.help ? null : "not-visible",
+          gm: gm.reroll ? "inactive" : "shift-center",
+          gmReroll: gm.reroll ? null : "not-visible",
+        },
+        outcome: {
+          gm: outcomeClass("gm"),
+          player: outcomeClass("player"),
+        },
       },
     };
   }
