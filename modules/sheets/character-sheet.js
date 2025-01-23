@@ -64,11 +64,11 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
           : system.description,
       },
       luckMax: {
-        field: system.schema.getField("luck").getField("max"),
+        field: system.schema.getField("luck.max"),
         value: this.isEditMode ? system._source.luck.max : system.luck.max,
       },
       luckValue: {
-        field: system.schema.getField("luck").getField("value"),
+        field: system.schema.getField("luck.value"),
         value: this.isEditMode ? system._source.luck.value : system.luck.value,
       },
       pronouns: {
