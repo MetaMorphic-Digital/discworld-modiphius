@@ -2,48 +2,48 @@
   <header class="flexcol trait-quote">
     <q>{{trait.name}}</q>
     <cite>{{actor.name}}</cite>
-    {{#if helpTrait }}
-      <q>{{helpTrait.name}}</q>
-      <cite>{{helpActor.name}}</cite>
+    {{#if help.trait }}
+      <q>{{help.trait.name}}</q>
+      <cite>{{help.actor.name}}</cite>
     {{/if}}
   </header>
   <div class="flexrow dice-rolls">
     <!-- Player Results -->
     <div class="result-container">
-      <button data-action="help" class="help" {{disabled helpDisabled }}>
+      <button data-action="help" class="help" {{disabled buttonDisabled.help }}>
         {{localize "DISCWORLD.chat.postRollActions.help"}}
         <i class="fas fa-dice"></i>
       </button>
 
       <ol class="result {{cssClass.playerOutcome}}">
         <li class="playerResult {{term}} flexrow {{cssClass.playerResult}}">
-          <span>{{result}}</span>
+          <span>{{results.player.primary}}</span>
         </li>
 
-        <li class="helpResult {{helpTerm}} flexrow {{cssClass.helpResult}}">
-          <span>{{helpResult}}</span>
+        <li class="helpResult {{help.term}} flexrow {{cssClass.helpResult}}">
+          <span>{{results.player.help}}</span>
         </li>
       </ol>
     </div>
-
+    {{log this}}
     <!-- Narrativium Results -->
     <div class="result-container">
       <button data-action="narrativium"
-              class="narrativium {{cssClass.narrativiumReroll}}"
-              {{disabled narrativiumDisabled }}>
-        {{#unless gmResult}}
-          {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
-        {{else}}
+              class="narrativium {{cssClass.rerollButton}}"
+              {{disabled buttonDisabled.narrativium }}>
+        {{#if cssClass.rerollButton }}
           {{localize "DISCWORLD.chat.postRollActions.reroll"}}
-        {{/unless}}
+        {{else}}
+          {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
+        {{/if}}
         <i class="fas fa-dice"></i>
       </button>
 
       <ol class="result {{cssClass.gmOutcome }}">
         <li class="gmResult d8 flexrow {{cssClass.gmResult}}">
           <span>
-            {{#if gmResult }}
-              {{gmResult}}
+            {{#if results.gm.primary }}
+              {{results.gm.primary}}
             {{else}}
               ?
             {{/if}}
@@ -51,7 +51,7 @@
         </li>
 
         <li class="gmRerollResult d8 flexrow {{cssClass.gmRerollResult}}">
-          <span>{{gmRerollResult}}</span>
+          <span>{{results.gm.reroll}}</span>
         </li>
       </ol>
     </div>

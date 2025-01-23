@@ -22,50 +22,82 @@ export default class DiscworldRoll extends Roll {
    */
   constructor(formula, data, options = {}) {
     super(formula, data, options);
+    this.template = options.template || this.constructor.DEFAULT_TEMPLATE;
+  }
 
-    // TODO: Simplify this using getters and perhaps `mergeObject` with an object of defaults.
-    const {
-      actor,
-      trait,
-      gmResult,
-      gmRerollResult,
-      helpResult,
-      helpTerm,
-      helpTrait,
-      helpActor,
-    } = options;
+  static DEFAULT_TEMPLATE = "systems/discworld/templates/roll-card.hbs";
 
-    this.actor = actor;
-    this.trait = trait;
-    this.template = "systems/discworld/templates/roll-card.hbs";
+  /** @type {DiscworldCharacter} The Actor that initiated the roll. */
+  get actor() {
+    return this.options.actor;
+  }
 
-    this.gmResult = gmResult || null;
-    this.gmRerollResult = gmRerollResult || null;
-    this.helpResult = helpResult || null;
-    this.helpTerm = helpTerm || null;
-    this.helpTrait = helpTrait || null;
-    this.helpActor = helpActor || null;
+  /** @type {Item} The Trait used for this roll. */
+  get trait() {
+    return this.options.trait;
+  }
+
+  /**
+   * @typedef {{
+   *            gm: {primary: number|null, reroll: number|null},
+   *            player: {primary: number|null, help: number|null}
+   *          }} ResultsData
+   */
+  /**
+   * Organized data about the results of all rolls.
+   * @type {ResultsData}
+   */
+  get results() {
+    const { options = {} } = this;
+    return {
+      gm: {
+        primary: parseInt(options.gmResult) || null,
+        reroll: parseInt(options.gmRerollResult) || null,
+      },
+      player: {
+        primary: parseInt(this.result),
+        help: parseInt(options.helpResult) || null,
+      },
+    };
+  }
+
+  /**
+   * @typedef {{
+   *            actor: DiscworldCharacter,
+   *            trait: Item,
+   *            result: number,
+   *            term: string
+   *          }} HelpData
+   */
+  /** @type {HelpData} - Organized data about the Help roll. */
+  get help() {
+    const { options = {} } = this;
+    return {
+      actor: options.helpActor || null,
+      trait: options.helpTrait || null,
+      result: parseInt(options.helpResult) || null,
+      term: options.helpTerm || null,
+    };
   }
 
   /**
    * Evaluate the outcome of a test based on whether the
    * player or GM/Narrativium won.
-   *
    * @type {{
-   *             status: "tie" | "win" | null,
-   *             winner: "gm" | "player" | null
-   *          }}
-   *        - An object with `status` and `winner` properties.
+   *           status: "tie" | "win" | null,
+   *           winner: "gm" | "player" | null
+   *       }}
+   *     - An object with `status` and `winner` properties.
    */
   get outcome() {
-    const { result, gmResult, gmRerollResult, helpResult } = this;
+    const { results } = this;
 
-    if (!gmResult) {
+    if (!results.gm.primary) {
       return { status: null, winner: null };
     }
 
-    const finalGmResult = gmRerollResult ?? gmResult;
-    const finalPlayerResult = helpResult ?? result;
+    const finalGmResult = results.gm.reroll ?? results.gm.primary;
+    const finalPlayerResult = results.player.help ?? results.player.primary;
 
     if (finalGmResult === finalPlayerResult) {
       return { status: "tie", winner: null };
@@ -112,17 +144,16 @@ export default class DiscworldRoll extends Roll {
    */
   static async createNarrativiumRoll({ message, reroll = false } = {}) {
     // Determine the type of narrativium roll (regular or reroll).
-    const resultKey = reroll ? "gmRerollResult" : "gmResult";
-
+    const resultKey = reroll ? "results.gm.reroll" : "results.gm.primary";
     const [parentRoll] = message.rolls;
-    if (parentRoll[resultKey]) return null;
+    if (foundry.utils.getProperty(parentRoll, resultKey)) return null;
     // Create Narrativium roll and show 3d dice if DSN installed.
     const roll = await new Roll("d8").evaluate();
     if (game.dice3d) await game.dice3d.showForRoll(roll, game.user, true); // Roll Dice So Nice if present.
 
-    // Get the parent roll and update it with the Narrativium result.
-    [parentRoll.options[resultKey]] = roll.result;
-    [parentRoll[resultKey]] = roll.result;
+    // Update parent roll options with the Narrativium result.
+    const optionsKey = reroll ? "gmRerollResult" : "gmResult";
+    parentRoll.options[optionsKey] = roll.result;
 
     // Prepare chat data with updated info.
     const chatData = parentRoll.prepareChatMessageContext();
@@ -161,15 +192,11 @@ export default class DiscworldRoll extends Roll {
 
     // Get the parent roll and update it with the Narrativium result.
     const helpResult = helpRoll.result;
-    [parentRoll.options.helpResult] = helpResult;
-    [parentRoll.helpResult] = helpResult;
     const helpTerm = helpRoll.dice[0].denomination;
+    parentRoll.options.helpResult = helpResult;
     parentRoll.options.helpTerm = helpTerm;
-    parentRoll.helpTerm = helpTerm;
     parentRoll.options.helpTrait = trait;
-    parentRoll.helpTrait = trait;
     parentRoll.options.helpActor = trait.actor;
-    parentRoll.helpActor = trait.actor;
 
     // Prepare chat data with updated info.
     const chatData = parentRoll.prepareChatMessageContext();
@@ -186,18 +213,15 @@ export default class DiscworldRoll extends Roll {
   /**
    * @typedef {object} ChatMessageContext
    * @prop {DiscworldCharacter} actor
-   * @prop {number} gmResult
-   * @prop {number} gmRerollResult
-   * @prop {number} helpResult
-   * @prop {DiceTermOptions} helpTerm
-   * @prop {number} result
-   * @prop {DiceTermOptions} term
    * @prop {Item} trait
-   * @prop {Item} helpTrait
-   * @prop {boolean} helpDisabled
-   * @prop {boolean} narrativiumDisabled
+   * @prop {ResultsData} results
+   * @prop {HelpData} help
+   * @prop {DiceTermOptions} term
+   * @prop {object} buttonDisabled
+   * @prop {boolean} buttonDisabled.help
+   * @prop {boolean} buttonDisabled.narrativium
    * @prop {object} cssClass
-   * @prop {"reroll"|null} cssClass.narrativiumReroll
+   * @prop {"reroll"|null} cssClass.rerollButton
    * @prop {"inactive"|"shift-center"} cssClass.playerResult
    * @prop {"not-visible"|null} cssClass.helpResult
    * @prop {"inactive"|"shift-center"} cssClass.gmResult
@@ -226,25 +250,25 @@ export default class DiscworldRoll extends Roll {
       return winner === userRole ? "winner" : "loser";
     };
 
+    const { actor, trait, results, help } = this;
+    const { gm, player } = results;
+
     return {
-      actor: this.actor,
-      gmResult: this.gmResult,
-      gmRerollResult: this.gmRerollResult,
-      helpResult: this.helpResult,
-      helpTerm: this.helpTerm,
-      result: this.result,
+      actor,
+      trait,
+      results,
+      help,
       term: this.dice[0].denomination,
-      trait: this.trait,
-      helpTrait: this.helpTrait,
-      helpActor: this.helpActor,
-      helpDisabled: this.helpResult,
-      narrativiumDisabled: this.gmRerollResult,
+      buttonDisabled: {
+        help: player.help,
+        narrativium: gm.reroll,
+      },
       cssClass: {
-        narrativiumReroll: this.gmResult ? "reroll" : null,
-        playerResult: this.helpResult ? "inactive" : "shift-center",
-        helpResult: this.helpResult ? null : "not-visible",
-        gmResult: this.gmRerollResult ? "inactive" : "shift-center",
-        gmRerollResult: this.gmRerollResult ? null : "not-visible",
+        rerollButton: gm.primary ? "reroll" : null,
+        playerResult: player.help ? "inactive" : "shift-center",
+        helpResult: player.help ? null : "not-visible",
+        gmResult: gm.reroll ? "inactive" : "shift-center",
+        gmRerollResult: gm.reroll ? null : "not-visible",
         playerOutcome: outcomeClass("player"),
         gmOutcome: outcomeClass("gm"),
       },
