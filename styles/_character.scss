@@ -1,3 +1,4 @@
+@use "fonts" as *;
 @use "mixins" as *;
 
 .application.discworld {
@@ -25,7 +26,8 @@
   @include toggle-switch();
 
   label {
-    font-weight: bold;
+    font-family: $font-trattatello;
+    font-size: 1.15rem;
   }
 
   hr {
@@ -70,10 +72,12 @@
 
       h1.name {
         flex: none;
+        font-family: $font-caslon;
 
         input {
           margin: unset;
-          font-size: 2rem;
+          font-size: 2.25rem;
+          font-weight: bold;
         }
       }
 
@@ -82,7 +86,20 @@
         padding: 0 0.25rem;
         padding-top: 0.125rem;
 
+        font-family: $font-caslon;
+        font-size: 1.25rem;
+        font-weight: bold;
+
         .pronouns {
+          text-align: right;
+        }
+
+        input {
+          padding-right: 0.25rem;
+
+          font-size: inherit;
+          font-weight: inherit;
+
           text-align: right;
         }
       }

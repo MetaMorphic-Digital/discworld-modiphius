@@ -1,0 +1,36 @@
+@use "vars" as *;
+
+/* ----------------- Caslon Antique ----------------- */
+@font-face {
+  font-family: "Caslon Antique";
+  src: url("#{$assetsPrefix}/fonts/CaslonAntique.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Caslon Antique";
+  src: url("#{$assetsPrefix}/fonts/CaslonAntique-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Caslon Antique";
+  src: url("#{$assetsPrefix}/fonts/CaslonAntique-BoldItalic.ttf")
+    format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+
+$font-caslon: "Caslon Antique";
+
+/* ------------------- Trattatello ------------------ */
+@font-face {
+  font-family: "Trattatello";
+  src: url("#{$assetsPrefix}/fonts/Trattatello.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+$font-trattatello: "Trattatello";
