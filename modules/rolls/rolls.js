@@ -18,6 +18,7 @@ export default class DiscworldRoll extends Roll {
    * @param {number} [options.helpResult] - The result of help.
    * @param {DiceTermOptions} [options.helpTerm] - The dice term used to roll help.
    * @param {Item} [options.helpTrait] - The Trait used to help.
+   * @param {DiscworldCharacter} [options.helpActor] - The Actor that is offering help.
    */
   constructor(formula, data, options = {}) {
     super(formula, data, options);
@@ -31,6 +32,7 @@ export default class DiscworldRoll extends Roll {
       helpResult,
       helpTerm,
       helpTrait,
+      helpActor,
     } = options;
 
     this.actor = actor;
@@ -42,6 +44,7 @@ export default class DiscworldRoll extends Roll {
     this.helpResult = helpResult || null;
     this.helpTerm = helpTerm || null;
     this.helpTrait = helpTrait || null;
+    this.helpActor = helpActor || null;
   }
 
   /**
@@ -165,6 +168,8 @@ export default class DiscworldRoll extends Roll {
     parentRoll.helpTerm = helpTerm;
     parentRoll.options.helpTrait = trait;
     parentRoll.helpTrait = trait;
+    parentRoll.options.helpActor = trait.actor;
+    parentRoll.helpActor = trait.actor;
 
     // Prepare chat data with updated info.
     const chatData = parentRoll.prepareChatMessageContext();
@@ -231,6 +236,7 @@ export default class DiscworldRoll extends Roll {
       term: this.dice[0].denomination,
       trait: this.trait,
       helpTrait: this.helpTrait,
+      helpActor: this.helpActor,
       helpDisabled: this.helpResult,
       narrativiumDisabled: this.gmRerollResult,
       cssClass: {
