@@ -48,7 +48,7 @@ export default class DiscworldRoll extends Roll {
    * Evaluate the outcome of a test based on whether the
    * player or GM/Narrativium won.
    *
-   * @returns {{
+   * @type {{
    *             status: "tie" | "win" | null,
    *             winner: "gm" | "player" | null
    *          }}
