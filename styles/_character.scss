@@ -7,6 +7,10 @@
   background-size: cover;
   background-image: var(--sheet-background);
 
+  .window-content {
+    backdrop-filter: unset;
+  }
+
   &.help-mode .window-content {
     animation: flash 3s ease-in-out infinite;
 
