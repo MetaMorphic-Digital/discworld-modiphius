@@ -193,10 +193,12 @@ export default class DiscworldRoll extends Roll {
     // Get the parent roll and update it with the Narrativium result.
     const helpResult = helpRoll.result;
     const helpTerm = helpRoll.dice[0].denomination;
-    parentRoll.options.helpResult = helpResult;
-    parentRoll.options.helpTerm = helpTerm;
-    parentRoll.options.helpTrait = trait;
-    parentRoll.options.helpActor = trait.actor;
+    foundry.utils.mergeObject(parentRoll.options, {
+      helpActor: trait.actor,
+      helpTrait: trait,
+      helpResult,
+      helpTerm,
+    });
 
     // Prepare chat data with updated info.
     const chatData = parentRoll.prepareChatMessageContext();
