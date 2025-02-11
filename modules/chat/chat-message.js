@@ -1,4 +1,5 @@
 import DWHelpRoll from "../rolls/help-roll.js";
+import DWNarrativiumRoll from "../rolls/narrativium-roll.js";
 import transitionClass from "../utils/animations.js";
 
 /**
@@ -22,6 +23,18 @@ export default class DiscworldMessage extends ChatMessage {
   /** @type {DWHelpRoll} - The Help roll. */
   get help() {
     return this.rolls.find((roll) => roll instanceof DWHelpRoll);
+  }
+
+  get gmRoll() {
+    return this.rolls.find(
+      (roll) => roll instanceof DWNarrativiumRoll && !roll.options.reroll,
+    );
+  }
+
+  get gmReroll() {
+    return this.rolls.find(
+      (roll) => roll instanceof DWNarrativiumRoll && roll.options.reroll,
+    );
   }
 
   /**
@@ -66,17 +79,27 @@ export default class DiscworldMessage extends ChatMessage {
    * @type {ResultsData}
    */
   get results() {
-    const { options = {} } = this.mainRoll;
+    const { mainRoll, help, gmRoll, gmReroll } = this;
     return {
       gm: {
-        primary: parseInt(options.gmResult) || null,
-        reroll: parseInt(options.gmRerollResult) || null,
+        primary: parseInt(gmRoll?.result) || null,
+        reroll: parseInt(gmReroll?.result) || null,
       },
       player: {
-        primary: parseInt(this.mainRoll.result),
-        help: parseInt(this.help?.result) || null,
+        primary: parseInt(mainRoll.result),
+        help: parseInt(help?.result) || null,
       },
     };
+  }
+
+  /** @override */
+  static async create(data) {
+    const message = await super.create(data);
+    if (!message.isRoll) return message;
+
+    const chatData = await message._prepareContext();
+    const content = await renderTemplate(message.mainRoll.template, chatData);
+    return message.update({ ...data, content });
   }
 
   /** @override */
@@ -84,8 +107,12 @@ export default class DiscworldMessage extends ChatMessage {
     const newRoll = data["+=roll"]; // Special syntax for adding new rolls.
     if (!newRoll) return super.update(data);
 
+    if (game.dice3d) await game.dice3d.showForRoll(newRoll, game.user, true); // Roll Dice So Nice if present.
+    newRoll.dice[0].results[0].hidden = true; // Hide from DSN.
+
     const returnIfInstance = (a, b) => (a instanceof b ? a : null);
     const helpRoll = returnIfInstance(newRoll, DWHelpRoll);
+    const gmRoll = returnIfInstance(newRoll, DWNarrativiumRoll);
 
     let chatDataOverrides;
     if (helpRoll) {
@@ -102,11 +129,33 @@ export default class DiscworldMessage extends ChatMessage {
       };
     }
 
-    const chatData = await this._prepareContext();
-    const content = await renderTemplate(
-      this.mainRoll.template,
-      foundry.utils.mergeObject(chatData, chatDataOverrides),
-    );
+    if (gmRoll) {
+      const { reroll } = gmRoll.options;
+      if (!reroll) {
+        // Fade question mark out / new result in.
+        await this.fadeTextInOut("gmResult", gmRoll.result);
+
+        chatDataOverrides = {
+          "results.gm.primary": gmRoll.result,
+        };
+      }
+
+      if (reroll) {
+        // Slide parent roll icon left. (We're technically sliding it back from the right).
+        await this.slideDiceIcon("gmResult");
+        // Fade in reroll result/icon.
+        await this.fadeDiceIcon("gmRerollResult", gmRoll.result); // Fade result
+
+        chatDataOverrides = {
+          "results.gm.gmReroll": gmRoll.result,
+          "cssClass.results.gmReroll": null,
+          "cssClass.results.gm": "inactive",
+        };
+      }
+    }
+
+    const chatData = await this._prepareContext(chatDataOverrides);
+    const content = await renderTemplate(this.mainRoll.template, chatData);
 
     return super.update({ ...data, content, rolls: [...this.rolls, newRoll] });
   }
@@ -122,7 +171,7 @@ export default class DiscworldMessage extends ChatMessage {
      *                                    or null if the role hasn't been evaluated.
      */
     const outcomeClass = (userRole) => {
-      const { status, winner } = mainRoll.outcome;
+      const { status, winner } = this.outcome;
 
       if (!status) return null; // Opposed roll hasn't been fully evaluated.
 
@@ -130,35 +179,40 @@ export default class DiscworldMessage extends ChatMessage {
       return winner === userRole ? "winner" : "loser";
     };
 
-    const { actor, trait, dice } = mainRoll;
+    const { actor, trait, term } = mainRoll;
     const { results, help } = this;
     const { gm, player } = results;
 
-    return foundry.utils.mergeObject(data, {
-      actor,
-      trait,
-      term: dice[0].denomination,
-      results,
-      help,
-      buttonDisabled: {
-        help: player.help,
-        narrativium: gm.reroll,
-      },
-      cssClass: {
-        rerollButton: gm.primary ? "reroll" : null,
-        results: {
-          player: player.help ? "inactive" : "shift-center",
-          help: player.help ? null : "not-visible",
-          gm: gm.reroll ? "inactive" : "shift-center",
-          gmReroll: gm.reroll ? null : "not-visible",
+    return foundry.utils.mergeObject(
+      {
+        actor,
+        trait,
+        term,
+        results,
+        help,
+        buttonDisabled: {
+          help: player.help,
+          narrativium: gm.reroll,
         },
-        outcome: {
-          gm: outcomeClass("gm"),
-          player: outcomeClass("player"),
+        cssClass: {
+          rerollButton: gm.primary ? "reroll" : null,
+          results: {
+            player: player.help ? "inactive" : "shift-center",
+            help: player.help ? null : "not-visible",
+            gm: gm.reroll ? "inactive" : "shift-center",
+            gmReroll: gm.reroll ? null : "not-visible",
+          },
+          outcome: {
+            gm: outcomeClass("gm"),
+            player: outcomeClass("player"),
+          },
         },
       },
-    });
+      data,
+    );
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Slide the dice icon of a given class name to over from the center of its container.
