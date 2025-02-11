@@ -20,17 +20,19 @@ export default class DiscworldMessage extends ChatMessage {
     return this.rolls[0];
   }
 
-  /** @type {DWHelpRoll} - The Help roll. */
-  get help() {
+  /** @type {DWHelpRoll | undefined} - The Help roll. */
+  get helpRoll() {
     return this.rolls.find((roll) => roll instanceof DWHelpRoll);
   }
 
+  /** @type {DWNarrativiumRoll | undefined} */
   get gmRoll() {
     return this.rolls.find(
       (roll) => roll instanceof DWNarrativiumRoll && !roll.options.reroll,
     );
   }
 
+  /** @type {DWNarrativiumRoll | undefined} */
   get gmReroll() {
     return this.rolls.find(
       (roll) => roll instanceof DWNarrativiumRoll && roll.options.reroll,
@@ -68,30 +70,6 @@ export default class DiscworldMessage extends ChatMessage {
     };
   }
 
-  /**
-   * @typedef {{
-   *            gm: {primary: number|null, reroll: number|null},
-   *            player: {primary: number|null, help: number|null}
-   *          }} ResultsData
-   */
-  /**
-   * Organized data about the results of all rolls.
-   * @type {ResultsData}
-   */
-  get results() {
-    const { mainRoll, help, gmRoll, gmReroll } = this;
-    return {
-      gm: {
-        primary: parseInt(gmRoll?.result) || null,
-        reroll: parseInt(gmReroll?.result) || null,
-      },
-      player: {
-        primary: parseInt(mainRoll.result),
-        help: parseInt(help?.result) || null,
-      },
-    };
-  }
-
   /** @override */
   static async create(data) {
     const message = await super.create(data);
@@ -122,8 +100,8 @@ export default class DiscworldMessage extends ChatMessage {
       await this.fadeDiceIcon("helpResult", helpRoll.result, helpRoll.term);
 
       chatDataOverrides = {
-        help: helpRoll,
-        "results.player.help": helpRoll?.result,
+        helpRoll,
+        "buttonDisabled.help": true,
         "cssClass.results.help": null,
         "cssClass.results.player": "inactive",
       };
@@ -136,7 +114,8 @@ export default class DiscworldMessage extends ChatMessage {
         await this.fadeTextInOut("gmResult", gmRoll.result);
 
         chatDataOverrides = {
-          "results.gm.primary": gmRoll.result,
+          gmRoll,
+          "cssClass.rerollButton": "reroll",
         };
       }
 
@@ -147,7 +126,8 @@ export default class DiscworldMessage extends ChatMessage {
         await this.fadeDiceIcon("gmRerollResult", gmRoll.result); // Fade result
 
         chatDataOverrides = {
-          "results.gm.gmReroll": gmRoll.result,
+          gmReroll: gmRoll,
+          "buttonDisabled.narrativium": true,
           "cssClass.results.gmReroll": null,
           "cssClass.results.gm": "inactive",
         };
@@ -157,11 +137,17 @@ export default class DiscworldMessage extends ChatMessage {
     const chatData = await this._prepareContext(chatDataOverrides);
     const content = await renderTemplate(this.mainRoll.template, chatData);
 
+    // Remove special key.
+    foundry.utils.mergeObject(
+      data,
+      { "-=+=roll": null },
+      { performDeletions: true },
+    );
     return super.update({ ...data, content, rolls: [...this.rolls, newRoll] });
   }
 
-  async _prepareContext(data = {}) {
-    const { mainRoll } = this;
+  async _prepareContext(dataOverrides = {}) {
+    const { mainRoll, helpRoll, gmRoll, gmReroll } = this;
 
     /**
      * Get the class name for a given section of results.
@@ -179,28 +165,23 @@ export default class DiscworldMessage extends ChatMessage {
       return winner === userRole ? "winner" : "loser";
     };
 
-    const { actor, trait, term } = mainRoll;
-    const { results, help } = this;
-    const { gm, player } = results;
-
     return foundry.utils.mergeObject(
       {
-        actor,
-        trait,
-        term,
-        results,
-        help,
+        mainRoll,
+        helpRoll,
+        gmRoll,
+        gmReroll,
         buttonDisabled: {
-          help: player.help,
-          narrativium: gm.reroll,
+          help: helpRoll?.result,
+          narrativium: gmReroll?.result,
         },
         cssClass: {
-          rerollButton: gm.primary ? "reroll" : null,
+          rerollButton: gmRoll?.result ? "reroll" : null,
           results: {
-            player: player.help ? "inactive" : "shift-center",
-            help: player.help ? null : "not-visible",
-            gm: gm.reroll ? "inactive" : "shift-center",
-            gmReroll: gm.reroll ? null : "not-visible",
+            player: helpRoll?.result ? "inactive" : "shift-center",
+            help: helpRoll?.result ? null : "not-visible",
+            gm: gmReroll?.result ? "inactive" : "shift-center",
+            gmReroll: gmReroll?.result ? null : "not-visible",
           },
           outcome: {
             gm: outcomeClass("gm"),
@@ -208,7 +189,7 @@ export default class DiscworldMessage extends ChatMessage {
           },
         },
       },
-      data,
+      dataOverrides,
     );
   }
 
