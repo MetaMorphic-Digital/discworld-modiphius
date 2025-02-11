@@ -17,10 +17,6 @@ export default class DWTraitRoll extends Roll {
    * @param {Item} options.trait - The Item being rolled.
    * @param {number} [options.gmResult] - The GM/Narrativium result.
    * @param {number} [options.gmRerollResult] - The GM's rerolled result.
-   * @param {number} [options.helpResult] - The result of help.
-   * @param {DiceTermOptions} [options.helpTerm] - The dice term used to roll help.
-   * @param {Item} [options.helpTrait] - The Trait used to help.
-   * @param {DiscworldCharacter} [options.helpActor] - The Actor that is offering help.
    */
   constructor(formula, data, options = {}) {
     super(formula, data, options);

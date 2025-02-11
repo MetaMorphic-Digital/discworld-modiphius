@@ -41,22 +41,11 @@ export default class DWHelpRoll extends Roll {
     const rollData = actor?.getRollData() ?? {};
     const roll = new DWHelpRoll(term, rollData, { actor, trait });
     await roll.evaluate();
-    const diceResultData = roll.dice[0].results[0];
-    // if (game.dice3d) await game.dice3d.showForRoll(roll, game.user, true); // Roll Dice So Nice if present.
+    if (game.dice3d) await game.dice3d.showForRoll(roll, game.user, true); // Roll Dice So Nice if present.
 
-    diceResultData.hidden = true;
-
-    // Get the parent roll and update it with the Narrativium result.
-
-    // Prepare chat data with updated info.
-    const chatData = parentRoll.prepareChatMessageContext();
-    const content = await renderTemplate(parentRoll.template, chatData);
-
-    // Slide parent roll icon left. (We're technically sliding it back from the right).
-    await message.slideDiceIcon("playerResult");
-    // Fade in reroll result/icon.
-    await message.fadeDiceIcon("helpResult", roll.result, term);
-
-    return message.update({ content, rolls: [...message.rolls, roll] });
+    roll.dice[0].results[0].hidden = true; // Hide from DSN.
+    return message.update({
+      "+=roll": roll,
+    });
   }
 }
