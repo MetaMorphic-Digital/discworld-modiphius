@@ -1,7 +1,9 @@
+import DWHelpRoll from "./help-roll.js";
+
 /**
  * @extends Roll
  */
-export default class DiscworldRoll extends Roll {
+export default class DWTraitRoll extends Roll {
   /**
    * @typedef {"d4"|"d6"|"d10"|"d12"} DiceTermOptions
    */
@@ -22,10 +24,20 @@ export default class DiscworldRoll extends Roll {
    */
   constructor(formula, data, options = {}) {
     super(formula, data, options);
-    this.template = options.template || this.constructor.DEFAULT_TEMPLATE;
+    this.messageID = options.messageID || null;
   }
 
-  static DEFAULT_TEMPLATE = "systems/discworld/templates/roll-card.hbs";
+  static CHAT_TEMPLATE = "systems/discworld/templates/roll-card.hbs";
+
+  get template() {
+    return this.options.template || this.constructor.CHAT_TEMPLATE;
+  }
+
+  get message() {
+    const { messageID } = this.options;
+    if (!messageID) return null;
+    return game.messages.get(messageID);
+  }
 
   /** @type {DiscworldCharacter} The Actor that initiated the roll. */
   get actor() {
@@ -56,28 +68,16 @@ export default class DiscworldRoll extends Roll {
       },
       player: {
         primary: parseInt(this.result),
-        help: parseInt(options.helpResult) || null,
+        help: parseInt(this.help?.result) || null,
       },
     };
   }
 
-  /**
-   * @typedef {{
-   *            actor: DiscworldCharacter,
-   *            trait: Item,
-   *            result: number,
-   *            term: string
-   *          }} HelpData
-   */
-  /** @type {HelpData} - Organized data about the Help roll. */
+  /** @type {DWHelpRoll} - The Help roll. */
   get help() {
-    const { options = {} } = this;
-    return {
-      actor: options.helpActor || null,
-      trait: options.helpTrait || null,
-      result: parseInt(options.helpResult) || null,
-      term: options.helpTerm || null,
-    };
+    const { message } = this;
+    if (!message) return null;
+    return this.message.rolls.find((roll) => roll instanceof DWHelpRoll);
   }
 
   /**
@@ -121,14 +121,22 @@ export default class DiscworldRoll extends Roll {
    */
   static async createBaseRoll(formula, options) {
     const rollData = options.actor?.getRollData() ?? {};
-    const roll = new DiscworldRoll(formula, rollData, options);
+    const roll = new DWTraitRoll(formula, rollData, options);
 
     const flavor = game.i18n.localize("DISCWORLD.roll.traitRoll");
-    return roll.toMessage({
+    const message = await roll.toMessage({
       // eslint-disable-next-line no-undef
       speaker: getDocumentClass("ChatMessage").getSpeaker(),
       flavor,
     });
+
+    await message.update({
+      rolls: [
+        foundry.utils.mergeObject(roll, { "options.messageID": message.id }),
+      ],
+    });
+
+    return message;
   }
 
   /* -------------------------------------------------- */
@@ -170,44 +178,6 @@ export default class DiscworldRoll extends Roll {
       // Fade in reroll result/icon.
       await message.fadeDiceIcon("gmRerollResult", roll.result); // Fade result
     }
-
-    return message.update({ content, rolls: [parentRoll] });
-  }
-
-  /**
-   * Create a help roll, and update the parent message with the result.
-   *
-   * @param {object} options
-   * @param {DiceTermOptions} options.diceTerm - The term to be rolled.
-   * @param {Item} options.trait - The trait associated with this roll.
-   * @param {DiscworldMessage} options.message - The chat message to update.
-   * @returns {Promise<DiscworldMessage|null>} A promise that resolves to the updated chat message.
-   */
-  static async createHelpRoll({ diceTerm, trait, message } = {}) {
-    const [parentRoll] = message.rolls;
-    if (parentRoll.helpResult) return null;
-
-    const helpRoll = await new Roll(diceTerm).evaluate();
-    if (game.dice3d) await game.dice3d.showForRoll(helpRoll, game.user, true); // Roll Dice So Nice if present.
-
-    // Get the parent roll and update it with the Narrativium result.
-    const helpResult = helpRoll.result;
-    const helpTerm = helpRoll.dice[0].denomination;
-    foundry.utils.mergeObject(parentRoll.options, {
-      helpActor: trait.actor,
-      helpTrait: trait,
-      helpResult,
-      helpTerm,
-    });
-
-    // Prepare chat data with updated info.
-    const chatData = parentRoll.prepareChatMessageContext();
-    const content = await renderTemplate(parentRoll.template, chatData);
-
-    // Slide parent roll icon left. (We're technically sliding it back from the right).
-    await message.slideDiceIcon("playerResult");
-    // Fade in reroll result/icon.
-    await message.fadeDiceIcon("helpResult", helpResult, helpTerm);
 
     return message.update({ content, rolls: [parentRoll] });
   }

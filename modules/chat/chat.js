@@ -1,4 +1,4 @@
-import DiscworldRoll from "../rolls/rolls.js";
+import DWTraitRoll from "../rolls/rolls.js";
 
 /**
  * The Discworld Chat Log. We extend this class to add custom button listeners.
@@ -113,7 +113,7 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
     }
 
     const messageData = DiscworldChatLog.getClickedMessageData(event, target);
-    DiscworldRoll.createNarrativiumRoll(messageData);
+    DWTraitRoll.createNarrativiumRoll(messageData);
   }
 
   /**
