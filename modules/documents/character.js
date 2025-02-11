@@ -1,5 +1,5 @@
 import DWHelpRoll from "../rolls/help-roll.js";
-import DWTraitRoll from "../rolls/rolls.js";
+import DWTraitRoll from "../rolls/trait-roll.js";
 
 export default class DiscworldCharacter extends Actor {
   /**
