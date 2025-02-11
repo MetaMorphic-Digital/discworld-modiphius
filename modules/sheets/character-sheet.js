@@ -1,4 +1,3 @@
-import DiscworldRoll from "../rolls/rolls.js";
 import DiscworldSheetMixin from "./base-document-sheet.js";
 import DISCWORLD from "../config.js";
 
