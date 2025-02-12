@@ -33,7 +33,7 @@ export default class DWHelpRoll extends DWTraitRoll {
     await roll.evaluate();
 
     return message.update({
-      "+=roll": roll,
+      "roll++": roll,
     });
   }
 }

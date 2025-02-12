@@ -53,7 +53,7 @@ export default class DiscworldMessage extends ChatMessage {
 
   /** @override */
   async update(data) {
-    const newRoll = data["+=roll"]; // Special syntax for adding new rolls.
+    const newRoll = data["roll++"]; // Special syntax for adding new rolls.
     if (!newRoll) return super.update(data);
 
     if (game.dice3d) await game.dice3d.showForRoll(newRoll, game.user, true); // Roll Dice So Nice if present.
@@ -95,10 +95,11 @@ export default class DiscworldMessage extends ChatMessage {
     const chatData = await this._prepareContext(chatDataOverrides);
     const content = await renderTemplate(this.mainRoll.template, chatData);
 
-    // Remove special key.
+    // Remove key containing our special syntax, using Foundry's special syntax,
+    // so as to not pass this property on to the `super` call.
     const strippedData = foundry.utils.mergeObject(
       data,
-      { "-=+=roll": null },
+      { "-=roll++": null },
       { performDeletions: true },
     );
     return super.update({

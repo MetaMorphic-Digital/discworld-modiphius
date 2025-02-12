@@ -20,6 +20,6 @@ export default class DWNarrativiumRoll extends Roll {
     // Create Narrativium roll and show 3d dice if DSN installed.
     const roll = await new DWNarrativiumRoll("d8", {}, { reroll }).evaluate();
 
-    return message.update({ "+=roll": roll });
+    return message.update({ "roll++": roll });
   }
 }
