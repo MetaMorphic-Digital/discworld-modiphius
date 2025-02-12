@@ -59,43 +59,30 @@ export default class DiscworldMessage extends ChatMessage {
     if (game.dice3d) await game.dice3d.showForRoll(newRoll, game.user, true); // Roll Dice So Nice if present.
     newRoll.dice[0].results[0].hidden = true; // Hide from DSN.
 
-    const returnIfInstance = (a, b) => (a instanceof b ? a : null);
-    const helpRoll = returnIfInstance(newRoll, DWHelpRoll);
-    const gmRoll = returnIfInstance(newRoll, DWNarrativiumRoll);
-
     const chatDataOverrides = {};
-    if (helpRoll) {
-      // Slide parent roll icon left. (We're technically sliding it back from the right).
-      await this.slideDiceIcon("playerResult");
-      // Fade in reroll result/icon.
-      await this.fadeDiceIcon("helpResult", helpRoll.result, helpRoll.term);
+    switch (true) {
+      case newRoll instanceof DWHelpRoll:
+        await this.animateHelp(newRoll);
 
-      chatDataOverrides.helpRoll = helpRoll;
-    }
+        chatDataOverrides.helpRoll = newRoll;
+        break;
 
-    if (gmRoll) {
-      const { reroll } = gmRoll.options;
-      if (!reroll) {
-        chatDataOverrides.gmRoll = gmRoll;
+      case newRoll instanceof DWNarrativiumRoll: {
+        await this.animateNarrativium(newRoll);
 
-        // Fade question mark out / new result in.
-        await this.fadeTextInOut("gmResult", gmRoll.result);
+        const rollKey = newRoll.options.reroll ? "gmReroll" : "gmRoll";
+        chatDataOverrides[rollKey] = newRoll;
+        break;
       }
 
-      if (reroll) {
-        chatDataOverrides.gmReroll = gmRoll;
-
-        // Slide parent roll icon left. (We're technically sliding it back from the right).
-        await this.slideDiceIcon("gmResult");
-        // Fade in reroll result/icon.
-        await this.fadeDiceIcon("gmRerollResult", gmRoll.result); // Fade result
-      }
+      default:
+        break;
     }
 
     const chatData = await this._prepareContext(chatDataOverrides);
     const content = await renderTemplate(this.mainRoll.template, chatData);
 
-    // Remove key containing our special syntax, using Foundry's special syntax,
+    // Remove key containing our special syntax, by using Foundry's special syntax,
     // so as to not pass this property on to the `super` call.
     const strippedData = foundry.utils.mergeObject(
       data,
@@ -212,7 +199,29 @@ export default class DiscworldMessage extends ChatMessage {
     };
   }
 
-  /* -------------------------------------------------- */
+  /* ---------------- Animation Helpers --------------- */
+
+  async animateHelp(roll) {
+    // Slide parent roll icon left. (We're technically sliding it back from the right).
+    await this.slideDiceIcon("playerResult");
+    // Fade in reroll result/icon.
+    await this.fadeDiceIcon("helpResult", roll.result, roll.term);
+  }
+
+  async animateNarrativium(roll) {
+    const { isReroll } = roll.options;
+    if (!isReroll) {
+      // Fade question mark out / new result in.
+      await this.fadeTextInOut("gmResult", roll.result);
+    }
+
+    if (isReroll) {
+      // Slide parent roll icon left. (We're technically sliding it back from the right).
+      await this.slideDiceIcon("gmResult");
+      // Fade in reroll result/icon.
+      await this.fadeDiceIcon("gmRerollResult", roll.result); // Fade result
+    }
+  }
 
   /**
    * Slide the dice icon of a given class name to over from the center of its container.
