@@ -5,13 +5,10 @@ import transitionClass from "../utils/animations.js";
 
 /**
  * Discworld chat message class.
+ * @extends ChatMessage
  */
 export default class DiscworldMessage extends ChatMessage {
-  /**
-   * Retrieve the HTML element for this message from the chat log.
-   *
-   * @returns {HTMLElement} The message element from the chat log.
-   */
+  /** @type {HTMLElement} The message element from the chat log. */
   get element() {
     const chatLog = document.getElementById("chat");
     return chatLog.querySelector(`li[data-message-id="${this.id}"]`);
@@ -41,17 +38,31 @@ export default class DiscworldMessage extends ChatMessage {
     );
   }
 
-  /** @override */
+  /**
+   * Intercept creation of chat message to inject the roll template,
+   * if applicable.
+   *
+   * @override
+   * @param {object} data - The chat message data.
+   * @returns {Promise<DiscworldMessage>}
+   */
   static async create(data) {
-    const message = await super.create(data);
-    if (!(message.mainRoll instanceof DWTraitRoll)) return message;
+    const message = new DiscworldMessage(data);
+    if (!(message.mainRoll instanceof DWTraitRoll))
+      return super.create(message);
 
     const chatData = await message._prepareContext();
     const content = await renderTemplate(message.mainRoll.template, chatData);
-    return message.update({ ...data, content });
+    return super.create({ ...data, content });
   }
 
-  /** @override */
+  /**
+   * Intercept update of chat message to perform.
+   *
+   * @override
+   * @param {object} data - The chat message data.
+   * @returns {Promise<DiscworldMessage>}
+   */
   async update(data) {
     const newRoll = data["roll++"]; // Special syntax for adding new rolls.
     if (!newRoll) return super.update(data);
@@ -94,6 +105,16 @@ export default class DiscworldMessage extends ChatMessage {
     });
   }
 
+  /**
+   * Prepare the context for rendering a chat message by merging roll data
+   * with any provided overrides. Additionally, prepare CSS data for styling
+   * the message based on the roll results.
+   *
+   * @param {object} [dataOverrides={}] - Optional data to override default roll data.
+   * @returns {Promise<object>} - The prepared context including roll data and CSS.
+   * @property {object} css
+   *
+   */
   async _prepareContext(dataOverrides = {}) {
     const { mainRoll, helpRoll, gmRoll, gmReroll } = this;
     const rollData = {
@@ -111,25 +132,43 @@ export default class DiscworldMessage extends ChatMessage {
 
   /**
    * @typedef {'gm' | 'player'} UserRoles
+   * @typedef {'winner' | 'loser' | 'tie' | null} OutcomeClassOptions
+   * @typedef {"inactive" | "shift-center"} BaseRollClassOptions
+   * @typedef {"not-visible" | null} RerollClassOptions
    *
-   * @typedef {object} RollContext - Roll data.
+   * @typedef {object} RollContext
    * @property {DWTraitRoll} [mainRoll]
    * @property {DWHelpRoll} [helpRoll]
    * @property {DWNarrativiumRoll} [gmRoll]
    * @property {DWNarrativiumRoll} [gmReroll]
+   *
+   * @typedef {object} CssData
+   * @property {object} css.buttonDisabled
+   * @property {boolean} css.buttonDisabled.help
+   * @property {boolean} css.buttonDisabled.narrativium
+   * @property {"reroll" | null} css.rerollButton
+   * @property {object} css.result
+   * @property {BaseRollClassOptions} css.result.player
+   * @property {RerollClassOptions} css.result.help
+   * @property {BaseRollClassOptions} css.result.gm
+   * @property {RerollClassOptions} css.result.gmReroll
+   * @property {object} css.outcome
+   * @property {OutcomeClassOptions} css.outcome.gm
+   * @property {OutcomeClassOptions} css.outcome.player
    */
 
   /**
+   * Prepare CSS data for styling a chat message based on the roll results.
    *
    * @param {RollContext} [context] - The context to evaluate.
-   * @returns {object} - The prepared CSS data.
+   * @returns {CssData} - The prepared CSS data.
    */
   _prepareCssData(context = {}) {
     /**
      * Get the class name for a given section of results.
      *
      * @param {UserRoles} userRole - The user role to get the class for.
-     * @returns {"winner"|"loser"|"tie"|null} - The class name for the winner,
+     * @returns {OutcomeClass} - The class name for the winner,
      *                                    or null if the role hasn't been evaluated.
      */
     const outcomeClass = (userRole) => {
@@ -145,15 +184,15 @@ export default class DiscworldMessage extends ChatMessage {
 
     return {
       buttonDisabled: {
-        help: helpRoll?.result,
-        narrativium: gmReroll?.result,
+        help: helpRoll?._evaluated,
+        narrativium: gmReroll?._evaluated,
       },
-      rerollButton: gmRoll?.result ? "reroll" : null,
+      rerollButton: gmRoll?._evaluated ? "reroll" : null,
       result: {
-        player: helpRoll?.result ? "inactive" : "shift-center",
-        help: helpRoll?.result ? null : "not-visible",
-        gm: gmReroll?.result ? "inactive" : "shift-center",
-        gmReroll: gmReroll?.result ? null : "not-visible",
+        player: helpRoll?._evaluated ? "inactive" : "shift-center",
+        help: helpRoll?._evaluated ? null : "not-visible",
+        gm: gmReroll?._evaluated ? "inactive" : "shift-center",
+        gmReroll: gmReroll?._evaluated ? null : "not-visible",
       },
       outcome: {
         gm: outcomeClass("gm"),
@@ -200,27 +239,40 @@ export default class DiscworldMessage extends ChatMessage {
 
   /* ---------------- Animation Helpers --------------- */
 
+  /**
+   * Delegates chat animation of a roll result, based on the type of roll.
+   *
+   * @param {DWHelpRoll | DWNarrativiumRoll} roll - The roll to animate.
+   * @returns {Promise<void>}
+   */
   async animateRoll(roll) {
     if (roll instanceof DWHelpRoll) return this.animateHelp(roll);
     return this.animateNarrativium(roll);
   }
 
+  /**
+   * Handles animation of a Help roll.
+   *
+   * @param {DWHelpRoll} roll - The roll to animate.
+   * @returns {Promise<void>}
+   */
   async animateHelp(roll) {
-    // Slide parent roll icon left. (We're technically sliding it back from the right).
     await this.slideDiceIcon("playerResult");
-    // Fade in reroll result/icon.
     await this.fadeDiceIcon("helpResult", roll.result, roll.term);
   }
 
+  /**
+   * Handles animation of a Narrativium roll, whether it's regular or reroll.
+   *
+   * @param {DWNarrativiumRoll} roll - The roll to animate.
+   * @returns {Promise<void>}
+   */
   async animateNarrativium(roll) {
     const { reroll } = roll.options;
     if (reroll) {
-      // Slide parent roll icon left. (We're technically sliding it back from the right).
       await this.slideDiceIcon("gmResult");
-      // Fade in reroll result/icon.
-      await this.fadeDiceIcon("gmRerollResult", roll.result); // Fade result
+      await this.fadeDiceIcon("gmRerollResult", roll.result);
     } else {
-      // Fade question mark out / new result in.
       await this.fadeTextInOut("gmResult", roll.result);
     }
   }

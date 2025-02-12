@@ -40,7 +40,7 @@ export default class DWTraitRoll extends Roll {
   }
 
   /**
-   * Create a base Trait roll.
+   * Create a base Trait roll and send to chat.
    *
    * @param {DiceTermOptions} formula - The roll formula.
    * @param {object} [options] - The options to pass to the `DiscworldRoll` constructor.
