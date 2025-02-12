@@ -44,7 +44,7 @@ export default class DiscworldMessage extends ChatMessage {
   /** @override */
   static async create(data) {
     const message = await super.create(data);
-    if (!message.isRoll) return message;
+    if (!(message.mainRoll instanceof DWTraitRoll)) return message;
 
     const chatData = await message._prepareContext();
     const content = await renderTemplate(message.mainRoll.template, chatData);
