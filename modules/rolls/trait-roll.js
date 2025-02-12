@@ -53,7 +53,6 @@ export default class DWTraitRoll extends Roll {
 
     const flavor = game.i18n.localize("DISCWORLD.roll.traitRoll");
     return roll.toMessage({
-      // eslint-disable-next-line no-undef
       speaker: getDocumentClass("ChatMessage").getSpeaker(),
       flavor,
     });

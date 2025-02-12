@@ -191,7 +191,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
    * @returns {Promise<void>}
    */
   static async #addTrait(traitType) {
-    // eslint-disable-next-line no-undef
     const newTrait = await getDocumentClass("Item").create(
       {
         type: "trait",
