@@ -13,24 +13,15 @@ export default class DWTraitRoll extends Roll {
    * @param {object} options - An object with additional options.
    * @param {DiscworldCharacter} options.actor - The Actor being rolled for.
    * @param {Item} options.trait - The Item being rolled.
-   * @param {number} [options.gmResult] - The GM/Narrativium result.
-   * @param {number} [options.gmRerollResult] - The GM's rerolled result.
    */
   constructor(formula, data, options = {}) {
     super(formula, data, options);
-    this.messageID = options.messageID || null;
   }
 
   static CHAT_TEMPLATE = "systems/discworld/templates/roll-card.hbs";
 
   get template() {
     return this.options.template || this.constructor.CHAT_TEMPLATE;
-  }
-
-  get message() {
-    const { messageID } = this.options;
-    if (!messageID) return null;
-    return game.messages.get(messageID);
   }
 
   /** @type {DiscworldCharacter} The Actor that initiated the roll. */
@@ -61,18 +52,10 @@ export default class DWTraitRoll extends Roll {
     const roll = new DWTraitRoll(formula, rollData, options);
 
     const flavor = game.i18n.localize("DISCWORLD.roll.traitRoll");
-    const message = await roll.toMessage({
+    return roll.toMessage({
       // eslint-disable-next-line no-undef
       speaker: getDocumentClass("ChatMessage").getSpeaker(),
       flavor,
     });
-
-    await message.update({
-      rolls: [
-        foundry.utils.mergeObject(roll, { "options.messageID": message.id }),
-      ],
-    });
-
-    return message;
   }
 }

@@ -24,9 +24,6 @@ export default class DWHelpRoll extends DWTraitRoll {
    * @returns {Promise<DiscworldMessage|null>} A promise that resolves to the updated chat message.
    */
   static async createHelpRoll({ term, trait, message }) {
-    const [parentRoll] = message.rolls;
-    if (parentRoll.helpResult) return null;
-
     const { actor } = trait;
     const rollData = actor?.getRollData() ?? {};
     const roll = new DWHelpRoll(term, rollData, { actor, trait });

@@ -60,6 +60,9 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
    * @returns {void}
    */
   static async #onHelp(event, target) {
+    const { message } = DiscworldChatLog.getClickedMessageData(event, target);
+    if (message.helpRoll) return;
+
     const controlledTokens = canvas.tokens.controlled;
     if (controlledTokens.length > 1) {
       ui.notifications.warn("DISCWORLD.chat.warning.singleTokenSelect", {
@@ -89,8 +92,6 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
       );
       return;
     }
-
-    const { message } = DiscworldChatLog.getClickedMessageData(event, target);
 
     // Wait for a Trait to be rolled.
     actor.resolveHelpMode(message);
