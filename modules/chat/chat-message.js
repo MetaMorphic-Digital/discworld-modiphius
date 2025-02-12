@@ -1,5 +1,6 @@
 import DWHelpRoll from "../rolls/help-roll.js";
 import DWNarrativiumRoll from "../rolls/narrativium-roll.js";
+import DWTraitRoll from "../rolls/trait-roll.js";
 import transitionClass from "../utils/animations.js";
 
 /**
@@ -16,11 +17,12 @@ export default class DiscworldMessage extends ChatMessage {
     return chatLog.querySelector(`li[data-message-id="${this.id}"]`);
   }
 
+  /** @type {DWTraitRoll} */
   get mainRoll() {
     return this.rolls[0];
   }
 
-  /** @type {DWHelpRoll | undefined} - The Help roll. */
+  /** @type {DWHelpRoll | undefined} */
   get helpRoll() {
     return this.rolls.find((roll) => roll instanceof DWHelpRoll);
   }
@@ -37,37 +39,6 @@ export default class DiscworldMessage extends ChatMessage {
     return this.rolls.find(
       (roll) => roll instanceof DWNarrativiumRoll && roll.options.reroll,
     );
-  }
-
-  /**
-   * Evaluate the outcome of a test based on whether the
-   * player or GM/Narrativium won.
-   * @type {{
-   *           status: "tie" | "win" | null,
-   *           winner: "gm" | "player" | null
-   *       }}
-   *     - An object with `status` and `winner` properties.
-   */
-  get outcome() {
-    const { results } = this;
-
-    if (!results.gm.primary) {
-      return { status: null, winner: null };
-    }
-
-    const finalGmResult = results.gm.reroll ?? results.gm.primary;
-    const finalPlayerResult = results.player.help ?? results.player.primary;
-
-    if (finalGmResult === finalPlayerResult) {
-      return { status: "tie", winner: null };
-    }
-
-    const gmWins = finalGmResult > finalPlayerResult;
-
-    return {
-      status: "win",
-      winner: gmWins ? "gm" : "player",
-    };
   }
 
   /** @override */
@@ -92,45 +63,32 @@ export default class DiscworldMessage extends ChatMessage {
     const helpRoll = returnIfInstance(newRoll, DWHelpRoll);
     const gmRoll = returnIfInstance(newRoll, DWNarrativiumRoll);
 
-    let chatDataOverrides;
+    const chatDataOverrides = {};
     if (helpRoll) {
       // Slide parent roll icon left. (We're technically sliding it back from the right).
       await this.slideDiceIcon("playerResult");
       // Fade in reroll result/icon.
       await this.fadeDiceIcon("helpResult", helpRoll.result, helpRoll.term);
 
-      chatDataOverrides = {
-        helpRoll,
-        "buttonDisabled.help": true,
-        "cssClass.results.help": null,
-        "cssClass.results.player": "inactive",
-      };
+      chatDataOverrides.helpRoll = helpRoll;
     }
 
     if (gmRoll) {
       const { reroll } = gmRoll.options;
       if (!reroll) {
+        chatDataOverrides.gmRoll = gmRoll;
+
         // Fade question mark out / new result in.
         await this.fadeTextInOut("gmResult", gmRoll.result);
-
-        chatDataOverrides = {
-          gmRoll,
-          "cssClass.rerollButton": "reroll",
-        };
       }
 
       if (reroll) {
+        chatDataOverrides.gmReroll = gmRoll;
+
         // Slide parent roll icon left. (We're technically sliding it back from the right).
         await this.slideDiceIcon("gmResult");
         // Fade in reroll result/icon.
         await this.fadeDiceIcon("gmRerollResult", gmRoll.result); // Fade result
-
-        chatDataOverrides = {
-          gmReroll: gmRoll,
-          "buttonDisabled.narrativium": true,
-          "cssClass.results.gmReroll": null,
-          "cssClass.results.gm": "inactive",
-        };
       }
     }
 
@@ -138,26 +96,57 @@ export default class DiscworldMessage extends ChatMessage {
     const content = await renderTemplate(this.mainRoll.template, chatData);
 
     // Remove special key.
-    foundry.utils.mergeObject(
+    const strippedData = foundry.utils.mergeObject(
       data,
       { "-=+=roll": null },
       { performDeletions: true },
     );
-    return super.update({ ...data, content, rolls: [...this.rolls, newRoll] });
+    return super.update({
+      ...strippedData,
+      content,
+      rolls: [...this.rolls, newRoll],
+    });
   }
 
   async _prepareContext(dataOverrides = {}) {
     const { mainRoll, helpRoll, gmRoll, gmReroll } = this;
+    const rollData = {
+      mainRoll,
+      helpRoll,
+      gmRoll,
+      gmReroll,
+    };
+    const context = foundry.utils.mergeObject(rollData, dataOverrides);
 
+    context.css = this._prepareCssData(context);
+
+    return context;
+  }
+
+  /**
+   * @typedef {'gm' | 'player'} UserRoles
+   * @typedef {object} RollContext - The context to evaluate.
+   * @property {DWTraitRoll} [mainRoll]
+   * @property {DWHelpRoll} [helpRoll]
+   * @property {DWNarrativiumRoll} [gmRoll]
+   * @property {DWNarrativiumRoll} [gmReroll]
+   */
+
+  /**
+   *
+   * @param {RollContext} [context] - The context to evaluate.
+   * @returns {object} - The prepared CSS data.
+   */
+  _prepareCssData(context = {}) {
     /**
      * Get the class name for a given section of results.
      *
-     * @param {"gm"|"player"} userRole - The user role to get the class for.
+     * @param {UserRoles} userRole - The user role to get the class for.
      * @returns {"winner"|"loser"|"tie"|null} - The class name for the winner,
      *                                    or null if the role hasn't been evaluated.
      */
     const outcomeClass = (userRole) => {
-      const { status, winner } = this.outcome;
+      const { status, winner } = this.outcome(context);
 
       if (!status) return null; // Opposed roll hasn't been fully evaluated.
 
@@ -165,32 +154,61 @@ export default class DiscworldMessage extends ChatMessage {
       return winner === userRole ? "winner" : "loser";
     };
 
-    return foundry.utils.mergeObject(
-      {
-        mainRoll,
-        helpRoll,
-        gmRoll,
-        gmReroll,
-        buttonDisabled: {
-          help: helpRoll?.result,
-          narrativium: gmReroll?.result,
-        },
-        cssClass: {
-          rerollButton: gmRoll?.result ? "reroll" : null,
-          results: {
-            player: helpRoll?.result ? "inactive" : "shift-center",
-            help: helpRoll?.result ? null : "not-visible",
-            gm: gmReroll?.result ? "inactive" : "shift-center",
-            gmReroll: gmReroll?.result ? null : "not-visible",
-          },
-          outcome: {
-            gm: outcomeClass("gm"),
-            player: outcomeClass("player"),
-          },
-        },
+    const { helpRoll, gmRoll, gmReroll } = context;
+
+    return {
+      buttonDisabled: {
+        help: helpRoll?.result,
+        narrativium: gmReroll?.result,
       },
-      dataOverrides,
-    );
+      rerollButton: gmRoll?.result ? "reroll" : null,
+      result: {
+        player: helpRoll?.result ? "inactive" : "shift-center",
+        help: helpRoll?.result ? null : "not-visible",
+        gm: gmReroll?.result ? "inactive" : "shift-center",
+        gmReroll: gmReroll?.result ? null : "not-visible",
+      },
+      outcome: {
+        gm: outcomeClass("gm"),
+        player: outcomeClass("player"),
+      },
+    };
+  }
+
+  /**
+   * Evaluate the outcome of a test based on whether the
+   * player or GM/Narrativium won.
+   *
+   * @param {RollContext} [context] - The context to evaluate.
+   * @returns {{
+   *             status: "tie" | "win" | null,
+   *             winner: UserRoles | null
+   *          }}
+   *          - An object with `status` and `winner` properties.
+   */
+  outcome({
+    mainRoll = this.mainRoll,
+    helpRoll = this.helpRoll,
+    gmRoll = this.gmRoll,
+    gmReroll = this.gmReroll,
+  } = {}) {
+    if (!gmRoll?.result) {
+      return { status: null, winner: null };
+    }
+
+    const finalGmResult = gmReroll?.result ?? gmRoll?.result;
+    const finalPlayerResult = helpRoll?.result ?? mainRoll?.result;
+
+    if (finalGmResult === finalPlayerResult) {
+      return { status: "tie", winner: null };
+    }
+
+    const gmWins = finalGmResult > finalPlayerResult;
+
+    return {
+      status: "win",
+      winner: gmWins ? "gm" : "player",
+    };
   }
 
   /* -------------------------------------------------- */

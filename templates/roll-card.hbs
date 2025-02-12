@@ -10,17 +10,17 @@
   <div class="flexrow dice-rolls">
     <!-- Player Results -->
     <div class="outcome-container">
-      <button data-action="help" class="help" {{disabled buttonDisabled.help }}>
+      <button data-action="help" class="help" {{disabled css.buttonDisabled.help }}>
         {{localize "DISCWORLD.chat.postRollActions.help"}}
         <i class="fas fa-dice"></i>
       </button>
 
-      <ol class="result {{cssClass.outcome.player}}">
-        <li class="playerResult {{mainRoll.term}} flexrow {{cssClass.results.player}}">
+      <ol class="result {{css.outcome.player}}">
+        <li class="playerResult {{mainRoll.term}} flexrow {{css.result.player}}">
           <span>{{mainRoll.result}}</span>
         </li>
 
-        <li class="helpResult {{helpRoll.term}} flexrow {{cssClass.results.help}}">
+        <li class="helpResult {{helpRoll.term}} flexrow {{css.result.help}}">
           <span>{{helpRoll.result}}</span>
         </li>
       </ol>
@@ -28,9 +28,9 @@
     <!-- Narrativium Results -->
     <div class="outcome-container">
       <button data-action="narrativium"
-              class="narrativium {{cssClass.rerollButton}}"
-              {{disabled buttonDisabled.narrativium }}>
-        {{#if cssClass.rerollButton }}
+              class="narrativium {{css.rerollButton}}"
+              {{disabled css.buttonDisabled.narrativium }}>
+        {{#if css.rerollButton }}
           {{localize "DISCWORLD.chat.postRollActions.reroll"}}
         {{else}}
           {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
@@ -38,8 +38,8 @@
         <i class="fas fa-dice"></i>
       </button>
 
-      <ol class="result {{cssClass.outcome.gm }}">
-        <li class="gmResult d8 flexrow {{cssClass.results.gm}}">
+      <ol class="result {{css.outcome.gm }}">
+        <li class="gmResult d8 flexrow {{css.result.gm}}">
           <span>
             {{#if gmRoll.result }}
               {{gmRoll.result}}
@@ -49,7 +49,7 @@
           </span>
         </li>
 
-        <li class="gmRerollResult d8 flexrow {{cssClass.results.gmReroll}}">
+        <li class="gmRerollResult d8 flexrow {{css.result.gmReroll}}">
           <span>{{gmReroll.result}}</span>
         </li>
       </ol>
