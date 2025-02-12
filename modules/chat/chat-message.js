@@ -111,7 +111,8 @@ export default class DiscworldMessage extends ChatMessage {
 
   /**
    * @typedef {'gm' | 'player'} UserRoles
-   * @typedef {object} RollContext - The context to evaluate.
+   *
+   * @typedef {object} RollContext - Roll data.
    * @property {DWTraitRoll} [mainRoll]
    * @property {DWHelpRoll} [helpRoll]
    * @property {DWNarrativiumRoll} [gmRoll]
@@ -200,19 +201,8 @@ export default class DiscworldMessage extends ChatMessage {
   /* ---------------- Animation Helpers --------------- */
 
   async animateRoll(roll) {
-    switch (true) {
-      case roll instanceof DWHelpRoll:
-        await this.animateHelp(roll);
-        break;
-
-      case roll instanceof DWNarrativiumRoll: {
-        await this.animateNarrativium(roll);
-        break;
-      }
-
-      default:
-        break;
-    }
+    if (roll instanceof DWHelpRoll) return this.animateHelp(roll);
+    return this.animateNarrativium(roll);
   }
 
   async animateHelp(roll) {
