@@ -59,17 +59,15 @@ export default class DiscworldMessage extends ChatMessage {
     if (game.dice3d) await game.dice3d.showForRoll(newRoll, game.user, true); // Roll Dice So Nice if present.
     newRoll.dice[0].results[0].hidden = true; // Hide from DSN.
 
+    await this.animateRoll(newRoll);
+
     const chatDataOverrides = {};
     switch (true) {
       case newRoll instanceof DWHelpRoll:
-        await this.animateHelp(newRoll);
-
         chatDataOverrides.helpRoll = newRoll;
         break;
 
       case newRoll instanceof DWNarrativiumRoll: {
-        await this.animateNarrativium(newRoll);
-
         const rollKey = newRoll.options.reroll ? "gmReroll" : "gmRoll";
         chatDataOverrides[rollKey] = newRoll;
         break;
@@ -201,6 +199,22 @@ export default class DiscworldMessage extends ChatMessage {
 
   /* ---------------- Animation Helpers --------------- */
 
+  async animateRoll(roll) {
+    switch (true) {
+      case roll instanceof DWHelpRoll:
+        await this.animateHelp(roll);
+        break;
+
+      case roll instanceof DWNarrativiumRoll: {
+        await this.animateNarrativium(roll);
+        break;
+      }
+
+      default:
+        break;
+    }
+  }
+
   async animateHelp(roll) {
     // Slide parent roll icon left. (We're technically sliding it back from the right).
     await this.slideDiceIcon("playerResult");
@@ -209,17 +223,15 @@ export default class DiscworldMessage extends ChatMessage {
   }
 
   async animateNarrativium(roll) {
-    const { isReroll } = roll.options;
-    if (!isReroll) {
-      // Fade question mark out / new result in.
-      await this.fadeTextInOut("gmResult", roll.result);
-    }
-
-    if (isReroll) {
+    const { reroll } = roll.options;
+    if (reroll) {
       // Slide parent roll icon left. (We're technically sliding it back from the right).
       await this.slideDiceIcon("gmResult");
       // Fade in reroll result/icon.
       await this.fadeDiceIcon("gmRerollResult", roll.result); // Fade result
+    } else {
+      // Fade question mark out / new result in.
+      await this.fadeTextInOut("gmResult", roll.result);
     }
   }
 
