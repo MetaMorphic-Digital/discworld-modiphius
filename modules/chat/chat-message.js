@@ -192,18 +192,18 @@ export default class DiscworldMessage extends ChatMessage {
     gmRoll = this.gmRoll,
     gmReroll = this.gmReroll,
   } = {}) {
-    if (!gmRoll?.result) {
+    if (!gmRoll?.total) {
       return { status: null, winner: null };
     }
 
-    const finalGmResult = gmReroll?.result ?? gmRoll?.result;
-    const finalPlayerResult = helpRoll?.result ?? mainRoll?.result;
+    const finalGmTotal = gmReroll?.total ?? gmRoll?.total;
+    const finalPlayerTotal = helpRoll?.total ?? mainRoll?.total;
 
-    if (finalGmResult === finalPlayerResult) {
+    if (finalGmTotal === finalPlayerTotal) {
       return { status: "tie", winner: null };
     }
 
-    const gmWins = finalGmResult > finalPlayerResult;
+    const gmWins = finalGmTotal > finalPlayerTotal;
 
     return {
       status: "win",
