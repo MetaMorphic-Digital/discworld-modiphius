@@ -16,9 +16,9 @@ export default class DWNarrativiumRoll extends Roll {
     const resultKey = reroll ? "gmReroll" : "gmRoll";
     if (foundry.utils.getProperty(message, resultKey)) return null;
 
-    // Create Narrativium roll and show 3d dice if DSN installed.
+    // Create Narrativium roll.
     const roll = await new DWNarrativiumRoll("d8", {}, { reroll }).evaluate();
 
-    return message.update({ "roll++": roll });
+    return message.addRoll(roll);
   }
 }

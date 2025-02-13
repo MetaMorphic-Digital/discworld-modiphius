@@ -57,30 +57,32 @@ export default class DiscworldMessage extends ChatMessage {
   }
 
   /**
-   * Intercept update of chat message to perform.
+   * Add a roll to the chat message. Animate the 3d dice (if present),
+   * animate the chat message, finally, update the database.
    *
    * @override
-   * @param {object} data - The chat message data.
+   * @param {DWHelpRoll | DWNarrativiumRoll} roll - The roll to add.
    * @returns {Promise<DiscworldMessage>}
    */
-  async update(data) {
-    const newRoll = data["roll++"]; // Special syntax for adding new rolls.
-    if (!newRoll) return super.update(data);
+  async addRoll(roll) {
+    // Creating an update to `ChatMessage#rolls` (as we do in this function) triggers a DiceSoNice animation.
+    // However, the dice animation and the chat animation must happen before the database update (which occurs last).
+    // So, we manually trigger it first, using DiceSoNice's API and *then* hide the dice from DSN, so it doesn't get
+    // triggered a 2nd time when the chat message is updated.
+    if (game.dice3d) await game.dice3d.showForRoll(roll, game.user, true); // Roll Dice So Nice if present.
+    roll.dice[0].results[0].hidden = true; // Hide from DSN.
 
-    if (game.dice3d) await game.dice3d.showForRoll(newRoll, game.user, true); // Roll Dice So Nice if present.
-    newRoll.dice[0].results[0].hidden = true; // Hide from DSN.
-
-    await this.animateRoll(newRoll);
+    await this.animateRoll(roll);
 
     const chatDataOverrides = {};
     switch (true) {
-      case newRoll instanceof DWHelpRoll:
-        chatDataOverrides.helpRoll = newRoll;
+      case roll instanceof DWHelpRoll:
+        chatDataOverrides.helpRoll = roll;
         break;
 
-      case newRoll instanceof DWNarrativiumRoll: {
-        const rollKey = newRoll.options.reroll ? "gmReroll" : "gmRoll";
-        chatDataOverrides[rollKey] = newRoll;
+      case roll instanceof DWNarrativiumRoll: {
+        const rollKey = roll.options.reroll ? "gmReroll" : "gmRoll";
+        chatDataOverrides[rollKey] = roll;
         break;
       }
 
@@ -91,17 +93,9 @@ export default class DiscworldMessage extends ChatMessage {
     const chatData = await this._prepareContext(chatDataOverrides);
     const content = await renderTemplate(this.mainRoll.template, chatData);
 
-    // Remove key containing our special syntax, by using Foundry's special syntax,
-    // so as to not pass this property on to the `super` call.
-    const strippedData = foundry.utils.mergeObject(
-      data,
-      { "-=roll++": null },
-      { performDeletions: true },
-    );
-    return super.update({
-      ...strippedData,
+    return this.update({
       content,
-      rolls: [...this.rolls, newRoll],
+      rolls: [...this.rolls, roll],
     });
   }
 
