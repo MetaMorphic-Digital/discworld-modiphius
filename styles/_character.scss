@@ -135,7 +135,7 @@
     }
   }
 
-  section.sheet-body {
+  section.tab {
     .trait-type {
       label {
         align-self: flex-start;
@@ -149,7 +149,7 @@
     }
   }
 
-  footer.sheet-footer {
+  section.description {
     gap: 0.5rem;
     line-height: unset;
     height: 100%;

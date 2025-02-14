@@ -25,11 +25,15 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     header: {
       template: "systems/discworld/templates/character-sheet/header.hbs",
     },
-    main: {
-      template: "systems/discworld/templates/character-sheet/main.hbs",
+    tabs: {
+      template: "templates/generic/tab-navigation.hbs",
     },
-    footer: {
-      template: "systems/discworld/templates/character-sheet/footer.hbs",
+    traits: {
+      template: "systems/discworld/templates/character-sheet/traits-tab.hbs",
+    },
+    description: {
+      template:
+        "systems/discworld/templates/character-sheet/description-tab.hbs",
     },
   };
 
@@ -51,6 +55,25 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
     const { document } = this;
     const { system } = document;
+
+    if (!this.tabGroups.primary) this.tabGroups.primary = "traits";
+
+    context.tabs = {
+      traits: {
+        cssClass: this.tabGroups.primary === "traits" ? "active" : "",
+        group: "primary",
+        id: "traits",
+        icon: "",
+        label: "DISCWORLD.sheet.tabs.traits",
+      },
+      description: {
+        cssClass: this.tabGroups.primary === "description" ? "active" : "",
+        group: "primary",
+        id: "description",
+        icon: "",
+        label: "DISCWORLD.sheet.tabs.description",
+      },
+    };
 
     // Prepare input fields.
     context.fields = {
@@ -103,12 +126,23 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     return context;
   }
 
+  async _preparePartContext(partId, context) {
+    switch (partId) {
+      case "description":
+      case "traits":
+        context.tab = context.tabs[partId];
+        break;
+      default:
+    }
+    return context;
+  }
+
   /** @override */
   _onRender() {
     super._onRender();
 
     // Edit Trait by right-click.
-    const sheetBody = this.element.querySelector("section.sheet-body");
+    const sheetBody = this.element.querySelector("section.traits");
     sheetBody.addEventListener("contextmenu", (event) => {
       const { itemId } = event.target.dataset;
       if (!itemId) return;
