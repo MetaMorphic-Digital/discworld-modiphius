@@ -2,6 +2,8 @@
 @use "mixins" as *;
 
 .application.discworld {
+  overflow: visible;
+
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

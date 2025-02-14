@@ -1,7 +1,9 @@
+@use "vars" as *;
+
 body.theme-dark {
-  --sheet-background: url("/systems/discworld/assets/sheet/sheet-background-dark.webp");
+  --sheet-background: url("#{$assetsPrefix}/sheet/sheet-background-dark.webp");
 }
 
 body.theme-light {
-  --sheet-background: url("/systems/discworld/assets/sheet/sheet-background-light.webp");
+  --sheet-background: url("#{$assetsPrefix}/sheet/sheet-background-light.webp");
 }
