@@ -6,13 +6,25 @@
        title="{{document.name}}" />
 
   <div class="name-pronouns-container flexcol">
+    <div data-tooltip="{{localize "DISCWORLD.sheet.toggleSheetMode"}}">
+      {{> (systemFilePath "templates/mixins/toggle-switch.hbs")}}
+    </div>
     <h1 class="name flexrow">
       {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
     </h1>
 
     <div class="pronouns-subrow flexrow">
-      <div data-tooltip="{{localize "DISCWORLD.sheet.toggleSheetMode"}}">
-        {{> (systemFilePath "templates/mixins/toggle-switch.hbs")}}
+      <div class="luck-container flexrow">
+        <label>{{localize "DISCWORLD.character.luck"}}:</label>
+        <div class="flexrow">
+          {{formInput fields.luckValue.field value=fields.luckValue.value}}
+          /
+          {{#if isEditMode }}
+            {{formInput fields.luckMax.field value=fields.luckMax.value}}
+          {{else}}
+            {{document.system.luck.max}}
+          {{/if}}
+        </div>
       </div>
 
       <div class="pronouns">
@@ -22,19 +34,6 @@
           {{document.system.pronouns}}
         {{/if}}
       </div>
-    </div>
-  </div>
-
-  <div class="luck-container flexcol">
-    <label>{{localize "DISCWORLD.character.luck"}}:</label>
-    <div class="flexrow">
-      {{formInput fields.luckValue.field value=fields.luckValue.value}}
-      /
-      {{#if isEditMode }}
-        {{formInput fields.luckMax.field value=fields.luckMax.value}}
-      {{else}}
-        {{document.system.luck.max}}
-      {{/if}}
     </div>
   </div>
 

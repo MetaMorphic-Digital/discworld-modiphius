@@ -89,8 +89,6 @@
 
       .pronouns-subrow {
         align-items: flex-start;
-        padding: 0 0.25rem;
-        padding-top: 0.125rem;
 
         font-family: $font-caslon;
         font-size: 1.25rem;
@@ -114,18 +112,16 @@
     .luck-container {
       flex: 0.75;
 
-      padding: 0.25rem;
+      padding: 0 0.25rem;
 
-      border-style: solid;
-      border-radius: 0.25rem;
+      border-style: none solid solid solid;
+      border-radius: 0 0.25rem;
       border-color: #7e4839;
       border-width: 1px;
     }
 
     label {
       align-self: center;
-
-      padding-bottom: 0.5rem;
     }
 
     aside.help-aside {
