@@ -18,6 +18,16 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
+  static TABS = {
+    traits: {
+      template: "systems/discworld/templates/character-sheet/traits-tab.hbs",
+    },
+    description: {
+      template:
+        "systems/discworld/templates/character-sheet/description-tab.hbs",
+    },
+  };
+
   static PARTS = {
     decoration: {
       template: "systems/discworld/templates/mixins/decoration.hbs",
@@ -28,14 +38,12 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     tabs: {
       template: "templates/generic/tab-navigation.hbs",
     },
-    traits: {
-      template: "systems/discworld/templates/character-sheet/traits-tab.hbs",
-    },
-    description: {
-      template:
-        "systems/discworld/templates/character-sheet/description-tab.hbs",
-    },
+    ...this.TABS,
   };
+
+  /** @typedef {keyof CharacterSheet.TABS} Tabs */
+  /** @type {Tabs[]} */
+  static tabParts = Object.keys(this.TABS);
 
   /**
    * Helper to check if the actor is currently in help mode.
@@ -48,8 +56,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   /** @override */
-  async _prepareContext() {
-    const context = await super._prepareContext();
+  async _prepareContext(options) {
+    const context = await super._prepareContext(options);
 
     context.helpMode = this.isHelpMode;
 
@@ -58,22 +66,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
     if (!this.tabGroups.primary) this.tabGroups.primary = "traits";
 
-    context.tabs = {
-      traits: {
-        cssClass: this.tabGroups.primary === "traits" ? "active" : "",
-        group: "primary",
-        id: "traits",
-        icon: "",
-        label: "DISCWORLD.sheet.tabs.traits",
-      },
-      description: {
-        cssClass: this.tabGroups.primary === "description" ? "active" : "",
-        group: "primary",
-        id: "description",
-        icon: "",
-        label: "DISCWORLD.sheet.tabs.description",
-      },
-    };
+    // Prepare tab context.
+    context.tabs = this._getTabs(options.parts);
 
     // Prepare input fields.
     context.fields = {
@@ -126,15 +120,54 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     return context;
   }
 
+  /**
+   *
+   * @param {Tabs} partId
+   * @param {*} context
+   * @returns {*}
+   */ // eslint-disable-next-line class-methods-use-this
   async _preparePartContext(partId, context) {
-    switch (partId) {
-      case "description":
-      case "traits":
-        context.tab = context.tabs[partId];
-        break;
-      default:
-    }
+    if (CharacterSheet.tabParts.includes(partId))
+      context.tab = context.tabs[partId];
+
     return context;
+  }
+
+  /**
+   *
+   * @param {(keyof CharacterSheet.PARTS)[]} parts
+   * @returns
+   */
+  _getTabs(parts) {
+    const tabGroup = "primary";
+
+    // Default tab for first time it's rendered this session
+    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = "traits";
+
+    return parts.reduce((tabs, partId) => {
+      const tab = {
+        cssClass: "",
+        group: tabGroup,
+        // Matches tab property
+        id: "",
+        // FontAwesome Icon, if you so choose
+        icon: "",
+        // Run through localization
+        label: "DISCWORLD.sheet.tabs.",
+      };
+
+      if (!CharacterSheet.tabParts.includes(partId)) return tabs;
+
+      tab.id = partId;
+      tab.label += partId;
+
+      // This is what turns on a single tab
+      if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = "active";
+
+      // eslint-disable-next-line no-param-reassign
+      tabs[partId] = tab;
+      return tabs;
+    }, {});
   }
 
   /** @override */
