@@ -21,10 +21,12 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static TABS = {
     traits: {
       template: "systems/discworld/templates/character-sheet/traits-tab.hbs",
+      scrollable: [""],
     },
     description: {
       template:
         "systems/discworld/templates/character-sheet/description-tab.hbs",
+      scrollable: [""],
     },
   };
 
@@ -61,41 +63,11 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
     context.helpMode = this.isHelpMode;
 
-    const { document } = this;
-    const { system } = document;
-
-    if (!this.tabGroups.primary) this.tabGroups.primary = "traits";
-
-    // Prepare tab context.
+    // Prepare context for each tab.
     context.tabs = this._getTabs(options.parts);
 
     // Prepare input fields.
-    context.fields = {
-      name: {
-        field: document.schema.getField("name"),
-        placeholder: game.i18n.localize("Name"), // TODO: remove once v12 support is dropped
-        value: this.isEditMode ? document._source.name : document.name,
-      },
-      description: {
-        field: system.schema.getField("description"),
-        value: this.isEditMode
-          ? system._source.description
-          : system.description,
-      },
-      luckMax: {
-        field: system.schema.getField("luck.max"),
-        value: this.isEditMode ? system._source.luck.max : system.luck.max,
-      },
-      luckValue: {
-        field: system.schema.getField("luck.value"),
-        value: this.isEditMode ? system._source.luck.value : system.luck.value,
-      },
-      pronouns: {
-        field: system.schema.getField("pronouns"),
-        placeholder: game.i18n.localize("DISCWORLD.character.pronouns"),
-        value: this.isEditMode ? system._source.pronouns : system.pronouns,
-      },
-    };
+    context.fields = this._getFields();
 
     // Enrich the description field.
     context.fields.description.enriched = await TextEditor.enrichHTML(
@@ -107,12 +79,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     );
 
     // Construct arrays of traits, filtered by category.
-    context.traitGroups = {};
-    for (const traitType of Object.keys(DISCWORLD.traitTypes)) {
-      context.traitGroups[traitType] = this.actor.items.filter(
-        (item) => item.system.type === traitType,
-      );
-    }
+    context.traitGroups = this._getTraitGroups();
 
     // Translation of trait types.
     context.traitTypeTranslationMap = DISCWORLD.traitTypes;
@@ -148,12 +115,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       const tab = {
         cssClass: "",
         group: tabGroup,
-        // Matches tab property
-        id: "",
-        // FontAwesome Icon, if you so choose
-        icon: "",
-        // Run through localization
-        label: "DISCWORLD.sheet.tabs.",
+        id: "", // Matches tab property
+        icon: "", // FontAwesome Icon (currently unused)
+        label: "DISCWORLD.sheet.tabs.", // Run through localization
       };
 
       if (!CharacterSheet.tabParts.includes(partId)) return tabs;
@@ -168,6 +132,52 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       tabs[partId] = tab;
       return tabs;
     }, {});
+  }
+
+  _getFields() {
+    const { document } = this;
+    const { system } = document;
+    return {
+      name: {
+        field: document.schema.getField("name"),
+        placeholder: game.i18n.localize("Name"), // TODO: remove once v12 support is dropped
+        value: this.isEditMode ? document._source.name : document.name,
+      },
+      description: {
+        field: system.schema.getField("description"),
+        value: this.isEditMode
+          ? system._source.description
+          : system.description,
+      },
+      luckMax: {
+        field: system.schema.getField("luck.max"),
+        value: this.isEditMode ? system._source.luck.max : system.luck.max,
+      },
+      luckValue: {
+        field: system.schema.getField("luck.value"),
+        value: this.isEditMode ? system._source.luck.value : system.luck.value,
+      },
+      pronouns: {
+        field: system.schema.getField("pronouns"),
+        placeholder: game.i18n.localize("DISCWORLD.character.pronouns"),
+        value: this.isEditMode ? system._source.pronouns : system.pronouns,
+      },
+    };
+  }
+
+  /**
+   *
+   * @returns {Record<keyof DISCWORLD.traitTypes, Item[]>}
+   */
+  _getTraitGroups() {
+    const traitGroups = {};
+    for (const traitType of Object.keys(DISCWORLD.traitTypes)) {
+      traitGroups[traitType] = this.actor.items.filter(
+        (item) => item.system.type === traitType,
+      );
+    }
+
+    return traitGroups;
   }
 
   /** @override */
