@@ -18,7 +18,13 @@ export default class DWTraitRoll extends Roll {
     super(formula, data, options);
   }
 
-  static CHAT_TEMPLATE = "systems/discworld/templates/roll-card.hbs";
+  /**
+   * The template used to render the roll card.
+   * @override
+   */
+  static CHAT_TEMPLATE = /** @type {const} */ (
+    "systems/discworld/templates/roll-card.hbs"
+  );
 
   get template() {
     return this.options.template || this.constructor.CHAT_TEMPLATE;

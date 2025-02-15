@@ -11,7 +11,7 @@ export default class DWNarrativiumRoll extends Roll {
    * @param {boolean} [options.reroll=false] - Whether this is a reroll.
    * @returns {Promise<DiscworldMessage|null>} A promise that resolves to the updated chat message.
    */
-  static async createNarrativiumRoll({ message, reroll = false } = {}) {
+  static async createNarrativiumRoll({ message, reroll = false }) {
     // Determine the type of narrativium roll (regular or reroll).
     const resultKey = reroll ? "gmReroll" : "gmRoll";
     if (foundry.utils.getProperty(message, resultKey)) return null;

@@ -42,6 +42,7 @@ Hooks.once("init", () => {
 
   // Register Dice
   for (const Roll of Object.values(Rolls)) CONFIG.Dice.rolls.push(Roll);
+  Object.assign(CONFIG.Dice, Rolls);
 
   // Run various utils.
   registerKeybindings();

@@ -16,25 +16,29 @@ export default class DiscworldMessage extends ChatMessage {
 
   /** @type {DWTraitRoll} */
   get mainRoll() {
-    return this.rolls[0];
+    return this.rolls[0] || null;
   }
 
   /** @type {DWHelpRoll | undefined} */
   get helpRoll() {
-    return this.rolls.find((roll) => roll instanceof DWHelpRoll);
+    return this.rolls.find((roll) => roll instanceof DWHelpRoll) || null;
   }
 
   /** @type {DWNarrativiumRoll | undefined} */
   get gmRoll() {
-    return this.rolls.find(
-      (roll) => roll instanceof DWNarrativiumRoll && !roll.options.reroll,
+    return (
+      this.rolls.find(
+        (roll) => roll instanceof DWNarrativiumRoll && !roll.options.reroll,
+      ) || null
     );
   }
 
   /** @type {DWNarrativiumRoll | undefined} */
   get gmReroll() {
-    return this.rolls.find(
-      (roll) => roll instanceof DWNarrativiumRoll && roll.options.reroll,
+    return (
+      this.rolls.find(
+        (roll) => roll instanceof DWNarrativiumRoll && roll.options.reroll,
+      ) || null
     );
   }
 
