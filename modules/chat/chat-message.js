@@ -8,23 +8,35 @@ import transitionClass from "../utils/animations.js";
  * @extends ChatMessage
  */
 export default class DiscworldMessage extends ChatMessage {
-  /** @type {HTMLElement} The message element from the chat log. */
+  /**
+   *  The message element from the chat log (null if message isn't rendered).
+   *  @type {HTMLLIElement | null}
+   */
   get element() {
     const chatLog = document.getElementById("chat");
     return chatLog.querySelector(`li[data-message-id="${this.id}"]`);
   }
 
-  /** @type {DWTraitRoll} */
+  /**
+   * The main roll of the chat message (null if message is not a Roll type).
+   * @type {DWTraitRoll | null}
+   */
   get mainRoll() {
     return this.rolls[0] || null;
   }
 
-  /** @type {DWHelpRoll | undefined} */
+  /**
+   * The help roll of the chat message (null if Help has not been rolled).
+   * @type {DWHelpRoll | null}
+   */
   get helpRoll() {
     return this.rolls.find((roll) => roll instanceof DWHelpRoll) || null;
   }
 
-  /** @type {DWNarrativiumRoll | undefined} */
+  /**
+   * The first Narrativium roll of the chat message (null if Narrativium has not been rolled).
+   * @type {DWNarrativiumRoll | null}
+   */
   get gmRoll() {
     return (
       this.rolls.find(
@@ -33,7 +45,11 @@ export default class DiscworldMessage extends ChatMessage {
     );
   }
 
-  /** @type {DWNarrativiumRoll | undefined} */
+  /**
+   *  The second (reroll) Narrativium roll of the chat message
+   *  (null if Narrativium has not been re-rolled).
+   *  @type {DWNarrativiumRoll | null}
+   */
   get gmReroll() {
     return (
       this.rolls.find(
@@ -48,16 +64,17 @@ export default class DiscworldMessage extends ChatMessage {
    *
    * @override
    * @param {object} data - The chat message data.
+   * @param {Partial<Omit<DatabaseCreateOperation, "data">>} [operation={}]  Parameters of the creation operation
    * @returns {Promise<DiscworldMessage>}
    */
-  static async create(data) {
+  static async create(data, operation = {}) {
     const message = new DiscworldMessage(data);
     if (!(message.mainRoll instanceof DWTraitRoll))
-      return super.create(message);
+      return super.create(message, operation);
 
     const chatData = await message._prepareContext();
     const content = await renderTemplate(message.mainRoll.template, chatData);
-    return super.create({ ...data, content });
+    return super.create({ ...data, content }, operation);
   }
 
   /**
@@ -284,7 +301,7 @@ export default class DiscworldMessage extends ChatMessage {
    * Slide the dice icon of a given class name to over from the center of its container.
    *
    * @param {"playerResult" | "gmResult"} resultClass - The class name of the roll whose icon should be moved.
-   * @returns {Promise<HTMLElement>} Promise that resolves with the element once the transition has ended.
+   * @returns {Promise<HTMLLIElement>} Promise that resolves with the element once the transition has ended.
    */
   async slideDiceIcon(resultClass) {
     const dieListItem = this.element.querySelector(`li.${resultClass}`);
@@ -298,8 +315,8 @@ export default class DiscworldMessage extends ChatMessage {
    *
    * @param {"helpResult" | "gmRerollResult"} resultClass - The class name of the roll whose icon should be faded.
    * @param {number} rollResult - The new result to display.
-   * @param {"d4" | "d6" | "d10" | "d12"} [rollTerm=null] - An additional class name to apply to the dice icon.
-   * @returns {Promise<HTMLElement>} Promise that resolves with the element once the transition has ended.
+   * @param {"d4" | "d6" | "d10" | "d12" | null} [rollTerm=null] - An additional class name to apply to the dice icon.
+   * @returns {Promise<HTMLLIElement>} Promise that resolves with the element once the transition has ended.
    */
   async fadeDiceIcon(resultClass, rollResult, rollTerm = null) {
     const dieListItem = this.element.querySelector(`li.${resultClass}`);
@@ -317,7 +334,7 @@ export default class DiscworldMessage extends ChatMessage {
    *
    * @param {"gmResult"} resultClass - The class name of the result element whose text should be updated.
    * @param {number} rollResult - The new result to display within the text element.
-   * @returns {Promise<HTMLElement>} Promise that resolves with the element once the transition has ended.
+   * @returns {Promise<HTMLSpanElement>} Promise that resolves with the element once the transition has ended.
    */
   async fadeTextInOut(resultClass, rollResult) {
     const resultSpan = this.element.querySelector(`li.${resultClass} span`);

@@ -26,6 +26,7 @@ export default class DWTraitRoll extends Roll {
     "systems/discworld/templates/roll-card.hbs"
   );
 
+  /** @type {string} - Path to the template for this roll. */
   get template() {
     return this.options.template || this.constructor.CHAT_TEMPLATE;
   }
@@ -42,7 +43,7 @@ export default class DWTraitRoll extends Roll {
 
   /** @type {DiceTermOptions} The dice term used for this roll. */
   get term() {
-    return this.dice[0].denomination || null;
+    return this.dice[0].denomination;
   }
 
   /**
@@ -59,7 +60,9 @@ export default class DWTraitRoll extends Roll {
 
     const flavor = game.i18n.localize("DISCWORLD.roll.traitRoll");
     return roll.toMessage({
-      speaker: getDocumentClass("ChatMessage").getSpeaker(),
+      speaker: getDocumentClass("ChatMessage").getSpeaker({
+        actor: options.actor,
+      }),
       flavor,
     });
   }
