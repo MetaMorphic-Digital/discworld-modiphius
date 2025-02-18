@@ -67,7 +67,6 @@
 
     $header-height: 100px;
     height: $header-height;
-    margin-bottom: 0.5rem;
 
     > * {
       height: 100%;
@@ -76,10 +75,19 @@
       font-size: 1rem;
     }
 
-    img.portrait {
+    div.portrait-container {
       flex: 0 0 $header-height;
-      border: unset;
       margin-right: unset;
+
+      filter: drop-shadow(2px 2px 6px #b64848);
+    }
+
+    img.portrait {
+      cursor: pointer;
+      border: unset;
+
+      mask-image: url(#{$assetsPrefix}/sheet/paint-smear.webp);
+      mask-size: cover;
     }
 
     input {
@@ -163,6 +171,8 @@
   nav.tabs {
     position: relative;
     line-height: 1.75;
+
+    margin-bottom: 0.5rem;
 
     border: none;
 

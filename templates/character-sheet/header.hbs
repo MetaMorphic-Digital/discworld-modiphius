@@ -1,9 +1,11 @@
 <header class="sheet-header flexrow">
-  <img class="portrait"
-       src="{{document.img}}"
-       data-edit="img"
-       data-action="editImage"
-       title="{{document.name}}" />
+  <div class="portrait-container">
+    <img class="portrait"
+         src="{{document.img}}"
+         data-edit="img"
+         data-action="editImage"
+         title="{{document.name}}" />
+  </div>
 
   <div class="name-pronouns-container flexcol">
     <div data-tooltip="{{localize "DISCWORLD.sheet.toggleSheetMode"}}">
