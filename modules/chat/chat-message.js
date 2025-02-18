@@ -19,10 +19,13 @@ export default class DiscworldMessage extends ChatMessage {
 
   /**
    * The main roll of the chat message (null if message is not a Roll type).
-   * @type {DWTraitRoll | null}
+   * @type {DWTraitRoll}
+   * @throws {Error}
    */
   get mainRoll() {
-    return this.rolls[0] || null;
+    const roll = this.rolls[0];
+    if (!roll) throw new Error("DiscworldMessage does not contain a Roll.");
+    return roll;
   }
 
   /**
@@ -69,7 +72,7 @@ export default class DiscworldMessage extends ChatMessage {
    */
   static async create(data, operation = {}) {
     const message = new DiscworldMessage(data);
-    if (!(message.mainRoll instanceof DWTraitRoll))
+    if (!message.isRoll || !(message.mainRoll instanceof DWTraitRoll))
       return super.create(message, operation);
 
     const chatData = await message._prepareContext();
