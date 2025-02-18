@@ -1,4 +1,4 @@
-import DiscworldRoll from "../rolls/rolls.js";
+import DWNarrativiumRoll from "../rolls/narrativium-roll.js";
 
 /**
  * The Discworld Chat Log. We extend this class to add custom button listeners.
@@ -60,6 +60,9 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
    * @returns {void}
    */
   static async #onHelp(event, target) {
+    const { message } = DiscworldChatLog.getClickedMessageData(event, target);
+    if (message.helpRoll) return;
+
     const controlledTokens = canvas.tokens.controlled;
     if (controlledTokens.length > 1) {
       ui.notifications.warn("DISCWORLD.chat.warning.singleTokenSelect", {
@@ -90,8 +93,6 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
       return;
     }
 
-    const { message } = DiscworldChatLog.getClickedMessageData(event, target);
-
     // Wait for a Trait to be rolled.
     actor.resolveHelpMode(message);
   }
@@ -113,7 +114,7 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
     }
 
     const messageData = DiscworldChatLog.getClickedMessageData(event, target);
-    DiscworldRoll.createNarrativiumRoll(messageData);
+    DWNarrativiumRoll.createNarrativiumRoll(messageData);
   }
 
   /**

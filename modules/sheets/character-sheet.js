@@ -1,4 +1,3 @@
-import DiscworldRoll from "../rolls/rolls.js";
 import DiscworldSheetMixin from "./base-document-sheet.js";
 import DISCWORLD from "../config.js";
 
@@ -192,7 +191,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
    * @returns {Promise<void>}
    */
   static async #addTrait(traitType) {
-    // eslint-disable-next-line no-undef
     const newTrait = await getDocumentClass("Item").create(
       {
         type: "trait",

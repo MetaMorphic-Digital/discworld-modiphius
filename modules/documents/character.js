@@ -1,4 +1,5 @@
-import DiscworldRoll from "../rolls/rolls.js";
+import DWHelpRoll from "../rolls/help-roll.js";
+import DWTraitRoll from "../rolls/trait-roll.js";
 
 export default class DiscworldCharacter extends Actor {
   /**
@@ -36,7 +37,7 @@ export default class DiscworldCharacter extends Actor {
     const dialogResult = await this.rollTraitDialog(trait);
     if (!dialogResult) return null;
 
-    return DiscworldRoll.createBaseRoll(dialogResult, { actor: this, trait });
+    return DWTraitRoll.createBaseRoll(dialogResult, { actor: this, trait });
   }
 
   /**
@@ -109,8 +110,8 @@ export default class DiscworldCharacter extends Actor {
     this.leaveHelpMode();
 
     // Create the help roll and send to chat.
-    return DiscworldRoll.createHelpRoll({
-      diceTerm: dialogResult,
+    return DWHelpRoll.createHelpRoll({
+      term: dialogResult,
       trait,
       message,
     });

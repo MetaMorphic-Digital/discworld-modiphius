@@ -1,57 +1,56 @@
 <div class="discworld">
   <header class="flexcol trait-quote">
-    <q>{{trait.name}}</q>
-    <cite>{{actor.name}}</cite>
-    {{#if helpTrait }}
-      <q>{{helpTrait.name}}</q>
-      <cite>{{helpActor.name}}</cite>
+    <q>{{mainRoll.trait.name}}</q>
+    <cite>{{mainRoll.actor.name}}</cite>
+    {{#if helpRoll.trait }}
+      <q>{{helpRoll.trait.name}}</q>
+      <cite>{{helpRoll.actor.name}}</cite>
     {{/if}}
   </header>
   <div class="flexrow dice-rolls">
     <!-- Player Results -->
-    <div class="result-container">
-      <button data-action="help" class="help" {{disabled helpDisabled }}>
+    <div class="outcome-container">
+      <button data-action="help" class="help" {{disabled css.buttonDisabled.help }}>
         {{localize "DISCWORLD.chat.postRollActions.help"}}
         <i class="fas fa-dice"></i>
       </button>
 
-      <ol class="result {{cssClass.playerOutcome}}">
-        <li class="playerResult {{term}} flexrow {{cssClass.playerResult}}">
-          <span>{{result}}</span>
+      <ol class="result {{css.outcome.player}}">
+        <li class="playerResult {{mainRoll.term}} flexrow {{css.result.player}}">
+          <span>{{mainRoll.result}}</span>
         </li>
 
-        <li class="helpResult {{helpTerm}} flexrow {{cssClass.helpResult}}">
-          <span>{{helpResult}}</span>
+        <li class="helpResult {{helpRoll.term}} flexrow {{css.result.help}}">
+          <span>{{helpRoll.result}}</span>
         </li>
       </ol>
     </div>
-
     <!-- Narrativium Results -->
-    <div class="result-container">
+    <div class="outcome-container">
       <button data-action="narrativium"
-              class="narrativium {{cssClass.narrativiumReroll}}"
-              {{disabled narrativiumDisabled }}>
-        {{#unless gmResult}}
-          {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
-        {{else}}
+              class="narrativium {{css.rerollButton}}"
+              {{disabled css.buttonDisabled.narrativium }}>
+        {{#if css.rerollButton }}
           {{localize "DISCWORLD.chat.postRollActions.reroll"}}
-        {{/unless}}
+        {{else}}
+          {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
+        {{/if}}
         <i class="fas fa-dice"></i>
       </button>
 
-      <ol class="result {{cssClass.gmOutcome }}">
-        <li class="gmResult d8 flexrow {{cssClass.gmResult}}">
+      <ol class="result {{css.outcome.gm }}">
+        <li class="gmResult d8 flexrow {{css.result.gm}}">
           <span>
-            {{#if gmResult }}
-              {{gmResult}}
+            {{#if gmRoll.result }}
+              {{gmRoll.result}}
             {{else}}
               ?
             {{/if}}
           </span>
         </li>
 
-        <li class="gmRerollResult d8 flexrow {{cssClass.gmRerollResult}}">
-          <span>{{gmRerollResult}}</span>
+        <li class="gmRerollResult d8 flexrow {{css.result.gmReroll}}">
+          <span>{{gmReroll.result}}</span>
         </li>
       </ol>
     </div>

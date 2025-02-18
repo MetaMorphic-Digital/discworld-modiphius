@@ -5,7 +5,7 @@ import TraitDataModel from "./datamodels/trait-schema.js";
 import TraitSheet from "./sheets/trait-sheet.js";
 import preloadTemplates, { registerHelpers } from "./utils/handlebars.js";
 import registerKeybindings from "./utils/keybindings.js";
-import DiscworldRoll from "./rolls/rolls.js";
+import * as Rolls from "./rolls/index.js";
 import DISCWORLD from "./config.js";
 import DiscworldMessage from "./chat/chat-message.js";
 import DiscworldCharacter from "./documents/character.js";
@@ -41,7 +41,8 @@ Hooks.once("init", () => {
   CONFIG.ChatMessage.documentClass = DiscworldMessage;
 
   // Register Dice
-  CONFIG.Dice.rolls.push(DiscworldRoll);
+  for (const Roll of Object.values(Rolls)) CONFIG.Dice.rolls.push(Roll);
+  Object.assign(CONFIG.Dice, Rolls);
 
   // Run various utils.
   registerKeybindings();
