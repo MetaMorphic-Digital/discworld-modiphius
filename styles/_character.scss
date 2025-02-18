@@ -1,6 +1,6 @@
-@use "fonts" as *;
 @use "mixins" as *;
-@use "vars" as *;
+@use "variables/fonts" as *;
+@use "variables/generic" as *;
 
 .application.discworld {
   overflow: visible;
