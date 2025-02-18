@@ -1,0 +1,18 @@
+@use "generic" as *;
+
+// Idea from:
+// https://felipperegazio.com/posts/css-custom-props-sass-scss-practical-strategy/
+
+// This mixin must be used within a selector block.
+@mixin setVars($css_variables, $prefix: $packageCssClass) {
+  & {
+    @each $name, $value in $css_variables {
+      --#{$prefix}-#{$name}: #{$value};
+    }
+  }
+}
+
+// Returns a CSS variable for a given name/prefix.
+@function getVar($name, $prefix: $packageCssClass) {
+  @return var(--#{$prefix}-#{$name});
+}

@@ -1,4 +1,7 @@
+@use "sass:color";
+
 @use "mixins" as *;
+@use "variables/color" as *;
 @use "variables/fonts" as *;
 @use "variables/generic" as *;
 
@@ -32,13 +35,13 @@
 
     @keyframes flash {
       0% {
-        box-shadow: inset 0px 0px 20px 5px #671a46;
+        box-shadow: inset 0px 0px 20px 5px $purple-dark;
       }
       50% {
-        box-shadow: inset 0px 0px 20px 8px #671a46;
+        box-shadow: inset 0px 0px 20px 8px $purple-dark;
       }
       100% {
-        box-shadow: inset 0px 0px 20px 5px #671a46;
+        box-shadow: inset 0px 0px 20px 5px $purple-dark;
       }
     }
   }
@@ -51,11 +54,11 @@
   }
 
   hr {
-    color: #7e4839;
+    color: $discworld-brown;
     background-image: linear-gradient(
       90deg,
       transparent 0%,
-      #7e4839 50%,
+      $discworld-brown 50%,
       transparent 100%
     );
   }
@@ -79,7 +82,7 @@
       flex: 0 0 $header-height;
       margin-right: unset;
 
-      filter: drop-shadow(2px 2px 6px #b64848);
+      filter: drop-shadow(2px 2px 6px $red-light);
     }
 
     img.portrait {
@@ -102,10 +105,10 @@
 
       border-radius: 0.75rem;
 
-      background-color: rgba(49, 145, 183, 0.3);
+      background-color: color.adjust($blue-light, $alpha: -0.7);
       box-shadow:
         inset 0 0 10px white,
-        0 0 10px rgb(210, 233, 248);
+        0 0 10px $blue-very-light;
 
       h1.name {
         flex: none;
@@ -135,7 +138,7 @@
 
           border-style: none solid solid solid;
           border-radius: 0 0.25rem;
-          border-color: #7e4839;
+          border-color: $discworld-brown;
           border-width: 2px;
         }
 
