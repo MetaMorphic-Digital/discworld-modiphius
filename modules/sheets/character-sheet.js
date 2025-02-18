@@ -9,8 +9,8 @@ const { ActorSheetV2 } = foundry.applications.sheets;
 export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
     position: {
-      width: 516,
-      height: 688,
+      width: 525,
+      height: 685,
     },
     actions: {
       traitAction: CharacterSheet.#traitAction,
