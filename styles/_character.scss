@@ -1,5 +1,6 @@
 @use "fonts" as *;
 @use "mixins" as *;
+@use "vars" as *;
 
 .application.discworld {
   overflow: visible;
@@ -160,17 +161,42 @@
   }
 
   nav.tabs {
+    position: relative;
     line-height: 1.75;
 
-    label {
-      font-family: $font-caslon;
-      font-size: 1.5rem;
-      font-weight: bold;
+    border: none;
+
+    &::before {
+      content: "";
+      pointer-events: none;
+
+      z-index: 1;
+      position: absolute;
+      bottom: -30px;
+
+      width: 100%;
+      height: 100%;
+
+      background-image: url(#{$assetsPrefix}/sheet/banner-decoration-01.webp);
+      background-size: 100%;
+      background-repeat: no-repeat;
+
+      filter: drop-shadow(2px 4px 6px #000000);
+    }
+
+    a {
+      flex: 1;
+
+      label {
+        font-family: $font-caslon;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
     }
   }
 
   section.tab {
-    margin-top: 1rem;
+    margin-top: 2rem;
 
     &.traits {
       .trait-type {
