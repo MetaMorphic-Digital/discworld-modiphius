@@ -1,0 +1,10 @@
+@use "../variables/generic" as *;
+@use "../variables/variable-utils" as *;
+
+body.theme-dark {
+  @include setVars(
+    (
+      sheet-background: url("#{$assetsPrefix}/sheet/sheet-background-dark.webp"),
+    )
+  );
+}

@@ -4,6 +4,7 @@
 @use "variables/color" as *;
 @use "variables/fonts" as *;
 @use "variables/generic" as *;
+@use "variables/variable-utils" as *;
 
 .application.discworld {
   overflow: visible;
@@ -14,7 +15,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-image: var(--sheet-background);
+  background-image: getVar(sheet-background);
 
   .window-header {
     --header-height: 48px;

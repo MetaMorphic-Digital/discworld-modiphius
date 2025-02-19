@@ -1,0 +1,11 @@
+@use "../variables/generic" as *;
+@use "../variables/variable-utils" as *;
+
+body.theme-light {
+  @include setVars(
+    (
+      sheet-background:
+        url("#{$assetsPrefix}/sheet/sheet-background-light.webp"),
+    )
+  );
+}
