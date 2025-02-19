@@ -1,7 +1,9 @@
 @use "sass:color";
 
+@use "utils/decoration" as *;
 @use "utils/toggle-switch" as *;
 @use "utils/var-utils" as *;
+
 @use "variables/color" as *;
 @use "variables/fonts" as *;
 @use "variables/generic" as *;
@@ -16,6 +18,8 @@
   background-position: center;
   background-size: cover;
   background-image: getVar(sheet-background);
+
+  @include sheet-decoration();
 
   .window-header {
     --header-height: 48px; // Foundry variable.

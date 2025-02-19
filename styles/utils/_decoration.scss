@@ -1,0 +1,50 @@
+@use "../variables/generic" as *;
+
+@mixin sheet-decoration {
+  .decoration {
+    z-index: 1;
+    pointer-events: none;
+    position: absolute;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    filter: drop-shadow(2px 4px 6px #000000);
+    &.corner-ul {
+      top: -20px;
+      left: -15px;
+
+      background-image: url("#{$assetsPrefix}/sheet/sheet-corner-upper-left.webp");
+      width: 125px;
+      height: 125px;
+    }
+
+    &.corner-ur {
+      top: -20px;
+      right: -15px;
+
+      background-image: url("#{$assetsPrefix}/sheet/sheet-corner-upper-right.webp");
+      width: 275px;
+      height: 125px;
+    }
+
+    // Uncomment if we ever use a bottom-left corner.
+    /*   &.corner-bl {
+      bottom: -20px;
+      left: -12px;
+
+      background-image: url("#{$assetsPrefix}/sheet/sheet-corner-bottom-left.webp");
+      width: 500px;
+      height: 220px;
+    } */
+
+    &.corner-br {
+      bottom: -10px;
+      right: -15px;
+
+      background-image: url("#{$assetsPrefix}/sheet/sheet-corner-bottom-right.webp");
+      width: 101px;
+      height: 500px;
+    }
+  }
+}
