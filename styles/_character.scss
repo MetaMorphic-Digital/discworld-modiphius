@@ -8,6 +8,9 @@
 .application.discworld {
   overflow: visible;
 
+  min-width: 420px;
+  min-height: 515px;
+
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -91,18 +94,17 @@
 
       mask-image: url(#{$assetsPrefix}/sheet/paint-smear.webp);
       mask-size: cover;
+      mask-repeat: no-repeat;
     }
 
     input {
-      text-align: center;
-      font-size: 1rem;
+      border: none;
     }
 
     .name-pronouns-container {
       flex: 3;
 
       padding: 0 0.5rem;
-
       border-radius: 0.75rem;
 
       background-color: color.adjust($blue-light, $alpha: -0.7);
@@ -117,9 +119,13 @@
         margin: unset;
 
         input {
-          margin-top: 0.25rem;
+          color: $discworld-brown;
+          text-align: center;
+
           font-size: 2.25rem;
           font-weight: bold;
+
+          margin-top: 0.25rem;
         }
       }
 
@@ -130,23 +136,19 @@
         font-size: 1.25rem;
 
         .luck-container {
-          flex: 0.75;
+          gap: 0.25rem;
 
           font-weight: normal;
 
           padding: 0.25rem 0.25rem 0;
 
-          border-style: none solid solid solid;
-          border-radius: 0 0.25rem;
-          border-color: $discworld-brown;
-          border-width: 2px;
-        }
+          label {
+            flex: 0;
+          }
 
-        .pronouns {
-          padding-top: 0.25rem;
-
-          text-align: right;
-          font-weight: bold;
+          div.flexrow {
+            flex: 0 0 3.5rem;
+          }
         }
 
         input {
@@ -156,6 +158,17 @@
           font-size: inherit;
           height: unset;
           line-height: unset;
+        }
+
+        .pronouns {
+          padding-top: 0.25rem;
+
+          text-align: right;
+          font-weight: bold;
+
+          input {
+            width: 50%;
+          }
         }
       }
     }
@@ -175,8 +188,9 @@
     position: relative;
     line-height: 1.75;
 
-    margin-bottom: 0.5rem;
+    color: $discworld-brown;
 
+    margin-bottom: 0.5rem;
     border: none;
 
     &::before {
@@ -213,6 +227,10 @@
 
     &.traits {
       .trait-type {
+        .trait-category {
+          flex: 0 0 7.5rem;
+        }
+
         label {
           align-self: flex-start;
         }
