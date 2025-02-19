@@ -18,7 +18,7 @@
   background-image: getVar(sheet-background);
 
   .window-header {
-    --header-height: 48px;
+    --header-height: 48px; // Foundry variable.
     z-index: 2;
 
     padding-left: 4rem;
@@ -39,10 +39,10 @@
 
     @keyframes flash {
       0% {
-        box-shadow: inset 0px 0px 20px 5px $purple-dark;
+        box-shadow: inset 0px 0px 20px 5px getVar(color-help-mode);
       }
       100% {
-        box-shadow: inset 0px 0px 20px 8px $purple-dark;
+        box-shadow: inset 0px 0px 20px 8px getVar(color-help-mode);
       }
     }
   }
@@ -58,8 +58,8 @@
 
     gap: 0.25rem;
 
-    $header-height: 100px;
-    height: $header-height;
+    $sheet-header-height: 100px;
+    height: $sheet-header-height;
 
     > * {
       height: 100%;
@@ -69,10 +69,10 @@
     }
 
     div.portrait-container {
-      flex: 0 0 $header-height;
+      flex: 0 0 $sheet-header-height;
       margin-right: unset;
 
-      filter: drop-shadow(2px 2px 6px $red-light);
+      filter: drop-shadow(2px 2px 6px getVar(color-portrait-shadow));
     }
 
     img.portrait {
@@ -94,10 +94,10 @@
       padding: 0 0.5rem;
       border-radius: 0.75rem;
 
-      background-color: color.adjust($blue-light, $alpha: -0.7);
+      background-color: getVar(color-header-background);
       box-shadow:
         inset 0 0 10px white,
-        0 0 10px $blue-very-light;
+        0 0 10px getVar(color-header-shadow);
 
       @include toggle-switch();
 
@@ -108,7 +108,7 @@
         margin: unset;
 
         input {
-          color: $discworld-brown;
+          color: getVar(color-title);
           text-align: center;
 
           font-size: 2.25rem;
@@ -179,7 +179,7 @@
     position: relative;
     line-height: 1.75;
 
-    color: $discworld-brown;
+    color: getVar(color-title);
 
     margin-bottom: 0.5rem;
     border: none;
@@ -218,11 +218,11 @@
 
     &.traits {
       hr {
-        color: $discworld-brown;
+        color: getVar(color-title);
         background-image: linear-gradient(
           90deg,
           transparent 0%,
-          $discworld-brown 50%,
+          getVar(color-title) 50%,
           transparent 100%
         );
       }

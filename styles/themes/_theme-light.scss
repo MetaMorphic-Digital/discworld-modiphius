@@ -1,11 +1,26 @@
+@use "sass:color";
+
+@use "../variables/color" as *;
 @use "../variables/generic" as *;
 @use "../variables/variable-utils" as *;
 
-body.theme-light {
+:root {
+  /* ----------------- Themed Images ----------------- */
   @include setVars(
     (
       sheet-background:
         url("#{$assetsPrefix}/sheet/sheet-background-light.webp"),
+    )
+  );
+
+  /* ----------------- Themed Colors ----------------- */
+  @include setVars(
+    (
+      color-header-background: color.adjust($blue-light, $alpha: -0.7),
+      color-header-shadow: $blue-very-light,
+      color-help-mode: $purple-dark,
+      color-portrait-shadow: $red-light,
+      color-title: $discworld-brown,
     )
   );
 }
