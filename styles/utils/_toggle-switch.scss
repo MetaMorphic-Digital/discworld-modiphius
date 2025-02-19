@@ -1,8 +1,10 @@
+@use "../utils/var-utils" as *;
+
 @mixin toggle-switch(
   $width: 1.875rem,
   $padding: 0.063rem,
-  $colorChecked: #444444,
-  $colorUnchecked: #b90202
+  $colorChecked: getVar(color-toggle-off),
+  $colorUnchecked: getVar(color-toggle-on)
 ) {
   $height: calc($width / 2);
   $dot-height: calc($height - ($padding * 2));
@@ -15,41 +17,39 @@
   .toggle-container a.toggle-switch {
     height: auto;
 
-    & {
-      display: inline-block;
-      vertical-align: middle;
-      position: relative;
-      width: $width;
-      height: $height;
-      border-radius: $height;
-      background-color: #444444; // Initial background color when unchecked
-      transition: background-color 0.2s;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    width: $width;
+    height: $height;
+    border-radius: $height;
+    background-color: $colorChecked; // Initial background color when unchecked
+    transition: background-color 0.2s;
 
-      &:before {
-        content: "";
-        display: block;
-        width: $dot-height;
-        height: $dot-height;
-        border-radius: 50%; // Round border for the dot
-        background-color: white; // Dot color
-        transition: transform 0.2s;
-        position: absolute;
-        top: $padding;
-        left: $padding;
-      }
+    &:before {
+      content: "";
 
-      &.toggled:before {
-        content: "";
-        transform: translateX($height);
-      }
+      display: block;
+      width: $dot-height;
+      height: $dot-height;
+      border-radius: 50%; // Round border for the dot
+      background-color: white; // Dot color
+      transition: transform 0.2s;
+      position: absolute;
+      top: $padding;
+      left: $padding;
+    }
 
-      &.toggled:after {
-        content: "";
-      }
+    &.toggled:before {
+      transform: translateX($height);
+    }
 
-      &.toggled {
-        background-color: #b90202; // Change background color when checked
-      }
+    &.toggled:after {
+      content: "";
+    }
+
+    &.toggled {
+      background-color: $colorUnchecked; // Change background color when checked
     }
   }
 }
