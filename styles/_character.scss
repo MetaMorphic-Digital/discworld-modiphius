@@ -35,17 +35,14 @@
   }
 
   &.help-mode .window-content {
-    animation: flash 3s ease-in-out infinite;
+    animation: flash 1s ease-in-out infinite alternate;
 
     @keyframes flash {
       0% {
         box-shadow: inset 0px 0px 20px 5px $purple-dark;
       }
-      50% {
-        box-shadow: inset 0px 0px 20px 8px $purple-dark;
-      }
       100% {
-        box-shadow: inset 0px 0px 20px 5px $purple-dark;
+        box-shadow: inset 0px 0px 20px 8px $purple-dark;
       }
     }
   }
