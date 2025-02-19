@@ -49,21 +49,10 @@
     }
   }
 
-  @include toggle-switch();
-
-  label {
-    font-family: $font-trattatello;
-    font-size: 1.15rem;
-  }
-
-  hr {
-    color: $discworld-brown;
-    background-image: linear-gradient(
-      90deg,
-      transparent 0%,
-      $discworld-brown 50%,
-      transparent 100%
-    );
+  .window-resize-handle {
+    z-index: 2;
+    filter: invert(1);
+    transform: scale(2);
   }
 
   header.sheet-header {
@@ -112,6 +101,8 @@
         inset 0 0 10px white,
         0 0 10px $blue-very-light;
 
+      @include toggle-switch();
+
       h1.name {
         flex: none;
         font-family: $font-caslon;
@@ -144,10 +135,12 @@
 
           label {
             flex: 0;
+            font-weight: bold;
           }
 
           div.flexrow {
             flex: 0 0 3.5rem;
+            font-family: $font-trattatello;
           }
         }
 
@@ -226,9 +219,24 @@
     margin-top: 2rem;
 
     &.traits {
+      hr {
+        color: $discworld-brown;
+        background-image: linear-gradient(
+          90deg,
+          transparent 0%,
+          $discworld-brown 50%,
+          transparent 100%
+        );
+      }
+
       .trait-type {
         .trait-category {
           flex: 0 0 7.5rem;
+
+          label {
+            font-family: $font-trattatello;
+            font-size: 1.15rem;
+          }
         }
 
         label {
