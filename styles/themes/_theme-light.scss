@@ -1,8 +1,8 @@
 @use "sass:color";
 
+@use "../utils/var-utils" as *;
 @use "../variables/color" as *;
 @use "../variables/generic" as *;
-@use "../variables/variable-utils" as *;
 
 :root {
   /* ----------------- Themed Images ----------------- */

@@ -53,24 +53,3 @@
     }
   }
 }
-
-@mixin dice-backgrounds($includeProps: true) {
-  $height: 36px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: $height $height;
-
-  @if $includeProps {
-    @include dice-background-image;
-  }
-}
-
-@mixin dice-background-image {
-  $dice-types: d4, d6, d8, d10, d12;
-
-  @each $dice in $dice-types {
-    &.#{$dice} {
-      background-image: url("/systems/discworld/assets/dice/#{$dice}.svg");
-    }
-  }
-}

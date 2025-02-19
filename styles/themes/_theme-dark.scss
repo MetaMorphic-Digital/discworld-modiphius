@@ -1,5 +1,5 @@
+@use "../utils/var-utils" as *;
 @use "../variables/generic" as *;
-@use "../variables/variable-utils" as *;
 
 body.theme-dark {
   @include setVars(
