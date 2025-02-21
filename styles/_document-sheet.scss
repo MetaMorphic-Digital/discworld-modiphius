@@ -112,16 +112,15 @@
         flex: none;
         font-family: $font-caslon;
 
-        margin: unset;
+        margin: 0.25rem 0 0 0;
 
+        &,
         input {
           color: getVar(color-title);
           text-align: center;
 
           font-size: 2.25rem;
           font-weight: bold;
-
-          margin-top: 0.25rem;
         }
       }
 
@@ -130,6 +129,15 @@
 
         font-family: $font-caslon;
         font-size: 1.25rem;
+
+        input {
+          padding-right: 0.25rem;
+          text-align: right;
+
+          font-size: inherit;
+          height: unset;
+          line-height: unset;
+        }
 
         .luck-container {
           gap: 0.25rem;
@@ -143,19 +151,9 @@
             font-weight: bold;
           }
 
-          div.flexrow {
-            flex: 0 0 3.5rem;
-            font-family: $font-trattatello;
+          input {
+            flex: 0 0 1em;
           }
-        }
-
-        input {
-          padding-right: 0.25rem;
-          text-align: right;
-
-          font-size: inherit;
-          height: unset;
-          line-height: unset;
         }
 
         .pronouns {

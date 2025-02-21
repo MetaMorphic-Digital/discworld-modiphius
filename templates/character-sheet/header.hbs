@@ -12,21 +12,23 @@
       {{> (systemFilePath "templates/mixins/toggle-switch.hbs")}}
     </div>
     <h1 class="name flexrow">
-      {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
+      {{#if isEditMode }}
+        {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
+      {{else}}
+        <span>{{document.name}}</span>
+      {{/if}}
     </h1>
 
     <div class="pronouns-subrow flexrow">
       <div class="luck-container flexrow">
         <label>{{localize "DISCWORLD.character.luck"}}:</label>
-        <div class="flexrow">
-          {{formInput fields.luckValue.field value=fields.luckValue.value}}
-          /
-          {{#if isEditMode }}
-            {{formInput fields.luckMax.field value=fields.luckMax.value}}
-          {{else}}
-            {{document.system.luck.max}}
-          {{/if}}
-        </div>
+        {{formInput fields.luckValue.field value=fields.luckValue.value}}
+        /
+        {{#if isEditMode }}
+          {{formInput fields.luckMax.field value=fields.luckMax.value}}
+        {{else}}
+          {{document.system.luck.max}}
+        {{/if}}
       </div>
 
       <div class="pronouns">
