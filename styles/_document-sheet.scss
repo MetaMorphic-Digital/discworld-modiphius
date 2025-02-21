@@ -25,11 +25,14 @@
     --header-height: 48px; // Foundry variable.
     z-index: 2;
 
-    padding-left: 4rem;
+    padding-left: 6rem;
     padding-right: 2rem;
 
-    button {
-      margin-top: 1rem;
+    background: none;
+    border-bottom: none;
+
+    h1.window-title {
+      color: var(--color-text-primary); // Foundry variable
     }
   }
 
