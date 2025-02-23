@@ -10,7 +10,7 @@ const DiscworldSheetMixin = (Base) => {
   const { HandlebarsApplicationMixin } = foundry.applications.api;
   return class DiscworldDocumentSheet extends HandlebarsApplicationMixin(Base) {
     static DEFAULT_OPTIONS = {
-      classes: ["discworld"],
+      classes: ["discworld", "document-sheet"],
       window: { resizable: true },
       actions: {
         editImage: DiscworldDocumentSheet.#onEditImage,
