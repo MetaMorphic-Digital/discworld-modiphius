@@ -8,9 +8,7 @@
   </div>
 
   <div class="name-pronouns-container flexcol">
-    <div data-tooltip="{{localize "DISCWORLD.sheet.toggleSheetMode"}}">
-      {{> (systemFilePath "templates/mixins/toggle-switch.hbs")}}
-    </div>
+    {{> (systemFilePath "templates/mixins/toggle-switch.hbs") tooltip=(localize "DISCWORLD.sheet.toggleSheetMode") tooltipDir="UP"}}
     <h1 class="name flexrow">
       {{#if isEditMode }}
         {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
