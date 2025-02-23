@@ -128,15 +128,11 @@
           }
         }
 
-        label {
-          align-self: flex-start;
+        .trait-list {
+          flex: 3;
+
+          padding: 0 0.25rem;
         }
-      }
-
-      .trait-list {
-        flex: 3;
-
-        padding: 0 0.25rem;
       }
     }
 
