@@ -16,12 +16,14 @@
   /* ----------------- Themed Colors ----------------- */
   @include setVars(
     (
-      color-header-background: color.adjust($blue-light, $alpha: -0.7),
-      color-header-shadow: $blue-very-light,
       color-help-mode: $purple-dark,
       color-input-outline: $discworld-brown,
       color-portrait-shadow: $red-dark,
       color-title: $discworld-brown,
+
+      color-callout-primary: color.adjust($discworld-sand, $alpha: -0.65),
+      color-callout-secondary: color.adjust($blue-light, $alpha: -0.7),
+      color-callout-secondary-shadow: $blue-very-light,
 
       color-toggle-on: $discworld-brown,
       color-toggle-off: rgb(116, 116, 116),

@@ -29,8 +29,16 @@
       flex: 3;
 
       padding: 0 0.5rem;
+      border-radius: 0.75rem;
 
       @include toggle-switch();
+
+      background-image: linear-gradient(
+        getVar(color-callout-primary) 0%,
+        transparent 90%
+      );
+      box-shadow: inset 0 0 20px #eee;
+      filter: drop-shadow(0 0 10px getVar(color-callout-primary));
 
       h1.name {
         flex: none;
@@ -45,6 +53,8 @@
 
           font-size: 2.25rem;
           font-weight: bold;
+
+          height: 36px;
         }
       }
 
