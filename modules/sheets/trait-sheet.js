@@ -14,6 +14,9 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
   };
 
   static PARTS = {
+    decoration: {
+      template: "systems/discworld/templates/mixins/decoration.hbs",
+    },
     main: {
       template: "systems/discworld/templates/trait-sheet.hbs",
     },
