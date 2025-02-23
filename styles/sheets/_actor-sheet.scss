@@ -1,7 +1,7 @@
-@use "utils/toggle-switch" as *;
-@use "utils/var-utils" as *;
+@use "../utils/toggle-switch" as *;
+@use "../utils/var-utils" as *;
 
-@use "variables/fonts" as *;
+@use "../variables/fonts" as *;
 
 .application.discworld.actor-sheet {
   &::not(.minimized) {
