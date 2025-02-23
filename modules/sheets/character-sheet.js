@@ -12,6 +12,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       width: 525,
       height: 685,
     },
+    classes: ["actor-sheet"],
     actions: {
       traitAction: CharacterSheet.#traitAction,
       leaveHelpMode: CharacterSheet.#leaveHelpMode,

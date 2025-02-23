@@ -1,18 +1,13 @@
 @use "sass:color";
 
 @use "utils/decoration" as *;
-@use "utils/toggle-switch" as *;
 @use "utils/var-utils" as *;
 
-@use "variables/color" as *;
 @use "variables/fonts" as *;
 @use "variables/generic" as *;
 
 .application.discworld {
   overflow: visible;
-
-  min-width: 420px;
-  min-height: 515px;
 
   background-repeat: no-repeat;
   background-position: center;
@@ -47,19 +42,6 @@
     backdrop-filter: unset;
   }
 
-  &.help-mode .window-content {
-    animation: flash 1s ease-in-out infinite alternate;
-
-    @keyframes flash {
-      0% {
-        box-shadow: inset 0px 0px 20px 5px getVar(color-help-mode);
-      }
-      100% {
-        box-shadow: inset 0px 0px 20px 8px getVar(color-help-mode);
-      }
-    }
-  }
-
   .window-resize-handle {
     z-index: 2;
     filter: invert(1);
@@ -67,8 +49,6 @@
   }
 
   header.sheet-header {
-    position: relative;
-
     gap: 0.25rem;
 
     $sheet-header-height: 100px;
@@ -101,88 +81,8 @@
       border: none;
     }
 
-    .name-pronouns-container {
-      flex: 3;
-
-      padding: 0 0.5rem;
-
-      @include toggle-switch();
-
-      h1.name {
-        flex: none;
-        font-family: $font-caslon;
-
-        margin: 0.25rem 0 0 0;
-
-        &,
-        input {
-          color: getVar(color-title);
-          text-align: center;
-
-          font-size: 2.25rem;
-          font-weight: bold;
-        }
-      }
-
-      .pronouns-subrow {
-        align-items: flex-start;
-
-        font-family: $font-caslon;
-        font-size: 1.25rem;
-
-        input {
-          padding-right: 0.25rem;
-          text-align: right;
-
-          font-size: inherit;
-          height: unset;
-          line-height: unset;
-        }
-
-        .luck-container {
-          gap: 0.25rem;
-
-          font-weight: normal;
-
-          padding: 0.25rem 0.25rem 0;
-
-          label {
-            flex: 0;
-            font-weight: bold;
-          }
-
-          input {
-            flex: 0 0 1em;
-
-            background: none;
-
-            &:hover {
-              outline: 2px solid var(--input-focus-outline-color);
-            }
-          }
-        }
-
-        .pronouns {
-          padding-top: 0.25rem;
-
-          text-align: right;
-          font-weight: bold;
-
-          input {
-            width: 50%;
-          }
-        }
-      }
-    }
-
     label {
       align-self: center;
-    }
-
-    aside.help-aside {
-      position: absolute;
-      height: unset;
-      inset: 0.125rem;
     }
   }
 
@@ -236,43 +136,5 @@
 
   section.tab {
     margin-top: 2rem;
-
-    &.traits {
-      hr {
-        color: getVar(color-title);
-        background-image: linear-gradient(
-          90deg,
-          transparent 0%,
-          getVar(color-title) 50%,
-          transparent 100%
-        );
-      }
-
-      .trait-type {
-        .trait-category {
-          flex: 0 0 7.5rem;
-
-          label {
-            font-family: $font-trattatello;
-            font-size: 1.15rem;
-          }
-        }
-
-        label {
-          align-self: flex-start;
-        }
-      }
-
-      .trait-list {
-        flex: 3;
-
-        padding: 0 0.25rem;
-      }
-    }
-
-    &.description {
-      gap: 0.5rem;
-      line-height: unset;
-    }
   }
 }
