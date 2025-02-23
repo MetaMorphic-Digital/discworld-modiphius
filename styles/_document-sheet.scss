@@ -21,6 +21,12 @@
 
   @include sheet-decoration();
 
+  input,
+  select {
+    // Replace a Foundry variable with our own.
+    --input-focus-outline-color: #{getVar(color-input-outline)};
+  }
+
   .window-header {
     --header-height: 48px; // Foundry variable.
     z-index: 2;
@@ -147,6 +153,12 @@
 
           input {
             flex: 0 0 1em;
+
+            background: none;
+
+            &:hover {
+              outline: 2px solid var(--input-focus-outline-color);
+            }
           }
         }
 
@@ -261,7 +273,6 @@
     &.description {
       gap: 0.5rem;
       line-height: unset;
-      height: 100%;
     }
   }
 }
