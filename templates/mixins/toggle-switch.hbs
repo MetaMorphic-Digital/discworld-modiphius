@@ -2,5 +2,12 @@
      data-action="toggleSheetMode"
      data-tooltip="{{tooltip}}"
      data-tooltip-direction="{{tooltipDir}}">
+  <span class="icon-container">
+    <i class="fas fa-sm fa-lock-open
+              {{#unless isEditMode }}
+                not-visible{{/unless }}"></i>
+
+    <i class="fas fa-sm fa-lock {{#if isEditMode }}not-visible{{/if }}"></i>
+  </span>
   <a class="toggle-switch {{#if isEditMode }}toggled{{/if }}"></a>
 </div>

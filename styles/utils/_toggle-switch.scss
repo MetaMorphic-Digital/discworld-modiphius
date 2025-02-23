@@ -3,52 +3,75 @@
 @mixin toggle-switch(
   $width: 1.875rem,
   $padding: 0.063rem,
-  $colorChecked: getVar(color-toggle-off),
-  $colorUnchecked: getVar(color-toggle-on)
+  $color-toggle-off: getVar(color-toggle-off),
+  $color-toggle-on: getVar(color-toggle-on),
+  $duration: 0.2s
 ) {
   $height: calc($width / 2);
   $dot-height: calc($height - ($padding * 2));
 
   .toggle-container {
     width: fit-content;
-  }
 
-  .toggle-container a.toggle-switch {
-    height: auto;
+    .icon-container {
+      position: relative;
 
-    display: inline-block;
-    vertical-align: middle;
-    position: relative;
-    width: $width;
-    height: $height;
-    border-radius: $height;
-    background-color: $colorChecked; // Initial background color when unchecked
-    transition: background-color 0.2s;
+      i {
+        position: absolute;
+        top: 0.6rem;
 
-    &:before {
-      content: "";
+        cursor: pointer;
+        color: getVar(color-toggle-icon);
 
-      display: block;
-      width: $dot-height;
-      height: $dot-height;
-      border-radius: 50%; // Round border for the dot
-      background-color: white; // Dot color
-      transition: transform 0.2s;
-      position: absolute;
-      top: $padding;
-      left: $padding;
+        opacity: 1;
+        transition: opacity $duration ease-in-out;
+
+        &.not-visible {
+          opacity: 0;
+          transition: opacity $duration ease-in-out;
+        }
+      }
     }
 
-    &.toggled:before {
-      transform: translateX($height);
-    }
+    a.toggle-switch {
+      position: relative;
+      display: inline-block;
 
-    &.toggled:after {
-      content: "";
-    }
+      vertical-align: middle;
+      width: $width;
+      height: $height;
 
-    &.toggled {
-      background-color: $colorUnchecked; // Change background color when checked
+      margin-left: 1.1rem;
+
+      border-radius: $height;
+      background-color: $color-toggle-off; // Initial background color when unchecked
+      transition: background-color $duration;
+
+      &:before {
+        content: "";
+
+        display: block;
+        width: $dot-height;
+        height: $dot-height;
+        border-radius: 50%; // Round border for the dot
+        background-color: white; // Dot color
+        transition: transform $duration;
+        position: absolute;
+        top: $padding;
+        left: $padding;
+      }
+
+      &.toggled:before {
+        transform: translateX($height);
+      }
+
+      &.toggled:after {
+        content: "";
+      }
+
+      &.toggled {
+        background-color: $color-toggle-on; // Change background color when checked
+      }
     }
   }
 }

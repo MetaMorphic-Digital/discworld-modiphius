@@ -193,6 +193,12 @@ const DiscworldSheetMixin = (Base) => {
       const modes = this.constructor.SHEET_MODES;
       this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT;
 
+      // Transition from lock icon to edit and vice versa.
+      const toggleIcons = this.element.querySelectorAll(".toggle-container i");
+      toggleIcons.forEach((icon) => {
+        icon.classList.toggle("not-visible");
+      });
+
       const toggleSwitch = this.element.querySelector(".toggle-switch");
       toggleSwitch.classList.toggle("toggled");
       toggleSwitch.addEventListener("transitionend", () => {
