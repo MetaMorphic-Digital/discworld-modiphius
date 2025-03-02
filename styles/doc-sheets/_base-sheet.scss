@@ -25,13 +25,18 @@
   }
 
   $horizontal-margin: abs($corner-horizontal-offset) * 2; // Margin to clear decoration intrusion.
-  .window-header {
+  .window-header:not(.minimized > *) {
     --header-height: 48px; // Foundry variable.
 
     display: grid;
-    grid-template-columns: $corner-ul-intrustion 1fr $corner-ur-intrustion;
+    // These adjustments frame the logo a little better.
+    grid-template-columns:
+      calc($corner-ul-intrustion - 20px)
+      1fr
+      calc($corner-ur-intrustion - 9px);
     gap: unset;
 
+    overflow: unset;
     z-index: 2;
 
     padding: unset;
@@ -41,7 +46,16 @@
 
     h1.window-title {
       grid-column: 2;
-      color: var(--color-text-primary); // Foundry variable
+
+      align-self: baseline;
+      height: 150%;
+
+      color: transparent;
+
+      background-image: url(#{$assetsPrefix}/dw-logo.webp);
+      background-size: auto 138%;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .button-wrapper {
@@ -56,7 +70,7 @@
 
   .window-content {
     margin: 1rem $horizontal-margin;
-    padding: 0.54rem;
+    padding: 0.5rem;
     backdrop-filter: unset;
   }
 
