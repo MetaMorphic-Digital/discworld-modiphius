@@ -43,12 +43,45 @@ const DiscworldSheetMixin = (Base) => {
     }
 
     /** @override */
+    _onFirstRender(context, options) {
+      super._onFirstRender(context, options);
+
+      this._encapsulateHeaderButtons();
+    }
+
+    /** @override */
     _onRender(context, options) {
       super._onRender(context, options);
+
       if (!this.isEditable) return;
 
       // Set up drag-and-drop
       this._setupDragAndDrop();
+    }
+
+    /**
+     * Wraps all buttons in the window header inside a div,
+     * allowing them to be positioned as a group within
+     * the decoration border.
+     */
+    _encapsulateHeaderButtons() {
+      if (this.element.querySelector(".button-wrapper")) return;
+
+      const buttons = this.element.querySelectorAll(
+        ".window-header button.header-control",
+      );
+
+      if (buttons.length > 0) {
+        // Create a new wrapper div
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("button-wrapper");
+
+        // Insert the wrapper before the first button
+        buttons[0].parentNode.insertBefore(wrapper, buttons[0]);
+
+        // Move all buttons inside the wrapper
+        buttons.forEach((button) => wrapper.appendChild(button));
+      }
     }
 
     /* -------------------------------- */
