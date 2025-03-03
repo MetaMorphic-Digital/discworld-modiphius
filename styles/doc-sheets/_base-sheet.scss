@@ -68,6 +68,10 @@
     }
   }
 
+  menu.controls-dropdown {
+    z-index: 2;
+  }
+
   .window-content {
     margin: 1rem $horizontal-margin;
     padding: 0.5rem;
