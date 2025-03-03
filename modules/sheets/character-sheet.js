@@ -19,9 +19,11 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
+  /** Break tabs out into own object for readibility */
   static TABS = {
     traits: {
       template: "systems/discworld/templates/character-sheet/traits-tab.hbs",
+      // Indicates root level is scrollable (and thus should have its position persisteted on re-render).
       scrollable: [""],
     },
     description: {
@@ -31,6 +33,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
+  /** @ovverride */
   static PARTS = {
     decoration: {
       template: "systems/discworld/templates/mixins/decoration.hbs",
