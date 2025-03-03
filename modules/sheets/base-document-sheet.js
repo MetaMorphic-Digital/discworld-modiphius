@@ -232,9 +232,7 @@ const DiscworldSheetMixin = (Base) => {
         icon.classList.toggle("not-visible");
       });
 
-      const toggleSwitch = this.element.querySelector(".toggle-switch");
-      toggleSwitch.classList.toggle("toggled");
-      toggleSwitch.addEventListener("transitionend", () => {
+      toggleIcons[0].addEventListener("transitionend", () => {
         this.render();
       });
     }
