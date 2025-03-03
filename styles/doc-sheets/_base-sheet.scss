@@ -24,6 +24,15 @@
     --input-focus-outline-color: #{getVar(color-input-outline)};
   }
 
+  &.minimized .window-header {
+    background-image: getVar(sheet-background);
+    background-size: cover;
+
+    * {
+      color: var(--color-text-primary);
+    }
+  }
+
   $horizontal-margin: abs($corner-horizontal-offset) * 2; // Margin to clear decoration intrusion.
   .window-header:not(.minimized > *) {
     --header-height: 48px; // Foundry variable.
