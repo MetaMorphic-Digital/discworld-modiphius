@@ -4,15 +4,15 @@
 // https://felipperegazio.com/posts/css-custom-props-sass-scss-practical-strategy/
 
 // This mixin must be used within a selector block.
-@mixin setVars($css_variables, $prefix: $packageCssClass) {
+@mixin setVars($varType, $css_variables) {
   & {
     @each $name, $value in $css_variables {
-      --#{$prefix}-#{$name}: #{$value};
+      --#{$packageCssClass}-#{$varType}-#{$name}: #{$value};
     }
   }
 }
 
 // Returns a CSS variable for a given name/prefix.
-@function getVar($name, $prefix: $packageCssClass) {
-  @return var(--#{$prefix}-#{$name});
+@function getVar($varType, $name) {
+  @return var(--#{$packageCssClass}-#{$varType}-#{$name});
 }

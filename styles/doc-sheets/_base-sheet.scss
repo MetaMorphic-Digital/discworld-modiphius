@@ -14,18 +14,18 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-image: getVar(sheet-background);
+  background-image: getVar(image, sheet-background);
 
   @include sheet-decoration();
 
   input,
   select {
     // Replace a Foundry variable with our own.
-    --input-focus-outline-color: #{getVar(color-input-outline)};
+    --input-focus-outline-color: #{getVar(color, input-outline)};
   }
 
   &.minimized .window-header {
-    background-image: getVar(sheet-background);
+    background-image: getVar(image, sheet-background);
     background-size: cover;
 
     * {
@@ -66,7 +66,7 @@
       background-position: center;
       background-repeat: no-repeat;
 
-      filter: getVar(filter-logo);
+      filter: getVar(filter, logo);
     }
 
     .button-wrapper {
@@ -112,7 +112,7 @@
       flex: 0 0 $sheet-header-height;
       margin-right: unset;
 
-      filter: drop-shadow(2px 2px 6px getVar(color-portrait-shadow));
+      filter: drop-shadow(2px 2px 6px getVar(color, portrait-shadow));
     }
 
     img.portrait {
@@ -138,7 +138,7 @@
     line-height: 1.75;
     gap: 2rem;
 
-    color: getVar(color-title);
+    color: getVar(color, title);
 
     margin: 0.5rem 0 0.25rem 0;
 
@@ -164,8 +164,8 @@
       filter:
         // Top Shadow: Blends decoration into nav background.
         // Bottom Shadow: Gives decoration depth.
-        drop-shadow(0px -4px 10px getVar(color-callout-primary))
-        drop-shadow(2px 4px 6px getVar(color-callout-primary-shadow-depth));
+        drop-shadow(0px -4px 10px getVar(color, callout-primary))
+        drop-shadow(2px 4px 6px getVar(color, callout-primary-shadow-depth));
     }
 
     a {

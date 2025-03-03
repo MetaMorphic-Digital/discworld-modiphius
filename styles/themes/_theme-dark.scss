@@ -5,18 +5,34 @@
 @use "../variables/generic" as *;
 
 body.theme-dark {
+  /* ----------------- Themed Images ----------------- */
   @include setVars(
+    image,
     (
       sheet-background: initial,
-      color-input-outline: $purple-light,
-      color-title: $purple-light,
+    )
+  );
 
-      color-toggle-icon: $purple-light,
-      color-callout-primary: color.adjust(#381b49, $alpha: -0.65),
-      color-callout-primary-shadow-inset: #000,
-      color-callout-primary-shadow-depth: #633d79,
+  /* ----------------- Themed Colors ----------------- */
+  @include setVars(
+    color,
+    (
+      input-outline: $purple-light,
+      title: $purple-light,
 
-      filter-logo: invert(0.8),
+      toggle-icon: $purple-light,
+      callout-primary: color.adjust(#381b49, $alpha: -0.65),
+      callout-primary-shadow-inset: #000,
+      callout-primary-shadow-depth: #633d79,
+    )
+  );
+
+  /* ----------------- Themed Filters ---------------- */
+
+  @include setVars(
+    filter,
+    (
+      logo: invert(0.8),
     )
   );
 }

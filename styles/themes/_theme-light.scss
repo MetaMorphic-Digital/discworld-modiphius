@@ -7,6 +7,7 @@
 :root {
   /* ----------------- Themed Images ----------------- */
   @include setVars(
+    image,
     (
       sheet-background:
         url("#{$assetsPrefix}/sheet/sheet-background-light.webp"),
@@ -15,23 +16,30 @@
 
   /* ----------------- Themed Colors ----------------- */
   @include setVars(
+    color,
     (
-      color-help-mode: $purple-dark,
-      color-input-outline: $discworld-brown,
-      color-portrait-shadow: $red-dark,
-      color-title: $discworld-brown,
+      help-mode: $purple-dark,
+      input-outline: $discworld-brown,
+      portrait-shadow: $red-dark,
+      title: $discworld-brown,
 
-      color-callout-primary: color.adjust($discworld-sand, $alpha: -0.65),
-      color-callout-primary-shadow-inset: #eee,
-      color-callout-primary-shadow-depth: #382501,
+      callout-primary: color.adjust($discworld-sand, $alpha: -0.65),
+      callout-primary-shadow-inset: #eee,
+      callout-primary-shadow-depth: #382501,
 
-      color-callout-secondary: color.adjust($blue-light, $alpha: -0.7),
-      color-callout-secondary-shadow: $blue-very-light,
-      color-callout-secondary-shadow-inset: #eee,
+      callout-secondary: color.adjust($blue-light, $alpha: -0.7),
+      callout-secondary-shadow: $blue-very-light,
+      callout-secondary-shadow-inset: #eee,
 
-      color-toggle-icon: $discworld-brown,
+      toggle-icon: $discworld-brown,
+    )
+  );
 
-      filter-logo: none,
+  /* ----------------- Themed Filters ---------------- */
+  @include setVars(
+    filter,
+    (
+      logo: none,
     )
   );
 }

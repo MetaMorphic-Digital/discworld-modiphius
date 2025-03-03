@@ -2,17 +2,17 @@
 
 @mixin callout-primary {
   background-image: linear-gradient(
-    getVar(color-callout-primary) 0%,
+    getVar(color, callout-primary) 0%,
     transparent 90%
   );
-  box-shadow: inset 0 0 20px getVar(color-callout-primary-shadow-inset);
-  filter: drop-shadow(0 0 10px getVar(color-callout-primary));
+  box-shadow: inset 0 0 20px getVar(color, callout-primary-shadow-inset);
+  filter: drop-shadow(0 0 10px getVar(color, callout-primary));
 }
 
 @mixin callout-secondary {
   border-radius: 0.75rem;
-  background-color: getVar(color-callout-secondary);
+  background-color: getVar(color, callout-secondary);
   box-shadow:
-    inset 0 0 10px getVar(color-callout-secondary-shadow-inset),
-    0 0 10px getVar(color-callout-secondary-shadow);
+    inset 0 0 10px getVar(color, callout-secondary-shadow-inset),
+    0 0 10px getVar(color, callout-secondary-shadow);
 }
