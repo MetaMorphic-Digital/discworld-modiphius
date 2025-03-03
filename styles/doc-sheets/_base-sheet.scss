@@ -65,6 +65,8 @@
       background-size: auto 138%;
       background-position: center;
       background-repeat: no-repeat;
+
+      filter: getVar(filter-logo);
     }
 
     .button-wrapper {
@@ -163,7 +165,7 @@
         // Top Shadow: Blends decoration into nav background.
         // Bottom Shadow: Gives decoration depth.
         drop-shadow(0px -4px 10px getVar(color-callout-primary))
-        drop-shadow(2px 4px 6px #382501);
+        drop-shadow(2px 4px 6px getVar(color-callout-primary-shadow-depth));
     }
 
     a {

@@ -1,10 +1,22 @@
+@use "sass:color";
+
 @use "../utils/var-utils" as *;
+@use "../variables/color" as *;
 @use "../variables/generic" as *;
 
 body.theme-dark {
   @include setVars(
     (
-      sheet-background: url("#{$assetsPrefix}/sheet/sheet-background-dark.webp"),
+      sheet-background: initial,
+      color-input-outline: $purple-light,
+      color-title: $purple-light,
+
+      color-toggle-icon: $purple-light,
+      color-callout-primary: color.adjust(#381b49, $alpha: -0.65),
+      color-callout-primary-shadow-inset: #000,
+      color-callout-primary-shadow-depth: #633d79,
+
+      filter-logo: invert(0.8),
     )
   );
 }

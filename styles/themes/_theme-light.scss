@@ -22,12 +22,16 @@
       color-title: $discworld-brown,
 
       color-callout-primary: color.adjust($discworld-sand, $alpha: -0.65),
+      color-callout-primary-shadow-inset: #eee,
+      color-callout-primary-shadow-depth: #382501,
+
       color-callout-secondary: color.adjust($blue-light, $alpha: -0.7),
       color-callout-secondary-shadow: $blue-very-light,
+      color-callout-secondary-shadow-inset: #eee,
 
       color-toggle-icon: $discworld-brown,
-      color-toggle-on: $discworld-brown,
-      color-toggle-off: rgb(116, 116, 116),
+
+      filter-logo: none,
     )
   );
 }
