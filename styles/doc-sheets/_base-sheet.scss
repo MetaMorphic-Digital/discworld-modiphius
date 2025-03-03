@@ -141,6 +141,7 @@
     margin: 0.5rem 0 0.25rem 0;
 
     border: none;
+    border-radius: 10px;
     @include callout-primary;
 
     &::before {
@@ -169,10 +170,11 @@
       flex: 1;
 
       border-width: 2px;
-      border-top-style: dotted;
+      border-style: dotted dotted none;
+      border-radius: inherit;
 
       &.active {
-        border-top-style: solid;
+        border-style: solid solid none;
       }
 
       label {
