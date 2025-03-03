@@ -54,7 +54,7 @@
       "type.niche": "Niche",
       "type.organization": "Organization",
       "type.quirks": "Quirks",
-      "type.uncategorized": "Uncategorized",
+      "type.other": "Other",
 
       "FIELDS": {
         "notes": {
