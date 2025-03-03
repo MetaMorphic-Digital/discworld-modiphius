@@ -121,6 +121,7 @@
   nav.tabs {
     position: relative;
     line-height: 1.75;
+    gap: 2rem;
 
     color: getVar(color-title);
 
@@ -153,6 +154,13 @@
 
     a {
       flex: 1;
+
+      border-width: 2px;
+      border-top-style: dotted;
+
+      &.active {
+        border-top-style: solid;
+      }
 
       label {
         font-family: $font-caslon;
