@@ -8,7 +8,22 @@
   </div>
 
   <div class="name-pronouns-container flexcol">
-    {{> (systemFilePath "templates/mixins/toggle-switch.hbs") tooltip=(localize "DISCWORLD.sheet.toggleSheetMode") tooltipDir="UP"}}
+    <div class="controls-container flexrow">
+      <div class="roll-name-as-trait">{{!-- Space for future button --}}</div>
+
+      {{!-- Leave Help Mode --}}
+      <a class="leave-help-mode
+                {{#unless helpMode }}
+                  not-visible{{/unless }}"
+         data-action="leaveHelpMode">
+        <i class="fas fa-x"></i>
+        {{localize "DISCWORLD.sheet.leaveHelpMode"}}
+      </a>
+
+      {{!-- Toggle Switch --}}
+      {{> (systemFilePath "templates/mixins/toggle-switch.hbs") tooltip=(localize "DISCWORLD.sheet.toggleSheetMode") tooltipDir="UP"}}
+    </div>
+
     <h1 class="name flexrow">
       {{#if isEditMode }}
         {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
@@ -38,13 +53,4 @@
       </div>
     </div>
   </div>
-
-  {{#if helpMode }}
-    <aside class="help-aside">
-      <a data-action="leaveHelpMode">
-        <i class="fas fa-x"></i>
-        {{localize "DISCWORLD.sheet.leaveHelpMode"}}
-      </a>
-    </aside>
-  {{/if}}
 </header>
