@@ -172,6 +172,18 @@
 
   section.tab {
     overflow: auto;
+
+    height: 100%;
+
     margin-top: 2rem;
+
+    prose-mirror {
+      min-height: 100%;
+
+      // Get rid of base styling's large margin in dropdown menus.
+      menu .pm-dropdown i.fa-chevron-down {
+        margin-left: unset;
+      }
+    }
   }
 }
