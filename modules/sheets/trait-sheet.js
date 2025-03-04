@@ -8,9 +8,10 @@ const { ItemSheetV2 } = foundry.applications.sheets;
 export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
   static DEFAULT_OPTIONS = {
     position: {
-      width: 600,
+      width: 525,
       height: "auto",
     },
+    classes: ["trait-sheet"],
   };
 
   static PARTS = {

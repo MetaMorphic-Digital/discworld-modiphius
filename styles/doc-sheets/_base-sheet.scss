@@ -96,13 +96,12 @@
   }
 
   header.sheet-header {
-    gap: 0.25rem;
+    gap: 0.5rem;
 
     $sheet-header-height: 100px;
     height: $sheet-header-height;
 
     > * {
-      height: 100%;
       justify-content: center;
 
       font-size: 1rem;
@@ -122,6 +121,23 @@
       mask-image: url(#{$assetsPrefix}/sheet/paint-smear.webp);
       mask-size: cover;
       mask-repeat: no-repeat;
+    }
+
+    h1.name {
+      font-family: $font-caslon;
+
+      margin: 0.25rem 0 0 0;
+
+      &,
+      input {
+        color: getVar(color, title);
+        text-align: center;
+
+        font-size: 2.25rem;
+        font-weight: bold;
+
+        height: 36px;
+      }
     }
 
     input {
@@ -193,14 +209,18 @@
     height: 100%;
 
     margin-top: 2rem;
+  }
 
-    prose-mirror {
-      min-height: 100%;
+  prose-mirror {
+    min-height: 100%;
 
-      // Get rid of base styling's large margin in dropdown menus.
-      menu .pm-dropdown i.fa-chevron-down {
-        margin-left: unset;
-      }
+    // Get rid of base styling's large margin in dropdown menus.
+    menu {
+      padding: 0.25rem;
+    }
+
+    menu .pm-dropdown i.fa-chevron-down {
+      margin-left: unset;
     }
   }
 }
