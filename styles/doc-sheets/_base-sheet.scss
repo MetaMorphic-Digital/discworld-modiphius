@@ -3,6 +3,7 @@
 
 @use "../utils/callouts" as *;
 @use "../utils/decoration" as *;
+@use "../utils/prose-mirror" as *;
 @use "../utils/var-utils" as *;
 
 @use "../variables/fonts" as *;
@@ -16,7 +17,7 @@
   background-size: cover;
   background-image: getVar(image, sheet-background);
 
-  @include sheet-decoration();
+  @include sheet-decoration;
 
   input,
   select {
@@ -211,16 +212,5 @@
     margin-top: 2rem;
   }
 
-  prose-mirror {
-    min-height: 100%;
-
-    // Get rid of base styling's large margin in dropdown menus.
-    menu {
-      padding: 0.25rem;
-    }
-
-    menu .pm-dropdown i.fa-chevron-down {
-      margin-left: unset;
-    }
-  }
+  @include prose-mirror;
 }

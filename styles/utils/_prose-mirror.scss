@@ -1,0 +1,14 @@
+@mixin prose-mirror {
+  prose-mirror {
+    min-height: 100%;
+
+    // Get rid of base styling's large margin in dropdown menus.
+    menu {
+      padding: 0.25rem;
+
+      .pm-dropdown i.fa-chevron-down {
+        margin-left: unset;
+      }
+    }
+  }
+}
