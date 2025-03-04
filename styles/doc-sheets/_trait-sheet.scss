@@ -11,43 +11,29 @@
     text-align: center;
   }
 
-  .sheet-header {
-    .name-container {
-      height: 100%;
-      align-items: center;
-
-      @include callout-primary;
-
-      padding: 0 0.5rem;
-    }
-  }
-
-  .sheet-body {
+  header.sheet-header .header-data-container {
     .form-group {
-      margin-top: 0.25rem;
+      display: flex;
+      flex-direction: column;
 
       label {
-        flex: 1;
-        font-weight: bold;
+        align-self: unset;
+
+        padding: 0 0.5rem;
       }
 
-      select {
-        height: 1.5rem;
+      .form-fields {
         text-align: center;
+
+        select {
+          height: 1.5rem;
+          width: 85%;
+
+          text-align: center;
+
+          border: none;
+        }
       }
     }
-
-    .property-container .form-group {
-      display: flex;
-      align-items: center;
-
-      > * {
-        flex: 1;
-      }
-    }
-  }
-
-  .editor-content {
-    overflow: auto;
   }
 }

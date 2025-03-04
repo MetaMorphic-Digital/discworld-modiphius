@@ -8,25 +8,21 @@
            title="{{document.name}}" />
     </div>
 
-    <div class="header-data-container flexrow">
+    <div class="header-data-container flexcol">
       <h1 class="document-name">{{formInput fields.name.field value=fields.name.value}}</h1>
+      <div class="document-details flexrow">
+        <div class="detail-left trait-type">{{formGroup fields.type.field value=fields.type.value}}</div>
+        {{#if fields.severity.show }}
+          <div class="detail-right severity">
+            {{formGroup fields.severity.field value=fields.severity.value}}
+          </div>
+        {{/if}}
+      </div>
     </div>
   </header>
 
   <hr>
-  <h4>Settings</h4>
-
   <section class="sheet-body">
-    <div class="property-container">
-      {{formGroup fields.type.field value=fields.type.value}}
-
-      {{#if fields.severity.show }}
-        {{formGroup fields.severity.field value=fields.severity.value}}
-      {{/if}}
-    </div>
-    <hr>
-    <div class="notes-container">
-      {{formGroup fields.notes.field value=fields.notes.value enriched=fields.notes.enriched height=200 toggled=true}}
-    </div>
+    {{formInput fields.notes.field value=fields.notes.value enriched=fields.notes.enriched toggled=true}}
   </section>
 </div>
