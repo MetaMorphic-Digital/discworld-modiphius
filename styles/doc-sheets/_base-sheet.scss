@@ -124,29 +124,63 @@
       mask-repeat: no-repeat;
     }
 
-    h1.name {
-      font-family: $font-caslon;
+    .header-data-container {
+      padding: 0 0.5rem;
+      border-radius: 0.75rem;
 
-      margin: 0.25rem 0 0 0;
+      @include callout-primary;
 
-      &,
-      input {
-        color: getVar(color, title);
-        text-align: center;
+      h1.document-name {
+        font-family: $font-caslon;
 
-        font-size: 2.25rem;
-        font-weight: bold;
+        margin: 0.25rem 0 0 0;
 
-        height: 36px;
+        &,
+        input {
+          color: getVar(color, title);
+          text-align: center;
+
+          font-size: 2.25rem;
+          font-weight: bold;
+
+          height: 36px;
+        }
       }
-    }
 
-    input {
-      border: none;
-    }
+      .document-details {
+        align-items: flex-start;
 
-    label {
-      align-self: center;
+        font-family: $font-caslon;
+        font-size: 1.25rem;
+
+        .detail-left {
+          gap: 0.25rem;
+
+          font-weight: normal;
+
+          padding: 0.25rem 0.25rem 0;
+
+          label {
+            flex: 0;
+            font-weight: bold;
+          }
+        }
+
+        .detail-right {
+          padding-top: 0.25rem;
+
+          text-align: right;
+          font-weight: bold;
+        }
+      }
+
+      input {
+        border: none;
+      }
+
+      label {
+        align-self: center;
+      }
     }
   }
 

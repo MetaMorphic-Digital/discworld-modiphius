@@ -26,22 +26,12 @@
   header.sheet-header {
     position: relative;
 
-    .name-pronouns-container {
-      flex: 3;
+    .header-data-container {
+      // flex: 3;
 
-      padding: 0 0.5rem;
-      border-radius: 0.75rem;
+      @include toggle-switch;
 
-      @include toggle-switch();
-
-      @include callout-primary;
-
-      .pronouns-subrow {
-        align-items: flex-start;
-
-        font-family: $font-caslon;
-        font-size: 1.25rem;
-
+      .document-details {
         input {
           padding-right: 0.25rem;
           text-align: right;
@@ -51,40 +41,20 @@
           line-height: unset;
         }
 
-        .luck-container {
-          gap: 0.25rem;
+        .detail-left input {
+          flex: 0 0 1em;
 
-          font-weight: normal;
-
-          padding: 0.25rem 0.25rem 0;
-
-          label {
-            flex: 0;
-            font-weight: bold;
+          &:not(.edit-mode input) {
+            background: none;
           }
 
-          input {
-            flex: 0 0 1em;
-
-            &:not(.edit-mode input) {
-              background: none;
-            }
-
-            &:hover {
-              outline: 2px solid var(--input-focus-outline-color);
-            }
+          &:hover {
+            outline: 2px solid var(--input-focus-outline-color);
           }
         }
 
-        .pronouns {
-          padding-top: 0.25rem;
-
-          text-align: right;
-          font-weight: bold;
-
-          input {
-            width: 50%;
-          }
+        .detail-right input {
+          width: 50%;
         }
       }
     }
