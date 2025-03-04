@@ -5,7 +5,7 @@
 @use "../variables/fonts" as *;
 
 .application.discworld.actor-sheet {
-  &:not(.minimized) {
+  &:not(.minimized, .minimizing, .maximizing) {
     min-width: 420px;
     min-height: 515px;
   }
