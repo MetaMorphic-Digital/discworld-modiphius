@@ -1,13 +1,7 @@
-<div class="toggle-container"
-     data-action="toggleSheetMode"
-     data-tooltip="{{tooltip}}"
-     data-tooltip-direction="{{tooltipDir}}">
+<a class="toggle-container"
+   data-action="toggleSheetMode"
+   data-tooltip="{{tooltip}}"
+   data-tooltip-direction="{{tooltipDir}}">
 
-  <div class="icon-container">
-    <i class="fas fa-lock-open
-              {{#unless isEditMode }}
-                not-visible{{/unless }}"></i>
-
-    <i class="fas fa-lock {{#if isEditMode }}not-visible{{/if }}"></i>
-  </div>
-</div>
+  <i class="fas fa-xs fa-lock{{#if isEditMode }}-open{{/if }}"></i>
+</a>
