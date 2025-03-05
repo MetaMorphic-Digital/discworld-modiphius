@@ -9,7 +9,7 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
   static DEFAULT_OPTIONS = {
     position: {
       width: 525,
-      height: "auto",
+      height: 450,
     },
     classes: ["trait-sheet"],
   };

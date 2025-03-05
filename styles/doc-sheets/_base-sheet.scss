@@ -238,12 +238,17 @@
     }
   }
 
-  section.tab {
-    overflow: auto;
+  section {
+    &.sheet-body {
+      height: 100%;
+      overflow-y: auto;
 
-    height: 100%;
+      margin-top: 1rem;
+    }
 
-    margin-top: 2rem;
+    &.tab {
+      margin-top: 2rem; // Tabs need a bit more margin.
+    }
   }
 
   @include prose-mirror;
