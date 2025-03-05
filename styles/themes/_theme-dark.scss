@@ -4,7 +4,8 @@
 @use "../variables/color" as *;
 @use "../variables/generic" as *;
 
-body.theme-dark {
+body.theme-dark,
+.application.theme-dark {
   /* ----------------- Themed Images ----------------- */
   @include setVars(
     image,

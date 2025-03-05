@@ -4,7 +4,9 @@
 @use "../variables/color" as *;
 @use "../variables/generic" as *;
 
-:root {
+:root,
+body.theme-light,
+.application.theme-light {
   /* ----------------- Themed Images ----------------- */
   @include setVars(
     image,
