@@ -1,3 +1,5 @@
+import createElement from "../utils/dom-manipulation.js";
+
 /**
  * Adds basic sheet methods that all actor sheets should have,
  * e.g. drag-and-drop support, image editing, etc.
@@ -55,7 +57,10 @@ const DiscworldSheetMixin = (Base) => {
     /** @override */
     async _renderFrame(options) {
       const element = await super._renderFrame(options);
-      this.constructor._encapsulateHeaderButtons(element);
+
+      const SheetCls = this.constructor;
+      SheetCls._encapsulateHeaderButtons(element);
+      SheetCls._injectFrameDecoration(element);
 
       return element;
     }
@@ -76,8 +81,7 @@ const DiscworldSheetMixin = (Base) => {
 
       if (buttons.length > 0) {
         // Create a new wrapper div
-        const wrapper = document.createElement("div");
-        wrapper.classList.add("button-wrapper");
+        const wrapper = createElement("div", { classes: ["button-wrapper"] });
 
         // Insert the wrapper before the first button
         buttons[0].parentNode.insertBefore(wrapper, buttons[0]);
@@ -85,6 +89,29 @@ const DiscworldSheetMixin = (Base) => {
         // Move all buttons inside the wrapper
         buttons.forEach((button) => wrapper.appendChild(button));
       }
+    }
+
+    /**
+     * Creates and injects a the sheet frame decoration.
+     *
+     * @param {HTMLElement} element The Sheet element.
+     */
+    static _injectFrameDecoration(element) {
+      const decorationContainer = createElement("div", {
+        classes: ["decoration-container"],
+      });
+
+      const corners = ["ul", "ur", "bl", "br"];
+
+      corners.forEach((corner) => {
+        const childDecoration = createElement("div", {
+          classes: ["decoration", `corner-${corner}`],
+        });
+        decorationContainer.appendChild(childDecoration);
+      });
+
+      const windowContent = element.querySelector(".window-content");
+      windowContent.insertBefore(decorationContainer, windowContent.firstChild);
     }
 
     /* -------------------------------- */
