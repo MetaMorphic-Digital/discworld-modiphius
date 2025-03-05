@@ -33,6 +33,12 @@ body.theme-light,
       callout-secondary-shadow: $blue-very-light,
       callout-secondary-shadow-inset: #eee,
 
+      dialog-button-background: rgba(0, 0, 0, 0.1),
+      dialog-button-background-hover: $discworld-sand-light,
+      dialog-button-text: var(--color-dark-2),
+      dialog-button-text-shadow: #ebebeb,
+      dialog-button-text-shadow-hover: #1a1a1a,
+
       toggle-icon: $discworld-brown,
     )
   );
