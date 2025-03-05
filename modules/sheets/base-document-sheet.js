@@ -43,13 +43,6 @@ const DiscworldSheetMixin = (Base) => {
     }
 
     /** @override */
-    _onFirstRender(context, options) {
-      super._onFirstRender(context, options);
-
-      this._encapsulateHeaderButtons();
-    }
-
-    /** @override */
     _onRender(context, options) {
       super._onRender(context, options);
 
@@ -59,15 +52,25 @@ const DiscworldSheetMixin = (Base) => {
       this._setupDragAndDrop();
     }
 
+    /** @override */
+    async _renderFrame(options) {
+      const element = await super._renderFrame(options);
+      this.constructor._encapsulateHeaderButtons(element);
+
+      return element;
+    }
+
     /**
      * Wraps all buttons in the window header inside a div,
      * allowing them to be positioned as a group within
      * the decoration border.
+     *
+     * @param {HTMLElement} element The Sheet element.
      */
-    _encapsulateHeaderButtons() {
-      if (this.element.querySelector(".button-wrapper")) return;
+    static _encapsulateHeaderButtons(element) {
+      if (element.querySelector(".button-wrapper")) return;
 
-      const buttons = this.element.querySelectorAll(
+      const buttons = element.querySelectorAll(
         ".window-header button.header-control",
       );
 
