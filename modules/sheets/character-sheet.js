@@ -19,7 +19,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
-  /** Break tabs out into own object for readibility */
+  /** Break tabs out into own object for readability */
   static TABS = {
     traits: {
       template: "systems/discworld/templates/character-sheet/traits-tab.hbs",
@@ -105,7 +105,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   /**
-   *
+   * Create context for tabs. TODO: remove when v12 support is dropped.
    * @param {(keyof CharacterSheet.PARTS)[]} parts
    * @returns
    */
