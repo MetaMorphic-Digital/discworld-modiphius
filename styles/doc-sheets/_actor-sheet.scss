@@ -84,7 +84,9 @@
           input {
             flex: 0 0 1em;
 
-            background: none;
+            &:not(.edit-mode input) {
+              background: none;
+            }
 
             &:hover {
               outline: 2px solid var(--input-focus-outline-color);

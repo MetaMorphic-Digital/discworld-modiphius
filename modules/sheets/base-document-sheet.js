@@ -52,6 +52,13 @@ const DiscworldSheetMixin = (Base) => {
 
       // Set up drag-and-drop
       this._setupDragAndDrop();
+
+      // Add/remove class depending on Edit Mode.
+      if (this.isEditMode) {
+        this.element.classList.add("edit-mode");
+      } else {
+        this.element.classList.remove("edit-mode");
+      }
     }
 
     /** @override */
