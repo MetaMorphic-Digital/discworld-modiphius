@@ -19,8 +19,14 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
-  /** Break tabs out into own object for readability */
-  static TABS = {
+  /** @ovverride */
+  static PARTS = {
+    header: {
+      template: "systems/discworld/templates/character-sheet/header.hbs",
+    },
+    tabs: {
+      template: "templates/generic/tab-navigation.hbs",
+    },
     traits: {
       template: "systems/discworld/templates/character-sheet/traits-tab.hbs",
       // Indicates root level is scrollable (and thus should have its position persisteted on re-render).
@@ -33,20 +39,14 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
-  /** @ovverride */
-  static PARTS = {
-    header: {
-      template: "systems/discworld/templates/character-sheet/header.hbs",
+  /** @override */
+  static TABS = {
+    primary: {
+      tabs: [{ id: "traits" }, { id: "description" }],
+      initial: "traits",
+      labelPrefix: "DISCWORLD.sheet.tabs",
     },
-    tabs: {
-      template: "templates/generic/tab-navigation.hbs",
-    },
-    ...this.TABS,
   };
-
-  /** @typedef {keyof CharacterSheet.TABS} Tabs */
-  /** @type {Tabs[]} */
-  static tabParts = Object.keys(this.TABS);
 
   /**
    * Helper to check if the actor is currently in help mode.
@@ -63,9 +63,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     const context = await super._prepareContext(options);
 
     context.helpMode = this.isHelpMode;
-
-    // Prepare context for each tab.
-    context.tabs = this._getTabs(options.parts);
 
     // Prepare input fields.
     context.fields = this._getFields();
@@ -93,44 +90,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     // By default, this returns the same mutated context.
     context = await super._preparePartContext(partId, context, options);
 
-    if (CharacterSheet.tabParts.includes(partId))
-      context.tab = context.tabs[partId];
+    context.tab = context.tabs[partId];
 
     return context;
-  }
-
-  /**
-   * Create context for tabs. TODO: remove when v12 support is dropped.
-   * @param {(keyof CharacterSheet.PARTS)[]} parts
-   * @returns
-   */
-  _getTabs(parts) {
-    const tabGroup = "primary";
-
-    // Default tab for first time it's rendered this session
-    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = "traits";
-
-    return parts.reduce((tabs, partId) => {
-      const tab = {
-        cssClass: "",
-        group: tabGroup,
-        id: "", // Matches tab property
-        icon: "", // FontAwesome Icon (currently unused)
-        label: "DISCWORLD.sheet.tabs.", // Run through localization
-      };
-
-      if (!CharacterSheet.tabParts.includes(partId)) return tabs;
-
-      tab.id = partId;
-      tab.label += partId;
-
-      // This is what turns on a single tab
-      if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = "active";
-
-      // eslint-disable-next-line no-param-reassign
-      tabs[partId] = tab;
-      return tabs;
-    }, {});
   }
 
   /**
