@@ -20,6 +20,7 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
     },
     description: {
       template: "systems/discworld/templates/trait-sheet/description.hbs",
+      scrollable: [".editor-content"],
     },
   };
 
