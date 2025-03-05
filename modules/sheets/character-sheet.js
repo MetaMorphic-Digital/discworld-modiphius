@@ -91,13 +91,10 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     return context;
   }
 
-  /**
-   *
-   * @param {Tabs} partId
-   * @param {*} context
-   * @returns {*}
-   */ // eslint-disable-next-line class-methods-use-this
+  /** @override */ // eslint-disable-next-line class-methods-use-this
   async _preparePartContext(partId, context) {
+    await super._preparePartContext(partId, context);
+
     if (CharacterSheet.tabParts.includes(partId))
       context.tab = context.tabs[partId];
 
