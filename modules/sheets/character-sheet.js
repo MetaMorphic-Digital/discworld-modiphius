@@ -133,6 +133,10 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     }, {});
   }
 
+  /**
+   * Create context for input fields.
+   * @returns {object} Organized context for fields.
+   */
   _getFields() {
     const { document } = this;
     const { system } = document;
