@@ -1,0 +1,176 @@
+@use "../utils/callouts" as *;
+@use "../utils/toggle-switch" as *;
+@use "../utils/var-utils" as *;
+
+@use "../variables/fonts" as *;
+
+.application.discworld.actor-sheet {
+  &:not(.minimized, .minimizing, .maximizing) {
+    min-width: 420px;
+    min-height: 515px;
+  }
+
+  &.help-mode {
+    animation: inset-glow 1s ease-in-out infinite alternate;
+
+    @keyframes inset-glow {
+      0% {
+        box-shadow: inset 0px 0px 20px 4px getVar(color, help-mode);
+      }
+      100% {
+        box-shadow: inset 0px 0px 20px 8px getVar(color, help-mode);
+      }
+    }
+  }
+
+  header.sheet-header {
+    position: relative;
+
+    .name-pronouns-container {
+      flex: 3;
+
+      padding: 0 0.5rem;
+      border-radius: 0.75rem;
+
+      @include toggle-switch();
+
+      @include callout-primary;
+
+      h1.name {
+        flex: none;
+        font-family: $font-caslon;
+
+        margin: 0.25rem 0 0 0;
+
+        &,
+        input {
+          color: getVar(color, title);
+          text-align: center;
+
+          font-size: 2.25rem;
+          font-weight: bold;
+
+          height: 36px;
+        }
+      }
+
+      .pronouns-subrow {
+        align-items: flex-start;
+
+        font-family: $font-caslon;
+        font-size: 1.25rem;
+
+        input {
+          padding-right: 0.25rem;
+          text-align: right;
+
+          font-size: inherit;
+          height: unset;
+          line-height: unset;
+        }
+
+        .luck-container {
+          gap: 0.25rem;
+
+          font-weight: normal;
+
+          padding: 0.25rem 0.25rem 0;
+
+          label {
+            flex: 0;
+            font-weight: bold;
+          }
+
+          input {
+            flex: 0 0 1em;
+
+            &:not(.edit-mode input) {
+              background: none;
+            }
+
+            &:hover {
+              outline: 2px solid var(--input-focus-outline-color);
+            }
+          }
+        }
+
+        .pronouns {
+          padding-top: 0.25rem;
+
+          text-align: right;
+          font-weight: bold;
+
+          input {
+            width: 50%;
+          }
+        }
+      }
+    }
+
+    .controls-container {
+      .roll-name-as-trait {
+        flex: 0 0 2rem;
+      }
+
+      a.leave-help-mode {
+        text-align: center;
+
+        animation: text-glow 1s ease-in-out infinite alternate;
+
+        @keyframes text-glow {
+          0% {
+            text-shadow: 0px 0px 4px getVar(color, help-mode);
+          }
+          100% {
+            text-shadow: 0px 0px 12px getVar(color, help-mode);
+          }
+        }
+
+        &.not-visible {
+          opacity: 0;
+          cursor: unset;
+        }
+      }
+
+      .toggle-container {
+        flex: 0 0 2rem;
+      }
+    }
+  }
+
+  section.tab {
+    &.traits {
+      hr {
+        color: getVar(color, title);
+        background-image: linear-gradient(
+          90deg,
+          transparent 0%,
+          getVar(color, title) 50%,
+          transparent 100%
+        );
+      }
+
+      .trait-type {
+        .trait-category {
+          flex: 0 0 7.5rem;
+
+          label {
+            font-family: $font-trattatello;
+            font-size: 1.15rem;
+          }
+        }
+
+        .trait-list {
+          flex: 3;
+
+          padding: 0 0.25rem;
+        }
+      }
+    }
+
+    &.description {
+      gap: 0.5rem;
+      line-height: unset;
+    }
+  }
+}

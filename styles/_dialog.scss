@@ -1,6 +1,9 @@
-@use "mixins" as *;
+@use "utils/dice" as *;
+@use "utils/trait-quote" as *;
 
 dialog.discworld {
+  @include trait-quote;
+
   button {
     min-width: unset !important;
 

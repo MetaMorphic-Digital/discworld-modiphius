@@ -1,3 +1,7 @@
-<div class="toggle-container" data-action="toggleSheetMode">
-  <a class="toggle-switch {{#if isEditMode }}toggled{{/if }}"></a>
-</div>
+<a class="toggle-container"
+   data-action="toggleSheetMode"
+   data-tooltip="{{tooltip}}"
+   data-tooltip-direction="{{tooltipDir}}">
+
+  <i class="fas fa-xs fa-lock{{#if isEditMode }}-open{{/if }}"></i>
+</a>

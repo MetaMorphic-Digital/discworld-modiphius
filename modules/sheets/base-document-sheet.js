@@ -1,3 +1,5 @@
+import createElement from "../utils/dom-manipulation.js";
+
 /**
  * Adds basic sheet methods that all actor sheets should have,
  * e.g. drag-and-drop support, image editing, etc.
@@ -10,7 +12,7 @@ const DiscworldSheetMixin = (Base) => {
   const { HandlebarsApplicationMixin } = foundry.applications.api;
   return class DiscworldDocumentSheet extends HandlebarsApplicationMixin(Base) {
     static DEFAULT_OPTIONS = {
-      classes: ["discworld"],
+      classes: ["discworld", "document-sheet"],
       window: { resizable: true },
       actions: {
         editImage: DiscworldDocumentSheet.#onEditImage,
@@ -45,10 +47,78 @@ const DiscworldSheetMixin = (Base) => {
     /** @override */
     _onRender(context, options) {
       super._onRender(context, options);
+
       if (!this.isEditable) return;
 
       // Set up drag-and-drop
       this._setupDragAndDrop();
+
+      // Add/remove class depending on Edit Mode.
+      if (this.isEditMode) {
+        this.element.classList.add("edit-mode");
+      } else {
+        this.element.classList.remove("edit-mode");
+      }
+    }
+
+    /** @override */
+    async _renderFrame(options) {
+      const element = await super._renderFrame(options);
+
+      const SheetCls = this.constructor;
+      SheetCls._encapsulateHeaderButtons(element);
+      SheetCls._injectFrameDecoration(element);
+
+      return element;
+    }
+
+    /**
+     * Wraps all buttons in the window header inside a div,
+     * allowing them to be positioned as a group within
+     * the decoration border.
+     *
+     * @param {HTMLElement} element The Sheet element.
+     */
+    static _encapsulateHeaderButtons(element) {
+      if (element.querySelector(".button-wrapper")) return;
+
+      const buttons = element.querySelectorAll(
+        ".window-header button.header-control",
+      );
+
+      if (buttons.length > 0) {
+        // Create a new wrapper div
+        const wrapper = createElement("div", { classes: ["button-wrapper"] });
+
+        // Insert the wrapper before the first button
+        buttons[0].parentNode.insertBefore(wrapper, buttons[0]);
+
+        // Move all buttons inside the wrapper
+        buttons.forEach((button) => wrapper.appendChild(button));
+      }
+    }
+
+    /**
+     * Creates and injects a the sheet frame decoration.
+     *
+     * @param {HTMLElement} element The Sheet element.
+     */
+    static _injectFrameDecoration(element) {
+      const decorationContainer = createElement("div", {
+        classes: ["decoration-container"],
+      });
+
+      const corners = ["ul", "ur", "bl", "br"];
+
+      corners.forEach((corner) => {
+        const childDecoration = createElement("div", {
+          classes: ["decoration", `corner-${corner}`],
+        });
+        decorationContainer.appendChild(childDecoration);
+      });
+
+      const windowContent = element.querySelector(".window-content");
+      windowContent.insertBefore(decorationContainer, windowContent.firstChild);
     }
 
     /* -------------------------------- */
@@ -193,11 +263,7 @@ const DiscworldSheetMixin = (Base) => {
       const modes = this.constructor.SHEET_MODES;
       this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT;
 
-      const toggleSwitch = this.element.querySelector(".toggle-switch");
-      toggleSwitch.classList.toggle("toggled");
-      toggleSwitch.addEventListener("transitionend", () => {
-        this.render();
-      });
+      this.render();
     }
   };
 };

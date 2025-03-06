@@ -1,0 +1,47 @@
+@use "sass:color";
+
+@use "../utils/var-utils" as *;
+@use "../variables/color" as *;
+@use "../variables/generic" as *;
+
+:root,
+body.theme-light,
+.application.theme-light {
+  /* ----------------- Themed Images ----------------- */
+  @include setVars(
+    image,
+    (
+      sheet-background:
+        url("#{$assetsPrefix}/sheet/sheet-background-light.webp"),
+    )
+  );
+
+  /* ----------------- Themed Colors ----------------- */
+  @include setVars(
+    color,
+    (
+      help-mode: $purple-dark,
+      input-outline: $discworld-brown,
+      portrait-shadow: $red-dark,
+      title: $discworld-brown,
+
+      callout-primary: color.adjust($discworld-sand, $alpha: -0.65),
+      callout-primary-shadow-inset: #eee,
+      callout-primary-shadow-depth: #382501,
+
+      callout-secondary: color.adjust($blue-light, $alpha: -0.7),
+      callout-secondary-shadow: $blue-very-light,
+      callout-secondary-shadow-inset: #eee,
+
+      toggle-icon: $discworld-brown,
+    )
+  );
+
+  /* ----------------- Themed Filters ---------------- */
+  @include setVars(
+    filter,
+    (
+      logo: none,
+    )
+  );
+}

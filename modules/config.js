@@ -16,8 +16,8 @@ const DISCWORLD = {
     niche: "DISCWORLD.trait.type.niche",
     core: "DISCWORLD.trait.type.core",
     quirks: "DISCWORLD.trait.type.quirks",
-    uncategorized: "DISCWORLD.trait.type.uncategorized",
     consequences: "DISCWORLD.trait.type.consequences",
+    other: "DISCWORLD.trait.type.other",
   },
 };
 

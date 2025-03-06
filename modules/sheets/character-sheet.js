@@ -9,24 +9,42 @@ const { ActorSheetV2 } = foundry.applications.sheets;
 export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
     position: {
-      width: 500,
-      height: 700,
+      width: 525,
+      height: 685,
     },
+    classes: ["actor-sheet"],
     actions: {
       traitAction: CharacterSheet.#traitAction,
       leaveHelpMode: CharacterSheet.#leaveHelpMode,
     },
   };
 
+  /** @override */
   static PARTS = {
     header: {
       template: "systems/discworld/templates/character-sheet/header.hbs",
     },
-    main: {
-      template: "systems/discworld/templates/character-sheet/main.hbs",
+    tabs: {
+      template: "templates/generic/tab-navigation.hbs",
     },
-    footer: {
-      template: "systems/discworld/templates/character-sheet/footer.hbs",
+    traits: {
+      template: "systems/discworld/templates/character-sheet/traits-tab.hbs",
+      // Indicates root level is scrollable (and thus should have its position persisteted on re-render).
+      scrollable: [""],
+    },
+    description: {
+      template:
+        "systems/discworld/templates/character-sheet/description-tab.hbs",
+      scrollable: [""],
+    },
+  };
+
+  /** @override */
+  static TABS = {
+    primary: {
+      tabs: [{ id: "traits" }, { id: "description" }],
+      initial: "traits",
+      labelPrefix: "DISCWORLD.sheet.tabs",
     },
   };
 
@@ -41,16 +59,50 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   /** @override */
-  async _prepareContext() {
-    const context = await super._prepareContext();
+  async _prepareContext(options) {
+    const context = await super._prepareContext(options);
 
     context.helpMode = this.isHelpMode;
 
+    // Prepare input fields.
+    context.fields = this._getFields();
+
+    // Enrich the description field.
+    context.fields.description.enriched = await TextEditor.enrichHTML(
+      context.fields.description.value,
+      {
+        rollData: this.document.getRollData(),
+        relativeTo: this.document,
+      },
+    );
+
+    // Construct arrays of traits, filtered by category.
+    context.traitGroups = this._getTraitGroups();
+
+    // Translation of trait types.
+    context.traitTypeTranslationMap = DISCWORLD.traitTypes;
+
+    return context;
+  }
+
+  /** @override */ // eslint-disable-next-line class-methods-use-this
+  async _preparePartContext(partId, context, options) {
+    // By default, this returns the same mutated context.
+    context = await super._preparePartContext(partId, context, options);
+
+    context.tab = context.tabs[partId];
+
+    return context;
+  }
+
+  /**
+   * Create context for input fields.
+   * @returns {object} Organized context for fields.
+   */
+  _getFields() {
     const { document } = this;
     const { system } = document;
-
-    // Prepare input fields.
-    context.fields = {
+    return {
       name: {
         field: document.schema.getField("name"),
         placeholder: game.i18n.localize("Name"), // TODO: remove once v12 support is dropped
@@ -76,28 +128,21 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
         value: this.isEditMode ? system._source.pronouns : system.pronouns,
       },
     };
+  }
 
-    // Enrich the description field.
-    context.fields.description.enriched = await TextEditor.enrichHTML(
-      context.fields.description.value,
-      {
-        rollData: this.document.getRollData(),
-        relativeTo: this.document,
-      },
-    );
-
-    // Construct arrays of traits, filtered by category.
-    context.traitGroups = {};
+  /**
+   *
+   * @returns {Record<keyof DISCWORLD.traitTypes, Item[]>}
+   */
+  _getTraitGroups() {
+    const traitGroups = {};
     for (const traitType of Object.keys(DISCWORLD.traitTypes)) {
-      context.traitGroups[traitType] = this.actor.items.filter(
+      traitGroups[traitType] = this.actor.items.filter(
         (item) => item.system.type === traitType,
       );
     }
 
-    // Translation of trait types.
-    context.traitTypeTranslationMap = DISCWORLD.traitTypes;
-
-    return context;
+    return traitGroups;
   }
 
   /** @override */
@@ -105,7 +150,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     super._onRender();
 
     // Edit Trait by right-click.
-    const sheetBody = this.element.querySelector("section.sheet-body");
+    const sheetBody = this.element.querySelector("section.traits");
     sheetBody.addEventListener("contextmenu", (event) => {
       const { itemId } = event.target.dataset;
       if (!itemId) return;

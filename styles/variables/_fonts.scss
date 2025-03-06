@@ -1,0 +1,75 @@
+@use "generic" as *;
+
+/* ----------------- Caslon Antique ----------------- */
+
+@font-face {
+  font-family: "Caslon Antique";
+  src: url("#{$assetsPrefix}/fonts/caslon/CaslonAntique.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Caslon Antique";
+  src: url("#{$assetsPrefix}/fonts/caslon/CaslonAntique-Bold.ttf")
+    format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Caslon Antique";
+  src: url("#{$assetsPrefix}/fonts/caslon/CaslonAntique-BoldItalic.ttf")
+    format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+
+$font-caslon: "Caslon Antique";
+
+/* ---------------- Linux Libertine ---------------- */
+
+@font-face {
+  font-family: "Linux Libertine";
+  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_R.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Linux Libertine";
+  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_RI.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Linux Libertine";
+  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_RB.ttf")
+    format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Linux Libertine";
+  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_RBI.ttf")
+    format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+
+$font-libertine: "Linux Libertine";
+
+/* ------------------- Trattatello ------------------ */
+
+@font-face {
+  font-family: "Trattatello";
+  src: url("#{$assetsPrefix}/fonts/Trattatello.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+$font-trattatello: "Trattatello";

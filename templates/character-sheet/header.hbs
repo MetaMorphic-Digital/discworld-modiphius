@@ -1,18 +1,47 @@
 <header class="sheet-header flexrow">
-  <img class="portrait"
-       src="{{document.img}}"
-       data-edit="img"
-       data-action="editImage"
-       title="{{document.name}}" />
+  <div class="portrait-container">
+    <img class="portrait"
+         src="{{document.img}}"
+         data-edit="img"
+         data-action="editImage"
+         title="{{document.name}}" />
+  </div>
 
   <div class="name-pronouns-container flexcol">
+    <div class="controls-container flexrow">
+      <div class="roll-name-as-trait">{{!-- Space for future button --}}</div>
+
+      {{!-- Leave Help Mode --}}
+      <a class="leave-help-mode
+                {{#unless helpMode }}
+                  not-visible{{/unless }}"
+         data-action="leaveHelpMode">
+        <i class="fas fa-x"></i>
+        {{localize "DISCWORLD.sheet.leaveHelpMode"}}
+      </a>
+
+      {{!-- Toggle Switch --}}
+      {{> (systemFilePath "templates/mixins/toggle-switch.hbs") tooltip=(localize "DISCWORLD.sheet.toggleSheetMode") tooltipDir="UP"}}
+    </div>
+
     <h1 class="name flexrow">
-      {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
+      {{#if isEditMode }}
+        {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
+      {{else}}
+        <span>{{document.name}}</span>
+      {{/if}}
     </h1>
 
     <div class="pronouns-subrow flexrow">
-      <div data-tooltip="{{localize "DISCWORLD.sheet.toggleSheetMode"}}">
-        {{> (systemFilePath "templates/mixins/toggle-switch.hbs")}}
+      <div class="luck-container flexrow">
+        <label>{{localize "DISCWORLD.character.luck"}}:</label>
+        {{formInput fields.luckValue.field value=fields.luckValue.value}}
+        /
+        {{#if isEditMode }}
+          {{formInput fields.luckMax.field value=fields.luckMax.value}}
+        {{else}}
+          {{document.system.luck.max}}
+        {{/if}}
       </div>
 
       <div class="pronouns">
@@ -24,26 +53,4 @@
       </div>
     </div>
   </div>
-
-  <div class="luck-container flexcol">
-    <label>{{localize "DISCWORLD.character.luck"}}:</label>
-    <div class="flexrow">
-      {{formInput fields.luckValue.field value=fields.luckValue.value}}
-      /
-      {{#if isEditMode }}
-        {{formInput fields.luckMax.field value=fields.luckMax.value}}
-      {{else}}
-        {{document.system.luck.max}}
-      {{/if}}
-    </div>
-  </div>
-
-  {{#if helpMode }}
-    <aside class="help-aside">
-      <a data-action="leaveHelpMode">
-        <i class="fas fa-x"></i>
-        {{localize "DISCWORLD.sheet.leaveHelpMode"}}
-      </a>
-    </aside>
-  {{/if}}
 </header>

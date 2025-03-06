@@ -1,9 +1,12 @@
-@use "mixins" as *;
+@use "utils/dice" as *;
+@use "utils/trait-quote" as *;
 
 .chat-message .discworld {
   header {
     margin: 0.25rem 0;
   }
+
+  @include trait-quote;
 
   .dice-rolls {
     gap: 0.25rem;

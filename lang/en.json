@@ -35,7 +35,11 @@
 
     "sheet": {
       "leaveHelpMode": "Leave Help Mode",
-      "toggleSheetMode": "Toggle Between Locked & Edit Mode"
+      "toggleSheetMode": "Toggle Between Locked & Edit Mode",
+      "tabs": {
+        "description": "Description",
+        "traits": "Traits"
+      }
     },
 
     "trait": {
@@ -50,7 +54,7 @@
       "type.niche": "Niche",
       "type.organization": "Organization",
       "type.quirks": "Quirks",
-      "type.uncategorized": "Uncategorized",
+      "type.other": "Other",
 
       "FIELDS": {
         "notes": {

@@ -1,0 +1,53 @@
+@use "../variables/generic" as *;
+
+// These vars are private to this doc.
+$-corner-ul-width: 125px;
+$-corner-ur-width: 275px;
+$-corner-br-width: 101px;
+
+// These vars are exported.
+$corner-horizontal-offset: -15px;
+$corner-ul-intrustion: $-corner-ul-width + $corner-horizontal-offset;
+$corner-ur-intrustion: $-corner-ur-width + $corner-horizontal-offset;
+
+@mixin sheet-decoration {
+  .decoration {
+    z-index: 1;
+    pointer-events: none;
+    position: absolute;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    filter: drop-shadow(2px 4px 6px #000000);
+    &.corner-ul {
+      top: -20px;
+      left: $corner-horizontal-offset;
+
+      width: $-corner-ul-width;
+      height: 125px;
+
+      background-image: url("#{$assetsPrefix}/sheet/sheet-corner-upper-left.webp");
+    }
+
+    &.corner-ur {
+      top: -20px;
+      right: $corner-horizontal-offset;
+
+      width: $-corner-ur-width;
+      height: 125px;
+
+      background-image: url("#{$assetsPrefix}/sheet/sheet-corner-upper-right.webp");
+    }
+
+    &.corner-br {
+      bottom: -10px;
+      right: $corner-horizontal-offset;
+
+      width: $-corner-br-width;
+      height: 500px;
+
+      background-image: url("#{$assetsPrefix}/sheet/sheet-corner-bottom-right.webp");
+    }
+  }
+}

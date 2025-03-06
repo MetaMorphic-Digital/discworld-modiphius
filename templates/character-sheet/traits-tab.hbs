@@ -1,4 +1,6 @@
-<section class="sheet-body">
+<section class="tab traits {{tabs.traits.cssClass}}"
+         data-group="{{tabs.traits.group}}"
+         data-tab="{{tabs.traits.id}}">
   {{#each traitGroups as |traits traitType| }}
     <div class="trait-type flexrow">
       <div class="trait-category" data-trait-type="{{traitType}}">

@@ -1,4 +1,11 @@
-@use "shared";
-@use "character";
 @use "chat";
 @use "dialog";
+@use "doc-sheets";
+@use "themes";
+
+@use "variables/fonts" as *;
+
+.discworld {
+  font-family: $font-libertine;
+  font-size: 1em;
+}
