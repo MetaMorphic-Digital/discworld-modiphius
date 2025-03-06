@@ -3,6 +3,11 @@
 @use "../utils/var-utils" as *;
 
 .application.discworld.trait-sheet {
+  &:not(.minimized, .minimizing, .maximizing) {
+    min-width: 420px;
+    min-height: 450px;
+  }
+
   h4 {
     margin: unset;
     margin-bottom: 0.5rem;
