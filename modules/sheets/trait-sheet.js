@@ -8,14 +8,19 @@ const { ItemSheetV2 } = foundry.applications.sheets;
 export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
   static DEFAULT_OPTIONS = {
     position: {
-      width: 600,
-      height: "auto",
+      width: 525,
+      height: 450,
     },
+    classes: ["trait-sheet"],
   };
 
   static PARTS = {
-    main: {
-      template: "systems/discworld/templates/trait-sheet.hbs",
+    header: {
+      template: "systems/discworld/templates/trait-sheet/header.hbs",
+    },
+    description: {
+      template: "systems/discworld/templates/trait-sheet/description.hbs",
+      scrollable: [".editor-content"],
     },
   };
 

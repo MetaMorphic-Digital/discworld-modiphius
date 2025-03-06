@@ -1,0 +1,44 @@
+@use "../variables/fonts" as *;
+@use "../utils/callouts" as *;
+@use "../utils/var-utils" as *;
+
+.application.discworld.trait-sheet {
+  &:not(.minimized, .minimizing, .maximizing) {
+    min-width: 420px;
+    min-height: 450px;
+  }
+
+  h4 {
+    margin: unset;
+    margin-bottom: 0.5rem;
+    font-family: $font-caslon;
+    color: getVar(color, title);
+    text-align: center;
+  }
+
+  header.sheet-header .header-data-container {
+    .form-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        align-self: unset;
+
+        padding: 0 0.5rem;
+      }
+
+      .form-fields {
+        text-align: center;
+
+        select {
+          height: 1.5rem;
+          width: 85%;
+
+          text-align: center;
+
+          border: none;
+        }
+      }
+    }
+  }
+}

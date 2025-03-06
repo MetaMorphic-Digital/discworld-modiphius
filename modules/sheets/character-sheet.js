@@ -35,7 +35,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     description: {
       template:
         "systems/discworld/templates/character-sheet/description-tab.hbs",
-      scrollable: [""],
+      scrollable: [".editor-content"],
     },
   };
 

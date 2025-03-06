@@ -7,8 +7,8 @@
          title="{{document.name}}" />
   </div>
 
-  <div class="name-pronouns-container flexcol">
-    <div class="controls-container flexrow">
+  <div class="header-data-container flexcol">
+    <div class="document-controls flexrow">
       <div class="roll-name-as-trait">{{!-- Space for future button --}}</div>
 
       {{!-- Leave Help Mode --}}
@@ -24,7 +24,7 @@
       {{> (systemFilePath "templates/mixins/toggle-switch.hbs") tooltip=(localize "DISCWORLD.sheet.toggleSheetMode") tooltipDir="UP"}}
     </div>
 
-    <h1 class="name flexrow">
+    <h1 class="document-name flexrow">
       {{#if isEditMode }}
         {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
       {{else}}
@@ -32,8 +32,8 @@
       {{/if}}
     </h1>
 
-    <div class="pronouns-subrow flexrow">
-      <div class="luck-container flexrow">
+    <div class="document-details flexrow">
+      <div class="detail-left luck-container flexrow">
         <label>{{localize "DISCWORLD.character.luck"}}:</label>
         {{formInput fields.luckValue.field value=fields.luckValue.value}}
         /
@@ -44,7 +44,7 @@
         {{/if}}
       </div>
 
-      <div class="pronouns">
+      <div class="detail-right pronouns">
         {{#if isEditMode }}
           {{formInput fields.pronouns.field value=fields.pronouns.value placeholder=fields.pronouns.placeholder}}
         {{else}}

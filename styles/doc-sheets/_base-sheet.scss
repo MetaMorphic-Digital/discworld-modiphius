@@ -3,6 +3,7 @@
 
 @use "../utils/callouts" as *;
 @use "../utils/decoration" as *;
+@use "../utils/prose-mirror" as *;
 @use "../utils/var-utils" as *;
 
 @use "../variables/fonts" as *;
@@ -16,7 +17,7 @@
   background-size: cover;
   background-image: getVar(image, sheet-background);
 
-  @include sheet-decoration();
+  @include sheet-decoration;
 
   input,
   select {
@@ -96,13 +97,12 @@
   }
 
   header.sheet-header {
-    gap: 0.25rem;
+    gap: 0.5rem;
 
     $sheet-header-height: 100px;
     height: $sheet-header-height;
 
     > * {
-      height: 100%;
       justify-content: center;
 
       font-size: 1rem;
@@ -124,12 +124,63 @@
       mask-repeat: no-repeat;
     }
 
-    input {
-      border: none;
-    }
+    .header-data-container {
+      padding: 0 0.5rem;
+      border-radius: 0.75rem;
 
-    label {
-      align-self: center;
+      @include callout-primary;
+
+      h1.document-name {
+        font-family: $font-caslon;
+
+        margin: 0.25rem 0 0 0;
+
+        &,
+        input {
+          color: getVar(color, title);
+          text-align: center;
+
+          font-size: 2.25rem;
+          font-weight: bold;
+
+          height: 36px;
+        }
+      }
+
+      .document-details {
+        align-items: flex-start;
+
+        font-family: $font-caslon;
+        font-size: 1.25rem;
+
+        .detail-left {
+          gap: 0.25rem;
+
+          font-weight: normal;
+
+          padding: 0.25rem 0.25rem 0;
+
+          label {
+            flex: 0;
+            font-weight: bold;
+          }
+        }
+
+        .detail-right {
+          padding-top: 0.25rem;
+
+          text-align: right;
+          font-weight: bold;
+        }
+      }
+
+      input {
+        border: none;
+      }
+
+      label {
+        align-self: center;
+      }
     }
   }
 
@@ -187,20 +238,18 @@
     }
   }
 
-  section.tab {
-    overflow: auto;
+  section {
+    &.sheet-body {
+      height: 100%;
+      overflow-y: auto;
 
-    height: 100%;
+      margin-top: 1rem;
+    }
 
-    margin-top: 2rem;
-
-    prose-mirror {
-      min-height: 100%;
-
-      // Get rid of base styling's large margin in dropdown menus.
-      menu .pm-dropdown i.fa-chevron-down {
-        margin-left: unset;
-      }
+    &.tab {
+      margin-top: 2rem; // Tabs need a bit more margin.
     }
   }
+
+  @include prose-mirror;
 }

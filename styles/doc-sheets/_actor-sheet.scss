@@ -26,40 +26,36 @@
   header.sheet-header {
     position: relative;
 
-    .name-pronouns-container {
-      flex: 3;
+    .header-data-container {
+      .document-controls {
+        .roll-name-as-trait {
+          flex: 0 0 2rem;
+        }
 
-      padding: 0 0.5rem;
-      border-radius: 0.75rem;
-
-      @include toggle-switch();
-
-      @include callout-primary;
-
-      h1.name {
-        flex: none;
-        font-family: $font-caslon;
-
-        margin: 0.25rem 0 0 0;
-
-        &,
-        input {
-          color: getVar(color, title);
+        a.leave-help-mode {
           text-align: center;
 
-          font-size: 2.25rem;
-          font-weight: bold;
+          animation: text-glow 1s ease-in-out infinite alternate;
 
-          height: 36px;
+          @keyframes text-glow {
+            0% {
+              text-shadow: 0px 0px 4px getVar(color, help-mode);
+            }
+            100% {
+              text-shadow: 0px 0px 12px getVar(color, help-mode);
+            }
+          }
+
+          &.not-visible {
+            opacity: 0;
+            cursor: unset;
+          }
         }
+
+        @include toggle-switch;
       }
 
-      .pronouns-subrow {
-        align-items: flex-start;
-
-        font-family: $font-caslon;
-        font-size: 1.25rem;
-
+      .document-details {
         input {
           padding-right: 0.25rem;
           text-align: right;
@@ -69,77 +65,29 @@
           line-height: unset;
         }
 
-        .luck-container {
-          gap: 0.25rem;
+        .detail-left input {
+          flex: 0 0 1em;
 
-          font-weight: normal;
-
-          padding: 0.25rem 0.25rem 0;
-
-          label {
-            flex: 0;
-            font-weight: bold;
+          &:not(.edit-mode input) {
+            background: none;
           }
 
-          input {
-            flex: 0 0 1em;
-
-            &:not(.edit-mode input) {
-              background: none;
-            }
-
-            &:hover {
-              outline: 2px solid var(--input-focus-outline-color);
-            }
+          &:hover {
+            outline: 2px solid var(--input-focus-outline-color);
           }
         }
 
-        .pronouns {
-          padding-top: 0.25rem;
-
-          text-align: right;
-          font-weight: bold;
-
-          input {
-            width: 50%;
-          }
+        .detail-right input {
+          width: 50%;
         }
-      }
-    }
-
-    .controls-container {
-      .roll-name-as-trait {
-        flex: 0 0 2rem;
-      }
-
-      a.leave-help-mode {
-        text-align: center;
-
-        animation: text-glow 1s ease-in-out infinite alternate;
-
-        @keyframes text-glow {
-          0% {
-            text-shadow: 0px 0px 4px getVar(color, help-mode);
-          }
-          100% {
-            text-shadow: 0px 0px 12px getVar(color, help-mode);
-          }
-        }
-
-        &.not-visible {
-          opacity: 0;
-          cursor: unset;
-        }
-      }
-
-      .toggle-container {
-        flex: 0 0 2rem;
       }
     }
   }
 
   section.tab {
     &.traits {
+      overflow-y: auto;
+
       hr {
         color: getVar(color, title);
         background-image: linear-gradient(
@@ -166,11 +114,6 @@
           padding: 0 0.25rem;
         }
       }
-    }
-
-    &.description {
-      gap: 0.5rem;
-      line-height: unset;
     }
   }
 }
