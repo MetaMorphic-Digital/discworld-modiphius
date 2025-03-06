@@ -8,7 +8,7 @@ export default class TraitDataModel extends foundry.abstract.TypeDataModel {
       type: new StringField({
         required: true,
         choices: DISCWORLD.traitTypes,
-        initial: "uncategorized",
+        initial: "consequences",
       }),
       severity: new StringField({
         required: true,
