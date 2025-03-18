@@ -1,7 +1,7 @@
 @mixin dice-backgrounds($includeProps: true) {
   $height: 36px;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: 75% center;
   background-size: $height $height;
 
   @if $includeProps {

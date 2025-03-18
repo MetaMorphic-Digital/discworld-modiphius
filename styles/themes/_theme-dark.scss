@@ -26,6 +26,9 @@ body.theme-dark,
       callout-primary-shadow-inset: #000,
       callout-primary-shadow-depth: #633d79,
 
+      dialog-button-background: #c3a1d1,
+      dialog-button-background-hover: #95a5da,
+      dialog-button-text: var(--color-dark-2),
       toggle-icon: $purple-light,
     )
   );
