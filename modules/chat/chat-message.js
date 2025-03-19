@@ -308,8 +308,9 @@ export default class DiscworldMessage extends ChatMessage {
    */
   async slideDiceIcon(resultClass) {
     const dieListItem = this.element.querySelector(`li.${resultClass}`);
-    return transitionClass(dieListItem, ["shift-center"], {
-      remove: true,
+    return transitionClass(dieListItem, {
+      remove: ["shift-center"],
+      add: ["inactive"],
     });
   }
 
@@ -326,9 +327,7 @@ export default class DiscworldMessage extends ChatMessage {
     dieListItem.classList.add(rollTerm);
     const rerollResultText = dieListItem.querySelector("span");
     rerollResultText.textContent = rollResult;
-    return transitionClass(dieListItem, ["not-visible"], {
-      remove: true,
-    });
+    return transitionClass(dieListItem, { remove: ["not-visible"] });
   }
 
   /**
@@ -341,10 +340,8 @@ export default class DiscworldMessage extends ChatMessage {
    */
   async fadeTextInOut(resultClass, rollResult) {
     const resultSpan = this.element.querySelector(`li.${resultClass} span`);
-    await transitionClass(resultSpan, ["not-visible"]);
+    await transitionClass(resultSpan, { add: ["not-visible"] });
     resultSpan.textContent = rollResult;
-    return transitionClass(resultSpan, ["not-visible"], {
-      remove: true,
-    });
+    return transitionClass(resultSpan, { remove: ["not-visible"] });
   }
 }

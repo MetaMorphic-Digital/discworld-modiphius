@@ -1,20 +1,28 @@
 /**
+ * @typedef {object} ClassesToRemove
+ * @property {string[]} remove - An array of class names to be removed from the element.
+ */
+/**
+ * @typedef {object} ClassesToAdd
+ * @property {string[]} add - An array of class names to be added to the element.
+ */
+/**
+ * @typedef {ClassesToRemove | ClassesToAdd} TransitionOptions
+ * A TransitionOptions object must have at least one of `remove` or `add` defined.
+ */
+
+/**
  * Avoid callback hell by wrapping `transitionend` event in a Promise,
  * allowing chaining of transitions with cleaner code.
  *
  * Adds specified class names to trigger transition.
  *
  * @param {HTMLElement} element - The DOM element to which class names will be added.
- * @param {string[]} classNames - An array of class names to be added to the element.
+ * @param {TransitionOptions} options - An object with `remove` and/or `add` properties.
  * @returns {Promise<HTMLElement>} A promise that resolves with the element
  * once the CSS transition has ended.
  */
-
-export default function transitionClass(
-  element,
-  classNames,
-  { remove = false } = {},
-) {
+export default function transitionClass(element, { remove = [], add = [] }) {
   return new Promise((resolve) => {
     function handleTransitionEnd() {
       resolve(element);
@@ -24,10 +32,7 @@ export default function transitionClass(
       once: true,
     });
 
-    if (remove) {
-      element.classList.remove(...classNames);
-      return;
-    }
-    element.classList.add(...classNames);
+    element.classList.remove(...remove);
+    element.classList.add(...add);
   });
 }
