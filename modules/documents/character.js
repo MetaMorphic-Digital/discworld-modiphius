@@ -49,8 +49,8 @@ export default class DiscworldCharacter extends Actor {
   async rollTraitDialog(trait) {
     const { DialogV2 } = foundry.applications.api;
     const content = await renderTemplate(
-      "systems/discworld/templates/roll-trait-prompt.hbs",
-      { trait, actor: this },
+      "systems/discworld/templates/mixins/trait-quote.hbs",
+      { traitName: trait.name, actorName: this.name },
     );
 
     const playerDice = ["d4", "d6", "d10", "d12"];
