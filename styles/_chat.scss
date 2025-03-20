@@ -1,6 +1,10 @@
-@use "utils/callouts" as *;
+@use "sass:color";
+
 @use "utils/dice" as *;
 @use "utils/trait-quote" as *;
+
+@use "variables/color" as *;
+@use "variables/fonts" as *;
 
 .chat-message .discworld {
   header {
@@ -10,9 +14,32 @@
   @include trait-quote;
 
   .trait-container {
-    @include callout-primary;
     border-radius: 10px;
+
+    // This is a repitition of the `callout-primary` mixin, but because
+    // chat cards are not themed, and the callout is, we can't use it.
+    background-image: linear-gradient(
+      color.adjust($discworld-sand, $alpha: -0.65) 0%,
+      transparent 90%
+    );
     box-shadow: inset 0 0 20px #dbdbdb;
+    filter: drop-shadow(0 0 10px color.adjust($discworld-sand, $alpha: -0.65));
+    padding-top: 0.125rem;
+
+    h4 {
+      color: $discworld-brown;
+      font-size: 1.25rem;
+      font-family: $font-caslon;
+
+      padding: 0 0.25rem;
+
+      margin: 0.125rem 0;
+
+      &::before,
+      &::after {
+        border-top-color: $discworld-brown;
+      }
+    }
   }
 
   .dice-rolls {
@@ -33,6 +60,11 @@
         &:disabled {
           filter: blur(0.5px);
           cursor: unset;
+        }
+
+        &:hover {
+          background-color: $discworld-sand-light;
+          text-shadow: 0 0 10px #1a1a1a;
         }
       }
 

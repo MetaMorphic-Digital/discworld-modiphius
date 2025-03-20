@@ -30,7 +30,8 @@
     },
 
     "roll": {
-      "traitRoll": "Trait Roll"
+      "traitRoll": "Trait Roll",
+      "helpRoll": "Help Roll"
     },
 
     "sheet": {
