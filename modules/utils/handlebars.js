@@ -9,6 +9,7 @@ export default async function preloadTemplates() {
   return loadTemplates([
     // Mixins
     `systems/${game.system.id}/templates/mixins/toggle-switch.hbs`,
+    `systems/${game.system.id}/templates/mixins/trait-quote.hbs`,
   ]);
 }
 

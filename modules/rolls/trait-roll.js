@@ -58,12 +58,10 @@ export default class DWTraitRoll extends Roll {
     const rollData = options.actor?.getRollData() ?? {};
     const roll = new DWTraitRoll(formula, rollData, options);
 
-    const flavor = game.i18n.localize("DISCWORLD.roll.traitRoll");
     return roll.toMessage({
       speaker: getDocumentClass("ChatMessage").getSpeaker({
         actor: options.actor,
       }),
-      flavor,
     });
   }
 }

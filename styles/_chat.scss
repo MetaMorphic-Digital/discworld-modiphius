@@ -1,5 +1,10 @@
+@use "sass:color";
+
 @use "utils/dice" as *;
 @use "utils/trait-quote" as *;
+
+@use "variables/color" as *;
+@use "variables/fonts" as *;
 
 .chat-message .discworld {
   header {
@@ -8,21 +13,58 @@
 
   @include trait-quote;
 
+  .trait-container {
+    border-radius: 10px;
+
+    // This is a repitition of the `callout-primary` mixin, but because
+    // chat cards are not themed, and the callout is, we can't use it.
+    background-image: linear-gradient(
+      color.adjust($discworld-sand, $alpha: -0.65) 0%,
+      transparent 90%
+    );
+    box-shadow: inset 0 0 20px #dbdbdb;
+    filter: drop-shadow(0 0 10px color.adjust($discworld-sand, $alpha: -0.65));
+    padding-top: 0.125rem;
+
+    h4 {
+      color: $discworld-brown;
+      font-size: 1.25rem;
+      font-family: $font-caslon;
+
+      padding: 0 0.25rem;
+
+      margin: 0.125rem 0;
+
+      &::before,
+      &::after {
+        border-top-color: $discworld-brown;
+      }
+    }
+  }
+
   .dice-rolls {
     gap: 0.25rem;
 
     .outcome-container {
       flex: 1;
 
+      color: var(--color-light-1);
       text-align: center;
 
       button {
         margin: 0.25rem 0;
         line-height: unset;
+        height: 1.5rem;
+        width: 100%;
 
         &:disabled {
           filter: blur(0.5px);
           cursor: unset;
+        }
+
+        &:hover {
+          background-color: $discworld-sand-light;
+          text-shadow: 0 0 10px #1a1a1a;
         }
       }
 
@@ -45,13 +87,9 @@
         box-shadow: 0 0 2px #fff inset;
 
         &.winner {
-          color: #18520b;
-          filter: sepia(0.5) hue-rotate(60deg) drop-shadow(2px 4px 6px #18520b);
-        }
-
-        &.loser {
-          color: #aa0200;
-          filter: sepia(0.5) hue-rotate(-60deg) drop-shadow(2px 4px 6px #aa0200);
+          box-shadow:
+            0 0 8px #18520b,
+            inset 0 0 8px #18520b;
         }
 
         &.tie {
@@ -63,6 +101,7 @@
           height: $height;
           width: $height;
           align-items: center;
+          justify-content: center;
 
           // Animation Properties
           $anim: ease-in-out 0.5s;
@@ -85,8 +124,17 @@
           @include not-visible;
 
           span {
+            flex: 0 0 auto;
             opacity: 1;
             transition: opacity $anim;
+
+            text-shadow:
+              0 0 4px #000,
+              0 0 8px #000;
+
+            backdrop-filter: blur(1px);
+            border-radius: 50%;
+            padding: 0 0.25rem;
 
             @include not-visible;
           }
@@ -102,7 +150,8 @@
           }
 
           &.inactive {
-            filter: contrast(0.5) blur(1px);
+            transform: scale(90%);
+            filter: saturate(0.25);
           }
         }
       }

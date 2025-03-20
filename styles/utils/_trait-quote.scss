@@ -1,10 +1,17 @@
+@use "../variables/fonts" as *;
+
 @mixin trait-quote {
   .trait-quote {
     quotes: "“ " ". ”";
     text-align: center;
 
-    cite::before {
-      content: "— ";
+    cite {
+      font-size: 1.025rem;
+      padding-left: 3.5rem;
+
+      &::before {
+        content: "— ";
+      }
     }
   }
 }

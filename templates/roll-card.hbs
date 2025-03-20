@@ -1,10 +1,10 @@
 <div class="discworld">
-  <header class="flexcol trait-quote">
-    <q>{{mainRoll.trait.name}}</q>
-    <cite>{{mainRoll.actor.name}}</cite>
+  <header class="trait-container">
+    <h4 class="divider">{{localize "DISCWORLD.roll.traitRoll"}}</h4>
+    {{> (systemFilePath "templates/mixins/trait-quote.hbs") traitName=mainRoll.trait.name actorName=mainRoll.actor.name}}
     {{#if helpRoll.trait }}
-      <q>{{helpRoll.trait.name}}</q>
-      <cite>{{helpRoll.actor.name}}</cite>
+      <h4 class="divider">{{localize "DISCWORLD.roll.helpRoll"}}</h4>
+      {{> (systemFilePath "templates/mixins/trait-quote.hbs") traitName=helpRoll.trait.name actorName=helpRoll.actor.name}}
     {{/if}}
   </header>
   <div class="flexrow dice-rolls">
