@@ -6,6 +6,7 @@ import DISCWORLD from "../config.js";
  * @return {Promise}
  */
 export default async function preloadTemplates() {
+  const { loadTemplates } = foundry.applications.handlebars;
   return loadTemplates([
     // Mixins
     `systems/${game.system.id}/templates/mixins/toggle-switch.hbs`,

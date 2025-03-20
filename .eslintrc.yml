@@ -49,7 +49,6 @@ globals:
   Actor: readonly
   ActorSheet: readonly
   ActorSheetV2: readonly
-  Actors: readonly
   CONFIG: readonly
   CONST: readonly
   ChatLog: readonly
@@ -60,13 +59,11 @@ globals:
   DiceTerm: readonly
   Die: readonly
   DocumentSheetConfig: readonly
-  DragDrop: readonly
   FilePicker: readonly
   FormDataExtended: readonly
   Handlebars: readonly
   Hooks: readonly
   ItemSheet: readonly
-  Items: readonly
   Macro: readonly
   Roll: readonly
   TextEditor: readonly
@@ -79,7 +76,6 @@ globals:
   getDocumentClass: readonly
   globals: readonly
   keyboard: readonly
-  loadTemplates: readonly
   mergeObject: readonly
   renderTemplate: readonly
   setProperty: readonly
