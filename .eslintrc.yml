@@ -60,7 +60,6 @@ globals:
   DiceTerm: readonly
   Die: readonly
   DocumentSheetConfig: readonly
-  DragDrop: readonly
   FilePicker: readonly
   FormDataExtended: readonly
   Handlebars: readonly

@@ -129,6 +129,7 @@ const DiscworldSheetMixin = (Base) => {
      * Set up drag-and-drop handlers.
      */
     _setupDragAndDrop() {
+      const { DragDrop } = foundry.applications.ux;
       const dd = new DragDrop({
         dragSelector: "[data-item-uuid]",
         dropSelector: ".application",
