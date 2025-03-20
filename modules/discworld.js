@@ -20,6 +20,8 @@ globalThis.discworld = {
 };
 
 Hooks.once("init", () => {
+  const { Actors, Items } = foundry.documents.collections;
+
   // Configuration.
   CONFIG.Discworld = DISCWORLD;
 

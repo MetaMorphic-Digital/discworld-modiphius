@@ -49,7 +49,6 @@ globals:
   Actor: readonly
   ActorSheet: readonly
   ActorSheetV2: readonly
-  Actors: readonly
   CONFIG: readonly
   CONST: readonly
   ChatLog: readonly
@@ -65,7 +64,6 @@ globals:
   Handlebars: readonly
   Hooks: readonly
   ItemSheet: readonly
-  Items: readonly
   Macro: readonly
   Roll: readonly
   TextEditor: readonly
