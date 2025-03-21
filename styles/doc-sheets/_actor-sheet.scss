@@ -124,5 +124,12 @@
         }
       }
     }
+
+    &.description {
+      prose-mirror.inactive .editor-content > *:hover {
+        text-shadow: 0 0 8px var(--color-shadow-primary);
+        cursor: pointer;
+      }
+    }
   }
 }

@@ -167,6 +167,16 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       CharacterSheet.#addTrait.call(this, traitType);
     });
 
+    const descriptionParts = this.element.querySelectorAll(
+      "prose-mirror.inactive .editor-content > *",
+    );
+    descriptionParts.forEach((part) =>
+      part.addEventListener("click", (event) => {
+        const text = event.target.textContent;
+        CharacterSheet.#rollDescriptionAsTrait.call(this, text);
+      }),
+    );
+
     // Add/remove class depending on Help Mode.
     if (this.isHelpMode) {
       this.element.classList.add("help-mode");
@@ -306,5 +316,14 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static #rollNameAsTrait() {
     const { actor } = this;
     actor.rollTrait({ actor, name: actor.name });
+  }
+
+  /**
+   *
+   * @returns {Promise<void>}
+   */
+  static #rollDescriptionAsTrait(text) {
+    const { actor } = this;
+    actor.rollTrait({ actor, name: text });
   }
 }
