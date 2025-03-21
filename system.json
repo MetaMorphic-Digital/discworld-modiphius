@@ -5,7 +5,7 @@
   "version": "0.0.0",
   "license": "Apache License, Version 2.0",
   "compatibility": {
-    "minimum": "13",
+    "minimum": "13.338",
     "verified": "13"
   },
   "authors": [
