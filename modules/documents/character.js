@@ -25,21 +25,32 @@ export default class DiscworldCharacter extends Actor {
    * @override
    */
   static async create(data, options = {}) {
-    data.prototypeToken = foundry.utils.mergeObject({
-      actorLink: true,
-      disposition: CONST.TOKEN_DISPOSTIONS.FRIENDLY,
-      "bar1.attribute": "luck",
-    }, data.prototypeToken ?? {});
+    data.prototypeToken = foundry.utils.mergeObject(
+      {
+        actorLink: true,
+        disposition: CONST.TOKEN_DISPOSTIONS.FRIENDLY,
+        "bar1.attribute": "luck",
+      },
+      data.prototypeToken ?? {},
+    );
 
     return super.create(data, options);
   }
 
   /**
+   * In Discworld, everything is a trait.
+   * So, you can pass anything that has a `name`
+   * property to `rolLTrait`.
+   *
+   * @typedef {object} TraitLike
+   * @prop {string} name
+   */
+  /**
    * Handles the logic for rolling a trait from the character sheet.
    * If help mode is enabled, the trait is passed to the help promise.
    * Otherwise, a dialog is shown asking the user to select a die to roll.
    *
-   * @param {Item} trait - The trait to be rolled.
+   * @param {Item|TraitLike} trait - The trait to be rolled.
    * @returns {Promise<DiscworldMessage|null>}
    */
   async rollTrait(trait) {

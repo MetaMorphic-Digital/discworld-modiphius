@@ -29,6 +29,7 @@
       .document-controls {
         .roll-name-as-trait {
           flex: 0 0 2rem;
+          color: getVar(color, toggle-icon);
         }
 
         a.leave-help-mode {

@@ -16,6 +16,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     actions: {
       traitAction: CharacterSheet.#traitAction,
       leaveHelpMode: CharacterSheet.#leaveHelpMode,
+      rollNameAsTrait: CharacterSheet.#rollNameAsTrait,
     },
   };
 
@@ -295,5 +296,15 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static async #rollTrait(trait) {
     const { actor } = this;
     actor.rollTrait(trait);
+  }
+
+  /**
+   * Rolls the character's name as a trait.
+   *
+   * @returns {Promise<void>}
+   */
+  static #rollNameAsTrait() {
+    const { actor } = this;
+    actor.rollTrait({ actor, name: actor.name });
   }
 }
