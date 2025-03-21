@@ -24,11 +24,11 @@ export default class DiscworldCharacter extends Actor {
    * @override
    */
   static async create(data, options = {}) {
-    data.prototypeToken = {
+    data.prototypeToken = foundry.utils.mergeObject({
       actorLink: true,
-      disposition: 1,
+      disposition: CONST.TOKEN_DISPOSTIONS.FRIENDLY,
       "bar1.attribute": "luck",
-    };
+    }, data.prototypeToken ?? {});
 
     return super.create(data, options);
   }
