@@ -11,7 +11,17 @@
   },
   "authors": [
     {
-      "name": "Jalen Michals Levy"
+      "name": "MetaMorphic Digital Studio",
+      "url": "https://metamorphic-digital.com/"
+    },
+    {
+      "name": "Zhell",
+      "discord": "zhell9201"
+    },
+    {
+      "name": "Jalen Michals Levy",
+      "discord": "jalensailin",
+      "url": "https://github.com/jalensailin"
     }
   ],
   "esmodules": ["modules/discworld.js"],
