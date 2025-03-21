@@ -1,5 +1,4 @@
 @use "../utils/callouts" as *;
-@use "../utils/toggle-switch" as *;
 @use "../utils/var-utils" as *;
 
 @use "../variables/fonts" as *;
@@ -52,7 +51,12 @@
           }
         }
 
-        @include toggle-switch;
+        .toggle-container {
+          flex: 0;
+
+          text-align: right;
+          color: getVar(color, toggle-icon);
+        }
       }
 
       .document-details {
