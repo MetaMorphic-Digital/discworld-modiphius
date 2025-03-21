@@ -3,7 +3,7 @@
   "title": "Terry Pratchett's Discworld - Official",
   "description": "Official implementation of \"Terry Pratchett's Discworld - Adventures in Ankh-Morpork\" by Modiphius",
   "version": "0.0.0",
-  "license": "",
+  "license": "Apache License, Version 2.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
