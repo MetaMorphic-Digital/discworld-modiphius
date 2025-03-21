@@ -309,13 +309,20 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   /**
-   * Rolls the character's name as a trait.
+   * Rolls the character's name/pronouns as a trait.
    *
    * @returns {Promise<void>}
    */
   static #rollNameAsTrait() {
     const { actor } = this;
-    actor.rollTrait({ actor, name: actor.name });
+
+    // Add pronouns if field is non-empty.
+    let traitText = actor.name;
+    if (actor.system.pronouns) {
+      traitText += ` - ${actor.system.pronouns}`;
+    }
+
+    actor.rollTrait({ actor, name: traitText });
   }
 
   /**
