@@ -21,6 +21,20 @@ export default class DiscworldCharacter extends Actor {
   };
 
   /**
+   * Set default prototype token data.
+   * @override
+   */
+  static async create(data, options = {}) {
+    data.prototypeToken = foundry.utils.mergeObject({
+      actorLink: true,
+      disposition: CONST.TOKEN_DISPOSTIONS.FRIENDLY,
+      "bar1.attribute": "luck",
+    }, data.prototypeToken ?? {});
+
+    return super.create(data, options);
+  }
+
+  /**
    * Handles the logic for rolling a trait from the character sheet.
    * If help mode is enabled, the trait is passed to the help promise.
    * Otherwise, a dialog is shown asking the user to select a die to roll.
