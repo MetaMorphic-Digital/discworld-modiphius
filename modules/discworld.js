@@ -28,13 +28,13 @@ Hooks.once("init", () => {
   // Register Actor classes.
   CONFIG.Actor.documentClass = DiscworldCharacter;
   CONFIG.Actor.dataModels.character = CharacterDataModel;
-  Actors.registerSheet("discworld", CharacterSheet, {
+  Actors.registerSheet(DISCWORLD.id, CharacterSheet, {
     makeDefault: true,
   });
 
   // Register Item classes.
   CONFIG.Item.dataModels.trait = TraitDataModel;
-  Items.registerSheet("discworld", TraitSheet, {
+  Items.registerSheet(DISCWORLD.id, TraitSheet, {
     makeDefault: true,
   });
 

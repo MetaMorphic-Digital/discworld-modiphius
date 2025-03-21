@@ -22,19 +22,18 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   /** @override */
   static PARTS = {
     header: {
-      template: "systems/discworld/templates/character-sheet/header.hbs",
+      template: `systems/${DISCWORLD.id}/templates/character-sheet/header.hbs`,
     },
     tabs: {
       template: "templates/generic/tab-navigation.hbs",
     },
     traits: {
-      template: "systems/discworld/templates/character-sheet/traits-tab.hbs",
+      template: `systems/${DISCWORLD.id}/templates/character-sheet/traits-tab.hbs`,
       // Indicates root level is scrollable (and thus should have its position persisteted on re-render).
       scrollable: [""],
     },
     description: {
-      template:
-        "systems/discworld/templates/character-sheet/description-tab.hbs",
+      template: `systems/${DISCWORLD.id}/templates/character-sheet/description-tab.hbs`,
       scrollable: [".editor-content"],
     },
   };

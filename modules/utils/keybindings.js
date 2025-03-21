@@ -1,5 +1,7 @@
+import DISCWORLD from "../config.js";
+
 export default function registerKeybindings() {
-  game.keybindings.register(game.system.id, "toggleEditMode", {
+  game.keybindings.register(DISCWORLD.id, "toggleEditMode", {
     name: "Toggle Edit Mode",
     hint: "Turn character sheet 'edit mode' on and off.",
     editable: [

@@ -1,4 +1,4 @@
-# Discworld - Quickstart
+# Terry Pratchett's Discworld - Adventures in Ankh-Morpork by Modiphius
 
 > **Note:** This system is a work-in-progress and in a _pre-release_ state. Until it is complete, this `README` will contain information for testing/contributing (i.e. getting a development environment set up). When the system is compelete, this `README` will be updated to contain general information about the system, and instructions for contributing will be moved to a file called `CONTRIBUTING.md` in the root of the repository.
 

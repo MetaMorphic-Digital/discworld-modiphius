@@ -1,3 +1,4 @@
+import DISCWORLD from "../config.js";
 import DWHelpRoll from "../rolls/help-roll.js";
 import DWTraitRoll from "../rolls/trait-roll.js";
 
@@ -49,7 +50,7 @@ export default class DiscworldCharacter extends Actor {
   async rollTraitDialog(trait) {
     const { DialogV2 } = foundry.applications.api;
     const content = await renderTemplate(
-      "systems/discworld/templates/mixins/trait-quote.hbs",
+      `systems/${DISCWORLD.id}/templates/mixins/trait-quote.hbs`,
       { traitName: trait.name, actorName: this.name },
     );
 
