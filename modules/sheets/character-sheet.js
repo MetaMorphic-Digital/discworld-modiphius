@@ -167,6 +167,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       CharacterSheet.#addTrait.call(this, traitType);
     });
 
+    // Make each description direct child element rollable.
     const descriptionParts = this.element.querySelectorAll(
       "prose-mirror.inactive .editor-content > *",
     );
@@ -326,7 +327,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   /**
-   *
+   * @param {string} text - The text of the TraitLike to be rolled.
+   *                        @see DiscworldCharacter.rollTrait
    * @returns {Promise<void>}
    */
   static #rollDescriptionAsTrait(text) {
