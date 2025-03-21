@@ -145,8 +145,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   /** @override */
-  _onRender() {
-    super._onRender();
+  _onRender(context, options) {
+    super._onRender(context, options);
 
     // Edit Trait by right-click.
     const sheetBody = this.element.querySelector("section.traits");
