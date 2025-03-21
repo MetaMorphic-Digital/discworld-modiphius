@@ -1,7 +1,7 @@
 {
-  "id": "discworld",
-  "title": "Discworld - Quickstart",
-  "description": "Terry Pratchett's Discworld - Adventures in Ankh-Morpork - Quickstart",
+  "id": "discworld-modiphius",
+  "title": "Terry Pratchett's Discworld - Official",
+  "description": "Official Terry Pratchett's Discworld - Adventures in Ankh-Morpork",
   "version": "0.0.0",
   "license": "",
   "compatibility": {
