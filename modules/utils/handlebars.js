@@ -9,8 +9,8 @@ export default async function preloadTemplates() {
   const { loadTemplates } = foundry.applications.handlebars;
   return loadTemplates([
     // Mixins
-    `systems/${game.system.id}/templates/mixins/toggle-switch.hbs`,
-    `systems/${game.system.id}/templates/mixins/trait-quote.hbs`,
+    `systems/${DISCWORLD.id}/templates/mixins/toggle-switch.hbs`,
+    `systems/${DISCWORLD.id}/templates/mixins/trait-quote.hbs`,
   ]);
 }
 
@@ -20,7 +20,7 @@ export function registerHelpers() {
    */
   Handlebars.registerHelper(
     "systemFilePath",
-    (string) => `systems/${game.system.id}/${string}`,
+    (string) => `systems/${DISCWORLD.id}/${string}`,
   );
 
   /**

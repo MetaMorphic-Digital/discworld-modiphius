@@ -3,6 +3,7 @@
  */
 
 const DISCWORLD = {
+  id: "discworld-modiphius",
   consequenceSeverity: {
     inconsequential: "DISCWORLD.trait.severity.inconsequential",
     minor: "DISCWORLD.trait.severity.minor",

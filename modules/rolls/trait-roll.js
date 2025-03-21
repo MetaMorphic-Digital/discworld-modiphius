@@ -1,3 +1,5 @@
+import DISCWORLD from "../config.js";
+
 /**
  * @extends Roll
  */
@@ -23,7 +25,7 @@ export default class DWTraitRoll extends Roll {
    * @override
    */
   static CHAT_TEMPLATE = /** @type {const} */ (
-    "systems/discworld/templates/roll-card.hbs"
+    `systems/${DISCWORLD.id}/templates/roll-card.hbs`
   );
 
   /** @type {string} - Path to the template for this roll. */

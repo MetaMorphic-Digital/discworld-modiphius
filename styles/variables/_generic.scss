@@ -1,2 +1,4 @@
-$assetsPrefix: "/systems/discworld/assets";
+$-packageId: "discworld-modiphius";
+
+$assetsPrefix: "/systems/#{$-packageId}/assets";
 $packageCssClass: "discworld";

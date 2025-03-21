@@ -1,3 +1,4 @@
+import DISCWORLD from "../config.js";
 import DiscworldSheetMixin from "./base-document-sheet.js";
 
 const { ItemSheetV2 } = foundry.applications.sheets;
@@ -16,10 +17,10 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
 
   static PARTS = {
     header: {
-      template: "systems/discworld/templates/trait-sheet/header.hbs",
+      template: `systems/${DISCWORLD.id}/templates/trait-sheet/header.hbs`,
     },
     description: {
-      template: "systems/discworld/templates/trait-sheet/description.hbs",
+      template: `systems/${DISCWORLD.id}/templates/trait-sheet/description.hbs`,
       scrollable: [".editor-content"],
     },
   };
