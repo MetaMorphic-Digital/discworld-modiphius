@@ -114,8 +114,12 @@
 
         .trait-list {
           flex: 3;
-
           padding: 0 0.25rem;
+
+          i.fa-ankh {
+            padding-left: 0.25rem;
+            padding-right: 0.1rem;
+          }
         }
       }
     }
