@@ -1,8 +1,0 @@
-@use "../utils/var-utils" as *;
-
-@mixin toggle-switch($duration: 0.3s) {
-  .toggle-container {
-    text-align: right;
-    color: getVar(color, toggle-icon);
-  }
-}
