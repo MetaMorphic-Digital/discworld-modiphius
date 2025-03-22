@@ -173,8 +173,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     );
     descriptionParts.forEach((part) =>
       part.addEventListener("click", (event) => {
-        const text = event.target.textContent;
-        CharacterSheet.#rollDescriptionAsTrait.call(this, text);
+        const html = event.currentTarget.outerHTML;
+        CharacterSheet.#rollDescriptionAsTrait.call(this, html);
       }),
     );
 
@@ -327,12 +327,18 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   }
 
   /**
-   * @param {string} text - The text of the TraitLike to be rolled.
+   * Rolls a part of the character's description as a trait (TraitLike).
+   *
+   * @param {string} html - The html of the TraitLike to be rolled.
    *                        @see DiscworldCharacter.rollTrait
    * @returns {Promise<void>}
    */
-  static #rollDescriptionAsTrait(text) {
+  static async #rollDescriptionAsTrait(html) {
     const { actor } = this;
-    actor.rollTrait({ actor, name: text });
+    const enrichedText = await TextEditor.enrichHTML(html, {
+      rollData: actor.getRollData(),
+      relativeTo: actor,
+    });
+    actor.rollTrait({ actor, name: enrichedText });
   }
 }
