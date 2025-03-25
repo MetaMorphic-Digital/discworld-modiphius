@@ -63,7 +63,7 @@ export default class DiscworldCharacter extends Actor {
    */
   async rollTraitDialog(trait) {
     const { DialogV2 } = foundry.applications.api;
-    const content = await renderTemplate(
+    const content = await foundry.applications.handlebars.renderTemplate(
       `systems/${DISCWORLD.id}/templates/mixins/trait-quote.hbs`,
       { traitName: trait.name, actorName: this.name },
     );
