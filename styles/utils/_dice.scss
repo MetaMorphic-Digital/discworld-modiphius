@@ -1,3 +1,5 @@
+@use "../variables/generic" as *;
+
 @mixin dice-backgrounds($includeProps: true) {
   $height: 36px;
   background-repeat: no-repeat;
@@ -14,7 +16,7 @@
 
   @each $dice in $dice-types {
     &.#{$dice} {
-      background-image: url("/systems/discworld/assets/dice/#{$dice}.svg");
+      background-image: url("#{$assetsPrefix}/dice/#{$dice}.svg");
     }
   }
 }
