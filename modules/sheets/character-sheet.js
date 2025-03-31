@@ -169,7 +169,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
     // Make each description direct child element rollable.
     const descriptionParts = this.element.querySelectorAll(
-      "prose-mirror.inactive .editor-content > *",
+      "prose-mirror.inactive .editor-content .trait-rollable",
     );
     descriptionParts.forEach((part) =>
       part.addEventListener("click", (event) => {

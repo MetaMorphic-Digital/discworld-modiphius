@@ -126,7 +126,7 @@
     }
 
     &.description {
-      prose-mirror.inactive .editor-content > *:hover {
+      prose-mirror.inactive .editor-content .trait-rollable:hover {
         text-shadow: 0 0 8px var(--color-shadow-primary);
         cursor: pointer;
       }
