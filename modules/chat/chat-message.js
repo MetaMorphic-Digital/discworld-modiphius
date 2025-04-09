@@ -76,7 +76,10 @@ export default class DiscworldMessage extends ChatMessage {
       return super.create(message, operation);
 
     const chatData = await message._prepareContext();
-    const content = await renderTemplate(message.mainRoll.template, chatData);
+    const content = await foundry.applications.handlebars.renderTemplate(
+      message.mainRoll.template,
+      chatData,
+    );
     return super.create({ ...data, content }, operation);
   }
 
@@ -115,7 +118,10 @@ export default class DiscworldMessage extends ChatMessage {
     }
 
     const chatData = await this._prepareContext(chatDataOverrides);
-    const content = await renderTemplate(this.mainRoll.template, chatData);
+    const content = await foundry.applications.handlebars.renderTemplate(
+      this.mainRoll.template,
+      chatData,
+    );
 
     return this.update({
       content,
