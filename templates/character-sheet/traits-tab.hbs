@@ -13,7 +13,7 @@
       </div>
       <div class="trait-list">
         {{#each traits as |trait| }}
-          <a data-action="traitAction"
+          <a data-action="traitAction" class="draggable"
              data-item-id="{{trait.id}}"
              data-item-uuid="{{trait.uuid}}">{{trait.name~}}</a>
           {{~#if ../../isEditMode}}
