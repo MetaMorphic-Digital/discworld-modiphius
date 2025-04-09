@@ -29,6 +29,7 @@
       .document-controls {
         .roll-name-as-trait {
           flex: 0 0 2rem;
+          color: getVar(color, toggle-icon);
         }
 
         a.leave-help-mode {
@@ -121,6 +122,13 @@
             padding-right: 0.1rem;
           }
         }
+      }
+    }
+
+    &.description {
+      prose-mirror.inactive .editor-content .trait-rollable:hover {
+        text-shadow: 0 0 8px var(--color-shadow-primary);
+        cursor: pointer;
       }
     }
   }

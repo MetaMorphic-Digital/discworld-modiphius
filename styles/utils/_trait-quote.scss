@@ -5,6 +5,21 @@
     quotes: "“ " " ”";
     text-align: center;
 
+    q > {
+      p,
+      table {
+        display: inline;
+      }
+
+      * {
+        display: inline-block;
+      }
+    }
+
+    q:has(> ol, > ul, > table, > img) {
+      quotes: none;
+    }
+
     cite {
       font-size: 1.025rem;
       padding-left: 3.5rem;

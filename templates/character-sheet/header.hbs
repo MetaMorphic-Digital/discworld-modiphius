@@ -9,7 +9,11 @@
 
   <div class="header-data-container flexcol">
     <div class="document-controls flexrow">
-      <div class="roll-name-as-trait">{{!-- Space for future button --}}</div>
+      <a class="roll-name-as-trait"
+         data-action="rollNameAsTrait"
+         data-tooltip="{{localize 'DISCWORLD.sheet.rollNameAsTrait'}}">
+        <i class="fas fa-dice"></i>
+      </a>
 
       {{!-- Leave Help Mode --}}
       <a class="leave-help-mode

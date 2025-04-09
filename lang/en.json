@@ -36,6 +36,7 @@
 
     "sheet": {
       "leaveHelpMode": "Leave Help Mode",
+      "rollNameAsTrait": "Roll Name As Trait",
       "toggleSheetMode": "Toggle Between Locked & Edit Mode",
       "tabs": {
         "description": "Description",

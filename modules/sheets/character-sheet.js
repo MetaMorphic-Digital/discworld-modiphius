@@ -16,6 +16,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     actions: {
       traitAction: CharacterSheet.#traitAction,
       leaveHelpMode: CharacterSheet.#leaveHelpMode,
+      rollNameAsTrait: CharacterSheet.#rollNameAsTrait,
     },
   };
 
@@ -166,6 +167,17 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       CharacterSheet.#addTrait.call(this, traitType);
     });
 
+    // Make each description direct child element rollable.
+    const descriptionParts = this.element.querySelectorAll(
+      "prose-mirror.inactive .editor-content .trait-rollable",
+    );
+    descriptionParts.forEach((part) =>
+      part.addEventListener("click", (event) => {
+        const html = event.currentTarget.outerHTML;
+        CharacterSheet.#rollDescriptionAsTrait.call(this, html);
+      }),
+    );
+
     // Add/remove class depending on Help Mode.
     if (this.isHelpMode) {
       this.element.classList.add("help-mode");
@@ -295,5 +307,38 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static async #rollTrait(trait) {
     const { actor } = this;
     actor.rollTrait(trait);
+  }
+
+  /**
+   * Rolls the character's name/pronouns as a trait.
+   *
+   * @returns {Promise<void>}
+   */
+  static #rollNameAsTrait() {
+    const { actor } = this;
+
+    // Add pronouns if field is non-empty.
+    let traitText = actor.name;
+    if (actor.system.pronouns) {
+      traitText += ` - ${actor.system.pronouns}`;
+    }
+
+    actor.rollTrait({ actor, name: traitText });
+  }
+
+  /**
+   * Rolls a part of the character's description as a trait (TraitLike).
+   *
+   * @param {string} html - The html of the TraitLike to be rolled.
+   *                        @see DiscworldCharacter.rollTrait
+   * @returns {Promise<void>}
+   */
+  static async #rollDescriptionAsTrait(html) {
+    const { actor } = this;
+    const enrichedText = await TextEditor.enrichHTML(html, {
+      rollData: actor.getRollData(),
+      relativeTo: actor,
+    });
+    actor.rollTrait({ actor, name: enrichedText });
   }
 }
