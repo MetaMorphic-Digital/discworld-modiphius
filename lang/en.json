@@ -35,6 +35,16 @@
     },
 
     "sheet": {
+      "context": {
+        "actor": {
+          "trait": {
+            "use": "Use Trait",
+            "edit": "Edit Trait",
+            "delete": "Delete Trait",
+            "duplicate": "Duplicate Trait"
+          }
+        }
+      },
       "leaveHelpMode": "Leave Help Mode",
       "rollNameAsTrait": "Roll Name As Trait",
       "toggleSheetMode": "Toggle Between Locked & Edit Mode",
