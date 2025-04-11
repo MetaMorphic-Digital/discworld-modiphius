@@ -7,6 +7,7 @@ const { ActorSheetV2 } = foundry.applications.sheets;
  * @extends ActorSheetV2
  */
 export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
+  /** @inheritdoc */
   static DEFAULT_OPTIONS = {
     position: {
       width: 525,
@@ -20,7 +21,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
-  /** @override */
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
   static PARTS = {
     header: {
       template: `systems/${DISCWORLD.id}/templates/character-sheet/header.hbs`,
@@ -30,7 +33,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
     traits: {
       template: `systems/${DISCWORLD.id}/templates/character-sheet/traits-tab.hbs`,
-      // Indicates root level is scrollable (and thus should have its position persisteted on re-render).
       scrollable: [""],
     },
     description: {
@@ -39,7 +41,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
   };
 
-  /** @override */
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
   static TABS = {
     primary: {
       tabs: [{ id: "traits" }, { id: "description" }],
@@ -47,6 +51,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       labelPrefix: "DISCWORLD.sheet.tabs",
     },
   };
+
+  /* -------------------------------------------------- */
 
   /**
    * Helper to check if the actor is currently in help mode.
@@ -58,7 +64,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     return this.actor.helpMode.enabled;
   }
 
-  /** @override */
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
 
@@ -85,15 +93,20 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     return context;
   }
 
-  /** @override */ // eslint-disable-next-line class-methods-use-this
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
   async _preparePartContext(partId, context, options) {
     // By default, this returns the same mutated context.
+    // eslint-disable-next-line no-param-reassign
     context = await super._preparePartContext(partId, context, options);
 
     context.tab = context.tabs[partId];
 
     return context;
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Create context for input fields.
@@ -105,7 +118,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     return {
       name: {
         field: document.schema.getField("name"),
-        placeholder: game.i18n.localize("Name"), // TODO: remove once v12 support is dropped
         value: this.isEditMode ? document._source.name : document.name,
       },
       description: {
@@ -130,6 +142,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     };
   }
 
+  /* -------------------------------------------------- */
+
   /**
    *
    * @returns {Record<keyof DISCWORLD.traitTypes, Item[]>}
@@ -145,21 +159,25 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     return traitGroups;
   }
 
-  /** @override */
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
   _onRender(context, options) {
     super._onRender(context, options);
 
-    // Edit Trait by right-click.
-    const sheetBody = this.element.querySelector("section.traits");
-    sheetBody.addEventListener("contextmenu", (event) => {
-      const { itemId } = event.target.dataset;
-      if (!itemId) return;
-
-      const trait = this.actor.items.get(itemId);
-      CharacterSheet.#editTrait.call(this, trait);
-    });
+    this._createContextMenu(
+      this.#prepareTraitContextOptions,
+      "[data-action=traitAction]",
+      {
+        container: this.element,
+        hookName: "getTraitContextOptions",
+        parentClassHooks: false,
+        fixed: true,
+      },
+    );
 
     // Add Trait by double-clicking trait category label.
+    const sheetBody = this.element.querySelector("section.traits");
     sheetBody.addEventListener("dblclick", (event) => {
       const { traitType } = event.target.closest(".trait-category").dataset;
       if (!traitType) return;
@@ -195,12 +213,58 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       );
   }
 
-  /** @override */
+  /* -------------------------------------------------- */
+
+  /**
+   * Prepare the list of context menu options for traits.
+   * @returns {object[]}    Context options.
+   */
+  #prepareTraitContextOptions() {
+    const getItem = (li) => this.document.items.get(li.dataset.itemId);
+    return [
+      {
+        name: "DISCWORLD.sheet.context.actor.trait.use",
+        icon: "<i class='fa-solid fa-fw fa-hand-fist'></i>",
+        condition: () => this.document.isOwner,
+        callback: (li) => this.document.rollTrait(getItem(li)),
+      },
+      {
+        name: "DISCWORLD.sheet.context.actor.trait.edit",
+        icon: "<i class='fa-solid fa-fw fa-edit'></i>",
+        condition: () => this.document.isOwner,
+        callback: (li) => getItem(li).sheet.render({ force: true }),
+      },
+      {
+        name: "DISCWORLD.sheet.context.actor.trait.delete",
+        icon: "<i class='fa-solid fa-fw fa-trash'></i>",
+        condition: () => this.document.isOwner,
+        callback: (li) => getItem(li).deleteDialog(),
+      },
+      {
+        name: "DISCWORLD.sheet.context.actor.trait.duplicate",
+        icon: "<i class='fa-solid fa-fw fa-copy'></i>",
+        condition: () => this.document.isOwner,
+        callback: (li) => {
+          const item = getItem(li);
+          item.clone(
+            { name: game.i18n.format("DOCUMENT.CopyOf", { name: item.name }) },
+            { save: true, renderSheet: true },
+          );
+        },
+      },
+    ];
+  }
+
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
   async close() {
     await super.close();
 
     if (this.isHelpMode) this.actor.leaveHelpMode();
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Leave help mode and re-render the character sheet,
@@ -209,6 +273,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static #leaveHelpMode() {
     this.actor.leaveHelpMode();
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Handle clicks on trait actions (add, edit, delete, roll).
@@ -239,6 +305,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     }
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Add a new trait of the given type to the character.
    *
@@ -261,6 +329,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     newTrait.sheet.render({ force: true, autofocus: true });
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Opens the Trait sheet for editing with autofocus enabled on the name field.
    *
@@ -270,6 +340,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   static async #editTrait(trait) {
     trait.sheet.render({ force: true, autofocus: true });
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Prompts the user for confirmation before deleting a Trait.
@@ -297,6 +369,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       trait.deleteDialog({ content: `<p>${content}</p>` });
     }
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Prompts the user to select a die to roll and then rolls the trait.

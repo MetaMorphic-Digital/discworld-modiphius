@@ -28,7 +28,7 @@ export default class DiscworldCharacter extends Actor {
     data.prototypeToken = foundry.utils.mergeObject(
       {
         actorLink: true,
-        disposition: CONST.TOKEN_DISPOSTIONS.FRIENDLY,
+        disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
         "bar1.attribute": "luck",
       },
       data.prototypeToken ?? {},
