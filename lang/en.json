@@ -73,6 +73,7 @@
 
   "TYPES.Actor.character": "Character",
   "TYPES.Item.trait": "Trait",
-  "discworld.CharacterSheet": "Discworld Character Sheet",
-  "discworld.TraitSheet": "Discworld Trait Sheet"
+  "discworld-modiphius.CharacterSheet": "Discworld Character Sheet",
+  "discworld-modiphius.DiscworldJournalEntrySheet": "Discworld Journal Sheet",
+  "discworld-modiphius.TraitSheet": "Discworld Trait Sheet"
 }

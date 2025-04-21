@@ -10,6 +10,7 @@ import DISCWORLD from "./config.js";
 import DiscworldMessage from "./chat/chat-message.js";
 import DiscworldCharacter from "./documents/character.js";
 import transitionClass from "./utils/animations.js";
+import DiscworldJournalEntrySheet from "./sheets/journal-entry-sheet.js";
 
 // Export globals.
 globalThis.discworld = {
@@ -20,7 +21,7 @@ globalThis.discworld = {
 };
 
 Hooks.once("init", () => {
-  const { Actors, Items } = foundry.documents.collections;
+  const { Actors, Items, Journal } = foundry.documents.collections;
 
   // Configuration.
   CONFIG.Discworld = DISCWORLD;
@@ -45,6 +46,9 @@ Hooks.once("init", () => {
   // Register Dice
   for (const Roll of Object.values(Rolls)) CONFIG.Dice.rolls.push(Roll);
   Object.assign(CONFIG.Dice, Rolls);
+
+  // Register Journal
+  Journal.registerSheet(DISCWORLD.id, DiscworldJournalEntrySheet);
 
   // Run various utils.
   registerKeybindings();
