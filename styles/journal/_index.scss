@@ -2,10 +2,12 @@
 
 @use "aside" as *;
 @use "headers" as *;
+@use "lists" as *;
 
 .discworld.journal-sheet .journal-entry-content {
   @include sheet-background;
 
   @include aside;
   @include headers;
+  @include lists;
 }

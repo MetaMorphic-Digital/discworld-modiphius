@@ -1,0 +1,13 @@
+@use "../variables/fonts" as *;
+
+@mixin lists {
+  ol {
+    font-family: $font-trattatello;
+    font-size: 1.1em;
+    margin-left: 1rem;
+
+    li {
+      padding-left: 0.5rem;
+    }
+  }
+}
