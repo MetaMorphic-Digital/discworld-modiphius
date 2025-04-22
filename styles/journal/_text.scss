@@ -1,0 +1,7 @@
+@use "../utils/var-utils" as *;
+
+@mixin text {
+  strong.highlight {
+    color: getVar(color, title-alt);
+  }
+}
