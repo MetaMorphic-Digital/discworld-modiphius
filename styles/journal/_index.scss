@@ -1,5 +1,7 @@
+@use "aside" as *;
 @use "headers" as *;
 
 .discworld.journal-sheet .journal-entry-content {
+  @include aside;
   @include headers;
 }

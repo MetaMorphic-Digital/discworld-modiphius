@@ -1,0 +1,16 @@
+@use "../utils/callouts" as *;
+
+@mixin aside {
+  aside {
+    @include callout-primary;
+
+    font-style: italic;
+
+    padding: 1rem;
+
+    h3 {
+      text-align: center;
+      font-style: oblique;
+    }
+  }
+}
