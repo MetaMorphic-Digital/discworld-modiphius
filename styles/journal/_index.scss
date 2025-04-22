@@ -1,7 +1,11 @@
+@use "../utils/sheet-background" as *;
+
 @use "aside" as *;
 @use "headers" as *;
 
 .discworld.journal-sheet .journal-entry-content {
+  @include sheet-background;
+
   @include aside;
   @include headers;
 }
