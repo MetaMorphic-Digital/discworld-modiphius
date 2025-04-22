@@ -1,0 +1,16 @@
+@use "../utils/sheet-background" as *;
+@use "../utils/var-utils" as *;
+
+@use "aside" as *;
+@use "headers" as *;
+@use "lists" as *;
+@use "text" as *;
+
+.discworld.journal-sheet .journal-entry-content {
+  @include sheet-background;
+
+  @include aside;
+  @include headers;
+  @include lists;
+  @include text;
+}
