@@ -10,4 +10,17 @@
       padding-left: 0.5rem;
     }
   }
+
+  ul {
+    margin-left: 0.5rem;
+
+    li {
+      padding-left: 1rem;
+    }
+
+    ::marker {
+      content: "\25C6";
+      font-size: 0.6em;
+    }
+  }
 }
