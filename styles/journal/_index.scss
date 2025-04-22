@@ -1,0 +1,5 @@
+@use "headers" as *;
+
+.discworld.journal-sheet .journal-entry-content {
+  @include headers;
+}

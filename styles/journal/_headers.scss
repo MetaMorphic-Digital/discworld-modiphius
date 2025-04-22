@@ -1,0 +1,39 @@
+@use "../utils/var-utils" as *;
+
+@use "../variables/fonts" as *;
+
+@mixin headers {
+  h1,
+  h2,
+  h3 {
+    font-family: $font-caslon;
+    font-weight: bold;
+    font-variant: small-caps;
+  }
+
+  h1,
+  h2 {
+    color: getVar(color, title);
+
+    border-bottom: unset;
+  }
+
+  header h1 {
+    font-size: 4rem;
+
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    color: getVar(color, title-alt);
+    font-size: 1.5rem;
+  }
+}
