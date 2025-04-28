@@ -20,6 +20,8 @@ globalThis.discworld = {
   },
 };
 
+/* -------------------------------------------------- */
+
 Hooks.once("init", () => {
   const { Actors, Items, Journal } = foundry.documents.collections;
 
@@ -48,13 +50,17 @@ Hooks.once("init", () => {
   Object.assign(CONFIG.Dice, Rolls);
 
   // Register Journal
-  Journal.registerSheet(DISCWORLD.id, DiscworldJournalEntrySheet);
+  Journal.registerSheet(DISCWORLD.id, DiscworldJournalEntrySheet, {
+    makeDefault: true,
+  });
 
   // Run various utils.
   registerKeybindings();
   registerHelpers();
   preloadTemplates();
 });
+
+/* -------------------------------------------------- */
 
 Hooks.once("i18nInit", () => {
   // Localize all strings in the system configuration object.

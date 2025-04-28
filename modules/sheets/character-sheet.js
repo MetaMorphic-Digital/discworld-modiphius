@@ -76,13 +76,14 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     context.fields = this._getFields();
 
     // Enrich the description field.
-    context.fields.description.enriched = await TextEditor.enrichHTML(
-      context.fields.description.value,
-      {
-        rollData: this.document.getRollData(),
-        relativeTo: this.document,
-      },
-    );
+    context.fields.description.enriched =
+      await foundry.applications.ux.TextEditor.implementation.enrichHTML(
+        context.fields.description.value,
+        {
+          rollData: this.document.getRollData(),
+          relativeTo: this.document,
+        },
+      );
 
     // Construct arrays of traits, filtered by category.
     context.traitGroups = this._getTraitGroups();
@@ -162,8 +163,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   /* -------------------------------------------------- */
 
   /** @inheritdoc */
-  _onRender(context, options) {
-    super._onRender(context, options);
+  async _onRender(context, options) {
+    await super._onRender(context, options);
 
     this._createContextMenu(
       this.#prepareTraitContextOptions,
@@ -259,9 +260,11 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /** @inheritdoc */
   async close() {
-    await super.close();
+    const result = await super.close();
 
     if (this.isHelpMode) this.actor.leaveHelpMode();
+
+    return result;
   }
 
   /* -------------------------------------------------- */
@@ -353,21 +356,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     const content = game.i18n.format("DISCWORLD.dialog.deleteTrait.content", {
       traitName: trait.name,
     });
-
-    // TODO: remove this when v12 support is dropped.
-    if (game.release.generation < 13) {
-      const { DialogV2 } = foundry.applications.api;
-      const promptResult = await DialogV2.confirm({
-        window: {
-          title: "DISCWORLD.dialog.deleteTrait.title",
-        },
-        content,
-      });
-      if (!promptResult) return;
-      trait.delete();
-    } else {
-      trait.deleteDialog({ content: `<p>${content}</p>` });
-    }
+    trait.deleteDialog({ content: `<p>${content}</p>` });
   }
 
   /* -------------------------------------------------- */
@@ -409,10 +398,11 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
    */
   static async #rollDescriptionAsTrait(html) {
     const { actor } = this;
-    const enrichedText = await TextEditor.enrichHTML(html, {
-      rollData: actor.getRollData(),
-      relativeTo: actor,
-    });
+    const enrichedText =
+      await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {
+        rollData: actor.getRollData(),
+        relativeTo: actor,
+      });
     actor.rollTrait({ actor, name: enrichedText });
   }
 }

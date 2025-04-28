@@ -3,9 +3,8 @@ import DWNarrativiumRoll from "../rolls/narrativium-roll.js";
 /**
  * The Discworld Chat Log. We extend this class to add custom button listeners.
  */
-export default class DiscworldChatLog extends (foundry.applications?.sidebar
-  ?.tabs?.ChatLog ?? ChatLog) {
-  /** @override */
+export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.ChatLog {
+  /** @inheritdoc */
   static DEFAULT_OPTIONS = {
     actions: {
       narrativium: DiscworldChatLog.#onRollNarrativium,
@@ -18,7 +17,7 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
   /**
    * Add custom button listeners to the chat log.
    *
-   * @override
+   * @inheritdoc
    * @param {jQuery} html - The jQuery object that represents the chat log.
    * @returns {void}
    */
@@ -97,6 +96,8 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
     actor.resolveHelpMode(message);
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Respond to the GM clicking the "Narrativium" button
    * by creating a Narrativium (d8) Roll.
@@ -117,6 +118,8 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
     DWNarrativiumRoll.createNarrativiumRoll(messageData);
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Retrieve message data from a clicked chat message element,
    * accounting for the current generation of Foundry.
@@ -128,10 +131,8 @@ export default class DiscworldChatLog extends (foundry.applications?.sidebar
    * @returns {boolean} return.reroll - Whether the message was marked as a reroll.
    */
   static getClickedMessageData(event, target) {
-    // TODO: Remove once v12 support is dropped.
-    const targetElem = game.release.generation < 13 ? event.target : target;
-    const messageElem = targetElem.closest(".message");
-    const buttonElem = targetElem.closest("button");
+    const messageElem = target.closest(".message");
+    const buttonElem = target.closest("button");
 
     const message = game.messages.get(messageElem.dataset.messageId);
     const reroll = buttonElem.classList.contains("reroll");

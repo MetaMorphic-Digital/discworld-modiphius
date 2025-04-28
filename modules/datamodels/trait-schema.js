@@ -3,6 +3,7 @@ import DISCWORLD from "../config.js";
 const { HTMLField, StringField } = foundry.data.fields;
 
 export default class TraitDataModel extends foundry.abstract.TypeDataModel {
+  /** @inheritdoc */
   static defineSchema() {
     return {
       type: new StringField({
@@ -21,6 +22,6 @@ export default class TraitDataModel extends foundry.abstract.TypeDataModel {
 
   /* -------------------------------------------------- */
 
-  /** @override */
+  /** @inheritdoc */
   static LOCALIZATION_PREFIXES = ["DISCWORLD.trait"];
 }

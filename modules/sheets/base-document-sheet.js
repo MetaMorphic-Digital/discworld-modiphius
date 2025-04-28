@@ -11,6 +11,7 @@ import createElement from "../utils/dom-manipulation.js";
 const DiscworldSheetMixin = (Base) => {
   const { HandlebarsApplicationMixin } = foundry.applications.api;
   return class DiscworldDocumentSheet extends HandlebarsApplicationMixin(Base) {
+    /** @inheritdoc */
     static DEFAULT_OPTIONS = {
       classes: ["discworld", "document-sheet"],
       window: { resizable: true },
@@ -20,9 +21,23 @@ const DiscworldSheetMixin = (Base) => {
       form: { submitOnChange: true },
     };
 
+    /* -------------------------------------------------- */
+
+    /**
+     * Sheet modes.
+     * @enum {number}
+     */
     static SHEET_MODES = { EDIT: 0, PLAY: 1 };
 
+    /* -------------------------------------------------- */
+
+    /**
+     * Current sheet mode.
+     * @type {number}
+     */
     _sheetMode = this.constructor.SHEET_MODES.PLAY;
+
+    /* -------------------------------------------------- */
 
     /**
      * Determines if the sheet is currently in edit mode.
@@ -33,7 +48,9 @@ const DiscworldSheetMixin = (Base) => {
       return this._sheetMode === this.constructor.SHEET_MODES.EDIT;
     }
 
-    /** @override */
+    /* -------------------------------------------------- */
+
+    /** @inheritdoc */
     async _prepareContext(options) {
       const context = await super._prepareContext(options);
       return {
@@ -43,9 +60,11 @@ const DiscworldSheetMixin = (Base) => {
       };
     }
 
-    /** @override */
-    _onRender(context, options) {
-      super._onRender(context, options);
+    /* -------------------------------------------------- */
+
+    /** @inheritdoc */
+    async _onRender(context, options) {
+      await super._onRender(context, options);
 
       if (!this.isEditable) return;
 
@@ -57,7 +76,9 @@ const DiscworldSheetMixin = (Base) => {
       }
     }
 
-    /** @override */
+    /* -------------------------------------------------- */
+
+    /** @inheritdoc */
     async _renderFrame(options) {
       const element = await super._renderFrame(options);
 
@@ -67,6 +88,8 @@ const DiscworldSheetMixin = (Base) => {
 
       return element;
     }
+
+    /* -------------------------------------------------- */
 
     /**
      * Wraps all buttons in the window header inside a div,
@@ -93,6 +116,8 @@ const DiscworldSheetMixin = (Base) => {
         buttons.forEach((button) => wrapper.appendChild(button));
       }
     }
+
+    /* -------------------------------------------------- */
 
     /**
      * Creates and injects a the sheet frame decoration.

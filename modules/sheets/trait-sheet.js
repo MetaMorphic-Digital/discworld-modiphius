@@ -7,6 +7,7 @@ const { ItemSheetV2 } = foundry.applications.sheets;
  * @extends ItemSheetV2
  */
 export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
+  /** @inheritdoc */
   static DEFAULT_OPTIONS = {
     position: {
       width: 525,
@@ -15,6 +16,9 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
     classes: ["trait-sheet"],
   };
 
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
   static PARTS = {
     header: {
       template: `systems/${DISCWORLD.id}/templates/trait-sheet/header.hbs`,
@@ -27,14 +31,13 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
 
   /* -------------------------------------------------- */
 
-  /** @override */
+  /** @inheritdoc */
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
 
     context.fields = {
       name: {
         field: this.document.schema.getField("name"),
-        label: game.i18n.localize("Name"), // TODO: remove once v12 support is dropped
         value: this.isEditMode
           ? this.document._source.name
           : this.document.name,
@@ -60,16 +63,19 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
     };
 
     context.fields.severity.show = context.fields.type.value === "consequences";
-    context.fields.notes.enriched = await TextEditor.enrichHTML(
-      context.fields.notes.value,
-      {
-        rollData: this.document.getRollData(),
-        relativeTo: this.document,
-      },
-    );
+    context.fields.notes.enriched =
+      await foundry.applications.ux.TextEditor.implementation.enrichHTML(
+        context.fields.notes.value,
+        {
+          rollData: this.document.getRollData(),
+          relativeTo: this.document,
+        },
+      );
 
     return context;
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * A user is most likely going to be editing the name field
@@ -77,7 +83,7 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
    * So, we override this method to add a new option to autofocus
    * that field.
    *
-   * @override
+   * @inheritdoc
    * @param {Object} options
    * @param {boolean} options.autofocus - Whether to autofocus the name field
    * @returns {Promise<ApplicationV2>} - See Foundry API docs.

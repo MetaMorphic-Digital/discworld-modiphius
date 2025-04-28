@@ -17,6 +17,8 @@ export default class DiscworldMessage extends ChatMessage {
     return chatLog.querySelector(`li[data-message-id="${this.id}"]`);
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * The main roll of the chat message (null if message is not a Roll type).
    * @type {DWTraitRoll}
@@ -28,6 +30,8 @@ export default class DiscworldMessage extends ChatMessage {
     return roll;
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * The help roll of the chat message (null if Help has not been rolled).
    * @type {DWHelpRoll | null}
@@ -35,6 +39,8 @@ export default class DiscworldMessage extends ChatMessage {
   get helpRoll() {
     return this.rolls.find((roll) => roll instanceof DWHelpRoll) || null;
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * The first Narrativium roll of the chat message (null if Narrativium has not been rolled).
@@ -47,6 +53,8 @@ export default class DiscworldMessage extends ChatMessage {
       ) || null
     );
   }
+
+  /* -------------------------------------------------- */
 
   /**
    *  The second (reroll) Narrativium roll of the chat message
@@ -61,11 +69,13 @@ export default class DiscworldMessage extends ChatMessage {
     );
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Intercept creation of chat message to inject the roll template,
    * if applicable.
    *
-   * @override
+   * @inheritdoc
    * @param {object} data - The chat message data.
    * @param {Partial<Omit<DatabaseCreateOperation, "data">>} [operation={}]  Parameters of the creation operation
    * @returns {Promise<DiscworldMessage>}
@@ -83,11 +93,12 @@ export default class DiscworldMessage extends ChatMessage {
     return super.create({ ...data, content }, operation);
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Add a roll to the chat message. Animate the 3d dice (if present),
    * animate the chat message, finally, update the database.
    *
-   * @override
    * @param {DWHelpRoll | DWNarrativiumRoll} roll - The roll to add.
    * @returns {Promise<DiscworldMessage>}
    */
@@ -186,6 +197,8 @@ export default class DiscworldMessage extends ChatMessage {
     return context;
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Prepare CSS data for styling a chat message based on the roll results.
    *
@@ -229,6 +242,8 @@ export default class DiscworldMessage extends ChatMessage {
       },
     };
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Evaluate the outcome of a test based on whether the
@@ -279,6 +294,8 @@ export default class DiscworldMessage extends ChatMessage {
     return this.animateNarrativium(roll);
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Handles animation of a Help roll.
    *
@@ -289,6 +306,8 @@ export default class DiscworldMessage extends ChatMessage {
     await this.slideDiceIcon("playerResult");
     await this.fadeDiceIcon("helpResult", roll.result, roll.term);
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Handles animation of a Narrativium roll, whether it's regular or reroll.
@@ -306,6 +325,8 @@ export default class DiscworldMessage extends ChatMessage {
     }
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Slide the dice icon of a given class name to over from the center of its container.
    *
@@ -319,6 +340,8 @@ export default class DiscworldMessage extends ChatMessage {
       add: ["inactive"],
     });
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Fade in the dice icon of a given class name.
@@ -335,6 +358,8 @@ export default class DiscworldMessage extends ChatMessage {
     rerollResultText.textContent = rollResult;
     return transitionClass(dieListItem, { remove: ["not-visible"] });
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Fades a text element out, updates its content with a new roll result,

@@ -10,7 +10,7 @@
 4. The repo uses `scss` so you must first compile the `css` (to the directory `styles/main.css`) either using `vite` or `sass`.
    - Vite: `npx vite build --watch`.
    - Sass: `npm run sass` (see package.json for full script).
-5. Run Foundry V12. You should see Discworld in your systems. Create a world and you're off to the races.
+5. Run Foundry V13. You should see Discworld in your systems. Create a world and you're off to the races.
 
 ## Tools
 
