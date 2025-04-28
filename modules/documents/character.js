@@ -20,10 +20,9 @@ export default class DiscworldCharacter extends Actor {
     },
   };
 
-  /**
-   * Set default prototype token data.
-   * @override
-   */
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
   static async create(data, options = {}) {
     data.prototypeToken = foundry.utils.mergeObject(
       {
@@ -37,6 +36,8 @@ export default class DiscworldCharacter extends Actor {
     return super.create(data, options);
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * In Discworld, everything is a trait.
    * So, you can pass anything that has a `name`
@@ -45,6 +46,7 @@ export default class DiscworldCharacter extends Actor {
    * @typedef {object} TraitLike
    * @prop {string} name
    */
+
   /**
    * Handles the logic for rolling a trait from the character sheet.
    * If help mode is enabled, the trait is passed to the help promise.
@@ -66,6 +68,8 @@ export default class DiscworldCharacter extends Actor {
     return DWTraitRoll.createBaseRoll(dialogResult, { actor: this, trait });
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Displays a dialog to prompt the user to select a die to roll.
    *
@@ -73,7 +77,7 @@ export default class DiscworldCharacter extends Actor {
    * @returns {Promise<"d4"|"d6"|"d10"|"d12"|null>} - A promise that resolves to the selected die, or null if the dialog is cancelled.
    */
   async rollTraitDialog(trait) {
-    const { DialogV2 } = foundry.applications.api;
+    const { Dialog } = foundry.applications.api;
     const content = await foundry.applications.handlebars.renderTemplate(
       `systems/${DISCWORLD.id}/templates/mixins/trait-quote.hbs`,
       { traitName: trait.name, actorName: this.name },
@@ -84,21 +88,22 @@ export default class DiscworldCharacter extends Actor {
       return { class: [die], label: die, action: die, default: die === "d6" };
     });
 
-    return DialogV2.wait({
+    return Dialog.wait({
       classes: ["discworld"],
       position: { width: 400, height: "auto" },
       window: { title: "DISCWORLD.dialog.rollTrait.title" },
       content,
       buttons,
-      rejectClose: false, // TODO: Redundant with v13.
     });
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Enable help mode and render the character sheet, which awaits a trait roll.
    *
-   * @param {DiscworldMessage} message - The message that triggered help mode.
-   * @returns {DiscworldMessage|null}
+   * @param {DiscworldMessage} message    The message that triggered help mode.
+   * @returns {Promise<DiscworldMessage|null>}
    */
   async resolveHelpMode(message) {
     this.helpMode.enabled = true;
@@ -143,6 +148,8 @@ export default class DiscworldCharacter extends Actor {
     });
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Returns a promise that resolves to the trait selected while in help mode.
    * Resolves to null if help mode is cancelled.
@@ -159,11 +166,15 @@ export default class DiscworldCharacter extends Actor {
     });
   }
 
+  /* -------------------------------------------------- */
+
   /** Leave help mode and re-render the character sheet, if open. */
   leaveHelpMode() {
     this.resetHelpMode();
     this.sheet.render();
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Resets the help mode flag and rejects any pending help promises.

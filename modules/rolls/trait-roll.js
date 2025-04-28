@@ -20,33 +20,42 @@ export default class DWTraitRoll extends Roll {
     super(formula, data, options);
   }
 
-  /**
-   * The template used to render the roll card.
-   * @override
-   */
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
   static CHAT_TEMPLATE = /** @type {const} */ (
     `systems/${DISCWORLD.id}/templates/roll-card.hbs`
   );
+
+  /* -------------------------------------------------- */
 
   /** @type {string} - Path to the template for this roll. */
   get template() {
     return this.options.template || this.constructor.CHAT_TEMPLATE;
   }
 
+  /* -------------------------------------------------- */
+
   /** @type {DiscworldCharacter} The Actor that initiated the roll. */
   get actor() {
     return this.options.actor;
   }
+
+  /* -------------------------------------------------- */
 
   /** @type {Item} The Trait used for this roll. */
   get trait() {
     return this.options.trait;
   }
 
+  /* -------------------------------------------------- */
+
   /** @type {DiceTermOptions} The dice term used for this roll. */
   get term() {
     return this.dice[0].denomination;
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Create a base Trait roll and send to chat.

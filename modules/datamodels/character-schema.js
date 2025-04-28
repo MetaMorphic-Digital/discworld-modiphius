@@ -2,6 +2,7 @@ const { HTMLField, NumberField, SchemaField, StringField } =
   foundry.data.fields;
 
 export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
+  /** @inheritdoc */
   static defineSchema() {
     return {
       description: new HTMLField({ required: true }),
@@ -25,7 +26,7 @@ export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
 
   /* -------------------------------------------------- */
 
-  /** @override */
+  /** @inheritdoc */
   prepareDerivedData() {
     super.prepareDerivedData();
     this.luck.value = Math.clamp(this.luck.value, 0, this.luck.max);
@@ -33,6 +34,6 @@ export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
 
   /* -------------------------------------------------- */
 
-  /** @override */
+  /** @inheritdoc */
   static LOCALIZATION_PREFIXES = ["DISCWORLD.character"];
 }

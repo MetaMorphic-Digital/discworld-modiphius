@@ -14,6 +14,8 @@ export default async function preloadTemplates() {
   ]);
 }
 
+/* -------------------------------------------------- */
+
 export function registerHelpers() {
   /**
    * Returns the path to a system file
