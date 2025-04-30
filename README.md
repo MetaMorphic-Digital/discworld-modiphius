@@ -1,43 +1,88 @@
 # Terry Pratchett's Discworld - Adventures in Ankh-Morpork by Modiphius
 
-> **Note:** This system is a work-in-progress and in a _pre-release_ state. Until it is complete, this `README` will contain information for testing/contributing (i.e. getting a development environment set up). When the system is compelete, this `README` will be updated to contain general information about the system, and instructions for contributing will be moved to a file called `CONTRIBUTING.md` in the root of the repository.
+## Character Sheet
 
-## Development Environment
+The Character Sheet allows you to view, edit, and roll Traits. See the images and legend below for details.
 
-1. Navigate to your `~/FoundryUserData/Data/systems` directory and clone this repo.
-2. Open a terminal in the repo and run `npm i` to install package dependencies (see NPM Packages)
-3. Download/Enable the recommended VS Code extensions.
-4. The repo uses `scss` so you must first compile the `css` (to the directory `styles/main.css`) either using `vite` or `sass`.
-   - Vite: `npx vite build --watch`.
-   - Sass: `npm run sass` (see package.json for full script).
-5. Run Foundry V13. You should see Discworld in your systems. Create a world and you're off to the races.
+### Normal Mode
 
-## Tools
+![Character Sheet, Normal Mode](/assets/readme/char-sheet-light.webp)
 
-### Editor
+### Edit Mode
 
-- VS Code (Of course you are welcome to use whatever works best for you. However, I will be suggesting extensions with VSCode in mind).
-- **Extensions**:
+![Character Sheet, Edit Mode](/assets/readme/char-sheet-edit-mode.webp)
 
-  - [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
-  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-  - [DJLint](https://marketplace.visualstudio.com/items?itemName=monosans.djlint)
+### Help Mode
 
-  _**Note**: For all extensions follow the documentation on their websites for how to properly install. DJLint in particular is different than Prettier/ESLint, because it doesn't use NPM._
+![Character Sheet, Help Mode](/assets/readme/char-sheet-help-mode.webp)
 
-### Linters
+### Character Sheet Legend
 
-- Javascript: ESLint
-- Handlebars: DJLint
-- Scss: VSCode Built-in (may move to stylelint in the future)
+1. **Name / Pronouns / Luck Panel:**
+   - Name (center)
+   - Pronouns (bottom-right)
+   - Luck (bottom-left)
+   - Button to roll Name / Pronouns as a Trait (top-left)
+2. **Character Art**
+   - Click to change your character's artwork.
+3. **Lock/Edit Sheet Button**
+   - Click this button to change the sheet from **Normal Mode** to **Edit Mode**, which allows you to adjust the values on the sheet and add/edit/delete Traits.
+   - You can also press the `e` key when your sheet is open to toggle between the two modes. This keybind can be changed in Foundry's "Configure Controls" menu.
+4. **Traits**
+   - Use **Edit Mode** to add/edit/delete Traits on your Character Sheet.
+   - Click on a Trait to roll it (see below).
+5. **Name/Pronouns/Luck** panel in **Edit Mode**
+6. **Buttons - Create Trait**
+   - Click to create a new Trait in a particular Category.
+   - You can also `double-click` a Trait Category label ("Organization", "Background", etc.) in any mode to create a new Trait in that category.
+7. **Buttons - Delete/Edit Trait**
+   - Click these buttons to delete or edit a Trait.
+   - `Right-click` a Trait while in any mode to Use/Edit/Duplicate/Delete a Trait.
+8. **Help Mode Border**
+   - A glowing border around the Character Sheet, which indicates the sheet is in **Help Mode**.
+9. **Button - Leave Help Mode**
+   - Click this button to leave **Help Mode**. This is typically done if you need to exit this mode without rolling.
+   - Otherwise, simply roll a Trait while in Help Mode to Help a companion (see below).
 
-### Formatters
+## Trait Sheet
 
-- Javascript/Scss: Prettier
-- Handlebars: DJLint
+![Trait Sheet](assets/readme/trait-sheet.webp)
 
-### Build
+Change the Name of the Trait, its Category, its Severity (if Category is "Consequences"), and add an optional Description.
 
-- Sass - For building CSS
-- Vite - Also for building CSS, but have plans to use more of its features in the future.
+**Note:** It is the Trait's Name which displays on the Character Sheet. To see the Description, simply edit the Trait.
+
+## Roll Trait Dialog
+
+![Roll Trait Dialog](assets/readme/roll-trait-dialog.webp)
+
+Click on a Trait to open the above dialog. Simply click the appropriate die icon to roll either a d4, d6, d10, or d12.
+
+## Roll Card
+
+Rolling a Trait will produce a roll card to the chat. The roll card displays the Trait's name, the character who rolled, and the results of the roll.
+
+![Roll Card, Unresolved](assets/readme/roll-card.webp)
+
+The GM may click the "Narrativium" button to roll their opposed die. The winner of the contest will be highlighted with a green
+border.
+
+![Roll Card, Narrativium Button](/assets/readme/roll-card-narr-button.webp)
+![Roll Card, Resolved](/assets/readme/roll-card-resolved.webp)
+
+Depending on the result, another player can Help the character who rolled by clicking the "Help" button. This will open the Character Sheet in **Help Mode**, awaiting a Trait roll. Once rolled, the Help Trait and its result will appear on the original roll card.
+
+![Roll Card, Help Button](/assets/readme/roll-card-help-button.webp)
+![Roll Card, Help Resolved](/assets/readme/roll-card-help-resolved.webp)
+
+Finally, the GM may choose to reroll as well.
+
+![Roll Card, GM Reroll Resolved](/assets/readme/roll-card-gm-reroll.webp)
+
+## Other Features
+
+- Supports the `Dice So Nice` module.
+- Provides default Journal styling to match the system's theme.
+- Dark mode support for sheets.
+
+![Character Sheet, Dark](/assets/readme/char-sheet-dark.webp)
