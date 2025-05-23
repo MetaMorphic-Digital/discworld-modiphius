@@ -51,6 +51,23 @@
       }
     }
   },
+  "packs": [
+    {
+      "name": "discworld-quickstart",
+      "label": "Quickstart",
+      "system": "discworld-modiphius",
+      "type": "JournalEntry",
+      "path": "packs/discworld-quickstart"
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "Discworld",
+      "sorting": "m",
+      "color": "#7E4839",
+      "packs": ["discworld-quickstart"]
+    }
+  ],
   "url": "",
   "manifest": "",
   "download": ""
