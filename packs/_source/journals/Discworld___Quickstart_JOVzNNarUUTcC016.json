@@ -1,0 +1,459 @@
+{
+  "name": "Discworld - Quickstart",
+  "_id": "JOVzNNarUUTcC016",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Credits",
+      "type": "text",
+      "_id": "EBR95R7AZRlSdidr",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<img src=\"https://files.d20.io/images/432567564/A-HmiD9dRFqitUDMWIBOog/max.png?1741816700\" alt=\"\" /><h1>Credits</h1><section class=\"credits\"><div><p>Lead Design</p><p>Andrew Douthwaite</p></div><div><p>Other Design/Development</p><p>Jack Caesar</p></div><div><p>Writing</p><p>Andrew Douthwaite, Jack Caesar, Bryce Johnston</p></div><div><p>Editing</p><p>Bryce Johnston</p></div><div><p>Graphic Design</p><p>Leigh Woosey, Michal E. Cross, Mark Whittington</p></div><div><p>Art Direction</p><p>Rocío Martín Pérez</p></div><div><p>Cover Artists</p><p>Paul Kidby</p></div><div><p>Interior Artwork</p><p>Paul Kidby, David Benzal</p></div><div><p>Page Architecture Artwork</p><p>David Benzal</p></div><div><p>Proofreading</p><p>Stuart Gorman</p></div><div><p>Project Management</p><p>Daniel Lade</p></div></section><h1>Modiphius Entertainment</h1><section class=\"credits\"><div><p>Chief Creative Officer</p><p>Chris Birch</p></div><div><p>Chief Operations Officer</p><p>Rita Birch</p></div><div><p>Managing Director</p><p>Cameron Dicks</p></div><div><p>Head of Brand</p><p>Samantha Webb</p></div><div><p>Head of Creative Services</p><p>Jon Webb</p></div><div><p>Head of Product Development</p><p>Błażej Kubacki</p></div><div><p>Head of Finance</p><p>Luc Woolfenden</p></div><div><p>Senior Creative Manager</p><p>Kieran Street</p></div><div><p>Logistics and Production Manager</p><p>Peter Grochulski</p></div><div><p>Lead Art Director</p><p>Rocío Martín Pérez</p></div><div><p>Art Director</p><p>Ariel Orea</p></div><div><p>Studio Coordinator</p><p>Rocío Martín Pérez</p></div><div><p>Photographer</p><p>Fátima Martín Pérez</p></div><div><p>Lead 3D Designer</p><p>Jonny La Trobe-Lewis</p></div><div><p>Senior 3D Designers</p><p>Joana Abbott, Domingo Díaz Fermín, Chris 'Chrispy' Peacey</p></div><div><p>Senior 3D Plastics Designer</p><p>Colin Grayson</p></div><div><p>3D Designers</p><p>Ben de Bosdari, Sean Bullough</p></div><div><p>Studio Painters</p><p>Callum France, Rosie Williams</p></div><div><p>Studio Terrain Designer</p><p>Julian Jeratsch</p></div><div><p>Lead Graphic Designer</p><p>Akha Hulzebos</p></div><div><p>Principal Graphic Designer</p><p>Michal E. Cross</p></div><div><p>Graphic Designers</p><p>Jane Robertson, Stephanie Toro, Chris Webb, Mark Whittington, Leigh Woosey</p></div><div><p>Audio and Video Producer</p><p>Steve Daldry</p></div><div><p>Senior Development and Editorial Manager</p><p>Bryce Johnston</p></div><div><p>Editorial Manager</p><p>Robert Hebblethwaite</p></div><div><p>Games Designers</p><p>Jack Caesar, E M Moriarty</p></div><div><p>Community and Design Assistant</p><p>Dom Westerland</p></div><div><p>Scheduling and Design Assistant</p><p>Justin Talsma</p></div><div><p>2d20 Developer</p><p>Nathan Dowdell</p></div><div><p>RPG Design Assistants</p><p>Andy Douthwaite, Jess Gibbs</p></div><div><p>Head of Product Development</p><p>Błażej Kubacki</p></div><div><p>Senior Project and Events Manager</p><p>Daniel Lade</p></div><div><p>Senior Project and Process Manager</p><p>Gavin Dady</p></div><div><p>Project Managers</p><p>Jamie MacKenzie, Ben Maunder, Jim Johnson, Haralampos Tsakiris</p></div><div><p>Senior Operations and Logistics Manager</p><p>John Wilson</p></div><div><p>Factory Manager</p><p>Martin Jones</p></div><div><p>Senior Production Operatives</p><p>Drew Cox, Warwick Voyzey</p></div><div><p>Lead Production Operative</p><p>Jake Pink, Miles Turner</p></div><div><p>Production Operatives</p><p>Thomas Bull, Rebecca Cartwright, Louis Hartley-Edwards, Jake Skinner-Guy, Christopher Leigh</p></div><div><p>Assembly Team</p><p>Elaine Elizabeth Hughes, Nichola Jones, Michelle Richards</p></div><div><p>Tool Makers</p><p>Luke Gill, David Hextall, Anthony Morris</p></div><div><p>Community Managers</p><p>Lloyd Gyan, April Hill</p></div><div><p>PR Manager</p><p>Sophie May</p></div><div><p>Translations and Publishing Manager</p><p>Matt Timm</p></div><div><p>Distribution and Key Accounts Manager</p><p>Gary Moore</p></div><div><p>Sales Account Manager</p><p>Matt Vann-Hinton</p></div><div><p>Marketing Coordinator</p><p>Shaun Hocking</p></div><div><p>Marketing Manager</p><p>Shareef Dahroug</p></div><div><p>Marketing Assistant</p><p>Georgie Reeve</p></div><div><p>Customer Support Team Leader</p><p>Chris Dann</p></div><div><p>Customer Support Representative</p><p>Jagdeep Thiara</p></div><div><p>Operations Assistant</p><p>Stephanie Catala</p></div><div><p>Webstore Manager</p><p>Apinya Ramakomud</p></div><div><p>Financial Analyst</p><p>Valya Mkrtchyan</p></div><div><p>Accounts Payable Manager</p><p>Ofelya Mnatsakanyan</p></div><div><p>Accounts Receivable Specialist and Finance Coordinator</p><p>Hollie Shepperson</p></div><div><p>Playtesters</p><p>Georgina Coles, Dave Gregory, Matt Harker, James Hewitt, Ed Holwell, Roo Irving, Duncan Saxby Monday, Kyle Purkiss, Jonathan Trowsdale “Troj”</p></div></section><section class=\"product-info\"><div><img src=\"https://files.d20.io/images/432567755/seGup3mvj9rFNV4Neez3lg/max.png?1741816797\" width=\"250\" alt=\"\" /><p>Modiphius Entertainment Ltd. 39 Harwood Rd, London SW6 4QP, United Kingdom</p><p>info@modiphius.com | <a href=\"https://www.modiphius.net/\">www.modiphius.net</a></p><p><strong class=\"highlight fancy\">Product Number: MUH157001 <br />ISBN: 978-1-80281-372-2</strong></p></div><div><div class=\"acknowledegment\"><p><strong class=\"highlight fancy\">With Grateful Thanks to:</strong></p><p>Louis \"Johnny Board Games\" Wilkins, without whom...</p></div><p>© 2024 Dunmanifestin Limited, All Rights Reserved. Licensed by Terry Pratchett®. Discworld® and Terry Pratchett® are registered trademarks of Dunmanifestin Limited. All trademarks used under licence. The Modiphius® logo is a registered trademark of Modiphius Entertainment Ltd.</p><p>This is a work of fiction. Any similarity to any people and events, past or present, is purely coincidental and unintentional except for those people and events described in an historical context.</p></div></section>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1747954796379,
+        "modifiedTime": 1747967836781,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!journal.pages!JOVzNNarUUTcC016.EBR95R7AZRlSdidr"
+    },
+    {
+      "sort": 200000,
+      "name": "Contents",
+      "type": "text",
+      "_id": "dymw5wniwKbI2Hnk",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h1 data-split-here=\"CreditsLead DesignAndrew DouthwaiteOther Design-De\" class=\"contents\">Contents</h1><ol><li>Introduction</li><li>What Is Discworld?</li><li>Ankh-Morpork</li><li>Tone</li><li>What is a Roleplaying Game?</li><li>Of Dice and GMs</li><li>What is the System?</li><li>What Do You Need?</li><li>Pen and Paper</li><li>Dice</li><li>Imagination</li><li>Punes, or Plays on Words</li><li>Friends</li><li>Time</li><li>Playing the Game</li><li>Scenes</li><li>Tests</li><li>Attempting a Test</li><li>Group Tests</li><li>Million to One</li><li>Characters and Traits</li><li>Luck</li><li>Traits in Tests</li><li>Consequences</li><li>Example of Play</li><li>Pre-Generated Characters</li><li>Reference Sheet</li></ol><img src=\"https://files.d20.io/images/432567517/5DXB6ZdSdVl0yUzuTpJ7jQ/max.png?1741816675\" alt=\"\" />"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1747955014037,
+        "modifiedTime": 1747967307632,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!journal.pages!JOVzNNarUUTcC016.dymw5wniwKbI2Hnk"
+    },
+    {
+      "sort": 300000,
+      "name": "Introduction",
+      "type": "text",
+      "_id": "0xANwjC29hMq4pH0",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h1 data-split-here=\"introduction\" class=\"introduction\">Introdutcion</h1><img src=\"https://files.d20.io/images/431879452/irUigdUauj-pBclYAaeeIg/max.png?1741389469\" alt=\"\" /><h2>What Is Discworld?</h2><blockquote><p>“In a distant and second-hand set of dimensions, in an astral plane that was never meant to fly, the curling star-mists waver and part…</p><p>See…</p><p>Great A’Tuin the Turtle comes, swimming slowly through the interstellar gulf, hydrogen frost on his ponderous limbs, his huge and ancient shell pocked with meteor craters. Through sea-sized eyes that are crusted with rheum and asteroid dust He stares fixedly at the Destination.</p><p>In a brain bigger than a city, with geological slowness, He thinks only of the Weight.</p><p>Most of the weight is of course accounted for by Berilia, Tubul, Great T’Phon and Jerakeen, the four giant elephants upon whose broad and star-tanned shoulders the disc of the World rests, garlanded by the long waterfall at its vast circumference and domed by the baby-blue vault of Heaven.”</p><p><cite>The Colour of Magic</cite></p></blockquote><p>Discworld is the setting for the novels penned, or at least typed, by Sir Terry Pratchett. These novels are present on nearly every fantasy reader's shelf, and many a charity shop one as well. It is a world built on stories, with fuzzy geography and unreliable chronology. It's a place where characters try to live their day-to-day lives, but are forever interrupted by the needs of a narrative. A place where dwarfs look askance at trolls, vampires look askance at werewolves, and the citizens of Ankh-Morpork mostly just want to get through one single day without being looked askance at.</p><p>Discworld is a setting “where the gods play games with the lives of men, on a board which is at one and the same time a simple playing area and the whole world”, to quote Interesting Times.</p><p>While you may not be gods, <em><strong>Adventures in Ankh-Morpork</strong></em> certainly allows you to play games with the lives of humans, dwarfs, trolls, gargoyles, Igors, zombies, and a whole plethora of other weird and wonderful creatures that call the Disc home. Well, maybe not the whole Disc, but certainly that stinking part of it that slumps on the Sto Plains known as Ankh-Morpork.</p><p>Discworld is a setting that has a special place in many hearts and imaginations all over Roundworld. It is our unbelievable privilege to bring that world to life on tabletops, both physical and virtual, for fans old and new. We hope we’ve done it justice.</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1747968025483,
+        "modifiedTime": 1747968414101,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!journal.pages!JOVzNNarUUTcC016.0xANwjC29hMq4pH0"
+    },
+    {
+      "sort": 400000,
+      "name": "Ankh-Morpork",
+      "type": "text",
+      "_id": "NoLWoxkUwKznrSC2",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h1 data-split-here=\"Ankh-Morpork\">Ankh-Morpork</h1><blockquote><p>“Ankh-Morpork! Brawling city of a hundred thousand souls! And, as the Patrician privately observed, ten times that number of actual people.”</p><p><cite>Guards! Guards!</cite></p></blockquote><p>Squatting on the dark loam of the Sto Plains, surrounded by cabbage fields as far as the eye can see and bisected by the River Ankh, which can only be called a river because it moves slightly faster than the surrounding land, this ancient city has stood for thousands of years. Built and rebuilt upon itself, it has weathered invasions (by letting the invaders in, making them it's own, and robbing them blind in the process), several civil wars, and too many fires to count, owing to the time-honoured Morporkian tradition of building out of tinder dry wood and thatch waterproofed with pitch.</p><p>The city thrives under the careful ministrations of the Patrician, Lord Vetinari. One of his most enlightened moves was encouraging the Thieves’ Guild to come out of the shadows and into the public eye, taking their place at civic banquets and in the smooth running of the city, with the reasoning that if you were going to have crime it might as well be organised crime.</p><p>And the city does run. It shouldn’t but it does. Vetinari has managed to convince the guilds that he is slightly preferable to any other option. Since his inauguration as Patrician the city has seen many changes, including the resurgence of the Watch. Having at one point dwindled into a handful of unemployables no one in their right mind would take seriously, it is now an efficient policing force led by Commander Sir Samuel Vimes. This thin brown smear stands between the fine and upstanding citizens of Ankh-Morpork and, ah, themselves. And any unlicensed thieves, of course.*</p><p>The Watch keeps the peace, although very few know where, and now the guilds spend slightly more time plotting against each other than they do against the Patrician. Now everything works. Mostly.</p><div class=\"footer\"><p><span class=\"footnote\">*</span> In fact the best an unlicensed thief can hope for is to be caught by the Watch. Those caught by the Thieves’ Guild tend to experience an extremely pointed, or very blunt, version of justice, depending on whatever the Guild has to hand at the time.</p></div><img class=\"bleed\" src=\"https://files.d20.io/images/431880084/o0BdPF53Q8nEX7-WDSjjEg/max.png?1741389704\" alt=\"\" /><p><br /></p><p>But when is now? Ankh-Morpork has a long and sordid history in which there have been infinite nows, but we’re not concerned with those old nows, we care about this present Now. Now is the turn of the Century of the Anchovy. The Century of the Fruit Bat saw many societal and technological leaps forward, or at least sideways, for the people of Ankh-Morpork. They were landed on by dragons, and saw multiple assassination attempts of important figures, not least of which were the Patrician and Sir Samuel Vimes. This year we look forward to the looming anniversary of Koom Valley (the only battle in history where both sides ambushed the other), one of the many reasons for the ancient grudge between dwarfs and trolls.</p><p>Ankh-Morpork has grown from a place near permanently on fire to a thriving metropolis inhabited by species of all different and wonderful shapes and sizes.*</p><p>For those familiar with the Discworld novels, this particular Now sits somewhere around the events of Going Postal and Thud!. Koom Valley looms ahead like an iceberg, the Grand Trunk Semaphore Company grinds the clacks into the ground in the name of profit, and a certain con man named by doting, if unwise, parents plies his trade with no thought of angels.</p><p>This is the Now of <em><strong>Adventures in Ankh-Morpork.</strong></em></p><h2>Tone</h2><p>Our aim with this game is to bring that core, indefinable Discworldyness to your tabletop. The focus here isn’t on delving into dungeons or fighting dragons.** Nor will you be moving 30 feet and dealing 12 damage to a monster. There are no rules for combat. While violence and conflict are commonplace in Ankh-Morpork, combat is never the point of the story. The focus is on the characters, the world, and the words. People are defined by traits, not numbers. The world and the players vie to control the story as Narrativium sluices finely through everything, gently pushing things towards a satisfying conclusion.</p><p>Finally, we encourage players to bend the English language far beyond what is usually considered reasonable. Terry Pratchett used words in ways that were unexpected, in combinations and meanings that were playful, joyful and often unreasonable. We heartily encourage you to do the same. The more awful the puns, the better.</p><aside><h3>Safety Tools</h3><p>A plethora of safety tools are available for budding RPG players. For those unaware or uninitiated, safety tools are tools to keep you safe at the table. A less facetious explanation is that these are ways in which everyone at the table can ensure that everyone else is having a good time. No person (player or GM) should ever feel uncomfortable or upset at the table. Characters can get uncomfortable and upset, but the people around the table should be enjoying the story, not wishing they could be somewhere else.</p><p>To this end there are many more resources than we can cover here. One main method is to discuss potentially upsetting topics before the game begins and outline whether each player is okay with them being ‘on-screen’, ‘off-screen’, or not included at all. This is known as lines and veils (Ron Edwards), and more information can be found online. Another is the X card system (Jon Stavropoulos) which involves giving each player a card (or other item) to hold up when the game is straying into uncomfortable territory. If a player holds up an X card, the GM moves on from the scene without need for further discussion. Many other safety tools can be found online.</p><p>The main thing to remember is; talk to each other. Have a discussion before play to make sure everyone is on the same page and if anything becomes uncomfortable stop the game. No explanation is necessary in the moment, just ask for a break or for a rewind or however your group has chosen to handle sensitive topics. You’re all people and should treat each other's boundaries with respect. Remember that these tools are there to ensure everyone is enjoying themselves.</p></aside><div class=\"footer\"><p><span class=\"footnote\">*</span> Which is now only sometimes on fire.</p><p><span class=\"footnote\">**</span> Swamp dragons are rather too small to offer much of a fight, for a start. Combine this with their inclination to explode if startled and you’ve got a recipe for some very disappointed, and slightly singed, adventurers milling around sheepishly picking bits of dragon out of their hair.</p></div><img class=\"bleed\" src=\"https://files.d20.io/images/431879330/jNLyYmkh8g1wEW79A0rXUw/max.png?1741389412\" alt=\"\" /><p><br /></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1747968268656,
+        "modifiedTime": 1747968939053,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!journal.pages!JOVzNNarUUTcC016.NoLWoxkUwKznrSC2"
+    },
+    {
+      "sort": 500000,
+      "name": "What is a Roleplaying Game?",
+      "type": "text",
+      "_id": "eXOoHCkQP64zGfSu",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h1 class=\"contents\" data-split-here=\"What is a Roleplaying Game\">What is a Roleplaying Game?</h1><p>Before we get into the rules themselves, it's worth taking a step back and asking: what is a roleplaying game (RPG)? As the name suggests, it's a game where you play a role. Each player takes on the role of a character within a world, in this case within Discworld, and via that character tells a story with their friends.</p><p>Most roleplaying games, including this one, have two types of person at the table. Most people are players, and one is the gamemaster. Players take on the role of characters (inventively named player characters, or PCs). The gamemaster (GM) takes on the role of the world. They play the part of every other character in the game, all the non-player characters (NPCs) that the PCs talk to, walk past, interact with and ignore, as well as the world itself. They are the narrator of the PC’s actions and the world's reactions, the one who decides what happens next. The dangler of plot hooks, the doer of silly voices, the twister of the narrative and the conduit through which the story unfolds.</p><p>It's important to note that while the GM may have a better idea of what is happening than the players, RPGs are collaborative storytelling experiences. Everyone influences and directs the story through their characters’ actions. The GM listens to their players, hones in on which aspects of the world and story they are enjoying and gives them more of that, but it's not their story alone.</p><p>The core of an RPG is telling a story around a table, be it physical or digital, with your friends. So gather a group of like-minded people and enjoy the ridiculous, and often emotional, ride that is a great game.</p><h2>Of Dice and GMs</h2><p>The GM is the person at the table that, supposedly, knows more about what’s going on than anyone else. They are the one with a better idea of where the story could be headed. Could. The story could be headed where they think but no plan survives contact with the players. Players will constantly twist and change a narrative until it is unrecognisable from its original form and the GM has to do some quite severe mental acrobatics to figure out how they got from point A to point 3.2 to Venezuela.</p><p>Something the GM does have more control over, to a point, is the tone. This is something to be discussed with your players before your game. Some groups will want to embrace the silly and outlandish aspects of Discworld. Others may want to dive into the political intrigue surrounding the governance of Ankh-Morpork, and yet more may want something that’s made to showcase the world they know and love.</p><p>Bear in mind that Discworld is a satirical setting, not a comedy one. Outside of the Fools’ Guild there are very few characters that are intentionally trying to be funny, and inside the Fools’ Guild there are very few characters that succeed at being funny. The funniest moments in Discworld novels come from excellent wordplay, and characters taking the events around them seriously no matter how ridiculous things are on the face of it.</p><img src=\"https://files.d20.io/images/432567501/umUMEKF_JQM8absNJKu_JQ/max.png?1741816667\" alt=\"\" />"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1747968992647,
+        "modifiedTime": 1747968998390,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!journal.pages!JOVzNNarUUTcC016.eXOoHCkQP64zGfSu"
+    },
+    {
+      "sort": 600000,
+      "name": "What is the System?",
+      "type": "text",
+      "_id": "2qnV9RBlb807il83",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h1 data-split-here=\"What is the System?\">What is the System?</h1><blockquote><p>“Iron contains not just iron but also the story of iron, the history of iron, the part of iron that ensures it will continue to be iron and has an iron-like job to do and is not, for example, cheese.</p><p>Without Narrativium, the cosmos has no story, no purpose, no destination.”</p><p><cite>The Science of Discworld</cite></p></blockquote><p>Discworld is a unique setting, and it deserves a bespoke system to do it justice; a system that encourages those random silly moments that RPGs and the Discworld novels both embrace so well. A system that allows for flexibility and actively encourages puns, awful and amazing alike. In short, a system that makes you feel like you are IN Discworld. That is what we have created.*</p><p>Our system is built on two core premises:</p><ol><li>The Disc has a story it wants to tell, and left alone will spin on much as it has always done.</li><li>The players want to change this story to one more to their liking.</li></ol><p>Discworld itself operates like a story, and top research wizards have found that it is helped along by an element found in abundance on Discworld: Narrativium.</p><p>It is this Narrativium that the players are going to have to contend with if they want to forge their own story in a world frankly bursting at the seams with stories.</p><p>Players will use their character and their dice to see if they have what it takes to beat the Narrativium into the shape they want. They need to be careful, however; sometimes it beats back.</p><div class=\"footer\"><p><span class=\"footnote\">*</span> Hopefully, at least. We’d hate to have to put Andy back in the scorpion pit, although it does seem to focus his mind beautifully.</p></div><img class=\"bleed\" src=\"https://files.d20.io/images/431878853/Tu_0Nj8gIGOqNZNPx2dBvA/max.png?1741389190\" alt=\"\" />"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1747969170480,
+        "modifiedTime": 1747969179629,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!journal.pages!JOVzNNarUUTcC016.2qnV9RBlb807il83"
+    },
+    {
+      "sort": 700000,
+      "name": "What Do You Need?",
+      "type": "text",
+      "_id": "1RIj7fDPki8HP1el",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h1 data-split-here=\"What Do You Need?\">What Do You Need?</h1><aside style=\"display:inline-block;float:right;width:100px\"><img src=\"https://files.d20.io/images/431879295/MnM0ilil-poNMf4hrVNCBg/med.png?1741389396\" alt=\"\" /><h3 style=\"width:100%;text-align:center\">d4</h3><img src=\"https://files.d20.io/images/431879260/4ug_Veu1JH5thDyk6x8M2A/med.png?1741389382\" alt=\"\" /><h3 style=\"width:100%;text-align:center\">d6</h3><img src=\"https://files.d20.io/images/431879289/YFGJFbzkUD7wcVmOG6hamA/med.png?1741389394\" alt=\"\" /><h3 style=\"width:100%;text-align:center\">d8</h3><img src=\"https://files.d20.io/images/431879250/ilcyeqiiMpWIoMP1X4R4uQ/med.png?1741389379\" alt=\"\" /><h3 style=\"width:100%;text-align:center\">d10</h3><img src=\"https://files.d20.io/images/431879273/mcBQ6WnZn4x2CmYtLMJeIw/med.png?1741389386\" alt=\"\" /><h3 style=\"width:100%;text-align:center\">d12</h3><img src=\"https://files.d20.io/images/431879282/WPbIC2o3IGqZwNgz5MW9oA/med.png?1741389390\" alt=\"\" /><h3 style=\"width:100%;text-align:center\">d20</h3><img src=\"https://files.d20.io/images/441363430/HVWJUksIuDfsEJdkbwCxNg/original.png\" alt=\"\" /><h3 style=\"width:100%;text-align:center\">d100</h3></aside><p>There are a few things that you’ll need in order to play a game of <em><strong>Adventures in Ankh-Morpork</strong></em>. You should have most of them lying around, although the more specialised items (such as polyhedral dice, friends and time) may require a little more work to acquire.</p><h2>Pen and Paper</h2><p>Somewhere to take notes and something to take them with. A pen and paper are traditional, but this is the Century of the Anchovy so go digital if you like.</p><p>Whatever your preferred medium, taking notes will be useful for everyone to keep track of what's going on, who said what, and that one NPC with the silly name that the party adopted so now the GM has to keep doing That Voice for the rest of the adventure.</p><h2>Dice</h2><p>A full set of polyhedral dice (A d4, d6, d8, d10, d12, d20 and d100) for failing… erm… attempting tests. Each shorthand given refers to the number of sides the die has. So d4 means a four-sided die, d20 means a twenty-sided die, and we’re fairly sure you can figure out the rest from there, although the d100 has to be contrary and break this mold. It is in fact two d10's rolled together, one to give you the tens (10-100) and the other the ones (1-10). The d20 and d100 will only be needed for rolling on tables, however, not used in general play. As a result, you won’t need them in this book.</p><p>Dice inject an element of randomness into your story. Things will not always go your characters' way. The Narrativium in the bones of the Disc may decide that you are simply not meant to do whatever it is you’re attempting, and you’ll have to figure out how to achieve your goal regardless.</p><h2>Imagination</h2><p>RPGs require a certain amount of imagination from both players and GMs. The story will be affected by everyone at the table, and may require a little bit of imagination to get off the ground.</p><h2>Punes, or Plays on Words</h2><img src=\"https://files.d20.io/images/432567809/qYgHw3BkTJnF6sWfMVQaDQ/med.png?1741816828\" class=\"spot\" alt=\"\" /><p>No session of <em><strong>Adventures in Ankh-Morpork</strong></em>, or Discworld book for that matter, would be complete without at least a few punes, or plays on words. Be prepared to twist, wrangle and torment the English language to serve your needs, or just to make people chuckle.</p><h2>Friends</h2><p>We can’t help you with this one.* You’ll want to bring together three to six like-minded individuals willing to put up with puns, who are up for an adventure based in the historic byways and filth covered highways of Ankh-Morpork. Obviously you can play with as many players as you like, but once you get beyond about five players, making decisions and ensuring everyone gets their time to shine becomes exponentially more difficult. Likewise, having only two players at the table limits your ability to bounce off one another and have things go in unexpected (and fun) directions.</p><h2>Time</h2><p><em><strong>Adventures in Ankh-Morpork</strong></em> is intended to be played as a short-form storytelling game, or as a palette cleanser between long-form campaign play. The adventure in these pages should only take one session, of around three to four hours, to complete, allowing you to get the feel of the game with barely any commitment whatsoever. There will be some guidance for those that want to play longer form games but the core system is designed to be like the Discworld novels themselves; a one off adventure rather than an epic journey involving stolen jewellery and a lot of walking.</p><div class=\"footer\"><p><span class=\"footnote\">*</span>Unless we’re counted amongst your friends, in which case, hi, how are you? It’s been too long, I know, we should organise a catch-up at some point. Next week? No…no, we’re busy next week, but could you do the 25th? No? Well we’ll message about it and sort something out, promise.</p></div><img class=\"bleed\" src=\"https://files.d20.io/images/431879224/xwZmgs7cHEydOwg1vQLvzQ/max.png?1741389370\" alt=\"\" />"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1747969253806,
+        "modifiedTime": 1747969523823,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!journal.pages!JOVzNNarUUTcC016.1RIj7fDPki8HP1el"
+    },
+    {
+      "sort": 800000,
+      "name": "Playing the Game",
+      "type": "text",
+      "_id": "qPEwhI7nu7nH5B3A",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h1 class=\"playing\" data-split-here=\"Playing the Game\">Playing the Game</h1><img src=\"https://files.d20.io/images/431880119/zJftrjAPGQEgSEYufewbqw/max.png?1741389719\" /><aside><p>A quick note before we get into playing the game. This is a quickstart, which means that it is a stripped down ruleset designed to get your character's feet hitting those cobbles as fast as possible. As such there are some aspects of the rules that we have chosen not to include. We've provided you with pre-generated characters and an adventure to muddle through because we're considerate like that.</p><p>Also worth noting is that while this is close to the final game, \"there's many a slip twixt dress and drawers\" as Nanny Ogg is wont to say. Some of the content here may look slightly different when the full game comes out.</p></aside><h1>Scenes</h1><p>The narrative of your game can be broken down into scenes, just like the Discworld novels. Each scene is a discrete moment. It takes place at a specific place, at a specific time, with specific people present. The GM sets the scene for the players, and then narrates how the PCs’ actions affect the scene. Once players have done all they want to (or can do) in a scene, the GM moves the action onto the next scene. Scenes can span minutes, hours, days, weeks, months, years, decades and even aeons if you really want them to, but realistically most scenes within this book shouldn’t take more than an hour tops.</p><p>Once a scene has been set players are going to want to start fiddling with it. To do this they will be using their characters (player characters, or PCs, to be precise) and dice to take actions and attempt tests. String these scenes together in a semi-coherent manner and Bjorn Stronginthearm’s your uncle! You’ve gone and got yourself a story.</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1747969601174,
+        "modifiedTime": 1747971357402,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!journal.pages!JOVzNNarUUTcC016.qPEwhI7nu7nH5B3A"
+    },
+    {
+      "sort": 900000,
+      "name": "Tests",
+      "type": "text",
+      "_id": "uiKCuls8doxwtm0c",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h1 data-split-here=\"Tests\">Tests</h1><p>Whenever players try to do something in a scene that has a chance of failure, they will need to make a test! No matter whether you are snooping around, in tense political negotiations or trying to outdrink a dwarf, all tests are resolved in the same way.</p><h2>Attempting a Test</h2><p>The test itself will follow the same steps every time:</p><ol><li>Declare an action</li><li>Justify the Action Using Traits</li><li>GM Determines the Outcome Die</li><li>Roll the Outcome Die Against the Narrativium Die</li><li>Get Help (optional)</li><li>Resolve the Test (not optional)</li></ol><h3>Declare an Action</h3><p>The player says what they want to do. If the GM thinks that they need to make a test in order to do so, then move on to the next step.</p><h3>Justify the Action Using Traits</h3><p>The player who declared the action decides which trait on their character’s sheet they’re using to justify the action. It is encouraged to twist the meanings of your traits and use them in absolutely ridiculous ways to justify actions they have no business justifying.</p><h3>GM Determines the Outcome Die</h3><p>The GM then determines the dice that will be used in the test out of the d4, d6, d10 and d12. If the justification is absolutely flawless, or this is very much within the PC’s wheelhouse, it’s a d12. If the PC clearly has no idea what they’re doing, and their attempt at justification is flimsy, it’s a d4. The d6 and the d10 come between these points, as determined by the GM. The GM also decides what the consequences for failing the test will be.</p><h3>Roll the Outcome Die Against the Narrativium Die</h3><p>The player rolls the outcome die the GM decided was appropriate. The GM then rolls the Narrativium die (the d8). Once the dice are rolled the results are compared. If the outcome die has rolled higher, the PC has been successful. If the Narrativium die is higher, then the PC has failed, and may now be subject to unforeseen consequences or twists represented as new traits.</p><p>If the dice have the same result then it’s a tie. The PC achieves what they set out to do, but they also suffer consequences as a new trait, twist or both.</p><h3>Get Help</h3><p>If the test is a failure then one PC in the scene can spend 1 Luck to try and help. This is risky, however, since this will also make the consequence for failing the test one degree worse, and open themselves up to the consequences of the test alongside the original test taker. If they still want to help they spend one point of Luck and then they repeat the first two steps (explain how they’re helping, and their justification for doing so), and roll the outcome die the GM decides is appropriate. Their outcome die replaces the original outcome die. If the test is still a failure or a tie, then both PCs suffer the now much worse consequences!</p><p>The GM does not reroll the Narrativium die when another PC decides to help, but the GM can at any point during the test decide to reroll the Narrativium die using an NPC’s trait as justification. This second result replaces the first result. The GM can only do this once per test.</p><h3>Resolve the Test</h3><p>After the dice are rolled, the GM narrates the outcome, whether it was a glorious success, a surprising stalemate or an embarrassing tumble into the Ankh. They also describe how the PC(s) suffer any consequences (p.18) for failing the test. If no player tried to help during the test, then the player suffering consequences can spend 1 Luck to reduce the severity of the consequence they suffer by one degree.</p><aside><p>Constable Surly Underhand is trying to get some information from a Shades informant while in uniform. The action is something fairly simple for him; he has the trait <strong>A dwarf born and raised in the Shades</strong> so he has contacts, and it's not unusual. He is in uniform, however, so what could have been a d12 if he was in plainclothes becomes a d10.</p></aside><img style=\"transform:rotateX(180deg)\" src=\"https://files.d20.io/images/431878791/4dcBlwik4zEJIpAMOCwcAA/max.png?1741389166\" alt=\"\" /><h2>Group Tests</h2><p>There are two situations in which a group test is more appropriate than individual tests. The first is when everyone wants the same outcome, but only one success is necessary to achieve it, for instance when people are trying to gain information about the same thing from different sources. The second is when everyone wants the same outcome and one failure will stop them all from achieving it, e.g. when the whole party is trying to move around without being spotted.</p><p>For both instances, as with other tests, the players state their action and traits and the GM decides what die they roll (it's perfectly normal for different players to be rolling different types of die in a group test). All players then roll. The GM only rolls the Narrativium die once, and compares each player’s outcome die to that Narrativium die roll. Then the GM narrates each result.</p><p>For those tests where everyone wants the same outcome, and only one success is necessary, the outcome die that rolls the highest has the most advantageous outcome, for example the most pertinent clue. All other results add their own flavour and support, if successful, or if a failure, they undermine the most successful outcome. If the Narrativium die has the highest result the players all suffer consequences, for example gaining incorrect information.</p><p>For tests when everyone wants the same outcome and one failure will stop them achieving it, the outcome die that rolls the lowest is counted as the result of the test.</p><p>Any PC that is involved in a group test may not help another PC on that test, but if any PC is not involved in the group test they may help as normal.</p><aside><h3>Combat</h3><p>As previously stated, there are no special rules for combat. If a fight does break out it is treated the same as any other test, with a slight focusing of the Narrativium die to represent the opposing force in the conflict rather than the world or story in general.</p></aside><h2>Million to One</h2><p>Sometimes your players will surprise the GM with an absolutely absurd, ridiculous or genius plan that is so outlandishly unlikely it makes you stop and go “it’s a million to one chance, but it just might work.” In these situations the GM can rule that the PCs automatically succeed on their plan. These auto successes should be very few and far between. Remember that any attempt to force a million to one chance is doomed to failure.</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1747969801698,
+        "modifiedTime": 1747971292411,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!journal.pages!JOVzNNarUUTcC016.uiKCuls8doxwtm0c"
+    },
+    {
+      "sort": 1000000,
+      "name": "Characters and Traits",
+      "type": "text",
+      "_id": "QQxzTSryUSc8qm2a",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h1 data-split-here=\"Characters and Traits \">Characters and Traits</h1><p>Characters in <em><strong>Adventures in Ankh-Morpork</strong></em> are a collection of traits held together in the approximate shape of a person. In this way they are not so different from their players. These traits are recorded on your character sheet and are how players use their PCs to interact with the world around them.</p><p>In the full game, you’ll spend time lovingly crafting elaborate backstories and slightly amusing names for your character. However, for this quickstart, we’ve provided pre-filled in character sheets to get you going with a minimum of fuss.</p><p>Here’s a quick run through of the character sheet and what all these things mean:</p><ol><li>Your character's Name(s) and Pronouns</li><li>The group they belong to</li><li>Their species and background</li><li>Niche traits: their experiences and where they fit in their group</li><li>Their core: their outlook, and how they react to the world</li><li>Quirk traits, the odd little idiosyncrasies and eccentricities that make their character who they are</li><li>A brief character description</li><li>A place to note down any consequences you gain during play</li><li>Notes, where you write notes</li><li>Luck, a measure of what your character can get away with</li><li>Character art, after all a picture says a thousand words</li></ol><img src=\"https://files.d20.io/images/431879958/7lCVR9ILTlbWm5ftRr-kNg/max.png?1741389655\" alt=\"\" /><p>All of these things are traits. These traits take the place of more traditional statistics and can be used in a test to argue the applicability of your actions. They tell you what a character is good at, as well as what they struggle with. They can be used to influence the world and story the characters find themselves in, while also providing information to help you play that character at the table. The only exception to this is Luck, which tracks your favour with The Lady and therefore how much you can get away with before things start catching up with you.</p><p>Characters have access to everything a trait could encompass. Let’s take an example chosen completely at random and in no way related to this adventure whatsoever. A character who has the trait <strong>The Watch</strong> will have access to everything that entails. Official badge, shiny breastplate, one sword, short (or weapon appropriate to the species) and AM$38 a month plus allowances. The same is true of every trait; a troll is incredibly strong and smarter in cold weather, an iconographer has all the tools of the trade needed to keep those imps painting, and someone who remembers the good bad old days probably knows their way around a back alley or twelve (provided they haven’t been built on or otherwise closed down for the sake of Hygiene).</p><h2>Luck</h2><p>Luck is a measure of your character's favour with The Lady *. It is spent in two ways: firstly to decrease the severity of a consequence and secondly to help another player with a test. Both of these cost one Luck, and only one Luck can be spent per test. It is up to the players whether they wish to take the safe option and tone down the consequences, or risk another roll and try to gain a success.</p><p>To regain Luck you’ll have to do things that pique The Lady’s interest. Excellent, unusual or downright weird roleplay, ideas and use of traits can all earn you back a point of Luck, at the GMs discretion.</p><h3>Awarding Luck</h3><p>The GM is the representative of The Lady at the table. As such the GM can award Luck to players for excellent roleplay, ridiculous plans, amazing, or awful, puns and outstanding bastardisation of the English language. This should be kept rare enough for players to feel like they’ve earned it rather than expect it every time.</p><aside><p>A PC jumps out a second story window and argues that their trait <strong>Is eager to see more of the world</strong> should allow them to land without too much injury. They are eager to see the world, and the world is rushing up eagerly to meet them. The GM gives them a d10 and decides that such justification deserves some Luck. However, it’s not going to entirely negate the fact that they jumped out of a window without any precautions. They roll a 6 on the outcome die against an 8 on the Narrativium. The player uses their newfound Luck to reduce the consequence from <strong>At least one broken limb</strong> to <strong>Has thorns in uncomfortable places</strong>. Thus the Lady, intrigued by this wanton display of lack of forethought, ensures a soft(ish) landing for them in a previously unseen compost heap.</p></aside><h2>Traits in Tests</h2><p>Everything on your character sheet is a trait; even your character’s name can be used as a trait if you think it'll justify your character being good at the test they’re attempting. Traits are not necessarily good or bad, but are situational. For example, having the trait <strong>I spend more time in the Drum than the Library</strong> would help you if you were trying to win a drinking contest or track down a specific unscrupulous person, but hinder you if you needed to do some occult research.</p><p>The easiest way to think of it is “I have X trait, therefore I should be good at Y action”. However, one of the key aspects of Pratchett's work is wordplay. As such we not only expect but downright insist that players bend, twist, bludgeon, beat and otherwise wrangle their traits to fit scenarios they were never meant for and justify actions they should have little to no business being associated with.</p><p>When justifying a trait for a test, the player should state why it will be useful for their action, then the GM decides the dice value. At the end of the day, deciding the exact die values for a particular test is much less important than rolling them.</p><aside><p>Hamrahan’s trait <strong>Always hits what he should be aiming at</strong> could be used to justify making a crack shot. Or it could be much more amusingly used to justify a lucky ricochet. Perhaps Hamrahan’s hand flies off his wrist while he’s gesticulating wildly and hits something he should have been concentrating on while he has an argument with Igorina about stitching. Both are completely valid uses of the trait.</p></aside><img src=\"https://files.d20.io/images/432567747/glGhO8kO3_DE79DaXh-NPQ/max.png?1741816792\" alt=\"\" /><div class=\"footer\" style=\"clip-path:polygon(0 -200px, 100% -200px, 100% calc(100% + 10px), 0 calc(100% + 10px))\"><p><span class=\"footnote\">*</span> The Lady is one of the gods of the Disc, one of those feuding, grumbling, all too human entities who live on Dunmanifestin' playing games with lives. And dice. And sometimes snacks.</p></div><h2>Consequences</h2><p>The thing about actions is they have consequences. These will manifest in gameplay as a new trait for the PCs, a twist in the narrative, or both. These traits are temporary and only apply as long as they are relevant; some will go away on their own at the end of the scene, others will require the PC to spend time removing them.</p><p>There are several degrees of consequence: <strong>inconsequential, minor, major, and exceptional</strong>.</p><ul><li><strong class=\"highlight\">Inconsequential consequences</strong> are things which will cause a small inconvenience for the PC; getting a paper cut, being overcharged for a sausage-inna-bun or gaining the trait <strong>Has a \"kick me\" sign stuck on their back</strong>.</li><li><strong class=\"highlight\">Minor consequences</strong> will cause an inconvenience for the PC; twisting an ankle, losing money at the races or gaining the trait <strong>Has a rumour going around</strong>.</li><li><strong class=\"highlight\">Major consequences</strong> will cause problems for the PC and may affect those around them; calling the Librarian a monkey, losing Chrysoprase’s money at the races or gaining the trait <strong>Wanted by the Thieves’ Guild</strong>.</li><li><strong class=\"highlight\">Exceptional consequences</strong> are threatening to life and livelihood and will cause the PC to be removed from the scene, and potentially the story. This should be a conversation between GM and Player as to how they wish to proceed. Some options can include a near Death experience, being wanted by the Patrician, a magical mishap or any other appropriately exceptional consequence that feels narratively appropriate.</li></ul><p>A PC can spend a point of Luck during a test to decrease the degree of a consequence by one, unless another PC has attempted to help them in the test.</p><aside><h3>Near Death Experience</h3><p>Since there are no health points in this game, you may be asking how and if characters can die. This is generally handled through an exceptional consequence to a failed test. In the full game, there will be rules covering this, but we sincerely doubt anyone will be dying in the span of this adventure*. The GM is of course free to give someone a brush with Death if they really screw up a particular roll, providing they remember to <span style=\"font-style:normal;font-variant:small-caps\">talk like this.</span></p></aside><img src=\"https://files.d20.io/images/432567551/1cc8bH0Cr2r7LD96L80YBg/max.png?1741816692\" alt=\"\" /><div class=\"footer\" style=\"clip-path:polygon(0 -200px, 100% -200px, 100% calc(100% + 10px), 0 calc(100% + 10px))\"><p><span class=\"footnote\">*</span> This is not a challenge.</p></div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1747970113181,
+        "modifiedTime": 1747971030578,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!journal.pages!JOVzNNarUUTcC016.QQxzTSryUSc8qm2a"
+    },
+    {
+      "sort": 1100000,
+      "name": "Example of Play",
+      "type": "text",
+      "_id": "tnQnOfx1yyoUUN8C",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h1 data-split-here=\"Example of Play\">Example of Play</h1><p>The party has made their way into the Sunshine Sanctuary for Sick Dragons. After a brief description Raphael, playing Cliff, talks with Rosie Devant-Molei and discovers that while she is more than willing to aid the Watch with their enquiries, there are dragons to round up first.</p><p>Rene, playing Surly, decides to try to round up some of the dragons while Cliff continues their conversation. The GM, Eleri, decides this calls for a test as the outcome is uncertain.</p><div class=\"example-of-play\"><p><strong>Eleri(GM):</strong> Ok Surly, what trait do you have that would make you good at dragon wrangling?</p><p><strong>Rene:</strong> I’ve got <strong>Blends into the background</strong>. That should let me sneak up on them without being noticed.</p><p><strong>Eleri(GM):</strong> Absolutely. I will say that while you blend into the background excellently on the street, the paints and pigments you’ve got will make it harder for you to sneak up on a dragon as they’re always sniffing for something flammable to eat. So take a d10 on that. I’m also going to say that any consequences are probably going to be minor for this test.</p></div><p>Rene rolls a 5 on their outcome die and the GM rolls a 6 on the Narrativium die.</p><p>The GM describes the scene.</p><div class=\"example-of-play\"><p><strong>Eleri(GM):</strong> Cliff is patiently talking through the events of the night with Rosie while a vaguely dwarf sized shape scuttles across the background. <br /><br />Surly, you see a small dragon currently dragging a half eaten boot under a handcart. Slowly and carefully you approach from behind. As you get to just outside grabbing distance its head shoots up in panic. It cracks its head on the underside of the cart, and lets out a pained shriek and a small gout of flame. You hear some worrying sounds of indigestion. <br /><br />Does anyone want to help Surly? Remember that you’ll increase the consequences to major.</p></div><p>Aisha, playing Hamrahan, decides to try and improve the situation.</p><div class=\"example-of-play\"><p><strong>Aisha:</strong> I've got the core trait <strong>Better it happen to me than you</strong> so I’d like to help by getting Surly out of the way of this upset dragon.</p><p><strong>Eleri(GM):</strong> Sure that makes sense, you're trying to protect a fellow officer from a dangerous situation. You’ve definitely done this before and the trait and action both fit really well, have a d12. Spend one Luck for helping and give me a roll.</p></div><p>Aisha rolls their outcome die. As this is a continuation of the same test the GM does not reroll the Narrativium die.</p><div class=\"example-of-play\"><p><strong>Aisha:</strong> Damn, I rolled a 6.</p><p><strong>Eleri(GM):</strong> Right, that's a double, so it’s a tie. <br /><br />So Surly, you hear the dragon's stomach start to rumble ominously. You know that swamp dragons have notoriously sensitive stomachs and a tendency to become craters if startled. You stare in fascinated horror as the dragon's eyes start to cross and it hiccups ominously. Once, twice… silence… then your world spins wildly as Hamrahan tackles you to the ground a split second before the sturdy walls of the Sunshine Sanctuary are tested once again. The small dragon explodes, destroying the handcart, and showering you both with its contents, last nights mucking out. Hamrahan you managed to get Surly to safety and they are protected from the shower hitting the ground. Unfortunately, that protection is you. Gain the trait <strong>Covered in dragon faeces.</strong></p></div><p>Having already spent their Luck to help Surly, Aisha cannot also spend Luck to decrease the degree of the consequence of the test. They did at least succeed in what they set out to do and saved Surly from an exploding dragon.</p><p>The scene continues as the party attempts to solve the mystery of the stolen dragons.</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "ownership": {
+        "default": -1,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1747971083602,
+        "modifiedTime": 1747971678526,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!journal.pages!JOVzNNarUUTcC016.tnQnOfx1yyoUUN8C"
+    }
+  ],
+  "folder": null,
+  "categories": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "uhIQlUux4nluWN8i": 3
+  },
+  "flags": {
+    "core": {
+      "locked": true
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.344",
+    "systemId": "discworld-modiphius",
+    "systemVersion": "0.0.0",
+    "createdTime": 1747954788198,
+    "modifiedTime": 1747968018016,
+    "lastModifiedBy": "uhIQlUux4nluWN8i"
+  },
+  "_key": "!journal!JOVzNNarUUTcC016"
+}
