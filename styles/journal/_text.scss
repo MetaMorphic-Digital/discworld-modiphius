@@ -1,8 +1,83 @@
 @use "../utils/var-utils" as *;
 
+@use "../variables/fonts" as *;
+
+@mixin -fancy-bold {
+  color: getVar(color, title-alt);
+  font-family: $font-caslon;
+  font-weight: bold;
+  font-size: 1.2em;
+  letter-spacing: 0.5px;
+}
+
 @mixin text {
+  /* --------------- Semantic elements --------------- */
   strong.highlight {
     color: getVar(color, title-alt);
+
+    &.fancy {
+      @include -fancy-bold;
+    }
+  }
+
+  a {
+    color: getVar(color, link);
+  }
+
+  blockquote {
+    font-family: $font-libertine;
+
+    cite {
+      font-weight: bold;
+    }
+
+    cite::before {
+      content: "— ";
+    }
+  }
+
+  img {
+    margin: 0 auto;
+  }
+
+  /* --------- Sections with specific styles --------- */
+  section.credits {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px 24px;
+    align-items: center;
+
+    text-align: center;
+
+    margin-bottom: 1rem;
+
+    p {
+      margin: unset;
+
+      &:first-child {
+        @include -fancy-bold;
+      }
+    }
+  }
+
+  section.product-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    align-items: center;
+
+    text-align: center;
+  }
+
+  div.acknowledegment {
+    p {
+      margin-top: unset;
+    }
+
+    p:first-child {
+      margin-top: 10px;
+      margin-bottom: unset;
+    }
   }
 
   div.example-of-play {
