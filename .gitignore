@@ -1,15 +1,5 @@
-# Ignore npm modules
-node_modules
-
-# Ignore generated style file.
-styles/main.css
-
-# Ignore any build output.
-dist
-
-# Ignore binary compendia packs
-packs/*
-
-# But don't ignore their source Object files.
-!packs/_source/
-!packs/_source/**
+packs/
+*.lock
+node_modules/
+foundry
+foundry-config.yaml

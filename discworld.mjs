@@ -1,16 +1,16 @@
-import CharacterSheet from "./sheets/character-sheet.js";
-import CharacterDataModel from "./datamodels/character-schema.js";
-import DiscworldChatLog from "./chat/chat.js";
-import TraitDataModel from "./datamodels/trait-schema.js";
-import TraitSheet from "./sheets/trait-sheet.js";
-import preloadTemplates, { registerHelpers } from "./utils/handlebars.js";
-import registerKeybindings from "./utils/keybindings.js";
-import * as Rolls from "./rolls/index.js";
-import DISCWORLD from "./config.js";
-import DiscworldMessage from "./chat/chat-message.js";
-import DiscworldCharacter from "./documents/character.js";
-import transitionClass from "./utils/animations.js";
-import DiscworldJournalEntrySheet from "./sheets/journal-entry-sheet.js";
+import CharacterSheet from "./modules/sheets/character-sheet.mjs";
+import CharacterDataModel from "./modules/datamodels/character-schema.mjs";
+import DiscworldChatLog from "./modules/chat/chat.mjs";
+import TraitDataModel from "./modules/datamodels/trait-schema.mjs";
+import TraitSheet from "./modules/sheets/trait-sheet.mjs";
+import preloadTemplates, { registerHelpers } from "./modules/utils/handlebars.mjs";
+import registerKeybindings from "./modules/utils/keybindings.mjs";
+import * as Rolls from "./modules/rolls/index.mjs";
+import DISCWORLD from "./modules/config.mjs";
+import DiscworldMessage from "./modules/chat/chat-message.mjs";
+import DiscworldCharacter from "./modules/documents/character.mjs";
+import transitionClass from "./modules/utils/animations.mjs";
+import DiscworldJournalEntrySheet from "./modules/sheets/journal-entry-sheet.mjs";
 
 // Export globals.
 globalThis.discworld = {

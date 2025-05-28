@@ -1,4 +1,4 @@
-import DWTraitRoll from "./trait-roll.js";
+import DWTraitRoll from "./trait-roll.mjs";
 
 /**
  * @extends Roll

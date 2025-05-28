@@ -1,4 +1,4 @@
-import DWNarrativiumRoll from "../rolls/narrativium-roll.js";
+import DWNarrativiumRoll from "../rolls/narrativium-roll.mjs";
 
 /**
  * The Discworld Chat Log. We extend this class to add custom button listeners.

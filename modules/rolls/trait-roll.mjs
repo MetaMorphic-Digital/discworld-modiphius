@@ -1,4 +1,4 @@
-import DISCWORLD from "../config.js";
+import DISCWORLD from "../config.mjs";
 
 /**
  * @extends Roll

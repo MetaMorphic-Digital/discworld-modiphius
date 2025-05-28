@@ -1,4 +1,4 @@
-import createElement from "../utils/dom-manipulation.js";
+import createElement from "../utils/dom-manipulation.mjs";
 
 /**
  * Adds basic sheet methods that all actor sheets should have,

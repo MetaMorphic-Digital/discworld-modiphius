@@ -1,5 +1,5 @@
-import DISCWORLD from "../config.js";
-import DiscworldSheetMixin from "./base-document-sheet.js";
+import DISCWORLD from "../config.mjs";
+import DiscworldSheetMixin from "./base-document-sheet.mjs";
 
 const { ItemSheetV2 } = foundry.applications.sheets;
 

@@ -1,6 +1,6 @@
-import DISCWORLD from "../config.js";
-import DWHelpRoll from "../rolls/help-roll.js";
-import DWTraitRoll from "../rolls/trait-roll.js";
+import DISCWORLD from "../config.mjs";
+import DWHelpRoll from "../rolls/help-roll.mjs";
+import DWTraitRoll from "../rolls/trait-roll.mjs";
 
 export default class DiscworldCharacter extends Actor {
   /**
@@ -114,7 +114,6 @@ export default class DiscworldCharacter extends Actor {
     // Render (or rerender) sheet in help mode.
     await this.sheet.render({ force: true });
 
-    /* eslint-disable no-await-in-loop */
     let trait;
     let dialogResult;
     // Wait for the user to select and roll a trait.
@@ -126,7 +125,6 @@ export default class DiscworldCharacter extends Actor {
 
       // Present user with the dice selection dialog.
       dialogResult = await this.rollTraitDialog(trait);
-      /* eslint-enable */
     }
 
     // Deduct a luck point (we've already determined the character has at least one).

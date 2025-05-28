@@ -1,4 +1,4 @@
-import DISCWORLD from "../config.js";
+import DISCWORLD from "../config.mjs";
 
 const { HTMLField, StringField } = foundry.data.fields;
 

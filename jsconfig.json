@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "ES2020",
+    "target": "ES2020",
+    "paths": {
+      "@client/*": ["./foundry/client/*"],
+      "@common/*": ["./foundry/common/*"]
+    },
+  },
+  "exclude": ["node_modules", "**/node_modules/*"],
+  "include": ["discworld.mjs", "foundry/client/client.mjs", "discworld.d.ts"],
+  "typeAcquisition": {
+    "include": ["jquery"]
+  }
+}

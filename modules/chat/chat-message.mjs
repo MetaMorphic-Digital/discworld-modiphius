@@ -1,7 +1,7 @@
-import DWHelpRoll from "../rolls/help-roll.js";
-import DWNarrativiumRoll from "../rolls/narrativium-roll.js";
-import DWTraitRoll from "../rolls/trait-roll.js";
-import transitionClass from "../utils/animations.js";
+import DWHelpRoll from "../rolls/help-roll.mjs";
+import DWNarrativiumRoll from "../rolls/narrativium-roll.mjs";
+import DWTraitRoll from "../rolls/trait-roll.mjs";
+import transitionClass from "../utils/animations.mjs";
 
 /**
  * Discworld chat message class.
@@ -49,7 +49,7 @@ export default class DiscworldMessage extends ChatMessage {
   get gmRoll() {
     return (
       this.rolls.find(
-        (roll) => roll instanceof DWNarrativiumRoll && !roll.options.reroll,
+        (roll) => (roll instanceof DWNarrativiumRoll) && !roll.options.reroll,
       ) || null
     );
   }
@@ -64,7 +64,7 @@ export default class DiscworldMessage extends ChatMessage {
   get gmReroll() {
     return (
       this.rolls.find(
-        (roll) => roll instanceof DWNarrativiumRoll && roll.options.reroll,
+        (roll) => (roll instanceof DWNarrativiumRoll) && roll.options.reroll,
       ) || null
     );
   }

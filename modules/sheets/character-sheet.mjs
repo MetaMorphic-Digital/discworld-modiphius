@@ -1,5 +1,5 @@
-import DiscworldSheetMixin from "./base-document-sheet.js";
-import DISCWORLD from "../config.js";
+import DiscworldSheetMixin from "./base-document-sheet.mjs";
+import DISCWORLD from "../config.mjs";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
 
@@ -99,7 +99,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   /** @inheritdoc */
   async _preparePartContext(partId, context, options) {
     // By default, this returns the same mutated context.
-    // eslint-disable-next-line no-param-reassign
     context = await super._preparePartContext(partId, context, options);
 
     context.tab = context.tabs[partId];

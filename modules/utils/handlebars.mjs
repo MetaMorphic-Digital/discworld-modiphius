@@ -1,4 +1,4 @@
-import DISCWORLD from "../config.js";
+import DISCWORLD from "../config.mjs";
 
 /**
  * Define a set of template paths to pre-load
@@ -39,7 +39,6 @@ export function registerHelpers() {
       throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
     }
 
-    // eslint-disable-next-line prefer-const
     let [lValue, operator, rValue, options] = args;
 
     if (options === undefined) {
@@ -68,7 +67,6 @@ export function registerHelpers() {
         return l >= r;
       },
       typeof(l, r) {
-        // eslint-disable-next-line valid-typeof
         return typeof l === r;
       },
       "&&": (l, r) => {
