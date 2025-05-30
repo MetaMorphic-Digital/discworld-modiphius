@@ -1,0 +1,6 @@
+# ESLint takes care of these files.
+
+*.*js
+*.*ts
+*.html
+*.hbs
