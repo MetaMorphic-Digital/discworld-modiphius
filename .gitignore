@@ -1,5 +1,9 @@
 packs/
+public/
+
 *.lock
+
 node_modules/
+
 foundry
 foundry-config.yaml
