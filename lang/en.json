@@ -12,19 +12,25 @@
     },
 
     "chat": {
-      "postRollActions.help": "Help",
-      "postRollActions.narrativium": "Narrativium",
-      "postRollActions.reroll": "GM Reroll",
+      "postRollActions": {
+        "help": "Help",
+        "narrativium": "Narrativium",
+        "reroll": "GM Reroll"
+      },
 
-      "warning.actorNotFound": "No token selected and no character assigned to User. Cannot determine Actor to help.",
-      "warning.gmOnly": "Only GMs can roll Narrativium!",
-      "warning.noLuck": "{actorName} has no luck remaining. Better luck next time!",
-      "warning.singleTokenSelect": "You must select a single token to roll for."
+      "warning": {
+        "actorNotFound": "No token selected and no character assigned to User. Cannot determine Actor to help.",
+        "gmOnly": "Only GMs can roll Narrativium!",
+        "noLuck": "{actorName} has no luck remaining. Better luck next time!",
+        "singleTokenSelect": "You must select a single token to roll for."
+      }
     },
 
     "dialog": {
-      "deleteTrait.content": "Are you sure you want to delete the trait, \"{traitName}\"?",
-      "deleteTrait.title": "Deleting a Trait!",
+      "deleteTrait": {
+        "content": "Are you sure you want to delete the trait, \"{traitName}\"?",
+        "title": "Deleting a Trait!"
+      },
 
       "rollTrait.title": "Rolling a Trait!"
     },
@@ -45,6 +51,7 @@
           }
         }
       },
+
       "leaveHelpMode": "Leave Help Mode",
       "rollNameAsTrait": "Roll Name As Trait",
       "toggleSheetMode": "Toggle Between Locked & Edit Mode",
@@ -55,18 +62,22 @@
     },
 
     "trait": {
-      "severity.inconsequential": "Inconsequential",
-      "severity.minor": "Minor",
-      "severity.major": "Major",
-      "severity.exceptional": "Exceptional",
+      "severity": {
+        "inconsequential": "Inconsequential",
+        "minor": "Minor",
+        "major": "Major",
+        "exceptional": "Exceptional"
+      },
 
-      "type.background": "Background",
-      "type.consequences": "Consequences",
-      "type.core": "Core",
-      "type.niche": "Niche",
-      "type.organization": "Organization",
-      "type.quirks": "Quirks",
-      "type.other": "Other",
+      "type": {
+        "background": "Background",
+        "consequences": "Consequences",
+        "core": "Core",
+        "niche": "Niche",
+        "organization": "Organization",
+        "quirks": "Quirks",
+        "other": "Other"
+      },
 
       "FIELDS": {
         "notes": {
@@ -82,9 +93,17 @@
     }
   },
 
-  "TYPES.Actor.character": "Character",
-  "TYPES.Item.trait": "Trait",
-  "discworld-modiphius.CharacterSheet": "Discworld Character Sheet",
-  "discworld-modiphius.DiscworldJournalEntrySheet": "Discworld Journal Sheet",
-  "discworld-modiphius.TraitSheet": "Discworld Trait Sheet"
+  "TYPES": {
+    "Actor": {
+      "character": "Character"
+    },
+    "Item": {
+      "trait": "Trait"
+    }
+  },
+  "discworld-modiphius": {
+    "CharacterSheet": "Discworld Character Sheet",
+    "DiscworldJournalEntrySheet": "Discworld Journal Sheet",
+    "TraitSheet": "Discworld Trait Sheet"
+  }
 }

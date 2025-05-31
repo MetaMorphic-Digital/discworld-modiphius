@@ -1,4 +1,13 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  "eslint.enable": true,
+  "eslint.validate": ["javascript", "handlebars", "html"],
+
+  "i18n-ally.localesPaths": ["foundry/lang", "lang"],
+  "i18n-ally.keystyle": "nested"
 }

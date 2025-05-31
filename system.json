@@ -23,8 +23,8 @@
       "url": "https://github.com/jalensailin"
     }
   ],
-  "esmodules": ["modules/discworld.js"],
-  "styles": ["styles/main.css"],
+  "esmodules": ["discworld.mjs"],
+  "styles": ["public/discworld.css"],
   "languages": [
     {
       "lang": "en",
@@ -36,7 +36,7 @@
   "flags": {
     "hotReload": {
       "extensions": ["css", "hbs", "json"],
-      "paths": ["styles", "templates", "lang"]
+      "paths": ["public/discworld.css", "templates", "lang"]
     }
   },
   "documentTypes": {

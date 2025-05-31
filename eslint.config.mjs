@@ -40,6 +40,8 @@ export default defineConfig([
       "no-undef": "off",
       "no-unused-vars": 0,
 
+      "array-callback-return": 2,
+
       "@stylistic/indent": ["error", 2, {
         SwitchCase: 1,
       }],
@@ -48,6 +50,8 @@ export default defineConfig([
       "@stylistic/semi": ["error", "always"],
       "@stylistic/quote-props": ["error", "as-needed"],
       "@stylistic/array-bracket-newline": ["error", "consistent"],
+      "@stylistic/array-bracket-spacing": 2,
+      "@stylistic/switch-colon-spacing": 2,
       "@stylistic/key-spacing": "error",
       "@stylistic/comma-dangle": ["error", "always-multiline"],
       "@stylistic/space-in-parens": ["error", "never"],
@@ -57,16 +61,19 @@ export default defineConfig([
       "@stylistic/no-multi-spaces": 2,
       "@stylistic/no-extra-semi": 2,
       "@stylistic/no-whitespace-before-property": 2,
+      "@stylistic/no-trailing-spaces": 2,
       "@stylistic/space-unary-ops": 2,
 
       "@stylistic/no-multiple-empty-lines": ["error", {
         max: 1,
         maxEOF: 0,
       }],
+      "lines-between-class-members": 2,
 
       "@stylistic/object-curly-spacing": ["error", "always"],
       "@stylistic/comma-spacing": ["error"],
       "@stylistic/space-before-blocks": 2,
+      "@stylistic/spaced-comment": 2,
       "@stylistic/arrow-spacing": 2,
       "@stylistic/eol-last": ["error", "always"],
 
