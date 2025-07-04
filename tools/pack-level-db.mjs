@@ -17,7 +17,7 @@ const PACK_DEST = "packs";
  * Folder where source JSON files should be located relative to the module folder.
  * @type {string}
  */
-const PACK_SRC = "journals";
+const PACK_SRC = "pack-data";
 
 /* -------------------------------------------------- */
 
