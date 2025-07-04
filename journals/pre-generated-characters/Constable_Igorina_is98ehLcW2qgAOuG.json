@@ -1,0 +1,347 @@
+{
+  "name": "Constable Igorina",
+  "type": "character",
+  "prototypeToken": {
+    "actorLink": true,
+    "disposition": 1,
+    "bar1": {
+      "attribute": "luck"
+    },
+    "name": "Constable Igorina",
+    "displayName": 0,
+    "width": 1,
+    "height": 1,
+    "texture": {
+      "src": "systems/discworld-modiphius/assets/characters/DW_QS_Igorina.webp",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "offsetX": 0,
+      "offsetY": 0,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "rotation": 0,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "displayBars": 0,
+    "bar2": {
+      "attribute": null
+    },
+    "light": {
+      "negative": false,
+      "priority": 0,
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": false,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": [],
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null,
+    "flags": {},
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
+  },
+  "_id": "is98ehLcW2qgAOuG",
+  "img": "systems/discworld-modiphius/assets/characters/igorina.webp",
+  "system": {
+    "description": "<p>The Igors of Überwald are a traditional people. They take great pride in their heritage, in serving the greatest vampire nobility and mad scientists across the Disc. When Igorina came to Ankh-Morpork she didn’t find such illustrious employers. Instead she found a position in the Watch, who were happy to overlook the lisp. Her talents as a surgeon were quickly recognised, but more useful was her determination to prevent the need for an Igor’s services. Any Igor can stitch someone back together, but few can prevent their patient from getting hurt in the first place. In fact some of them see that as rather spoiling the fun.</p><img src=\"systems/discworld-modiphius/assets/characters/igorina.webp\" alt=\"Constable Igorina\" /><p></p>",
+    "luck": {
+      "max": 4,
+      "value": 4
+    },
+    "pronouns": "She/Her"
+  },
+  "items": [
+    {
+      "type": "trait",
+      "name": "The Watch",
+      "system": {
+        "type": "organization",
+        "severity": "minor",
+        "notes": ""
+      },
+      "_id": "RIR2Cjy99GyOVa2w",
+      "img": "icons/svg/item-bag.svg",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1751657599412,
+        "modifiedTime": 1751657602811,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!actors.items!is98ehLcW2qgAOuG.RIR2Cjy99GyOVa2w"
+    },
+    {
+      "type": "trait",
+      "name": "An Igorina fresh from Überwald",
+      "system": {
+        "type": "background",
+        "severity": "minor",
+        "notes": ""
+      },
+      "_id": "X2Fdp4qzrppU29YD",
+      "img": "icons/svg/item-bag.svg",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1751657606095,
+        "modifiedTime": 1751657648888,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!actors.items!is98ehLcW2qgAOuG.X2Fdp4qzrppU29YD"
+    },
+    {
+      "type": "trait",
+      "name": "Applied forensics",
+      "system": {
+        "type": "niche",
+        "severity": "minor",
+        "notes": ""
+      },
+      "_id": "dvDjfbM3o0qFc5A5",
+      "img": "icons/svg/item-bag.svg",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1751657655279,
+        "modifiedTime": 1751657665938,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!actors.items!is98ehLcW2qgAOuG.dvDjfbM3o0qFc5A5"
+    },
+    {
+      "type": "trait",
+      "name": "Thpray it don't thay it",
+      "system": {
+        "type": "niche",
+        "severity": "minor",
+        "notes": ""
+      },
+      "_id": "3aYqeNJmyBEMvwMR",
+      "img": "icons/svg/item-bag.svg",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1751657675695,
+        "modifiedTime": 1751657682707,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!actors.items!is98ehLcW2qgAOuG.3aYqeNJmyBEMvwMR"
+    },
+    {
+      "type": "trait",
+      "name": "A stitch in time saves nine",
+      "system": {
+        "type": "core",
+        "severity": "minor",
+        "notes": ""
+      },
+      "_id": "JVHZndiopva7ft5k",
+      "img": "icons/svg/item-bag.svg",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1751657685246,
+        "modifiedTime": 1751657693007,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!actors.items!is98ehLcW2qgAOuG.JVHZndiopva7ft5k"
+    },
+    {
+      "type": "trait",
+      "name": "Happy to call a head wound a head wound",
+      "system": {
+        "type": "quirks",
+        "severity": "minor",
+        "notes": ""
+      },
+      "_id": "pk7eaW9l1G9FvcoN",
+      "img": "icons/svg/item-bag.svg",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1751657696146,
+        "modifiedTime": 1751657704000,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!actors.items!is98ehLcW2qgAOuG.pk7eaW9l1G9FvcoN"
+    },
+    {
+      "type": "trait",
+      "name": "Two left feet but the heart of a lion",
+      "system": {
+        "type": "quirks",
+        "severity": "minor",
+        "notes": ""
+      },
+      "_id": "wLGcMX30cskwJDfR",
+      "img": "icons/svg/item-bag.svg",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "uhIQlUux4nluWN8i": 3
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.344",
+        "systemId": "discworld-modiphius",
+        "systemVersion": "0.0.0",
+        "createdTime": 1751657710313,
+        "modifiedTime": 1751657718509,
+        "lastModifiedBy": "uhIQlUux4nluWN8i"
+      },
+      "_key": "!actors.items!is98ehLcW2qgAOuG.wLGcMX30cskwJDfR"
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 300000,
+  "ownership": {
+    "default": 0,
+    "uhIQlUux4nluWN8i": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.344",
+    "systemId": "discworld-modiphius",
+    "systemVersion": "0.0.0",
+    "createdTime": 1751657597130,
+    "modifiedTime": 1751659987282,
+    "lastModifiedBy": "uhIQlUux4nluWN8i"
+  },
+  "_key": "!actors!is98ehLcW2qgAOuG"
+}
