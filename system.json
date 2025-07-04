@@ -58,6 +58,13 @@
       "system": "discworld-modiphius",
       "type": "JournalEntry",
       "path": "packs/discworld-quickstart"
+    },
+    {
+      "name": "pre-generated-characters",
+      "label": "Pre-Generated Characters",
+      "system": "discworld-modiphius",
+      "type": "Actor",
+      "path": "packs/pre-generated-characters"
     }
   ],
   "packFolders": [
@@ -65,7 +72,7 @@
       "name": "Discworld",
       "sorting": "m",
       "color": "#7E4839",
-      "packs": ["discworld-quickstart"]
+      "packs": ["discworld-quickstart", "pre-generated-characters"]
     }
   ],
   "url": "",
