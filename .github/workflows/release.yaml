@@ -1,0 +1,58 @@
+name: Package Release
+
+env:
+  NODE_VERSION: 22
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout our repository so we can do things on it.
+      - name: Checkout
+        uses: actions/checkout@v4
+      # 2. Install Node
+      - name: Node Setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+      # 3. Install node modules and build
+      - run: npm ci
+      - run: npm run build
+      # 2. Get the version number without the leading -v.
+      - name: Get Version
+        id: get_version
+        uses: dhkatz/get-version-action@v3.0.0
+      # 3. Substitute relevant values in system.json
+      - name: Substitute Manifest
+        uses: TomaszKandula/variable-substitution@v1.0.1
+        with:
+          files: "system.json"
+        env:
+          version: ${{steps.get_version.outputs.version-without-v}}
+          esmodules: |
+            ["public/discworld.mjs"]
+          flags.hotReload: false
+          changelog: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/CHANGELOG.md
+          download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/discworld-modiphius.zip
+      # 4. Zip up the branch excluding unnecessary files/folders packs.
+      - name: Zip
+        # Only include needed dirs/files.
+        run: zip -r discworld-modiphius.zip system.json CHANGELOG.md LICENSE README.md assets lang packs public templates
+      # 5. Updates the release with the newly zipped branch and system.json. See documentation of this action for details.
+      - name: Update Release with Artifacts
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          allowUpdates: true
+          name: ${{ github.event.release.name }}
+          tag: ${{ github.event.release.tag_name }}
+          body: |
+            ${{ github.event.release.body }}
+
+            **Installation:** To manually install this release, please use the following manifest URL: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/system.json
+          artifacts: "./discworld-modiphius.zip, ./system.json, ./CHANGELOG.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
