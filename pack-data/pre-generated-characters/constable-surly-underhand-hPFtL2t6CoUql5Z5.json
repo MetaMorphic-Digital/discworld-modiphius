@@ -1,5 +1,5 @@
 {
-  "name": "Detective Bartholemew Hamrahan",
+  "name": "Constable Surly Underhand",
   "type": "character",
   "prototypeToken": {
     "actorLink": true,
@@ -7,12 +7,12 @@
     "bar1": {
       "attribute": "luck"
     },
-    "name": "Character",
+    "name": "Constable Surly Underhand",
     "displayName": 0,
     "width": 1,
     "height": 1,
     "texture": {
-      "src": "systems/discworld-modiphius/assets/characters/DW_QS_Detective%20Bartholomew%20Hamrahan%20CMYK%20LW.webp",
+      "src": "systems/discworld-modiphius/assets/characters/DW_QS_Constable%20Surly%20Underhand_001w.webp",
       "anchorX": 0.5,
       "anchorY": 0.5,
       "offsetX": 0,
@@ -95,10 +95,10 @@
     "appendNumber": false,
     "prependAdjective": false
   },
-  "_id": "4dKEP8ur23QLDSta",
-  "img": "systems/discworld-modiphius/assets/characters/bartholemew.webp",
+  "_id": "hPFtL2t6CoUql5Z5",
+  "img": "systems/discworld-modiphius/assets/characters/surly.webp",
   "system": {
-    "description": "<p>Detective Bartholemew Hamrahan was the best the Day Watch had to offer, back in the bad old days when the Night Watch was a pointless irrelevance commanded by a drunk. You didn’t have to worry about regulations or due process, you just had to know how to point a crossbow and follow your gut. Those were the days, before that drunk turned out to have a bunch of ideas about “due process” and “not shooting people.” Hamrahan has adapted, to some extent, to the times, but there’s nothing like getting an arrow in the chest three days from retirement to harden your heart, and Rottin’ Bart Hamrahan didn’t have the softest heart to begin with. Frankly, he’s too dead for this... stuff.</p><img src=\"systems/discworld-modiphius/assets/characters/bartholemew.webp\" alt=\"Detective Bartholemew Hamrahan\" />",
+    "description": "<p>Surly is a traditional dwarf with an eye for iconography and detail. The clink of chainmail and the odd tz’chk! of Surly’s iconograph are a common sound at any crime scene, and he only gets in trouble when he mixes in personal pictures with evidence. The trouble is, Surly argues, that everything is connected. More than once a crime has been solved because Surly thought to point his iconograph at a random stranger, plate of food or passing butterfly just at the right moment.*</p><img src=\"systems/discworld-modiphius/assets/characters/surly.webp\" alt=\"Constable Surly Underhand\" /><p>* The butterfly was charged with three counts of environmental terrorism.</p>",
     "luck": {
       "max": 4,
       "value": 4
@@ -114,14 +114,13 @@
         "severity": "minor",
         "notes": ""
       },
-      "_id": "PsvxnyJEzjvJqTqf",
+      "_id": "bn1Ev7yt3sobG4jB",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -131,28 +130,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751657426544,
-        "modifiedTime": 1751657431030,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751658093715,
+        "modifiedTime": 1751658096041,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!4dKEP8ur23QLDSta.PsvxnyJEzjvJqTqf"
+      "_key": "!actors.items!hPFtL2t6CoUql5Z5.bn1Ev7yt3sobG4jB"
     },
     {
       "type": "trait",
-      "name": "A zombie who lived and died on these streets",
+      "name": "A dwarf born and raised in the Shades",
       "system": {
         "type": "background",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "wMAB818oys1mR1U4",
+      "_id": "Sts8zBuYpD0Oo5h9",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -162,28 +160,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751657435094,
-        "modifiedTime": 1751657444468,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751658099515,
+        "modifiedTime": 1751658105089,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!4dKEP8ur23QLDSta.wMAB818oys1mR1U4"
+      "_key": "!actors.items!hPFtL2t6CoUql5Z5.Sts8zBuYpD0Oo5h9"
     },
     {
       "type": "trait",
-      "name": "Loose siege catapult",
+      "name": "Crimescene Iconographer",
       "system": {
         "type": "niche",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "h69xFTrYyMcqIfJ1",
+      "_id": "pRnqV32XEXkYRAGY",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -193,28 +190,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751657449210,
-        "modifiedTime": 1751657459306,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751658108516,
+        "modifiedTime": 1751658114132,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!4dKEP8ur23QLDSta.h69xFTrYyMcqIfJ1"
+      "_key": "!actors.items!hPFtL2t6CoUql5Z5.pRnqV32XEXkYRAGY"
     },
     {
       "type": "trait",
-      "name": "The law is more of a guideline really",
+      "name": "Curious enough to make cats nervous",
       "system": {
         "type": "niche",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "Ti9EWIuNphWmqhM9",
+      "_id": "Jq6NVzbehTzZHFWH",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -224,28 +220,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751657461264,
-        "modifiedTime": 1751657468562,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751658120316,
+        "modifiedTime": 1751658127453,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!4dKEP8ur23QLDSta.Ti9EWIuNphWmqhM9"
+      "_key": "!actors.items!hPFtL2t6CoUql5Z5.Jq6NVzbehTzZHFWH"
     },
     {
       "type": "trait",
-      "name": "Better it happen to me than you",
+      "name": "Do everything with a smile",
       "system": {
         "type": "core",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "lUJuhsErlhb7QxiD",
+      "_id": "GLS8CzZSW3b6kZTG",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -255,28 +250,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751657471277,
-        "modifiedTime": 1751657475808,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751658131066,
+        "modifiedTime": 1751658139385,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!4dKEP8ur23QLDSta.lUJuhsErlhb7QxiD"
+      "_key": "!actors.items!hPFtL2t6CoUql5Z5.GLS8CzZSW3b6kZTG"
     },
     {
       "type": "trait",
-      "name": "Remembers the good bad old days",
+      "name": "Blends into the background",
       "system": {
         "type": "quirks",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "a8c0sAR6z5SdW3HZ",
+      "_id": "rz8buUUWtSorw4Rz",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -286,28 +280,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751657480844,
-        "modifiedTime": 1751657487033,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751658143516,
+        "modifiedTime": 1751658146553,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!4dKEP8ur23QLDSta.a8c0sAR6z5SdW3HZ"
+      "_key": "!actors.items!hPFtL2t6CoUql5Z5.rz8buUUWtSorw4Rz"
     },
     {
       "type": "trait",
-      "name": "Always hits what he should be aiming at",
+      "name": "Virulently infectious personality",
       "system": {
         "type": "quirks",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "CMNhXRHfgeoyWa2l",
+      "_id": "mpLVnJaAu6VX2phq",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -317,19 +310,18 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751657490611,
-        "modifiedTime": 1751657497895,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751658151070,
+        "modifiedTime": 1751658158992,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!4dKEP8ur23QLDSta.CMNhXRHfgeoyWa2l"
+      "_key": "!actors.items!hPFtL2t6CoUql5Z5.mpLVnJaAu6VX2phq"
     }
   ],
   "effects": [],
   "folder": null,
-  "sort": 100000,
+  "sort": 0,
   "ownership": {
-    "default": 0,
-    "uhIQlUux4nluWN8i": 3
+    "default": 0
   },
   "flags": {},
   "_stats": {
@@ -339,9 +331,9 @@
     "coreVersion": "13.344",
     "systemId": "discworld-modiphius",
     "systemVersion": "0.0.0",
-    "createdTime": 1751657379029,
-    "modifiedTime": 1751660162196,
-    "lastModifiedBy": "uhIQlUux4nluWN8i"
+    "createdTime": 1751658032832,
+    "modifiedTime": 1751659893915,
+    "lastModifiedBy": "discworldbuilder"
   },
-  "_key": "!actors!4dKEP8ur23QLDSta"
+  "_key": "!actors!hPFtL2t6CoUql5Z5"
 }

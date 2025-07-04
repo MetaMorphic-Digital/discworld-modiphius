@@ -3,7 +3,7 @@
   "_id": "JOVzNNarUUTcC016",
   "pages": [
     {
-      "sort": 100000,
+      "sort": 0,
       "name": "Credits",
       "type": "text",
       "_id": "EBR95R7AZRlSdidr",
@@ -24,8 +24,7 @@
       "src": null,
       "category": null,
       "ownership": {
-        "default": -1,
-        "uhIQlUux4nluWN8i": 3
+        "default": -1
       },
       "flags": {},
       "_stats": {
@@ -37,12 +36,12 @@
         "systemVersion": "0.0.0",
         "createdTime": 1747954796379,
         "modifiedTime": 1747967836781,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "lastModifiedBy": "discworldbuilder"
       },
       "_key": "!journal.pages!JOVzNNarUUTcC016.EBR95R7AZRlSdidr"
     },
     {
-      "sort": 200000,
+      "sort": 0,
       "name": "Contents",
       "type": "text",
       "_id": "dymw5wniwKbI2Hnk",
@@ -63,8 +62,7 @@
       "src": null,
       "category": null,
       "ownership": {
-        "default": -1,
-        "uhIQlUux4nluWN8i": 3
+        "default": -1
       },
       "flags": {},
       "_stats": {
@@ -76,12 +74,12 @@
         "systemVersion": "0.0.0",
         "createdTime": 1747955014037,
         "modifiedTime": 1747967307632,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "lastModifiedBy": "discworldbuilder"
       },
       "_key": "!journal.pages!JOVzNNarUUTcC016.dymw5wniwKbI2Hnk"
     },
     {
-      "sort": 300000,
+      "sort": 0,
       "name": "Introduction",
       "type": "text",
       "_id": "0xANwjC29hMq4pH0",
@@ -102,8 +100,7 @@
       "src": null,
       "category": null,
       "ownership": {
-        "default": -1,
-        "uhIQlUux4nluWN8i": 3
+        "default": -1
       },
       "flags": {},
       "_stats": {
@@ -115,12 +112,12 @@
         "systemVersion": "0.0.0",
         "createdTime": 1747968025483,
         "modifiedTime": 1747968414101,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "lastModifiedBy": "discworldbuilder"
       },
       "_key": "!journal.pages!JOVzNNarUUTcC016.0xANwjC29hMq4pH0"
     },
     {
-      "sort": 400000,
+      "sort": 0,
       "name": "Ankh-Morpork",
       "type": "text",
       "_id": "NoLWoxkUwKznrSC2",
@@ -141,8 +138,7 @@
       "src": null,
       "category": null,
       "ownership": {
-        "default": -1,
-        "uhIQlUux4nluWN8i": 3
+        "default": -1
       },
       "flags": {},
       "_stats": {
@@ -154,12 +150,12 @@
         "systemVersion": "0.0.0",
         "createdTime": 1747968268656,
         "modifiedTime": 1747968939053,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "lastModifiedBy": "discworldbuilder"
       },
       "_key": "!journal.pages!JOVzNNarUUTcC016.NoLWoxkUwKznrSC2"
     },
     {
-      "sort": 500000,
+      "sort": 0,
       "name": "What is a Roleplaying Game?",
       "type": "text",
       "_id": "eXOoHCkQP64zGfSu",
@@ -180,8 +176,7 @@
       "src": null,
       "category": null,
       "ownership": {
-        "default": -1,
-        "uhIQlUux4nluWN8i": 3
+        "default": -1
       },
       "flags": {},
       "_stats": {
@@ -193,12 +188,12 @@
         "systemVersion": "0.0.0",
         "createdTime": 1747968992647,
         "modifiedTime": 1747968998390,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "lastModifiedBy": "discworldbuilder"
       },
       "_key": "!journal.pages!JOVzNNarUUTcC016.eXOoHCkQP64zGfSu"
     },
     {
-      "sort": 600000,
+      "sort": 0,
       "name": "What is the System?",
       "type": "text",
       "_id": "2qnV9RBlb807il83",
@@ -219,8 +214,7 @@
       "src": null,
       "category": null,
       "ownership": {
-        "default": -1,
-        "uhIQlUux4nluWN8i": 3
+        "default": -1
       },
       "flags": {},
       "_stats": {
@@ -232,12 +226,12 @@
         "systemVersion": "0.0.0",
         "createdTime": 1747969170480,
         "modifiedTime": 1747969179629,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "lastModifiedBy": "discworldbuilder"
       },
       "_key": "!journal.pages!JOVzNNarUUTcC016.2qnV9RBlb807il83"
     },
     {
-      "sort": 700000,
+      "sort": 0,
       "name": "What Do You Need?",
       "type": "text",
       "_id": "1RIj7fDPki8HP1el",
@@ -258,8 +252,7 @@
       "src": null,
       "category": null,
       "ownership": {
-        "default": -1,
-        "uhIQlUux4nluWN8i": 3
+        "default": -1
       },
       "flags": {},
       "_stats": {
@@ -271,12 +264,12 @@
         "systemVersion": "0.0.0",
         "createdTime": 1747969253806,
         "modifiedTime": 1747969523823,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "lastModifiedBy": "discworldbuilder"
       },
       "_key": "!journal.pages!JOVzNNarUUTcC016.1RIj7fDPki8HP1el"
     },
     {
-      "sort": 800000,
+      "sort": 0,
       "name": "Playing the Game",
       "type": "text",
       "_id": "qPEwhI7nu7nH5B3A",
@@ -297,8 +290,7 @@
       "src": null,
       "category": null,
       "ownership": {
-        "default": -1,
-        "uhIQlUux4nluWN8i": 3
+        "default": -1
       },
       "flags": {},
       "_stats": {
@@ -310,12 +302,12 @@
         "systemVersion": "0.0.0",
         "createdTime": 1747969601174,
         "modifiedTime": 1747971357402,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "lastModifiedBy": "discworldbuilder"
       },
       "_key": "!journal.pages!JOVzNNarUUTcC016.qPEwhI7nu7nH5B3A"
     },
     {
-      "sort": 900000,
+      "sort": 0,
       "name": "Tests",
       "type": "text",
       "_id": "uiKCuls8doxwtm0c",
@@ -336,8 +328,7 @@
       "src": null,
       "category": null,
       "ownership": {
-        "default": -1,
-        "uhIQlUux4nluWN8i": 3
+        "default": -1
       },
       "flags": {},
       "_stats": {
@@ -349,12 +340,12 @@
         "systemVersion": "0.0.0",
         "createdTime": 1747969801698,
         "modifiedTime": 1747971292411,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "lastModifiedBy": "discworldbuilder"
       },
       "_key": "!journal.pages!JOVzNNarUUTcC016.uiKCuls8doxwtm0c"
     },
     {
-      "sort": 1000000,
+      "sort": 0,
       "name": "Characters and Traits",
       "type": "text",
       "_id": "QQxzTSryUSc8qm2a",
@@ -375,8 +366,7 @@
       "src": null,
       "category": null,
       "ownership": {
-        "default": -1,
-        "uhIQlUux4nluWN8i": 3
+        "default": -1
       },
       "flags": {},
       "_stats": {
@@ -388,12 +378,12 @@
         "systemVersion": "0.0.0",
         "createdTime": 1747970113181,
         "modifiedTime": 1747971030578,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "lastModifiedBy": "discworldbuilder"
       },
       "_key": "!journal.pages!JOVzNNarUUTcC016.QQxzTSryUSc8qm2a"
     },
     {
-      "sort": 1100000,
+      "sort": 0,
       "name": "Example of Play",
       "type": "text",
       "_id": "tnQnOfx1yyoUUN8C",
@@ -414,8 +404,7 @@
       "src": null,
       "category": null,
       "ownership": {
-        "default": -1,
-        "uhIQlUux4nluWN8i": 3
+        "default": -1
       },
       "flags": {},
       "_stats": {
@@ -427,7 +416,7 @@
         "systemVersion": "0.0.0",
         "createdTime": 1747971083602,
         "modifiedTime": 1747971678526,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "lastModifiedBy": "discworldbuilder"
       },
       "_key": "!journal.pages!JOVzNNarUUTcC016.tnQnOfx1yyoUUN8C"
     }
@@ -436,8 +425,7 @@
   "categories": [],
   "sort": 0,
   "ownership": {
-    "default": 0,
-    "uhIQlUux4nluWN8i": 3
+    "default": 0
   },
   "flags": {
     "core": {
@@ -453,7 +441,7 @@
     "systemVersion": "0.0.0",
     "createdTime": 1747954788198,
     "modifiedTime": 1747968018016,
-    "lastModifiedBy": "uhIQlUux4nluWN8i"
+    "lastModifiedBy": "discworldbuilder"
   },
   "_key": "!journal!JOVzNNarUUTcC016"
 }

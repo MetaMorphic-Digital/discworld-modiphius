@@ -1,5 +1,5 @@
 {
-  "name": "Constable Misbegot & Ampersands",
+  "name": "Constable Igorina",
   "type": "character",
   "prototypeToken": {
     "actorLink": true,
@@ -7,12 +7,12 @@
     "bar1": {
       "attribute": "luck"
     },
-    "name": "Constable Mesbegot & Ampersands",
+    "name": "Constable Igorina",
     "displayName": 0,
     "width": 1,
     "height": 1,
     "texture": {
-      "src": "systems/discworld-modiphius/assets/characters/DW_QS_Constable%20Misbegot%20%26%20Ampersands%20CMYK%20LW.webp",
+      "src": "systems/discworld-modiphius/assets/characters/DW_QS_Igorina.webp",
       "anchorX": 0.5,
       "anchorY": 0.5,
       "offsetX": 0,
@@ -95,15 +95,15 @@
     "appendNumber": false,
     "prependAdjective": false
   },
-  "_id": "I3eKM0KhaBy9uB4V",
-  "img": "systems/discworld-modiphius/assets/characters/misbegot.webp",
+  "_id": "is98ehLcW2qgAOuG",
+  "img": "systems/discworld-modiphius/assets/characters/igorina.webp",
   "system": {
-    "description": "<p>Misbegot &amp; Ampersands lives on Misbegot Bridge, and usually spends their days watching the River Ankh for illegal activity.* Gargoyles make excellent members of the Watch. They are patient, perceptive and willing to be paid in pigeons. Since even criminals prefer to steer clear of the turgid river it tends to be a dull job. Misbegot &amp; Ampersands moves like a poor stop-motion animation, which scares most people who aren’t dragons. Dragons are irresistibly drawn to them, to their eternal consternation.</p><img src=\"systems/discworld-modiphius/assets/characters/misbegot.webp\" alt=\"Constable Misbegot &amp; Ampersands\" /><p>* Technically the river breaks several environmental laws and at least one public nuisance ordinance just by existing, but the Watch hasn't been able to find a bucket big enough to make an arrest with.</p>",
+    "description": "<p>The Igors of Überwald are a traditional people. They take great pride in their heritage, in serving the greatest vampire nobility and mad scientists across the Disc. When Igorina came to Ankh-Morpork she didn’t find such illustrious employers. Instead she found a position in the Watch, who were happy to overlook the lisp. Her talents as a surgeon were quickly recognised, but more useful was her determination to prevent the need for an Igor’s services. Any Igor can stitch someone back together, but few can prevent their patient from getting hurt in the first place. In fact some of them see that as rather spoiling the fun.</p><img src=\"systems/discworld-modiphius/assets/characters/igorina.webp\" alt=\"Constable Igorina\" /><p></p>",
     "luck": {
       "max": 4,
       "value": 4
     },
-    "pronouns": "They/Them"
+    "pronouns": "She/Her"
   },
   "items": [
     {
@@ -114,14 +114,13 @@
         "severity": "minor",
         "notes": ""
       },
-      "_id": "zufMWbgElDfBBIL5",
+      "_id": "RIR2Cjy99GyOVa2w",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -131,28 +130,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751658313100,
-        "modifiedTime": 1751658315971,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751657599412,
+        "modifiedTime": 1751657602811,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!I3eKM0KhaBy9uB4V.zufMWbgElDfBBIL5"
+      "_key": "!actors.items!is98ehLcW2qgAOuG.RIR2Cjy99GyOVa2w"
     },
     {
       "type": "trait",
-      "name": "Gargoyle",
+      "name": "An Igorina fresh from Überwald",
       "system": {
         "type": "background",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "xlooNyKN5MBs5YiQ",
+      "_id": "X2Fdp4qzrppU29YD",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -162,28 +160,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751658318800,
-        "modifiedTime": 1751658322328,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751657606095,
+        "modifiedTime": 1751657648888,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!I3eKM0KhaBy9uB4V.xlooNyKN5MBs5YiQ"
+      "_key": "!actors.items!is98ehLcW2qgAOuG.X2Fdp4qzrppU29YD"
     },
     {
       "type": "trait",
-      "name": "Designated noticer",
+      "name": "Applied forensics",
       "system": {
         "type": "niche",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "jZdpSkckezWNFmCy",
+      "_id": "dvDjfbM3o0qFc5A5",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -193,28 +190,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751658323701,
-        "modifiedTime": 1751658327514,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751657655279,
+        "modifiedTime": 1751657665938,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!I3eKM0KhaBy9uB4V.jZdpSkckezWNFmCy"
+      "_key": "!actors.items!is98ehLcW2qgAOuG.dvDjfbM3o0qFc5A5"
     },
     {
       "type": "trait",
-      "name": "Looks the spitting image of a Pixy-faced Smut",
+      "name": "Thpray it don't thay it",
       "system": {
         "type": "niche",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "TmTXWRmhADeNonpJ",
+      "_id": "3aYqeNJmyBEMvwMR",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -224,28 +220,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751658331500,
-        "modifiedTime": 1751658341994,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751657675695,
+        "modifiedTime": 1751657682707,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!I3eKM0KhaBy9uB4V.TmTXWRmhADeNonpJ"
+      "_key": "!actors.items!is98ehLcW2qgAOuG.3aYqeNJmyBEMvwMR"
     },
     {
       "type": "trait",
-      "name": "Doing nothing isn't the same as not doing anything",
+      "name": "A stitch in time saves nine",
       "system": {
         "type": "core",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "LMnZSWlqbyr5NMOj",
+      "_id": "JVHZndiopva7ft5k",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -255,28 +250,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751658354169,
-        "modifiedTime": 1751658360223,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751657685246,
+        "modifiedTime": 1751657693007,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!I3eKM0KhaBy9uB4V.LMnZSWlqbyr5NMOj"
+      "_key": "!actors.items!is98ehLcW2qgAOuG.JVHZndiopva7ft5k"
     },
     {
       "type": "trait",
-      "name": "Too shy to move if they are being look at",
+      "name": "Happy to call a head wound a head wound",
       "system": {
         "type": "quirks",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "RQKJNMLsN0DIOKeW",
+      "_id": "pk7eaW9l1G9FvcoN",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -286,28 +280,27 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751658366818,
-        "modifiedTime": 1751658374453,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751657696146,
+        "modifiedTime": 1751657704000,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!I3eKM0KhaBy9uB4V.RQKJNMLsN0DIOKeW"
+      "_key": "!actors.items!is98ehLcW2qgAOuG.pk7eaW9l1G9FvcoN"
     },
     {
       "type": "trait",
-      "name": "Beloved by animals despite their best efforts",
+      "name": "Two left feet but the heart of a lion",
       "system": {
         "type": "quirks",
         "severity": "minor",
         "notes": ""
       },
-      "_id": "3mVSLHRZl0Lnzgq5",
+      "_id": "wLGcMX30cskwJDfR",
       "img": "icons/svg/item-bag.svg",
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
-        "default": 0,
-        "uhIQlUux4nluWN8i": 3
+        "default": 0
       },
       "flags": {},
       "_stats": {
@@ -317,19 +310,18 @@
         "coreVersion": "13.344",
         "systemId": "discworld-modiphius",
         "systemVersion": "0.0.0",
-        "createdTime": 1751658376284,
-        "modifiedTime": 1751658388511,
-        "lastModifiedBy": "uhIQlUux4nluWN8i"
+        "createdTime": 1751657710313,
+        "modifiedTime": 1751657718509,
+        "lastModifiedBy": "discworldbuilder"
       },
-      "_key": "!actors.items!I3eKM0KhaBy9uB4V.3mVSLHRZl0Lnzgq5"
+      "_key": "!actors.items!is98ehLcW2qgAOuG.wLGcMX30cskwJDfR"
     }
   ],
   "effects": [],
   "folder": null,
   "sort": 0,
   "ownership": {
-    "default": 0,
-    "uhIQlUux4nluWN8i": 3
+    "default": 0
   },
   "flags": {},
   "_stats": {
@@ -339,9 +331,9 @@
     "coreVersion": "13.344",
     "systemId": "discworld-modiphius",
     "systemVersion": "0.0.0",
-    "createdTime": 1751658293604,
-    "modifiedTime": 1751659841364,
-    "lastModifiedBy": "uhIQlUux4nluWN8i"
+    "createdTime": 1751657597130,
+    "modifiedTime": 1751659987282,
+    "lastModifiedBy": "discworldbuilder"
   },
-  "_key": "!actors!I3eKM0KhaBy9uB4V"
+  "_key": "!actors!is98ehLcW2qgAOuG"
 }
