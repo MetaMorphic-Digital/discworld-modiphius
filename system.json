@@ -2,7 +2,7 @@
   "id": "discworld-modiphius",
   "title": "Terry Pratchett's Discworld - Official",
   "description": "Official implementation of \"Terry Pratchett's Discworld - Adventures in Ankh-Morpork\" by Modiphius",
-  "version": "0.0.0",
+  "version": "dev",
   "license": "Apache License, Version 2.0",
   "compatibility": {
     "minimum": "13.338",
@@ -75,7 +75,8 @@
       "packs": ["discworld-quickstart", "pre-generated-characters"]
     }
   ],
-  "url": "",
-  "manifest": "",
-  "download": ""
+  "url": "https://github.com/MetaMorphic-Digital/discworld-modiphius",
+  "changelog": "https://github.com/MetaMorphic-Digital/discworld-modiphius/releases/latest/download/CHANGELOG.md",
+  "manifest": "https://github.com/MetaMorphic-Digital/discworld-modiphius/releases/latest/download/system.json",
+  "download": "https://github.com/MetaMorphic-Digital/discworld-modiphius/releases/latest/download/discworld-modiphius.zip"
 }
