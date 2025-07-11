@@ -66,8 +66,8 @@ Hooks.once("i18nInit", () => {
   // Localize all strings in the system configuration object.
   const localize = (o, k, v) => {
     const type = foundry.utils.getType(v);
-    if (type === "string" && v.startsWith("DISCWORLD")) {
-      // eslint-disable-next-line no-param-reassign
+    if ((type === "string") && v.startsWith("DISCWORLD")) {
+
       o[k] = game.i18n.localize(v);
     } else if (type === "Object") {
       for (const [x, y] of Object.entries(v)) {
