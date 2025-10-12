@@ -49,7 +49,8 @@ body.theme-light,
   @include setVars(
     filter,
     (
-      logo: none,
+      discworld-logo: none,
+      modiphius-logo: none,
     )
   );
 }

@@ -40,7 +40,8 @@ body.theme-dark,
   @include setVars(
     filter,
     (
-      logo: invert(0.8),
+      discworld-logo: invert(0.8),
+      modiphius-logo: invert(0.75) sepia(0.3),
     )
   );
 }
