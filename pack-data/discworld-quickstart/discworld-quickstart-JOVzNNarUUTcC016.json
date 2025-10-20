@@ -42,44 +42,6 @@
     },
     {
       "sort": 0,
-      "name": "Contents",
-      "type": "text",
-      "_id": "dymw5wniwKbI2Hnk",
-      "system": {},
-      "title": {
-        "show": true,
-        "level": 1
-      },
-      "image": {},
-      "text": {
-        "format": 1,
-        "content": "<h1 data-split-here=\"CreditsLead DesignAndrew DouthwaiteOther Design-De\" class=\"contents\">Contents</h1><ol><li>Introduction</li><li>What Is Discworld?</li><li>Ankh-Morpork</li><li>Tone</li><li>What is a Roleplaying Game?</li><li>Of Dice and GMs</li><li>What is the System?</li><li>What Do You Need?</li><li>Pen and Paper</li><li>Dice</li><li>Imagination</li><li>Punes, or Plays on Words</li><li>Friends</li><li>Time</li><li>Playing the Game</li><li>Scenes</li><li>Tests</li><li>Attempting a Test</li><li>Group Tests</li><li>Million to One</li><li>Characters and Traits</li><li>Luck</li><li>Traits in Tests</li><li>Consequences</li><li>Example of Play</li><li>Pre-Generated Characters</li><li>Reference Sheet</li></ol><img src=\"https://files.d20.io/images/432567517/5DXB6ZdSdVl0yUzuTpJ7jQ/max.png?1741816675\" alt=\"\" />"
-      },
-      "video": {
-        "controls": true,
-        "volume": 0.5
-      },
-      "src": null,
-      "category": null,
-      "ownership": {
-        "default": -1
-      },
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.344",
-        "systemId": "discworld-modiphius",
-        "systemVersion": "0.0.0",
-        "createdTime": 1747955014037,
-        "modifiedTime": 1747967307632,
-        "lastModifiedBy": "discworldbuilder"
-      },
-      "_key": "!journal.pages!JOVzNNarUUTcC016.dymw5wniwKbI2Hnk"
-    },
-    {
-      "sort": 0,
       "name": "Introduction",
       "type": "text",
       "_id": "0xANwjC29hMq4pH0",
