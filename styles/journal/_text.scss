@@ -58,6 +58,11 @@
   }
 
   /* --------- Sections with specific styles --------- */
+
+  img.dw-logo {
+    filter: getVar(filter, discworld-logo);
+  }
+
   section.credits {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -77,6 +82,16 @@
     }
   }
 
+  section.system-support {
+    :not(h2) {
+      text-align: center;
+    }
+
+    img {
+      width: 50%;
+    }
+  }
+
   section.product-info {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -84,6 +99,10 @@
     align-items: center;
 
     text-align: center;
+
+    img {
+      filter: getVar(filter, modiphius-logo);
+    }
   }
 
   div.acknowledegment {
