@@ -19,20 +19,27 @@
  *
  * @param {HTMLElement} element - The DOM element to which class names will be added.
  * @param {TransitionOptions} options - An object with `remove` and/or `add` properties.
+ * @param {number} [timeout=1000] - Optional timeout in milliseconds (default: 1000ms)
  * @returns {Promise<HTMLElement>} A promise that resolves with the element
- * once the CSS transition has ended.
+ *                                 once the CSS transition has ended or timed out.
  */
-export default function transitionClass(element, { remove = [], add = [] }) {
-  return new Promise((resolve) => {
-    function handleTransitionEnd() {
-      resolve(element);
-    }
+export default function transitionClass(element, { remove = [], add = [] }, timeout = 1000) {
+  const { promise, resolve } = Promise.withResolvers();
+  let eventFired = false;
 
-    element.addEventListener("transitionend", handleTransitionEnd, {
-      once: true,
-    });
+  const handlePromise = () => {
+    if (eventFired) return;
+    eventFired = true;
+    resolve(element);
+  };
 
-    element.classList.remove(...remove);
-    element.classList.add(...add);
-  });
+  element.addEventListener("transitionend", handlePromise, { once: true });
+
+  // Fallback timeout to ensure promise always resolves
+  setTimeout(handlePromise, timeout);
+
+  element.classList.remove(...remove);
+  element.classList.add(...add);
+
+  return promise;
 }
