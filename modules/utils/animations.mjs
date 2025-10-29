@@ -24,24 +24,22 @@
  *                                 once the CSS transition has ended or timed out.
  */
 export default function transitionClass(element, { remove = [], add = [] }, timeout = 1000) {
-  return new Promise((resolve) => {
-    let eventFired = false;
+  const { promise, resolve } = Promise.withResolvers();
+  let eventFired = false;
 
-    function handleTransitionEnd() {
-      eventFired = true;
-      resolve(element);
-    }
+  const handlePromise = () => {
+    if (eventFired) return;
+    eventFired = true;
+    resolve(element);
+  };
 
-    element.addEventListener("transitionend", handleTransitionEnd, {
-      once: true,
-    });
+  element.addEventListener("transitionend", handlePromise, { once: true });
 
-    // Fallback timeout to ensure promise always resolves
-    setTimeout(() => {
-      if (!eventFired) resolve(element);
-    }, timeout);
+  // Fallback timeout to ensure promise always resolves
+  setTimeout(handlePromise, timeout);
 
-    element.classList.remove(...remove);
-    element.classList.add(...add);
-  });
+  element.classList.remove(...remove);
+  element.classList.add(...add);
+
+  return promise;
 }
