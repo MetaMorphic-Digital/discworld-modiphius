@@ -74,6 +74,10 @@ const DiscworldSheetMixin = (Base) => {
       } else {
         this.element.classList.remove("edit-mode");
       }
+
+      this.element.querySelectorAll("input.delta").forEach(input => {
+        input.addEventListener("change", () => discworld.utils.parseInputDelta(input, this.document));
+      });
     }
 
     /* -------------------------------------------------- */

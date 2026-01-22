@@ -1,58 +1,52 @@
 <header class="sheet-header flexrow">
   <div class="portrait-container">
-    <img class="portrait"
-         src="{{document.img}}"
-         data-edit="img"
-         data-action="editImage"
-         title="{{document.name}}" />
+    <img class="portrait" src="{{document.img}}" data-edit="img" data-action="editImage" title="{{document.name}}"
+      alt="">
   </div>
 
   <div class="header-data-container flexcol">
     <div class="document-controls flexrow">
-      <a class="roll-name-as-trait"
-         data-action="rollNameAsTrait"
-         data-tooltip="{{localize 'DISCWORLD.sheet.rollNameAsTrait'}}">
+      <a class="roll-name-as-trait" data-action="rollNameAsTrait"
+        data-tooltip="{{localize 'DISCWORLD.sheet.rollNameAsTrait'}}">
         <i class="fas fa-dice"></i>
       </a>
 
       {{!-- Leave Help Mode --}}
-      <a class="leave-help-mode
-                {{#unless helpMode }}
-                  not-visible{{/unless }}"
-         data-action="leaveHelpMode">
+      <a class="leave-help-mode {{#unless helpMode }} not-visible {{/unless}}" data-action="leaveHelpMode">
         <i class="fas fa-x"></i>
         {{localize "DISCWORLD.sheet.leaveHelpMode"}}
       </a>
 
       {{!-- Toggle Switch --}}
-      {{> (systemFilePath "templates/mixins/toggle-switch.hbs") tooltip=(localize "DISCWORLD.sheet.toggleSheetMode") tooltipDir="UP"}}
+      {{> (systemFilePath "templates/mixins/toggle-switch.hbs") tooltip=(localize "DISCWORLD.sheet.toggleSheetMode")
+      tooltipDir="UP"}}
     </div>
 
     <h1 class="document-name flexrow">
-      {{#if isEditMode }}
-        {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
+      {{#if isEditMode}}
+      {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
       {{else}}
-        <span>{{document.name}}</span>
+      <span>{{document.name}}</span>
       {{/if}}
     </h1>
 
     <div class="document-details flexrow">
       <div class="detail-left luck-container flexrow">
         <label>{{localize "DISCWORLD.character.luck"}}:</label>
-        {{formInput fields.luckValue.field value=fields.luckValue.value}}
+        <input type="text" class="delta" name="system.luck.value" value="{{fields.luckValue.value}}" placeholder="0">
         /
-        {{#if isEditMode }}
-          {{formInput fields.luckMax.field value=fields.luckMax.value}}
+        {{#if isEditMode}}
+        {{formInput fields.luckMax.field value=fields.luckMax.value}}
         {{else}}
-          {{document.system.luck.max}}
+        {{document.system.luck.max}}
         {{/if}}
       </div>
 
       <div class="detail-right pronouns">
-        {{#if isEditMode }}
-          {{formInput fields.pronouns.field value=fields.pronouns.value placeholder=fields.pronouns.placeholder}}
+        {{#if isEditMode}}
+        {{formInput fields.pronouns.field value=fields.pronouns.value placeholder=fields.pronouns.placeholder}}
         {{else}}
-          {{document.system.pronouns}}
+        {{document.system.pronouns}}
         {{/if}}
       </div>
     </div>
