@@ -5,7 +5,6 @@
  * @returns {number|void}             The new value.
  */
 export default function parseInputDelta(input, target) {
-  console.warn(input, target, input.value);
   let value = input.value;
   if (["+", "-"].includes(value[0])) {
     const delta = parseFloat(value);
