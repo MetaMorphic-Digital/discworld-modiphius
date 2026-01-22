@@ -9,15 +9,13 @@ import * as Rolls from "./modules/rolls/index.mjs";
 import DISCWORLD from "./modules/config.mjs";
 import DiscworldMessage from "./modules/chat/chat-message.mjs";
 import DiscworldCharacter from "./modules/documents/character.mjs";
-import transitionClass from "./modules/utils/animations.mjs";
 import DiscworldJournalEntrySheet from "./modules/sheets/journal-entry-sheet.mjs";
+import * as utils from "./modules/utils/_module.mjs";
 
 // Export globals.
 globalThis.discworld = {
+  utils,
   config: DISCWORLD,
-  utils: {
-    transitionClass,
-  },
 };
 
 /* -------------------------------------------------- */
