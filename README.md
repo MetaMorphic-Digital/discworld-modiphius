@@ -93,4 +93,4 @@ This short adventure serves as both a delightful introduction to the setting of 
 
 > The players, a team of Ankh-Morpork's finest Watch members, are called to investigate a robbery at _Lady Ramkin's Sunshine Sanctuary for Sick Dragons_. The mystery will bring the party to and fro across the city; will they be able to crack the case 'ere it grows claws?
 
-![Diagram of a dragon in profile, with key anatomy labeled. Rendered in a hand-drawn style, titled "Points of the Swamp Dragon"](https://files.d20.io/images/432567648/-s6FEKz3q5XGMzppqceNhA/max.png?1741816740")
+![Diagram of a dragon in profile, with key anatomy labeled. Rendered in a hand-drawn style, titled "Points of the Swamp Dragon"](/assets/readme/points-of-the-swamp-dragon.webp)
