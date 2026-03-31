@@ -41,7 +41,6 @@ const DiscworldSheetMixin = (Base) => {
 
     /**
      * Determines if the sheet is currently in edit mode.
-     *
      * @type {boolean} True if the sheet is in edit mode, false otherwise.
      */
     get isEditMode() {
@@ -96,11 +95,9 @@ const DiscworldSheetMixin = (Base) => {
     /* -------------------------------------------------- */
 
     /**
-     * Wraps all buttons in the window header inside a div,
-     * allowing them to be positioned as a group within
-     * the decoration border.
-     *
-     * @param {HTMLElement} element The Sheet element.
+     * Wraps all buttons in the window header inside a div, allowing them
+     * to be positioned as a group within the decoration border.
+     * @param {HTMLElement} element The sheet element.
      */
     static _encapsulateHeaderButtons(element) {
       if (element.querySelector(".button-wrapper")) return;
@@ -125,8 +122,7 @@ const DiscworldSheetMixin = (Base) => {
 
     /**
      * Creates and injects a the sheet frame decoration.
-     *
-     * @param {HTMLElement} element The Sheet element.
+     * @param {HTMLElement} element The sheet element.
      */
     static _injectFrameDecoration(element) {
       const decorationContainer = createElement("div", {
@@ -146,16 +142,15 @@ const DiscworldSheetMixin = (Base) => {
       windowContent.insertBefore(decorationContainer, windowContent.firstChild);
     }
 
-    /* -------------- COMMON SHEET HANDLERS ------------- */
+    /* -------------------------------------------------- */
+    /*   Common Sheet Handlers                            */
+    /* -------------------------------------------------- */
 
     /**
      * Handle toggling the sheet between edit and play modes.
-     *
      * Not private because this is called outside the class.
-     *
-     * @param {Event} event
-     * @param {HTMLElement} target
-     * @returns
+     * @param {PointerEvent} event    The originating click event.
+     * @param {HTMLElement} target    The element that defined the [data-action].
      */
     static onToggleSheetMode(event, target) {
       if (!this.isEditable) return; // Permissions, not our own internal edit mode.

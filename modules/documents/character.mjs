@@ -2,13 +2,13 @@ import DISCWORLD from "../config.mjs";
 import DWHelpRoll from "../rolls/help-roll.mjs";
 import DWTraitRoll from "../rolls/trait-roll.mjs";
 
-export default class DiscworldCharacter extends Actor {
+export default class DiscworldCharacter extends foundry.documents.Actor {
   /**
-   * @typedef {Object} HelpMode
-   * @prop {boolean} enabled - Whether help mode is enabled.
-   * @prop {Object} promise - The promise that resolves to the selected trait.
-   * @prop {Function|null} promise.resolve - The function to resolve the promise.
-   * @prop {Function|null} promise.reject - The function to reject the promise.
+   * @typedef HelpMode
+   * @property {boolean} enabled                  Whether help mode is enabled.
+   * @property {object} promise                   The promise that resolves to the selected trait.
+   * @property {Function|null} promise.resolve    The function to resolve the promise.
+   * @property {Function|null} promise.reject     The function to reject the promise.
    */
 
   /** @type {HelpMode} */
@@ -23,46 +23,47 @@ export default class DiscworldCharacter extends Actor {
   /* -------------------------------------------------- */
 
   /** @inheritdoc */
-  static async create(data, options = {}) {
-    data.prototypeToken = foundry.utils.mergeObject(
+  async _preCreate(data, options, user) {
+    if ((await super._preCreate(data, options, user)) === false) return false;
+    const update = foundry.utils.mergeObject(
       {
         actorLink: true,
         disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
-        "bar1.attribute": "luck",
+        bar1: { attribute: "luck" },
       },
       data.prototypeToken ?? {},
+      { insertKeys: false, insertValues: false, overwrite: true },
     );
-
-    return super.create(data, options);
+    this.updateSource({ prototypeToken: update });
   }
 
   /* -------------------------------------------------- */
 
   /**
-   * In Discworld, everything is a trait.
-   * So, you can pass anything that has a `name`
-   * property to `rolLTrait`.
-   *
-   * @typedef {object} TraitLike
+   * In Discworld, everything is a trait. So, you can pass anything that has a `name` property to `rollTrait`.
+   * @typedef TraitLike
    * @prop {string} name
    */
+
+  /* -------------------------------------------------- */
 
   /**
    * Handles the logic for rolling a trait from the character sheet.
    * If help mode is enabled, the trait is passed to the help promise.
    * Otherwise, a dialog is shown asking the user to select a die to roll.
-   *
-   * @param {Item|TraitLike} trait - The trait to be rolled.
+   * @param {Item|TraitLike} trait    The trait to be rolled.
+   * @param {object} [options]
+   * @param {string} [options.parentWindow]   The id of a parent window in which to render the prompt.
    * @returns {Promise<DiscworldMessage|null>}
    */
-  async rollTrait(trait) {
+  async rollTrait(trait, options = {}) {
     // A help roll will handle its own dialog/roll.
     if (this.helpMode.enabled) {
       this.helpMode.promise.resolve(trait);
       return null;
     }
 
-    const dialogResult = await this.rollTraitDialog(trait);
+    const dialogResult = await this.rollTraitDialog(trait, options);
     if (!dialogResult) return null;
 
     return DWTraitRoll.createBaseRoll(dialogResult, { actor: this, trait });
@@ -72,11 +73,13 @@ export default class DiscworldCharacter extends Actor {
 
   /**
    * Displays a dialog to prompt the user to select a die to roll.
-   *
-   * @param {Item} trait - The trait to be rolled.
-   * @returns {Promise<"d4"|"d6"|"d10"|"d12"|null>} - A promise that resolves to the selected die, or null if the dialog is cancelled.
+   * @param {Item} trait                              The trait to be rolled.
+   * @param {object} [options]
+   * @param {string} [options.parentWindow]           The id of a parent window in which to render the prompt.
+   * @returns {Promise<"d4"|"d6"|"d10"|"d12"|null>}   A promise that resolves to the selected die,
+   *                                                  or null if the dialog is cancelled.
    */
-  async rollTraitDialog(trait) {
+  async rollTraitDialog(trait, options) {
     const { Dialog } = foundry.applications.api;
     const content = await foundry.applications.handlebars.renderTemplate(
       `systems/${DISCWORLD.id}/templates/mixins/trait-quote.hbs`,
@@ -89,11 +92,18 @@ export default class DiscworldCharacter extends Actor {
     });
 
     return Dialog.wait({
-      classes: ["discworld"],
-      position: { width: 400, height: "auto" },
-      window: { title: "DISCWORLD.dialog.rollTrait.title" },
-      content,
       buttons,
+      content,
+      classes: ["discworld"],
+      position: { width: 400 },
+      window: {
+        title: "DISCWORLD.dialog.rollTrait.title",
+      },
+      renderOptions: {
+        window: {
+          windowId: options.parentWindow,
+        },
+      },
     });
   }
 
@@ -101,7 +111,6 @@ export default class DiscworldCharacter extends Actor {
 
   /**
    * Enable help mode and render the character sheet, which awaits a trait roll.
-   *
    * @param {DiscworldMessage} message    The message that triggered help mode.
    * @returns {Promise<DiscworldMessage|null>}
    */
@@ -128,9 +137,7 @@ export default class DiscworldCharacter extends Actor {
     }
 
     // Deduct a luck point (we've already determined the character has at least one).
-    this.update({
-      "system.luck.value": this.system.luck.value - 1,
-    });
+    this.update({ "system.luck.value": this.system.luck.value - 1 });
 
     // Close the sheet if it wasn't already opened.
     if (close) this.sheet.close();
@@ -140,9 +147,9 @@ export default class DiscworldCharacter extends Actor {
 
     // Create the help roll and send to chat.
     return DWHelpRoll.createHelpRoll({
-      term: dialogResult,
-      trait,
       message,
+      trait,
+      term: dialogResult,
     });
   }
 
@@ -151,9 +158,8 @@ export default class DiscworldCharacter extends Actor {
   /**
    * Returns a promise that resolves to the trait selected while in help mode.
    * Resolves to null if help mode is cancelled.
-   *
-   * @returns {Promise<Item|null>} A promise that resolves to the selected
-   *                               trait, or null if help mode is cancelled.
+   * @returns {Promise<Item|null>}    A promise that resolves to the selected
+   *                                  trait, or null if help mode is cancelled.
    */
   waitForTraitSelection() {
     return new Promise((resolve) => {
@@ -166,7 +172,9 @@ export default class DiscworldCharacter extends Actor {
 
   /* -------------------------------------------------- */
 
-  /** Leave help mode and re-render the character sheet, if open. */
+  /**
+   * Leave help mode and re-render the character sheet, if open.
+   */
   leaveHelpMode() {
     this.resetHelpMode();
     this.sheet.render();
@@ -176,11 +184,8 @@ export default class DiscworldCharacter extends Actor {
 
   /**
    * Resets the help mode flag and rejects any pending help promises.
-   *
-   * This is called when the character sheet is closed, or when the help mode
-   * flag is explicitly toggled off.
-   *
-   * @returns {void}
+   * This is called when the character sheet is closed,
+   * or when the help mode flag is explicitly toggled off.
    */
   resetHelpMode() {
     this.helpMode.enabled = false;

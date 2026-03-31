@@ -1,22 +1,26 @@
 import DISCWORLD from "../config.mjs";
 
-/**
- * @extends Roll
- */
-export default class DWTraitRoll extends Roll {
+export default class DWTraitRoll extends foundry.dice.Roll {
   /**
    * @typedef {"d4"|"d6"|"d10"|"d12"} DiceTermOptions
    */
+
+  /* -------------------------------------------------- */
+
   /**
    * Creates a new DiscworldRoll instance.
-   *
-   * @param {DiceTermOptions} formula - The dice formula to evaluate.
-   * @param {object} data - An object the roll uses to evaluate (see Foundry docs).
-   * @param {object} options - An object with additional options.
-   * @param {DiscworldCharacter} options.actor - The Actor being rolled for.
-   * @param {Item} options.trait - The Item being rolled.
+   * @param {DiceTermOptions} formula               The dice formula to evaluate.
+   * @param {object} data                           An object the roll uses to evaluate (see Foundry docs).
+   * @param {object} [options]                      An object with additional options.
+   * @param {DiscworldCharacter} [options.actor]    The Actor being rolled for.
+   * @param {Item} [options.trait]                  The Item being rolled.
    */
   constructor(formula, data, options = {}) {
+    options = {
+      ...options,
+      actor: options.actor instanceof foundry.documents.Actor ? options.actor.uuid : null,
+      trait: options.item instanceof foundry.documents.Item ? options.trait.uuid : null,
+    };
     super(formula, data, options);
   }
 
@@ -36,21 +40,32 @@ export default class DWTraitRoll extends Roll {
 
   /* -------------------------------------------------- */
 
-  /** @type {DiscworldCharacter} The Actor that initiated the roll. */
+  /**
+   * The Actor that initiated the roll.
+   * @type {DiscworldCharacter|null}
+   */
   get actor() {
-    return this.options.actor;
+    const actor = fromUuidSync(this.options.actor);
+    return (actor instanceof foundry.documents.Actor) ? actor : null;
   }
 
   /* -------------------------------------------------- */
 
-  /** @type {Item} The Trait used for this roll. */
+  /**
+   * The trait used for this roll.
+   * @type {Item|null}
+   */
   get trait() {
-    return this.options.trait;
+    const item = fromUuidSync(this.options.trait);
+    return (item instanceof foundry.documents.Item) ? item : null;
   }
 
   /* -------------------------------------------------- */
 
-  /** @type {DiceTermOptions} The dice term used for this roll. */
+  /**
+   * The dice term used for this roll.
+   * @type {DiceTermOptions}
+   */
   get term() {
     return this.dice[0].denomination;
   }
@@ -59,20 +74,17 @@ export default class DWTraitRoll extends Roll {
 
   /**
    * Create a base Trait roll and send to chat.
-   *
-   * @param {DiceTermOptions} formula - The roll formula.
-   * @param {object} [options] - The options to pass to the `DiscworldRoll` constructor.
-   *                             See `constructor` above and the Foundry API.
-   * @returns {Promise<DiscworldMessage>} A promise that resolves to the chat message.
+   * @param {DiceTermOptions} formula       The roll formula.
+   * @param {object} [options]              The options to pass to the `DiscworldRoll` constructor.
+   *                                        See `constructor` above and the Foundry API.
+   * @returns {Promise<DiscworldMessage>}   A promise that resolves to the chat message.
    */
   static async createBaseRoll(formula, options) {
     const rollData = options.actor?.getRollData() ?? {};
     const roll = new DWTraitRoll(formula, rollData, options);
 
     return roll.toMessage({
-      speaker: getDocumentClass("ChatMessage").getSpeaker({
-        actor: options.actor,
-      }),
+      speaker: getDocumentClass("ChatMessage").getSpeaker({ actor: options.actor }),
     });
   }
 }
