@@ -56,9 +56,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Helper to check if the actor is currently in help mode.
-   *
    * @type {boolean}
-   * @readonly
    */
   get isHelpMode() {
     return this.actor.helpMode.enabled;
@@ -76,14 +74,10 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     context.fields = this._getFields();
 
     // Enrich the description field.
-    context.fields.description.enriched =
-      await foundry.applications.ux.TextEditor.implementation.enrichHTML(
-        context.fields.description.value,
-        {
-          rollData: this.document.getRollData(),
-          relativeTo: this.document,
-        },
-      );
+    context.fields.description.enriched = await CONFIG.ux.TextEditor.enrichHTML(
+      context.fields.description.value,
+      { rollData: this.document.getRollData(), relativeTo: this.document },
+    );
 
     // Construct arrays of traits, filtered by category.
     context.traitGroups = this._getTraitGroups();
@@ -96,21 +90,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /* -------------------------------------------------- */
 
-  /** @inheritdoc */
-  async _preparePartContext(partId, context, options) {
-    // By default, this returns the same mutated context.
-    context = await super._preparePartContext(partId, context, options);
-
-    context.tab = context.tabs[partId];
-
-    return context;
-  }
-
-  /* -------------------------------------------------- */
-
   /**
    * Create context for input fields.
-   * @returns {object} Organized context for fields.
+   * @returns {object}    Organized context for fields.
    */
   _getFields() {
     const { document } = this;
@@ -136,7 +118,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       },
       pronouns: {
         field: system.schema.getField("pronouns"),
-        placeholder: game.i18n.localize("DISCWORLD.character.pronouns"),
         value: this.isEditMode ? system._source.pronouns : system.pronouns,
       },
     };
@@ -149,14 +130,11 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
    * @returns {Record<keyof DISCWORLD.traitTypes, Item[]>}
    */
   _getTraitGroups() {
-    const traitGroups = {};
-    for (const traitType of Object.keys(DISCWORLD.traitTypes)) {
-      traitGroups[traitType] = this.actor.items.filter(
-        (item) => item.system.type === traitType,
-      );
-    }
-
-    return traitGroups;
+    const items = Object.groupBy(this.actor.items, item => item.system.type);
+    return Object.keys(DISCWORLD.traitTypes).reduce((acc, traitType) => {
+      acc[traitType] = items[traitType] ?? [];
+      return acc;
+    }, {});
   }
 
   /* -------------------------------------------------- */
@@ -220,34 +198,39 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
    * @returns {object[]}    Context options.
    */
   #prepareTraitContextOptions() {
-    const getItem = (li) => this.document.items.get(li.dataset.itemId);
+    const getItem = (target) => this.document.items.get(target.dataset.itemId);
     return [
       {
-        name: "DISCWORLD.sheet.context.actor.trait.use",
-        icon: "<i class='fa-solid fa-fw fa-hand-fist'></i>",
-        condition: () => this.document.isOwner,
-        callback: (li) => this.document.rollTrait(getItem(li)),
+        label: "DISCWORLD.sheet.context.actor.trait.use",
+        icon: "fa-solid fa-hand-fist",
+        visible: () => this.document.isOwner,
+        onClick: (event, target) => this.document.rollTrait(
+          getItem(target),
+          { parentWindow: this.window.windowId },
+        ),
       },
       {
-        name: "DISCWORLD.sheet.context.actor.trait.edit",
-        icon: "<i class='fa-solid fa-fw fa-edit'></i>",
-        condition: () => this.document.isOwner,
-        callback: (li) => getItem(li).sheet.render({ force: true }),
+        label: "DISCWORLD.sheet.context.actor.trait.edit",
+        icon: "fa-solid fa-edit",
+        visible: () => this.document.isOwner,
+        onClick: (event, target) => getItem(target).sheet.render({ force: true }),
       },
       {
-        name: "DISCWORLD.sheet.context.actor.trait.delete",
-        icon: "<i class='fa-solid fa-fw fa-trash'></i>",
-        condition: () => this.document.isOwner,
-        callback: (li) => getItem(li).deleteDialog(),
+        label: "DISCWORLD.sheet.context.actor.trait.delete",
+        icon: "fa-solid fa-trash",
+        visible: () => this.document.isOwner,
+        onClick: (event, target) => getItem(target).deleteDialog({
+          renderOptions: { window: { windowId: this.window.windowId } },
+        }),
       },
       {
-        name: "DISCWORLD.sheet.context.actor.trait.duplicate",
-        icon: "<i class='fa-solid fa-fw fa-copy'></i>",
-        condition: () => this.document.isOwner,
-        callback: (li) => {
-          const item = getItem(li);
+        label: "DISCWORLD.sheet.context.actor.trait.duplicate",
+        icon: "fa-solid fa-copy",
+        visible: () => this.document.isOwner,
+        onClick: (event, target) => {
+          const item = getItem(target);
           item.clone(
-            { name: game.i18n.format("DOCUMENT.CopyOf", { name: item.name }) },
+            { name: _loc("DOCUMENT.CopyOf", { name: item.name }) },
             { save: true, renderSheet: true },
           );
         },
@@ -269,8 +252,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   /* -------------------------------------------------- */
 
   /**
-   * Leave help mode and re-render the character sheet,
-   * if open.
+   * Leave help mode and re-render the character sheet, if open.
+   * @this CharacterSheet
    */
   static #leaveHelpMode() {
     this.actor.leaveHelpMode();
@@ -280,10 +263,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Handle clicks on trait actions (add, edit, delete, roll).
-   *
-   * @param {Event} event - The originating click event.
-   * @param {HTMLElement} target - The target element of the event.
-   * @returns {void}
+   * @this CharacterSheet
+   * @param {PointerEvent} event    The originating click event.
+   * @param {HTMLElement} target    The element that defined the [data-action].
    */
   static #traitAction(event, target) {
     const { actionType, itemId } = target.dataset;
@@ -311,21 +293,17 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Add a new trait of the given type to the character.
-   *
-   * @param {string} traitType - The type of trait to add. Must be one of the
-   *                             {@link DISCWORLD.traitTypes} constants.
-   * @returns {Promise<void>}
+   * @this CharacterSheet
+   * @param {string} traitType    The type of trait to add. Must be one of the {@link DISCWORLD.traitTypes} constants.
    */
   static async #addTrait(traitType) {
     const newTrait = await getDocumentClass("Item").create(
       {
+        name: _loc("DOCUMENT.New", { type: _loc(`DISCWORLD.trait.type.${traitType}`) }),
         type: "trait",
-        name: game.i18n.format("DOCUMENT.New", {
-          type: game.i18n.localize(`DISCWORLD.trait.type.${traitType}`),
-        }),
         system: { type: traitType },
       },
-      { parent: this.document, renderSheet: true },
+      { parent: this.document, renderSheet: false },
     );
 
     newTrait.sheet.render({ force: true, autofocus: true });
@@ -335,9 +313,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Opens the Trait sheet for editing with autofocus enabled on the name field.
-   *
-   * @param {Item} trait - The trait item to be edited.
-   * @returns {Promise<void>}
+   * @this CharacterSheet
+   * @param {Item} trait    The trait item to be edited.
    */
   static async #editTrait(trait) {
     trait.sheet.render({ force: true, autofocus: true });
@@ -347,14 +324,11 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Prompts the user for confirmation before deleting a Trait.
-   *
-   * @param {Item} trait - The trait item to be deleted.
-   * @returns {Promise<void>}
+   * @this CharacterSheet
+   * @param {Item} trait    The trait item to be deleted.
    */
   static async #deleteTrait(trait) {
-    const content = game.i18n.format("DISCWORLD.dialog.deleteTrait.content", {
-      traitName: trait.name,
-    });
+    const content = _loc("DISCWORLD.dialog.deleteTrait.content", { traitName: trait.name });
     trait.deleteDialog({ content: `<p>${content}</p>` });
   }
 
@@ -362,19 +336,16 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Prompts the user to select a die to roll and then rolls the trait.
-   *
-   * @param {Item} trait - The trait to be rolled.
-   * @returns {Promise<void>}
+   * @this CharacterSheet
+   * @param {Item} trait    The trait to be rolled.
    */
   static async #rollTrait(trait) {
-    const { actor } = this;
-    actor.rollTrait(trait);
+    this.actor.rollTrait(trait, { parentWindow: this.window.windowId });
   }
 
   /**
    * Rolls the character's name/pronouns as a trait.
-   *
-   * @returns {Promise<void>}
+   * @this CharacterSheet
    */
   static #rollNameAsTrait() {
     const { actor } = this;
@@ -388,20 +359,19 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     actor.rollTrait({ actor, name: traitText });
   }
 
+  /* -------------------------------------------------- */
+
   /**
    * Rolls a part of the character's description as a trait (TraitLike).
-   *
-   * @param {string} html - The html of the TraitLike to be rolled.
-   *                        @see DiscworldCharacter.rollTrait
-   * @returns {Promise<void>}
+   * @this CharacterSheet
+   * @param {string} html   The html of the TraitLike to be rolled.
+   * @see DiscworldCharacter.rollTrait
    */
   static async #rollDescriptionAsTrait(html) {
     const { actor } = this;
-    const enrichedText =
-      await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {
-        rollData: actor.getRollData(),
-        relativeTo: actor,
-      });
+    const enrichedText = await CONFIG.ux.TextEditor.enrichHTML(html, {
+      rollData: actor.getRollData(), relativeTo: actor,
+    });
     actor.rollTrait({ actor, name: enrichedText });
   }
 }

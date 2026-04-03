@@ -7,10 +7,10 @@ import transitionClass from "../utils/animations.mjs";
  * Discworld chat message class.
  * @extends ChatMessage
  */
-export default class DiscworldMessage extends ChatMessage {
+export default class DiscworldMessage extends foundry.documents.ChatMessage {
   /**
-   *  The message element from the chat log (null if message isn't rendered).
-   *  @type {HTMLLIElement | null}
+   * The message element from the chat log (null if message isn't rendered).
+   * @type {HTMLLIElement | null}
    */
   get element() {
     const chatLog = document.getElementById("chat");
@@ -22,7 +22,7 @@ export default class DiscworldMessage extends ChatMessage {
   /**
    * The main roll of the chat message (null if message is not a Roll type).
    * @type {DWTraitRoll}
-   * @throws {Error}
+   * @throws    If the message does not contain a roll.
    */
   get mainRoll() {
     const roll = this.rolls[0];
@@ -57,9 +57,8 @@ export default class DiscworldMessage extends ChatMessage {
   /* -------------------------------------------------- */
 
   /**
-   *  The second (reroll) Narrativium roll of the chat message
-   *  (null if Narrativium has not been re-rolled).
-   *  @type {DWNarrativiumRoll | null}
+   * The second (reroll) Narrativium roll of the chat message (null if Narrativium has not been re-rolled).
+   * @type {DWNarrativiumRoll | null}
    */
   get gmReroll() {
     return (
@@ -71,20 +70,13 @@ export default class DiscworldMessage extends ChatMessage {
 
   /* -------------------------------------------------- */
 
-  /**
-   * Intercept creation of chat message to inject the roll template,
-   * if applicable.
-   *
-   * @inheritdoc
-   * @param {object} data - The chat message data.
-   * @param {Partial<Omit<DatabaseCreateOperation, "data">>} [operation={}]  Parameters of the creation operation
-   * @returns {Promise<DiscworldMessage>}
-   */
+  /** @inheritdoc */
   static async create(data, operation = {}) {
     const message = new DiscworldMessage(data);
     if (!message.isRoll || !(message.mainRoll instanceof DWTraitRoll))
       return super.create(message, operation);
 
+    // Intercept creation of chat message to inject the roll template, if applicable.
     const chatData = await message._prepareContext();
     const content = await foundry.applications.handlebars.renderTemplate(
       message.mainRoll.template,
@@ -98,11 +90,14 @@ export default class DiscworldMessage extends ChatMessage {
   /**
    * Add a roll to the chat message. Animate the 3d dice (if present),
    * animate the chat message, finally, update the database.
-   *
-   * @param {DWHelpRoll | DWNarrativiumRoll} roll - The roll to add.
+   * @param {DWHelpRoll | DWNarrativiumRoll} roll   The roll to add.
    * @returns {Promise<DiscworldMessage>}
    */
   async addRoll(roll) {
+    if (!roll._evaluated) {
+      throw new Error("Cannot add an unevaluated roll");
+    }
+
     // Creating an update to `ChatMessage#rolls` (as we do in this function) triggers a DiceSoNice animation.
     // However, the dice animation and the chat animation must happen before the database update (which occurs last).
     // So, we manually trigger it first, using DiceSoNice's API and *then* hide the dice from DSN, so it doesn't get
@@ -118,11 +113,9 @@ export default class DiscworldMessage extends ChatMessage {
         chatDataOverrides.helpRoll = roll;
         break;
 
-      case roll instanceof DWNarrativiumRoll: {
-        const rollKey = roll.options.reroll ? "gmReroll" : "gmRoll";
-        chatDataOverrides[rollKey] = roll;
+      case roll instanceof DWNarrativiumRoll:
+        chatDataOverrides[roll.options.reroll ? "gmReroll" : "gmRoll"] = roll;
         break;
-      }
 
       default:
         break;
@@ -173,14 +166,15 @@ export default class DiscworldMessage extends ChatMessage {
    * @typedef {RollContext & {css: CssData}} MessageContext
    */
 
+  /* -------------------------------------------------- */
+
   /**
    * Prepare the context for rendering a chat message by merging roll data
    * with any provided overrides. Additionally, prepare CSS data for styling
    * the message based on the roll results.
-   *
-   * @param {RollContext} [dataOverrides={}] - Roll data for a Roll which has not yet been added
-   *                                      to `ChatMessage#rolls`,but will be on next render.
-   * @returns {Promise<MessageContext>} - The prepared context including Roll and CSS data.
+   * @param {RollContext} [dataOverrides={}]    Roll data for a Roll which has not yet been added
+   *                                            to `ChatMessage#rolls`,but will be on next render.
+   * @returns {Promise<MessageContext>}         The prepared context including Roll and CSS data.
    */
   async _prepareContext(dataOverrides = {}) {
     const { mainRoll, helpRoll, gmRoll, gmReroll } = this;
@@ -190,8 +184,8 @@ export default class DiscworldMessage extends ChatMessage {
       gmRoll,
       gmReroll,
     };
-    const context = foundry.utils.mergeObject(rollData, dataOverrides);
 
+    const context = Object.assign(rollData, dataOverrides);
     context.css = this._prepareCssData(context);
 
     return context;
@@ -201,17 +195,16 @@ export default class DiscworldMessage extends ChatMessage {
 
   /**
    * Prepare CSS data for styling a chat message based on the roll results.
-   *
-   * @param {RollContext} [context = {}] - The context to evaluate.
-   * @returns {CssData} - The prepared CSS data.
+   * @param {RollContext} [context = {}]    The context to evaluate.
+   * @returns {CssData}                     The prepared CSS data.
    */
   _prepareCssData(context = {}) {
     /**
      * Get the class name for a given section of results.
      *
-     * @param {UserRoles} userRole - The user role to get the class for.
-     * @returns {OutcomeClassOptions} - The class name for the winner,
-     *                                    or null if the role hasn't been evaluated.
+     * @param {UserRoles} userRole      The user role to get the class for.
+     * @returns {OutcomeClassOptions}   The class name for the winner,
+     *                                  or null if the role hasn't been evaluated.
      */
     const outcomeClass = (userRole) => {
       const { status, winner } = this.outcome(context);
@@ -246,15 +239,9 @@ export default class DiscworldMessage extends ChatMessage {
   /* -------------------------------------------------- */
 
   /**
-   * Evaluate the outcome of a test based on whether the
-   * player or GM/Narrativium won.
-   *
-   * @param {RollContext} [context] - The context to evaluate.
-   * @returns {{
-   *             status: "tie" | "win" | null,
-   *             winner: UserRoles | null
-   *          }}
-   *          - An object with `status` and `winner` properties.
+   * Evaluate the outcome of a test based on whether the player or GM/Narrativium won.
+   * @param {RollContext} [context]   The context to evaluate.
+   * @returns {{ status: "tie" | "win" | null, winner: UserRoles | null }}
    */
   outcome({
     mainRoll = this.mainRoll,
@@ -281,13 +268,14 @@ export default class DiscworldMessage extends ChatMessage {
     };
   }
 
-  /* ---------------- Animation Helpers --------------- */
+  /* -------------------------------------------------- */
+  /*   Animation Helpers                                */
+  /* -------------------------------------------------- */
 
   /**
    * Delegates chat animation of a roll result, based on the type of roll.
-   *
-   * @param {DWHelpRoll | DWNarrativiumRoll} roll - The roll to animate.
-   * @returns {Promise<void>} gagadd
+   * @param {DWHelpRoll | DWNarrativiumRoll} roll   The roll to animate.
+   * @returns {Promise<void>}
    */
   async animateRoll(roll) {
     if (roll instanceof DWHelpRoll) return this.animateHelp(roll);
@@ -298,8 +286,7 @@ export default class DiscworldMessage extends ChatMessage {
 
   /**
    * Handles animation of a Help roll.
-   *
-   * @param {DWHelpRoll} roll - The roll to animate.
+   * @param {DWHelpRoll} roll   The roll to animate.
    * @returns {Promise<void>}
    */
   async animateHelp(roll) {
@@ -311,8 +298,7 @@ export default class DiscworldMessage extends ChatMessage {
 
   /**
    * Handles animation of a Narrativium roll, whether it's regular or reroll.
-   *
-   * @param {DWNarrativiumRoll} roll - The roll to animate.
+   * @param {DWNarrativiumRoll} roll    The roll to animate.
    * @returns {Promise<void>}
    */
   async animateNarrativium(roll) {
@@ -329,9 +315,9 @@ export default class DiscworldMessage extends ChatMessage {
 
   /**
    * Slide the dice icon of a given class name to over from the center of its container.
-   *
-   * @param {"playerResult" | "gmResult"} resultClass - The class name of the roll whose icon should be moved.
-   * @returns {Promise<HTMLLIElement>} Promise that resolves with the element once the transition has ended.
+   * @param {"playerResult" | "gmResult"} resultClass   The class name of the roll whose icon should be moved.
+   * @returns {Promise<HTMLLIElement>}                  A promise that resolves to the transitioning element
+   *                                                    once the transition has ended.
    */
   async slideDiceIcon(resultClass) {
     const dieListItem = this.element.querySelector(`li.${resultClass}`);
@@ -345,11 +331,11 @@ export default class DiscworldMessage extends ChatMessage {
 
   /**
    * Fade in the dice icon of a given class name.
-   *
-   * @param {"helpResult" | "gmRerollResult"} resultClass - The class name of the roll whose icon should be faded.
-   * @param {number} rollResult - The new result to display.
-   * @param {"d4" | "d6" | "d10" | "d12" | null} [rollTerm=null] - An additional class name to apply to the dice icon.
-   * @returns {Promise<HTMLLIElement>} Promise that resolves with the element once the transition has ended.
+   * @param {"helpResult" | "gmRerollResult"} resultClass           The class name of the roll whose icon should be faded.
+   * @param {number} rollResult                                     The new result to display.
+   * @param {"d4" | "d6" | "d10" | "d12" | null} [rollTerm=null]    An additional class name to apply to the dice icon.
+   * @returns {Promise<HTMLLIElement>}                              A promise that resolves to the transitioning element
+   *                                                                once the transition has ended.
    */
   async fadeDiceIcon(resultClass, rollResult, rollTerm = null) {
     const dieListItem = this.element.querySelector(`li.${resultClass}`);
@@ -362,12 +348,11 @@ export default class DiscworldMessage extends ChatMessage {
   /* -------------------------------------------------- */
 
   /**
-   * Fades a text element out, updates its content with a new roll result,
-   * and then fades it back in.
-   *
-   * @param {"gmResult"} resultClass - The class name of the result element whose text should be updated.
-   * @param {number} rollResult - The new result to display within the text element.
-   * @returns {Promise<HTMLSpanElement>} Promise that resolves with the element once the transition has ended.
+   * Fades a text element out, updates its content with a new roll result, and then fades it back in.
+   * @param {"gmResult"} resultClass        The class name of the result element whose text should be updated.
+   * @param {number} rollResult             The new result to display within the text element.
+   * @returns {Promise<HTMLSpanElement>}    A promise that resolves to the transitioning element
+   *                                        once the transition has ended.
    */
   async fadeTextInOut(resultClass, rollResult) {
     const resultSpan = this.element.querySelector(`li.${resultClass} span`);

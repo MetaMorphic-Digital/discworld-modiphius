@@ -2,11 +2,13 @@
   "DISCWORLD": {
     "character": {
       "luck": "Luck",
-      "pronouns": "Pronouns",
 
       "FIELDS": {
         "description": {
           "label": "Description"
+        },
+        "pronouns": {
+          "placeholder": "Pronouns"
         }
       }
     },
@@ -90,6 +92,11 @@
           "label": "Type"
         }
       }
+    },
+
+    "PACKS": {
+      "PREGENS": "Pre-Generated Characters",
+      "QUICKSTART": "Quickstart"
     }
   },
 

@@ -24,7 +24,7 @@
 
     <h1 class="document-name flexrow">
       {{#if isEditMode}}
-      {{formInput fields.name.field value=fields.name.value placeholder=fields.name.placeholder}}
+      {{formInput fields.name.field value=fields.name.value placeholder=(localize "DOCUMENT.FIELDS.name.label")}}
       {{else}}
       <span>{{document.name}}</span>
       {{/if}}
@@ -44,7 +44,7 @@
 
       <div class="detail-right pronouns">
         {{#if isEditMode}}
-        {{formInput fields.pronouns.field value=fields.pronouns.value placeholder=fields.pronouns.placeholder}}
+        {{formInput fields.pronouns.field value=fields.pronouns.value}}
         {{else}}
         {{document.system.pronouns}}
         {{/if}}

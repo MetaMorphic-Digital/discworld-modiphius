@@ -3,9 +3,6 @@ import DiscworldSheetMixin from "./base-document-sheet.mjs";
 
 const { ItemSheetV2 } = foundry.applications.sheets;
 
-/**
- * @extends ItemSheetV2
- */
 export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
@@ -63,39 +60,29 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
     };
 
     context.fields.severity.show = context.fields.type.value === "consequences";
-    context.fields.notes.enriched =
-      await foundry.applications.ux.TextEditor.implementation.enrichHTML(
-        context.fields.notes.value,
-        {
-          rollData: this.document.getRollData(),
-          relativeTo: this.document,
-        },
-      );
+    context.fields.notes.enriched = await CONFIG.ux.TextEditor.enrichHTML(
+      context.fields.notes.value,
+      { rollData: this.document.getRollData(), relativeTo: this.document },
+    );
 
     return context;
   }
 
   /* -------------------------------------------------- */
 
-  /**
-   * A user is most likely going to be editing the name field
-   * when opening the trait sheet from a character sheet.
-   * So, we override this method to add a new option to autofocus
-   * that field.
-   *
-   * @inheritdoc
-   * @param {Object} options
-   * @param {boolean} options.autofocus - Whether to autofocus the name field
-   * @returns {Promise<ApplicationV2>} - See Foundry API docs.
-   */
+  /** @inheritdoc */
   async render(options) {
     const renderedApp = await super.render(options);
     const { autofocus } = options;
 
+    // A user is most likely going to be editing the name field when opening the trait
+    // sheet from a character sheet. So, we override this method to add a new option
+    // to autofocus that field.
+
     if (autofocus) {
       const nameField = this.element.querySelector("input[name='name']");
-      nameField.focus();
-      nameField.select();
+      nameField?.focus();
+      nameField?.select();
     }
 
     return renderedApp;
