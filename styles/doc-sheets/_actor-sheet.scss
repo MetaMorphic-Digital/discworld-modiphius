@@ -117,6 +117,10 @@
           flex: 3;
           padding: 0 0.25rem;
 
+          a {
+            cursor: pointer;
+          }
+
           i.fa-ankh {
             padding-left: 0.25rem;
             padding-right: 0.1rem;
