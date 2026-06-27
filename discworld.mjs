@@ -16,6 +16,10 @@ import * as utils from "./modules/utils/_module.mjs";
 globalThis.discworld = {
   utils,
   config: DISCWORLD,
+  sheets: {
+    CharacterSheet,
+    TraitSheet,
+  },
 };
 
 /* -------------------------------------------------- */
