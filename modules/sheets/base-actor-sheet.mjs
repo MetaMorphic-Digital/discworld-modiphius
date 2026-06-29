@@ -115,12 +115,13 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
   /* -------------------------------------------------- */
 
   /**
-   *
+   * Get trait groups by type.
+   * @param {Object} traitTypes
    * @returns {Record<keyof DISCWORLD.traitTypes, Item[]>}
    */
-  _getTraitGroups() {
+  _getTraitGroups(traitTypes = DISCWORLD.traitTypes) {
     const items = Object.groupBy(this.actor.items, item => item.system.type);
-    return Object.keys(DISCWORLD.traitTypes).reduce((acc, traitType) => {
+    return Object.keys(traitTypes).reduce((acc, traitType) => {
       acc[traitType] = items[traitType] ?? [];
       return acc;
     }, {});
