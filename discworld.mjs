@@ -11,12 +11,14 @@ import DiscworldMessage from "./modules/chat/chat-message.mjs";
 import DiscworldCharacter from "./modules/documents/character.mjs";
 import DiscworldJournalEntrySheet from "./modules/sheets/journal-entry-sheet.mjs";
 import * as utils from "./modules/utils/_module.mjs";
+import DiscworldActorSheet from "./modules/sheets/base-actor-sheet.mjs";
 
 // Export globals.
 globalThis.discworld = {
   utils,
   config: DISCWORLD,
   sheets: {
+    DiscworldActorSheet,
     CharacterSheet,
     TraitSheet,
   },
