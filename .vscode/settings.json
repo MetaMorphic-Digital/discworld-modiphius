@@ -9,5 +9,6 @@
   "eslint.validate": ["javascript", "handlebars", "html"],
 
   "i18n-ally.localesPaths": ["foundry/lang", "lang"],
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "cSpell.words": ["DISCWORLD"]
 }

@@ -67,27 +67,5 @@ Hooks.once("init", () => {
 /* -------------------------------------------------- */
 
 Hooks.once("i18nInit", () => {
-  // Localize all strings in the system configuration object.
-  const localize = (o, k, v) => {
-    const type = foundry.utils.getType(v);
-    if ((type === "string") && v.startsWith("DISCWORLD")) {
-
-      o[k] = game.i18n.localize(v);
-    } else if (type === "Object") {
-      for (const [x, y] of Object.entries(v)) {
-        localize(v, x, y);
-      }
-    } else if (type === "Array") {
-      for (const obj of v)
-        if (foundry.utils.getType(obj) === "Object") {
-          for (const [u, w] of Object.entries(obj)) {
-            localize(obj, u, w);
-          }
-        }
-    }
-  };
-
-  for (const [k, v] of Object.entries(DISCWORLD)) {
-    localize(DISCWORLD, k, v);
-  }
+  utils.preLocalize("DISCWORLD", DISCWORLD);
 });
