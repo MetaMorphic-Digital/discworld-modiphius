@@ -7,17 +7,17 @@
     "bar1": {
       "attribute": "luck"
     },
-    "name": "Character",
+    "name": "Detective Bartholemew Hamrahan",
     "displayName": 0,
     "width": 1,
     "height": 1,
     "texture": {
-      "src": "systems/discworld-modiphius/assets/characters/DW_QS_Detective%20Bartholomew%20Hamrahan%20CMYK%20LW.webp",
+      "src": "systems/discworld-modiphius/assets/characters/bartholemew.webp",
       "anchorX": 0.5,
       "anchorY": 0.5,
       "offsetX": 0,
       "offsetY": 0,
-      "fit": "contain",
+      "fit": "cover",
       "scaleX": 1,
       "scaleY": 1,
       "rotation": 0,

@@ -6,6 +6,11 @@
 @use "variables/color" as *;
 @use "variables/fonts" as *;
 
+.chat-message .message-content:has(.discworld) {
+  // This is so the box-shadows on die result boxes do not get cut off.
+  overflow: visible;
+}
+
 .chat-message .discworld {
   header {
     margin: 0.25rem 0;

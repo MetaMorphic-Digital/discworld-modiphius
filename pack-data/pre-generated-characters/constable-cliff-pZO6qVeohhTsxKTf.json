@@ -16,17 +16,17 @@
     "bar1": {
       "attribute": null
     },
-    "name": "Testo",
+    "name": "Constable Cliff",
     "displayName": 0,
     "width": 1,
     "height": 1,
     "texture": {
-      "src": "worlds/discworld-test/art/Cosntable_Cliff.webp",
+      "src": "systems/discworld-modiphius/assets/characters/cliff.webp",
       "anchorX": 0.5,
       "anchorY": 0.5,
       "offsetX": 0,
       "offsetY": 0,
-      "fit": "contain",
+      "fit": "cover",
       "scaleX": 1,
       "scaleY": 1,
       "rotation": 0,

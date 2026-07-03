@@ -10,7 +10,7 @@
    - Build Compendia Packs: `npm run build:packs`
      - **Note:** this is only necessary if there have been recent changes to the source `JSON` files, or if you are working on this repo for the first time.
    - Watch for `SCSS` changes: `npm run dev`
-6. Run Foundry V13. You should see Discworld in your systems. Create a world and you're off to the races.
+6. Run Foundry V14. You should see Discworld in your systems. Create a world and you're off to the races.
 
 ## Tools
 

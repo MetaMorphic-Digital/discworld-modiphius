@@ -133,7 +133,7 @@ export default class DiscworldCharacter extends foundry.documents.Actor {
       if (!trait) return null;
 
       // Present user with the dice selection dialog.
-      dialogResult = await this.rollTraitDialog(trait);
+      dialogResult = await this.rollTraitDialog(trait, { parentWindow: this.sheet.window.windowId });
     }
 
     // Deduct a luck point (we've already determined the character has at least one).
