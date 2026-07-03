@@ -118,7 +118,7 @@
           padding: 0 0.25rem;
 
           a {
-            cursor: pointer;
+            cursor: var(--cursor-pointer);
           }
 
           i.fa-ankh {
