@@ -1,5 +1,5 @@
-import DiscworldSheetMixin from "./base-document-sheet.mjs";
-import DISCWORLD from "../config.mjs";
+import DiscworldSheetMixin from "../base-document-sheet.mjs";
+import DISCWORLD from "../../../config.mjs";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
 

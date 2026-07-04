@@ -1,4 +1,4 @@
-import DISCWORLD from "../config.mjs";
+import DISCWORLD from "../../config.mjs";
 import DiscworldSheetMixin from "./base-document-sheet.mjs";
 
 const { ItemSheetV2 } = foundry.applications.sheets;
