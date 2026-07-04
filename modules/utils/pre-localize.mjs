@@ -1,7 +1,7 @@
 /**
  * Recursively localize all strings in an object.
- * @param {string} localeScope The scope of the localization, e.g. "DISCWORLD".
- * @param {object} object - The object whose properties need to localize.
+ * @param {string} localeScope    The scope of the localization, e.g. "DISCWORLD".
+ * @param {object} object         The object whose properties need to localize.
  */
 export default function preLocalize(localeScope, object) {
   const localize = (o, k, v) => {
