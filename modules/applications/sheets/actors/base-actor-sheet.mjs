@@ -1,12 +1,12 @@
-import DiscworldSheetMixin from "./base-document-sheet.mjs";
-import DISCWORLD from "../config.mjs";
+import DiscworldSheetMixin from "../base-document-sheet.mjs";
+import DISCWORLD from "../../../config.mjs";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
 
 /**
  * @extends ActorSheetV2
  */
-export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
+export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV2) {
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
     position: {
@@ -15,9 +15,8 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     },
     classes: ["actor-sheet"],
     actions: {
-      traitAction: CharacterSheet.#traitAction,
-      leaveHelpMode: CharacterSheet.#leaveHelpMode,
-      rollNameAsTrait: CharacterSheet.#rollNameAsTrait,
+      traitAction: DiscworldActorSheet.#traitAction,
+      rollNameAsTrait: DiscworldActorSheet.#rollNameAsTrait,
     },
   };
 
@@ -68,8 +67,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
 
-    context.helpMode = this.isHelpMode;
-
     // Prepare input fields.
     context.fields = this._getFields();
 
@@ -108,14 +105,6 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
           ? system._source.description
           : system.description,
       },
-      luckMax: {
-        field: system.schema.getField("luck.max"),
-        value: this.isEditMode ? system._source.luck.max : system.luck.max,
-      },
-      luckValue: {
-        field: system.schema.getField("luck.value"),
-        value: this.isEditMode ? system._source.luck.value : system.luck.value,
-      },
       pronouns: {
         field: system.schema.getField("pronouns"),
         value: this.isEditMode ? system._source.pronouns : system.pronouns,
@@ -126,12 +115,13 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
   /* -------------------------------------------------- */
 
   /**
-   *
+   * Get trait groups by type.
+   * @param {Object} traitTypes
    * @returns {Record<keyof DISCWORLD.traitTypes, Item[]>}
    */
-  _getTraitGroups() {
+  _getTraitGroups(traitTypes = DISCWORLD.traitTypes) {
     const items = Object.groupBy(this.actor.items, item => item.system.type);
-    return Object.keys(DISCWORLD.traitTypes).reduce((acc, traitType) => {
+    return Object.keys(traitTypes).reduce((acc, traitType) => {
       acc[traitType] = items[traitType] ?? [];
       return acc;
     }, {});
@@ -160,7 +150,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
       const { traitType } = event.target.closest(".trait-category").dataset;
       if (!traitType) return;
 
-      CharacterSheet.#addTrait.call(this, traitType);
+      DiscworldActorSheet.#addTrait.call(this, traitType);
     });
 
     // Make each description direct child element rollable.
@@ -170,25 +160,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     descriptionParts.forEach((part) =>
       part.addEventListener("click", (event) => {
         const html = event.currentTarget.outerHTML;
-        CharacterSheet.#rollDescriptionAsTrait.call(this, html);
+        DiscworldActorSheet.#rollDescriptionAsTrait.call(this, html);
       }),
     );
-
-    // Add/remove class depending on Help Mode.
-    if (this.isHelpMode) {
-      this.element.classList.add("help-mode");
-    } else {
-      this.element.classList.remove("help-mode");
-    }
-
-    // Select luck input fields on focus.
-    this.element
-      .querySelectorAll(".luck-container input")
-      .forEach((input) =>
-        input.addEventListener("focus", (event) =>
-          event.currentTarget.select(),
-        ),
-      );
   }
 
   /* -------------------------------------------------- */
@@ -240,30 +214,9 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /* -------------------------------------------------- */
 
-  /** @inheritdoc */
-  async close() {
-    const result = await super.close();
-
-    if (this.isHelpMode) this.actor.leaveHelpMode();
-
-    return result;
-  }
-
-  /* -------------------------------------------------- */
-
-  /**
-   * Leave help mode and re-render the character sheet, if open.
-   * @this CharacterSheet
-   */
-  static #leaveHelpMode() {
-    this.actor.leaveHelpMode();
-  }
-
-  /* -------------------------------------------------- */
-
   /**
    * Handle clicks on trait actions (add, edit, delete, roll).
-   * @this CharacterSheet
+   * @this DiscworldActorSheet
    * @param {PointerEvent} event    The originating click event.
    * @param {HTMLElement} target    The element that defined the [data-action].
    */
@@ -274,17 +227,17 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
     switch (actionType) {
       case "add": {
         const { traitType } = target.closest(".trait-category").dataset;
-        CharacterSheet.#addTrait.call(this, traitType);
+        DiscworldActorSheet.#addTrait.call(this, traitType);
         break;
       }
       case "edit":
-        CharacterSheet.#editTrait.call(this, trait);
+        DiscworldActorSheet.#editTrait.call(this, trait);
         break;
       case "delete":
-        CharacterSheet.#deleteTrait.call(this, trait);
+        DiscworldActorSheet.#deleteTrait.call(this, trait);
         break;
       default:
-        CharacterSheet.#rollTrait.call(this, trait);
+        DiscworldActorSheet.#rollTrait.call(this, trait);
         break;
     }
   }
@@ -293,7 +246,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Add a new trait of the given type to the character.
-   * @this CharacterSheet
+   * @this DiscworldActorSheet
    * @param {string} traitType    The type of trait to add. Must be one of the {@link DISCWORLD.traitTypes} constants.
    */
   static async #addTrait(traitType) {
@@ -313,7 +266,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Opens the Trait sheet for editing with autofocus enabled on the name field.
-   * @this CharacterSheet
+   * @this DiscworldActorSheet
    * @param {Item} trait    The trait item to be edited.
    */
   static async #editTrait(trait) {
@@ -324,7 +277,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Prompts the user for confirmation before deleting a Trait.
-   * @this CharacterSheet
+   * @this DiscworldActorSheet
    * @param {Item} trait    The trait item to be deleted.
    */
   static async #deleteTrait(trait) {
@@ -336,7 +289,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Prompts the user to select a die to roll and then rolls the trait.
-   * @this CharacterSheet
+   * @this DiscworldActorSheet
    * @param {Item} trait    The trait to be rolled.
    */
   static async #rollTrait(trait) {
@@ -345,7 +298,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Rolls the character's name/pronouns as a trait.
-   * @this CharacterSheet
+   * @this DiscworldActorSheet
    */
   static #rollNameAsTrait() {
     const { actor } = this;
@@ -363,7 +316,7 @@ export default class CharacterSheet extends DiscworldSheetMixin(ActorSheetV2) {
 
   /**
    * Rolls a part of the character's description as a trait (TraitLike).
-   * @this CharacterSheet
+   * @this DiscworldActorSheet
    * @param {string} html   The html of the TraitLike to be rolled.
    * @see DiscworldCharacter.rollTrait
    */

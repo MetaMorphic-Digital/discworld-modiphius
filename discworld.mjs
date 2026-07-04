@@ -1,21 +1,34 @@
-import CharacterSheet from "./modules/sheets/character-sheet.mjs";
-import CharacterDataModel from "./modules/datamodels/character-schema.mjs";
-import DiscworldChatLog from "./modules/chat/chat.mjs";
-import TraitDataModel from "./modules/datamodels/trait-schema.mjs";
-import TraitSheet from "./modules/sheets/trait-sheet.mjs";
+import DISCWORLD from "./modules/config.mjs";
+
+import * as utils from "./modules/utils/_module.mjs";
 import preloadTemplates, { registerHelpers } from "./modules/utils/handlebars.mjs";
 import registerKeybindings from "./modules/utils/keybindings.mjs";
-import * as Rolls from "./modules/rolls/index.mjs";
-import DISCWORLD from "./modules/config.mjs";
+
+import CharacterDataModel from "./modules/datamodels/character-schema.mjs";
+import TraitDataModel from "./modules/datamodels/trait-schema.mjs";
+
+import DiscworldChatLog from "./modules/chat/chat.mjs";
 import DiscworldMessage from "./modules/chat/chat-message.mjs";
+
+import * as Rolls from "./modules/rolls/index.mjs";
+
 import DiscworldCharacter from "./modules/documents/character.mjs";
-import DiscworldJournalEntrySheet from "./modules/sheets/journal-entry-sheet.mjs";
-import * as utils from "./modules/utils/_module.mjs";
+
+import TraitSheet from "./modules/applications/sheets/trait-sheet.mjs";
+import DiscworldJournalEntrySheet from "./modules/applications/sheets/journal-entry-sheet.mjs";
+
+import DiscworldActorSheet from "./modules/applications/sheets/actors/base-actor-sheet.mjs";
+import CharacterSheet from "./modules/applications/sheets/actors/character-sheet.mjs";
 
 // Export globals.
 globalThis.discworld = {
   utils,
   config: DISCWORLD,
+  sheets: {
+    DiscworldActorSheet,
+    CharacterSheet,
+    TraitSheet,
+  },
 };
 
 /* -------------------------------------------------- */
@@ -61,27 +74,5 @@ Hooks.once("init", () => {
 /* -------------------------------------------------- */
 
 Hooks.once("i18nInit", () => {
-  // Localize all strings in the system configuration object.
-  const localize = (o, k, v) => {
-    const type = foundry.utils.getType(v);
-    if ((type === "string") && v.startsWith("DISCWORLD")) {
-
-      o[k] = game.i18n.localize(v);
-    } else if (type === "Object") {
-      for (const [x, y] of Object.entries(v)) {
-        localize(v, x, y);
-      }
-    } else if (type === "Array") {
-      for (const obj of v)
-        if (foundry.utils.getType(obj) === "Object") {
-          for (const [u, w] of Object.entries(obj)) {
-            localize(obj, u, w);
-          }
-        }
-    }
-  };
-
-  for (const [k, v] of Object.entries(DISCWORLD)) {
-    localize(DISCWORLD, k, v);
-  }
+  utils.preLocalize("DISCWORLD", DISCWORLD);
 });
