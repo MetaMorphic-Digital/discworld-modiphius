@@ -6,7 +6,7 @@
     min-height: 100%;
 
     > button {
-      flex: 0 0 2rem;
+      padding: unset;
     }
 
     // Get rid of base styling's large margin in dropdown menus.
