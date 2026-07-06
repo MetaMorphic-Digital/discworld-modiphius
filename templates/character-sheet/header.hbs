@@ -35,7 +35,7 @@
         <label>{{localize "DISCWORLD.character.luck"}}:</label>
         <input type="text" class="delta" name="system.luck.value" value="{{fields.luckValue.value}}" placeholder="0">
         /
-        {{#if isEditMode}}
+        {{#if (and isEditMode fields.luckMax.field)}}
         {{formInput fields.luckMax.field value=fields.luckMax.value}}
         {{else}}
         {{document.system.luck.max}}
