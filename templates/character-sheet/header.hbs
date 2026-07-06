@@ -44,7 +44,7 @@
 
       <div class="detail-right pronouns">
         {{#if isEditMode}}
-        {{formInput fields.pronouns.field value=fields.pronouns.value}}
+        {{formInput fields.pronouns.field value=fields.pronouns.value placeholder=(localize "DISCWORLD.character.FIELDS.pronouns.placeholder")}}
         {{else}}
         {{document.system.pronouns}}
         {{/if}}
