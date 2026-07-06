@@ -1,4 +1,5 @@
 @use "generic" as *;
+@use "../utils/var-utils" as *;
 
 /* ----------------- Caslon Antique ----------------- */
 
@@ -73,3 +74,14 @@ $font-libertine: "Linux Libertine";
 }
 
 $font-trattatello: "Trattatello";
+
+:root {
+  @include setVars(
+    font,
+    (
+      caslon: $font-caslon,
+      libertine: $font-libertine,
+      trattatello: $font-trattatello,
+    )
+  );
+}

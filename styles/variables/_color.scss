@@ -1,3 +1,5 @@
+@use "../utils/var-utils" as *;
+
 /* ------------------ Theme Colors ----------------- */
 
 $discworld-brown: #7e4839;
@@ -16,3 +18,25 @@ $blue-very-light: #d2e9f8;
 
 $purple-dark: #671a46;
 $purple-light: #c3a1d1;
+
+:root {
+  @include setVars(
+    color,
+    (
+      discworld-brown: $discworld-brown,
+      discworld-sand: $discworld-sand,
+      discworld-sand-light: $discworld-sand-light,
+      discworld-sand-dark: $discworld-sand-dark,
+
+      gray-dark: $gray-dark,
+
+      red-dark: $red-dark,
+
+      blue-light: $blue-light,
+      blue-very-light: $blue-very-light,
+
+      purple-dark: $purple-dark,
+      purple-light: $purple-light,
+    )
+  );
+}
