@@ -150,7 +150,7 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
       const { traitType } = event.target.closest(".trait-category").dataset;
       if (!traitType) return;
 
-      DiscworldActorSheet.#addTrait.call(this, traitType);
+      this.constructor._addTrait.call(this, traitType);
     });
 
     // Make each description direct child element rollable.
@@ -227,7 +227,7 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
     switch (actionType) {
       case "add": {
         const { traitType } = target.closest(".trait-category").dataset;
-        DiscworldActorSheet.#addTrait.call(this, traitType);
+        this.constructor._addTrait.call(this, traitType);
         break;
       }
       case "edit":
@@ -248,14 +248,19 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
    * Add a new trait of the given type to the character.
    * @this DiscworldActorSheet
    * @param {string} traitType    The type of trait to add. Must be one of the {@link DISCWORLD.traitTypes} constants.
+   * @param {object} extraData      Additional creation data that a module may provide. E.g., for new datapoints.
    */
-  static async #addTrait(traitType) {
-    const newTrait = await getDocumentClass("Item").create(
+  static async _addTrait(traitType, extraData = {}) {
+    const createData = foundry.utils.mergeObject(
       {
         name: _loc("DOCUMENT.New", { type: _loc(`DISCWORLD.trait.type.${traitType}`) }),
         type: "trait",
         system: { type: traitType },
       },
+      extraData,
+    );
+    const newTrait = await getDocumentClass("Item").create(
+      createData,
       { parent: this.document, renderSheet: false },
     );
 
