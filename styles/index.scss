@@ -3,8 +3,7 @@
 @use "doc-sheets";
 @use "journal";
 @use "themes";
-
-@use "variables/fonts" as *;
+@use "variables" as *;
 
 .discworld {
   font-family: $font-libertine;

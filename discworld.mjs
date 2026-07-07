@@ -24,6 +24,10 @@ import CharacterSheet from "./modules/applications/sheets/actors/character-sheet
 globalThis.discworld = {
   utils,
   config: DISCWORLD,
+  data: {
+    CharacterDataModel,
+    TraitDataModel,
+  },
   sheets: {
     DiscworldActorSheet,
     CharacterSheet,

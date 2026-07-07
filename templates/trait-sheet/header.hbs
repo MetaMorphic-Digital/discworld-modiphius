@@ -1,10 +1,10 @@
 <header class="sheet-header flexrow">
   <div class="portrait-container">
     <img class="portrait"
-         src="{{document.img}}"
-         data-edit="img"
-         data-action="editImage"
-         title="{{document.name}}" />
+      src="{{document.img}}"
+      data-edit="img"
+      data-action="editImage"
+      title="{{document.name}}">
   </div>
 
   <div class="header-data-container flexcol">
@@ -12,9 +12,9 @@
     <div class="document-details flexrow">
       <div class="detail-left trait-type">{{formGroup fields.type.field value=fields.type.value}}</div>
       {{#if fields.severity.show }}
-        <div class="detail-right severity">
-          {{formGroup fields.severity.field value=fields.severity.value}}
-        </div>
+      <div class="detail-right severity">
+        {{formGroup fields.severity.field value=fields.severity.value}}
+      </div>
       {{/if}}
     </div>
   </div>

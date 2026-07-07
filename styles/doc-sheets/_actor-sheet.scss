@@ -24,6 +24,7 @@
 
   header.sheet-header {
     position: relative;
+    flex-wrap: nowrap;
 
     .header-data-container {
       .document-controls {
