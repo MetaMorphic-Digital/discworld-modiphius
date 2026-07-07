@@ -16,11 +16,14 @@ export default class DWTraitRoll extends foundry.dice.Roll {
    * @param {Item} [options.trait]                  The Item being rolled.
    */
   constructor(formula, data, options = {}) {
-    options = {
-      ...options,
-      actor: options.actor instanceof foundry.documents.Actor ? options.actor.uuid : null,
-      trait: options.item instanceof foundry.documents.Item ? options.trait.uuid : null,
-    };
+    if (options.actor instanceof foundry.documents.Actor) {
+      options.actor = options.actor.uuid;
+    }
+
+    if (options.trait instanceof foundry.documents.Item) {
+      options.trait = options.trait.uuid;
+    }
+
     super(formula, data, options);
   }
 
