@@ -13,10 +13,10 @@
     <div class="document-details flexrow">
       {{#if fields.actorType.show }}
       <div class="detail-left actor-type">
-        {{formGroup fields.actorType.field value=fields.actorType.value localize=true rootId=rootId}}
+        {{formGroup fields.actorType.field value=fields.actorType.value choices=fields.actorType.choices localize=true rootId=rootId}}
       </div>
       {{/if}}
-      <div class="detail-left trait-type">{{formGroup fields.type.field value=fields.type.value rootId=rootId}}</div>
+      <div class="detail-left trait-type">{{formGroup fields.type.field value=fields.type.value choices=fields.type.choices rootId=rootId}}</div>
       {{#if fields.severity.show }}
       <div class="detail-right severity">
         {{formGroup fields.severity.field value=fields.severity.value rootId=rootId}}

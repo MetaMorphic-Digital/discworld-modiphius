@@ -34,6 +34,20 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
     const { document } = this;
     const { system } = this.document;
 
+    // Prepare choices for the trait type field.
+    const { traitTypes } = discworld.config;
+    let typeChoices = traitTypes[system.actorType] ?? traitTypes.character;
+    if (!Object.keys(typeChoices).includes(system.type) && system.type) {
+      // If the trait type isn't in the list, add it.
+      // This happens in the edge case that a module which
+      // adds trait types has been disabled.
+      typeChoices = foundry.utils.mergeObject(
+        typeChoices,
+        { [system.type]: _loc(`DISCWORLD.trait.type.${system.type}`) },
+        { inplace: false },
+      );
+    }
+
     context.fields = {
       name: {
         field: document.schema.getField("name"),
@@ -46,12 +60,14 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
         value: this.isEditMode
           ? system._source.actorType
           : system.actorType,
+        choices: DISCWORLD.actorTypes,
       },
       type: {
         field: system.schema.getField("type"),
         value: this.isEditMode
           ? system._source.type
           : system.type,
+        choices: typeChoices,
       },
       severity: {
         field: system.schema.getField("severity"),
@@ -75,30 +91,6 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
     );
 
     return context;
-  }
-
-  /* -------------------------------------------------- */
-
-  /** @inheritdoc */
-  async _onRender(context, options) {
-    await super._onRender(context, options);
-
-    const { system } = this.document;
-
-    // Sort and filter <option> elements.
-    const validTraits = Object.keys(discworld.config.traitTypes[system.actorType]);
-    const select = this.element.querySelector("select[name=\"system.type\"]");
-    const optionElements = Array.from(select.querySelectorAll("option"));
-
-    optionElements
-      .sort((a, b) => validTraits.indexOf(a.value) - validTraits.indexOf(b.value))
-      .forEach((option) => {
-        if (!validTraits.includes(option.value)) {
-          option.remove();
-        } else {
-          select.appendChild(option);
-        }
-      });
   }
 
   /* -------------------------------------------------- */
