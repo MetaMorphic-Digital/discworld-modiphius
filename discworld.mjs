@@ -14,6 +14,7 @@ import * as Rolls from "./modules/rolls/index.mjs";
 
 import DiscworldCharacter from "./modules/documents/character.mjs";
 
+import DiscworldSheetMixin from "./modules/applications/sheets/base-document-sheet.mjs";
 import TraitSheet from "./modules/applications/sheets/trait-sheet.mjs";
 import DiscworldJournalEntrySheet from "./modules/applications/sheets/journal-entry-sheet.mjs";
 
@@ -29,6 +30,7 @@ globalThis.discworld = {
     TraitDataModel,
   },
   sheets: {
+    DiscworldSheetMixin,
     DiscworldActorSheet,
     CharacterSheet,
     TraitSheet,

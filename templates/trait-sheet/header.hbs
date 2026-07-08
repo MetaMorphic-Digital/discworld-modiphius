@@ -8,12 +8,17 @@
   </div>
 
   <div class="header-data-container flexcol">
-    <h1 class="document-name">{{formInput fields.name.field value=fields.name.value}}</h1>
+    <h1 class="document-name">{{formInput fields.name.field value=fields.name.value rootId=document.id}}</h1>
     <div class="document-details flexrow">
-      <div class="detail-left trait-type">{{formGroup fields.type.field value=fields.type.value}}</div>
+      {{#if fields.actorType.show }}
+      <div class="detail-left actor-type">
+        {{formGroup fields.actorType.field value=fields.actorType.value localize=true rootId=document.id}}
+      </div>
+      {{/if}}
+      <div class="detail-left trait-type">{{formGroup fields.type.field value=fields.type.value rootId=document.id}}</div>
       {{#if fields.severity.show }}
       <div class="detail-right severity">
-        {{formGroup fields.severity.field value=fields.severity.value}}
+        {{formGroup fields.severity.field value=fields.severity.value rootId=document.id}}
       </div>
       {{/if}}
     </div>

@@ -31,34 +31,43 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
   /** @inheritdoc */
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
+    const { document } = this;
+    const { system } = this.document;
 
     context.fields = {
       name: {
-        field: this.document.schema.getField("name"),
+        field: document.schema.getField("name"),
         value: this.isEditMode
-          ? this.document._source.name
-          : this.document.name,
+          ? document._source.name
+          : document.name,
+      },
+      actorType: {
+        field: system.schema.getField("actorType"),
+        value: this.isEditMode
+          ? system._source.actorType
+          : system.actorType,
       },
       type: {
-        field: this.document.system.schema.getField("type"),
+        field: system.schema.getField("type"),
         value: this.isEditMode
-          ? this.document.system._source.type
-          : this.document.system.type,
+          ? system._source.type
+          : system.type,
       },
       severity: {
-        field: this.document.system.schema.getField("severity"),
+        field: system.schema.getField("severity"),
         value: this.isEditMode
-          ? this.document.system._source.severity
-          : this.document.system.severity,
+          ? system._source.severity
+          : system.severity,
       },
       notes: {
-        field: this.document.system.schema.getField("notes"),
+        field: system.schema.getField("notes"),
         value: this.isEditMode
-          ? this.document.system._source.notes
-          : this.document.system.notes,
+          ? system._source.notes
+          : system.notes,
       },
     };
 
+    context.fields.actorType.show = !document.isOwned && (Object.keys(DISCWORLD.actorTypes).length > 1);
     context.fields.severity.show = context.fields.type.value === "consequences";
     context.fields.notes.enriched = await CONFIG.ux.TextEditor.enrichHTML(
       context.fields.notes.value,
@@ -66,6 +75,30 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
     );
 
     return context;
+  }
+
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options);
+
+    const { system } = this.document;
+
+    // Sort and filter <option> elements.
+    const validTraits = Object.keys(discworld.config.traitTypes[system.actorType]);
+    const select = this.element.querySelector("select[name=\"system.type\"]");
+    const optionElements = Array.from(select.querySelectorAll("option"));
+
+    optionElements
+      .sort((a, b) => validTraits.indexOf(a.value) - validTraits.indexOf(b.value))
+      .forEach((option) => {
+        if (!validTraits.includes(option.value)) {
+          option.remove();
+        } else {
+          select.appendChild(option);
+        }
+      });
   }
 
   /* -------------------------------------------------- */
@@ -86,5 +119,22 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
     }
 
     return renderedApp;
+  }
+
+  /* ------------------------------------------------- */
+
+  /** @inheritdoc */
+  async _onChangeForm(formConfig, event) {
+    const { target } = event;
+
+    // Handle changes to actorType, assigning a valid trait type.
+    if (target?.name === "system.actorType") {
+      const [defaultType] = Object.keys(discworld.config.traitTypes[target.value]);
+      this.document.update(
+        { "system.type": defaultType },
+        { render: false },
+      );
+    }
+    return super._onChangeForm(formConfig, event);
   }
 }

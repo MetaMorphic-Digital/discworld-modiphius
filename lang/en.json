@@ -75,13 +75,19 @@
         "background": "Background",
         "consequences": "Consequences",
         "core": "Core",
+        "features": "Features",
+        "mannerism": "Mannerism",
         "niche": "Niche",
         "organization": "Organization",
+        "other": "Other",
         "quirks": "Quirks",
-        "other": "Other"
+        "species": "Species"
       },
 
       "FIELDS": {
+        "actorType": {
+          "label": "Actor Type"
+        },
         "notes": {
           "label": "Notes"
         },

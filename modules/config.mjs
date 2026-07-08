@@ -1,7 +1,6 @@
 /**
  * Centralized config constants for the DISCWORLD system.
  */
-
 const DISCWORLD = {
   id: "discworld-modiphius",
   consequenceSeverity: {
@@ -12,13 +11,19 @@ const DISCWORLD = {
   },
 
   traitTypes: {
-    organization: "DISCWORLD.trait.type.organization",
-    background: "DISCWORLD.trait.type.background",
-    niche: "DISCWORLD.trait.type.niche",
-    core: "DISCWORLD.trait.type.core",
-    quirks: "DISCWORLD.trait.type.quirks",
-    consequences: "DISCWORLD.trait.type.consequences",
-    other: "DISCWORLD.trait.type.other",
+    character: {
+      organization: "DISCWORLD.trait.type.organization",
+      background: "DISCWORLD.trait.type.background",
+      niche: "DISCWORLD.trait.type.niche",
+      core: "DISCWORLD.trait.type.core",
+      quirks: "DISCWORLD.trait.type.quirks",
+      consequences: "DISCWORLD.trait.type.consequences",
+      other: "DISCWORLD.trait.type.other",
+    },
+  },
+
+  actorTypes: {
+    character: "TYPES.Actor.character",
   },
 };
 
