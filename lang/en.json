@@ -87,10 +87,13 @@
         "consequences": "Consequences",
         "core": "Core",
         "features": "Features",
+        "goal": "Party Goal",
         "mannerism": "Mannerism",
         "niche": "Niche",
         "organization": "Organization",
         "other": "Other",
+        "past": "Party Past",
+        "present": "Party Present",
         "quirks": "Quirks",
         "species": "Species",
         "spellbook": "Spellbook"
