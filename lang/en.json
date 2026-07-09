@@ -81,7 +81,8 @@
         "organization": "Organization",
         "other": "Other",
         "quirks": "Quirks",
-        "species": "Species"
+        "species": "Species",
+        "spellbook": "Spellbook"
       },
 
       "FIELDS": {
