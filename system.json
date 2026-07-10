@@ -43,6 +43,9 @@
     "Actor": {
       "character": {
         "htmlFields": ["description"]
+      },
+      "npc": {
+        "htmlFields": ["description", "storyPrompt"]
       }
     },
     "Item": {

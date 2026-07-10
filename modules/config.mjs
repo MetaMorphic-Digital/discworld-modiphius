@@ -21,10 +21,18 @@ const DISCWORLD = {
       consequences: "DISCWORLD.trait.type.consequences",
       other: "DISCWORLD.trait.type.other",
     },
+    npc: {
+      species: "DISCWORLD.trait.type.species",
+      niche: "DISCWORLD.trait.type.niche",
+      features: "DISCWORLD.trait.type.features",
+      mannerism: "DISCWORLD.trait.type.mannerism",
+      other: "DISCWORLD.trait.type.other",
+    },
   },
 
   actorTypes: {
     character: "TYPES.Actor.character",
+    npc: "TYPES.Actor.npc",
   },
 };
 
