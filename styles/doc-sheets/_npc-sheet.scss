@@ -1,7 +1,7 @@
 @use "../utils/var-utils" as *;
 @use "../variables/generic" as *;
 
-.#{$packageCssClass}.actor-sheet.npc-sheet {
+.#{$packageCssClass}.application.actor-sheet.npc-sheet {
   .document-details {
     flex-wrap: nowrap;
     gap: 16px;

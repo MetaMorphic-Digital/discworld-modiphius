@@ -1,11 +1,10 @@
-import DISCWORLD from "../../../config.mjs";
 import DiscworldActorSheet from "./base-actor-sheet.mjs";
-import CharacterSheet from "./character-sheet.mjs";
+import { templatePath } from "../../../utils/paths.mjs";
 
 export default class NPCSheet extends DiscworldActorSheet {
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
-    classes: [DISCWORLD.id, "npc-sheet"],
+    classes: ["npc-sheet"],
     position: {
       width: 700,
       height: 575,
@@ -17,9 +16,9 @@ export default class NPCSheet extends DiscworldActorSheet {
 
   /** @inheritdoc */
   static PARTS = {
-    ...CharacterSheet.PARTS,
+    ...DiscworldActorSheet.PARTS,
     description: {
-      template: `systems/${DISCWORLD.id}/templates/npc-sheet/description.hbs`,
+      template: templatePath("npc-sheet/description.hbs"),
     },
   };
 
@@ -55,7 +54,7 @@ export default class NPCSheet extends DiscworldActorSheet {
 
     // Replace luck container with full name container.
     const fullNameContainer = await foundry.applications.handlebars.renderTemplate(
-      `systems/${DISCWORLD.id}/templates/npc-sheet/full-name.hbs`,
+      templatePath("npc-sheet/full-name.hbs"),
       context,
     );
 

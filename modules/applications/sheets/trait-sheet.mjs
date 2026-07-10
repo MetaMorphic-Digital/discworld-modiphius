@@ -1,5 +1,6 @@
 import DISCWORLD from "../../config.mjs";
 import DiscworldSheetMixin from "./base-document-sheet.mjs";
+import { templatePath } from "../../utils/paths.mjs";
 
 const { ItemSheetV2 } = foundry.applications.sheets;
 
@@ -18,10 +19,10 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
   /** @inheritdoc */
   static PARTS = {
     header: {
-      template: `systems/${DISCWORLD.id}/templates/trait-sheet/header.hbs`,
+      template: templatePath("trait-sheet/header.hbs"),
     },
     description: {
-      template: `systems/${DISCWORLD.id}/templates/trait-sheet/description.hbs`,
+      template: templatePath("trait-sheet/description.hbs"),
       scrollable: [".editor-content"],
     },
   };
@@ -33,20 +34,6 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
     const context = await super._prepareContext(options);
     const { document } = this;
     const { system } = this.document;
-
-    // Prepare choices for the trait type field.
-    const { traitTypes } = discworld.config;
-    let typeChoices = traitTypes[system.actorType] ?? traitTypes.character;
-    if (!Object.keys(typeChoices).includes(system.type) && system.type) {
-      // If the trait type isn't in the list, add it.
-      // This happens in the edge case that a module which
-      // adds trait types has been disabled.
-      typeChoices = foundry.utils.mergeObject(
-        typeChoices,
-        { [system.type]: _loc(`DISCWORLD.trait.type.${system.type}`) },
-        { inplace: false },
-      );
-    }
 
     context.fields = {
       name: {
@@ -64,10 +51,8 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
       },
       type: {
         field: system.schema.getField("type"),
-        value: this.isEditMode
-          ? system._source.type
-          : system.type,
-        choices: typeChoices,
+        value: system.type,
+        choices: DISCWORLD.traitTypes[system.actorType],
       },
       severity: {
         field: system.schema.getField("severity"),
@@ -121,7 +106,7 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
 
     // Handle changes to actorType, assigning a valid trait type.
     if (target?.name === "system.actorType") {
-      const [defaultType] = Object.keys(discworld.config.traitTypes[target.value]);
+      const [defaultType] = Object.keys(DISCWORLD.traitTypes[target.value]);
       this.document.update(
         { "system.type": defaultType },
         { render: false },
