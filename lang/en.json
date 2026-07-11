@@ -42,6 +42,17 @@
       "helpRoll": "Help Roll"
     },
 
+    "npc": {
+      "FIELDS": {
+        "fullName": {
+          "label": "Full Name"
+        },
+        "storyPrompt": {
+          "label": "Story Prompt"
+        }
+      }
+    },
+
     "sheet": {
       "context": {
         "actor": {
@@ -75,13 +86,20 @@
         "background": "Background",
         "consequences": "Consequences",
         "core": "Core",
+        "features": "Features",
+        "mannerism": "Mannerism",
         "niche": "Niche",
         "organization": "Organization",
+        "other": "Other",
         "quirks": "Quirks",
-        "other": "Other"
+        "species": "Species",
+        "spellbook": "Spellbook"
       },
 
       "FIELDS": {
+        "actorType": {
+          "label": "Actor Type"
+        },
         "notes": {
           "label": "Notes"
         },
@@ -102,7 +120,8 @@
 
   "TYPES": {
     "Actor": {
-      "character": "Character"
+      "character": "Character",
+      "npc": "NPC"
     },
     "Item": {
       "trait": "Trait"
@@ -111,6 +130,7 @@
   "discworld-modiphius": {
     "CharacterSheet": "Discworld Character Sheet",
     "DiscworldJournalEntrySheet": "Discworld Journal Sheet",
+    "NPCSheet": "Discworld NPC Sheet",
     "TraitSheet": "Discworld Trait Sheet"
   }
 }

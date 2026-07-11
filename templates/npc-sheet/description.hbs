@@ -1,0 +1,17 @@
+<section class="tab sheet-body description {{tabs.description.cssClass}}"
+         data-group="{{tabs.description.group}}"
+         data-tab="{{tabs.description.id}}">
+
+  {{formGroup
+    fields.description.field
+    value=fields.description.value
+    enriched=fields.description.enriched
+    toggled=true}}
+
+  {{formGroup
+    fields.storyPrompt.field
+    value=fields.storyPrompt.value
+    enriched=fields.storyPrompt.enriched
+    toggled=true}}
+
+</section>

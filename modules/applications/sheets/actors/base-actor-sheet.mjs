@@ -61,6 +61,17 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
     return this.actor.helpMode.enabled;
   }
 
+  /* ------------------------------------------------- */
+
+  /**
+   * Helper to get the base actor type, e.g., removing any prefixes from modules.
+   * @example "character" -> "character"; "discworld-core.npc" -> "npc"
+   * @type {string}
+   */
+  get actorBaseType() {
+    return this.actor.type.replace(/.*\./, "");
+  }
+
   /* -------------------------------------------------- */
 
   /** @inheritdoc */
@@ -76,11 +87,12 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
       { rollData: this.document.getRollData(), relativeTo: this.document },
     );
 
+    const traitActorGroup = DISCWORLD.traitTypes[this.actorBaseType]; // Get just the base actor type.
     // Construct arrays of traits, filtered by category.
-    context.traitGroups = this._getTraitGroups();
+    context.traitGroups = this._getTraitGroups(traitActorGroup);
 
     // Translation of trait types.
-    context.traitTypeTranslationMap = DISCWORLD.traitTypes;
+    context.traitTypeTranslationMap = traitActorGroup;
 
     return context;
   }
@@ -116,10 +128,10 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
 
   /**
    * Get trait groups by type.
-   * @param {Object} traitTypes
-   * @returns {Record<keyof DISCWORLD.traitTypes, Item[]>}
+   * @param {Object} traitTypes    Trait types for a particular sheet.
+   * @returns {Record<keyof DISCWORLD.traitTypes[keyof DISCWORLD.actorTypes], Item[]>}
    */
-  _getTraitGroups(traitTypes = DISCWORLD.traitTypes) {
+  _getTraitGroups(traitTypes) {
     const items = Object.groupBy(this.actor.items, item => item.system.type);
     return Object.keys(traitTypes).reduce((acc, traitType) => {
       acc[traitType] = items[traitType] ?? [];
@@ -150,7 +162,7 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
       const { traitType } = event.target.closest(".trait-category").dataset;
       if (!traitType) return;
 
-      this.constructor._addTrait.call(this, traitType);
+      DiscworldActorSheet.#addTrait.call(this, traitType);
     });
 
     // Make each description direct child element rollable.
@@ -227,7 +239,7 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
     switch (actionType) {
       case "add": {
         const { traitType } = target.closest(".trait-category").dataset;
-        this.constructor._addTrait.call(this, traitType);
+        DiscworldActorSheet.#addTrait.call(this, traitType);
         break;
       }
       case "edit":
@@ -248,14 +260,13 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
    * Add a new trait of the given type to the character.
    * @this DiscworldActorSheet
    * @param {string} traitType    The type of trait to add. Must be one of the {@link DISCWORLD.traitTypes} constants.
-   * @param {object} extraData      Additional creation data that a module may provide. E.g., for new datapoints.
    */
-  static async _addTrait(traitType, extraData = {}) {
+  static async #addTrait(traitType, extraData = {}) {
     const createData = foundry.utils.mergeObject(
       {
         name: _loc("DOCUMENT.New", { type: _loc(`DISCWORLD.trait.type.${traitType}`) }),
         type: "trait",
-        system: { type: traitType },
+        system: { type: traitType, actorType: this.actorBaseType },
       },
       extraData,
     );

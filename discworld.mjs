@@ -5,6 +5,7 @@ import preloadTemplates, { registerHelpers } from "./modules/utils/handlebars.mj
 import registerKeybindings from "./modules/utils/keybindings.mjs";
 
 import CharacterDataModel from "./modules/datamodels/character-schema.mjs";
+import NPCDataModel from "./modules/datamodels/npc-schema.mjs";
 import TraitDataModel from "./modules/datamodels/trait-schema.mjs";
 
 import DiscworldChatLog from "./modules/chat/chat.mjs";
@@ -14,11 +15,13 @@ import * as Rolls from "./modules/rolls/index.mjs";
 
 import DiscworldCharacter from "./modules/documents/character.mjs";
 
+import DiscworldSheetMixin from "./modules/applications/sheets/base-document-sheet.mjs";
 import TraitSheet from "./modules/applications/sheets/trait-sheet.mjs";
 import DiscworldJournalEntrySheet from "./modules/applications/sheets/journal-entry-sheet.mjs";
 
 import DiscworldActorSheet from "./modules/applications/sheets/actors/base-actor-sheet.mjs";
 import CharacterSheet from "./modules/applications/sheets/actors/character-sheet.mjs";
+import NPCSheet from "./modules/applications/sheets/actors/npc-sheet.mjs";
 
 // Export globals.
 globalThis.discworld = {
@@ -29,6 +32,7 @@ globalThis.discworld = {
     TraitDataModel,
   },
   sheets: {
+    DiscworldSheetMixin,
     DiscworldActorSheet,
     CharacterSheet,
     TraitSheet,
@@ -47,6 +51,13 @@ Hooks.once("init", () => {
   CONFIG.Actor.documentClass = DiscworldCharacter;
   CONFIG.Actor.dataModels.character = CharacterDataModel;
   Actors.registerSheet(DISCWORLD.id, CharacterSheet, {
+    types: ["character"],
+    makeDefault: true,
+  });
+
+  CONFIG.Actor.dataModels.npc = NPCDataModel;
+  Actors.registerSheet(DISCWORLD.id, NPCSheet, {
+    types: ["npc"],
     makeDefault: true,
   });
 

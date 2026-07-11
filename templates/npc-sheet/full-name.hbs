@@ -1,0 +1,9 @@
+<div class="detail-left full-name-container">
+  {{#if isEditMode}}
+  {{formInput fields.fullName.field value=fields.fullName.value placeholder=(localize "DWC.npc.FIELDS.fullName.label")}}
+  {{else}}
+  <span>
+    <a data-action="rollFullNameAsTrait" data-tooltip="Roll Full Name As Trait">{{fields.fullName.value}}</a>
+  </span>
+  {{/if}}
+</div>

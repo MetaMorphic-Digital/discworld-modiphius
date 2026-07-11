@@ -1,0 +1,48 @@
+@use "../utils/var-utils" as *;
+@use "../variables/generic" as *;
+
+.#{$packageCssClass}.application.actor-sheet.npc-sheet {
+  .document-details {
+    flex-wrap: nowrap;
+    gap: 16px;
+
+    .detail-left.full-name-container {
+      input {
+        text-align: left;
+      }
+    }
+
+    .detail-right {
+      flex: 0 0 fit-content;
+    }
+  }
+
+  .tab.description.active {
+    display: flex;
+    gap: 16px;
+    overflow-y: unset;
+
+    margin-block-start: 40px;
+
+    > .form-group {
+      flex: 1;
+      background-image: linear-gradient(getVar("color", "callout-primary") 0%, transparent 90%);
+      border-radius: 8px;
+      padding: 6px;
+
+      label {
+        font-family: getVar("font", "trattatello");
+        font-size: 1.25em;
+        font-weight: bold;
+        text-decoration: underline;
+        text-underline-offset: 0.125em;
+        text-decoration-color: getVar("color", "discworld-brown");
+      }
+
+      .form-fields {
+        height: 100%;
+        margin-inline: 8px 12px;
+      }
+    }
+  }
+}
