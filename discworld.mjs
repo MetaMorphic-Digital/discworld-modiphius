@@ -6,7 +6,11 @@ import registerKeybindings from "./modules/utils/keybindings.mjs";
 
 import CharacterDataModel from "./modules/datamodels/character-schema.mjs";
 import NPCDataModel from "./modules/datamodels/npc-schema.mjs";
+import PartyDataModel from "./modules/datamodels/party-schema.mjs";
 import TraitDataModel from "./modules/datamodels/trait-schema.mjs";
+
+import DiscworldActors from "./modules/collections/actors.mjs";
+import MembersCollection from "./modules/collections/members-collection.mjs";
 
 import DiscworldChatLog from "./modules/chat/chat.mjs";
 import DiscworldMessage from "./modules/chat/chat-message.mjs";
@@ -21,6 +25,7 @@ import DiscworldJournalEntrySheet from "./modules/applications/sheets/journal-en
 
 import DiscworldActorSheet from "./modules/applications/sheets/actors/base-actor-sheet.mjs";
 import CharacterSheet from "./modules/applications/sheets/actors/character-sheet.mjs";
+import PartySheet from "./modules/applications/sheets/actors/party-sheet.mjs";
 import NPCSheet from "./modules/applications/sheets/actors/npc-sheet.mjs";
 
 // Export globals.
@@ -29,6 +34,8 @@ globalThis.discworld = {
   config: DISCWORLD,
   data: {
     CharacterDataModel,
+    NPCDataModel,
+    PartyDataModel,
     TraitDataModel,
   },
   sheets: {
@@ -36,6 +43,9 @@ globalThis.discworld = {
     DiscworldActorSheet,
     CharacterSheet,
     TraitSheet,
+  },
+  collections: {
+    MembersCollection,
   },
 };
 
@@ -48,6 +58,8 @@ Hooks.once("init", () => {
   CONFIG.Discworld = DISCWORLD;
 
   // Register Actor classes.
+  CONFIG.Actor.collection = DiscworldActors;
+
   CONFIG.Actor.documentClass = DiscworldCharacter;
   CONFIG.Actor.dataModels.character = CharacterDataModel;
   Actors.registerSheet(DISCWORLD.id, CharacterSheet, {
@@ -58,6 +70,12 @@ Hooks.once("init", () => {
   CONFIG.Actor.dataModels.npc = NPCDataModel;
   Actors.registerSheet(DISCWORLD.id, NPCSheet, {
     types: ["npc"],
+    makeDefault: true,
+  });
+
+  CONFIG.Actor.dataModels.party = PartyDataModel;
+  Actors.registerSheet(DISCWORLD.id, PartySheet, {
+    types: ["party"],
     makeDefault: true,
   });
 

@@ -1,0 +1,171 @@
+import DiscworldActorSheet from "./base-actor-sheet.mjs";
+import { templatePath } from "../../../utils/paths.mjs";
+
+/**
+ * An implementation of an actor sheet for Party actors.
+ */
+export default class PartySheet extends DiscworldActorSheet {
+  /** @inheritdoc */
+  static DEFAULT_OPTIONS = {
+    position: { width: 650, height: 690 },
+    classes: ["party-sheet"],
+    actions: {
+      placeMembers: PartySheet.#placeMembers,
+      removeMember: PartySheet.#removeMember,
+      showMember: PartySheet.#showMember,
+    },
+  };
+
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
+  static PARTS = {
+    header: DiscworldActorSheet.PARTS.header,
+    members: {
+      template: templatePath("party-sheet/members.hbs"),
+      scrollable: [""],
+    },
+    tabs: DiscworldActorSheet.PARTS.tabs,
+    traits: DiscworldActorSheet.PARTS.traits,
+  };
+
+  /* -------------------------------------------------- */
+
+  /**
+   * External actors who re-render this application.
+   * @type {Set<DiscworldActor>}
+   */
+  #appActors = new Set();
+
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
+  async _prepareContext(options) {
+    const context = await super._prepareContext(options);
+
+    context.header = await this.#prepareHeader();
+    context.members = await this.#prepareMembers();
+
+    return context;
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Prepare header context.
+   * @returns {Promise<object>}
+   */
+  async #prepareHeader() {
+    const members = this.document.system.members;
+    return {
+      canPlaceMembers: game.user.isGM && canvas?.ready && members.size,
+    };
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Prepare members context.
+   * @returns {Promise<object[]>}
+   */
+  async #prepareMembers() {
+    const members = [];
+    for (const member of this.document.system.members) {
+      const ctx = { ...member };
+      const { recoveries, stamina } = member.actor.system;
+      Object.assign(ctx, {
+        recoveries,
+        stamina,
+        rootId: [this.id, member.actor.id].join("-"),
+        canView: member.actor.testUserPermission(game.user, "OBSERVER"),
+      });
+      members.push(ctx);
+    }
+    return members.sort((a, b) => a.actor._source.name.localeCompare(b.actor._source.name));
+  }
+
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options);
+    for (const actor of this.#appActors) {
+      delete actor.apps[this.id];
+    }
+    this.#appActors.clear();
+    for (const { actor } of this.document.system.members) {
+      actor.apps[this.id] = this;
+      this.#appActors.add(actor);
+    }
+
+    const docDetails = await foundry.applications.handlebars.renderTemplate(
+      templatePath("party-sheet/details.hbs"),
+      context,
+    );
+    this.element.querySelector(".document-details").outerHTML = docDetails;
+  }
+
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
+  async _onClose(options) {
+    for (const actor of this.#appActors) {
+      delete actor.apps[this.id];
+    }
+    this.#appActors.clear();
+    return super._onClose(options);
+  }
+
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
+  async _onDropActor(event, actor) {
+    await this.document.system.addMembers([actor]);
+    return true;
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * @this PartySheet
+   */
+  static async #placeMembers() {
+    if (!this.document.system.members.size) {
+      return;
+    }
+    const isMaximized = this.rendered && !this.minimized;
+    if (isMaximized) {
+      await this.minimize();
+    }
+    await this.document.system.placeMembers();
+    if (isMaximized) {
+      this.maximize();
+    }
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * @this PartySheet
+   * @param {PointerEvent} event    The initiating click event.
+   * @param {HTMLElement} target    The capturing html element that defined the [data-action].
+   */
+  static #removeMember(event, target) {
+    const id = target.closest("[data-member-id]").dataset.memberId;
+    const actor = game.actors.get(id);
+    this.document.system.removeMembers([actor]);
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * @this PartySheet
+   * @param {PointerEvent} event    The initiating click event.
+   * @param {HTMLElement} target    The capturing html element that defined the [data-action].
+   */
+  static #showMember(event, target) {
+    const id = target.closest("[data-member-id]").dataset.memberId;
+    const actor = game.actors.get(id);
+    actor.sheet.render({ force: true });
+  }
+}

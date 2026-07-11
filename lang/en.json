@@ -124,7 +124,8 @@
   "TYPES": {
     "Actor": {
       "character": "Character",
-      "npc": "NPC"
+      "npc": "NPC",
+      "party": "Party"
     },
     "Item": {
       "trait": "Trait"

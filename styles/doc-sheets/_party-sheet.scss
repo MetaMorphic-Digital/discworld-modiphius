@@ -1,0 +1,74 @@
+@use "../utils/var-utils" as *;
+@use "../variables/generic" as *;
+
+.#{$packageCssClass}.application.actor-sheet.party-sheet {
+  .window-content {
+    overflow-y: auto;
+  }
+
+  header[data-application-part="header"] {
+    .document-details {
+      font-size: 1em;
+    }
+    .details-right {
+      text-align: right;
+    }
+  }
+
+  [data-application-part="members"] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap: 8px;
+
+    border: 2px rgba(145, 88, 2, 0.24);
+    border-style: outset;
+    border-radius: 12px;
+
+    margin-block: 12px -19px;
+    padding-block: 0px 20px;
+
+    &:has(.no-members) {
+      border-style: dotted;
+    }
+
+    legend {
+      font-family: getVar("font", "trattatello");
+      font-size: 1.375em;
+    }
+
+    .member {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+
+      > * {
+        flex: 1;
+      }
+
+      .details {
+        max-width: 18ch;
+
+        display: flex;
+        align-items: center;
+
+        text-align: center;
+        gap: 0.5ch;
+      }
+    }
+
+    img {
+      width: 75px;
+      aspect-ratio: 1;
+
+      border-radius: 6px;
+    }
+  }
+
+  nav.tabs a {
+    display: none;
+  }
+}

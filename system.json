@@ -46,6 +46,9 @@
       },
       "npc": {
         "htmlFields": ["description", "storyPrompt"]
+      },
+      "party": {
+        "htmlFields": ["description.value"]
       }
     },
     "Item": {

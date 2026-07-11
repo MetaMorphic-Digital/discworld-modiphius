@@ -1,0 +1,27 @@
+<fieldset>
+  <legend>Party Members</legend>
+  {{#if (not members.length)}}
+  <div class="no-members">
+    Drop Party members here
+  </div>
+  {{/if}}
+  {{#each members}}
+  <div class="member" data-member-id="{{actor.id}}">
+    <div class="avatar">
+      <img src="{{actor.img}}" alt="{{actor.name}}">
+    </div>
+    <div class="details">
+      {{#if canView}}
+      <a class="title" data-action="showMember">{{actor.name}}</a>
+      {{else}}
+      <span class="title">{{actor.name}}</span>
+      {{/if}}
+      {{#if @root.isEditMode}}
+      <a class="control" data-action="removeMember">
+        <i class="fa-solid fa-fw fa-trash" inert></i>
+      </a>
+      {{/if}}
+    </div>
+  </div>
+  {{/each}}
+</fieldset>

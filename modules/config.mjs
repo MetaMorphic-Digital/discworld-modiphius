@@ -28,11 +28,19 @@ const DISCWORLD = {
       mannerism: "DISCWORLD.trait.type.mannerism",
       other: "DISCWORLD.trait.type.other",
     },
+    party: {
+      organization: "DISCWORLD.trait.type.organization",
+      goal: "DISCWORLD.trait.type.goal",
+      past: "DISCWORLD.trait.type.past",
+      present: "DISCWORLD.trait.type.present",
+      other: "DISCWORLD.trait.type.other",
+    },
   },
 
   actorTypes: {
     character: "TYPES.Actor.character",
     npc: "TYPES.Actor.npc",
+    party: "TYPES.Actor.party",
   },
 };
 
