@@ -19,7 +19,7 @@ import DiscworldMessage from "./modules/chat/chat-message.mjs";
 
 import * as Rolls from "./modules/rolls/index.mjs";
 
-import DiscworldCharacter from "./modules/documents/character.mjs";
+import DiscworldActor from "./modules/documents/actor.mjs";
 
 import DiscworldSheetMixin from "./modules/applications/sheets/base-document-sheet.mjs";
 import TraitSheet from "./modules/applications/sheets/trait-sheet.mjs";
@@ -62,7 +62,7 @@ Hooks.once("init", () => {
   // Register Actor classes.
   CONFIG.Actor.collection = DiscworldActors;
 
-  CONFIG.Actor.documentClass = DiscworldCharacter;
+  CONFIG.Actor.documentClass = DiscworldActor;
   CONFIG.Actor.dataModels.character = CharacterDataModel;
   Actors.registerSheet(DISCWORLD.id, CharacterSheet, {
     types: ["character"],

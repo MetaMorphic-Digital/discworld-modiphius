@@ -2,7 +2,7 @@ import DISCWORLD from "../config.mjs";
 import DWHelpRoll from "../rolls/help-roll.mjs";
 import DWTraitRoll from "../rolls/trait-roll.mjs";
 
-export default class DiscworldCharacter extends foundry.documents.Actor {
+export default class DiscworldActor extends foundry.documents.Actor {
   /**
    * @typedef HelpMode
    * @property {boolean} enabled                  Whether help mode is enabled.
