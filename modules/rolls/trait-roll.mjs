@@ -86,6 +86,7 @@ export default class DWTraitRoll extends foundry.dice.Roll {
 
     return roll.toMessage({
       speaker: getDocumentClass("ChatMessage").getSpeaker({ actor: options.actor }),
+      type: "baseTest",
     });
   }
 }

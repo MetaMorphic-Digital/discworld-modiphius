@@ -1,4 +1,6 @@
-import { templatePath } from "../../../utils/paths.mjs";
+import { templatePath } from "../../utils/paths.mjs";
+
+import DiscworldMessage from "../../chat/chat-message.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 const { StringField } = foundry.data.fields;
@@ -24,6 +26,7 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
         label: "DISCWORLD.dialog.groupTest.cancel",
         icon: "fas fa-times",
         type: "button",
+        default: true,
       },
     ],
     window: {
@@ -81,14 +84,23 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
     foundry.utils.mergeObject(expanded, {
       members: expanded.members
         .filter(Boolean)
-        .map((m) => game.actors.get(m)),
+        .reduce((acc, m) => {
+          acc[m] = game.actors.get(m);
+          return acc;
+        }, {}),
     });
 
-    if (!expanded.members.length) {
+    if (!Object.keys(expanded.members).length) {
       return ui.notifications.warn("DISCWORLD.dialog.groupTest.noMembersSelected", { localize: true });
     }
 
     this.close();
-    return expanded;
+    DiscworldMessage.create({
+      type: "groupTest",
+      system: {
+        groupMembers: expanded.members,
+        winCondition: expanded.winCondition,
+      },
+    });
   }
 }

@@ -1,0 +1,55 @@
+<div class="discworld group-test">
+  <header class="trait-container">
+    <h4 class="divider">{{localize "DISCWORLD.roll.groupRoll"}}</h4>
+  </header>
+  <ol class="members">
+    {{#each members}}
+    <li data-member-id="{{actor.id}}">
+      <span class="divider">{{actor.name}}</span>
+      <div class="dice-rolls">
+        <div class="outcome-container flexrow">
+          <ol class="result {{@root.css.outcome.player}}">
+            <li class="playerResult d6 {{mainRoll.term}} flexrow {{@root.css.result.player}}">
+              <span>
+                {{ifThen @root.mainRoll.result mainRoll.result "?"}}
+              </span>
+            </li>
+            <li class="helpResult {{@root.helpRoll.term}} flexrow {{@root.css.result.help}}">
+              <span>{{@root.helpRoll.result}}</span>
+            </li>
+          </ol>
+          <button data-action="trait" class="trait" {{disabled @root.css.buttonDisabled.trait }}>
+            {{localize "Roll Trait"}}
+            <i class="fas fa-dice"></i>
+          </button>
+        </div>
+      </div>
+    </li>
+    {{/each}}
+  </ol>
+  <hr>
+  <div class="dice-rolls">
+    <div class="outcome-container flexrow">
+      <ol class="result {{css.outcome.gm }}">
+        <li class="gmResult d8 flexrow {{css.result.gm}}">
+          <span>
+            {{ifThen gmRoll.result gmRoll.result "?"}}
+          </span>
+        </li>
+        <li class="gmRerollResult d8 flexrow {{css.result.gmReroll}}">
+          <span>{{gmReroll.result}}</span>
+        </li>
+      </ol>
+      <button data-action="narrativium"
+        class="narrativium {{css.rerollButton}}"
+        {{disabled css.buttonDisabled.narrativium }}>
+        {{#if css.rerollButton }}
+        {{localize "DISCWORLD.chat.postRollActions.reroll"}}
+        {{else}}
+        {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
+        {{/if}}
+        <i class="fas fa-dice"></i>
+      </button>
+    </div>
+  </div>
+</div>

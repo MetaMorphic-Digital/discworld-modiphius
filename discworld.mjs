@@ -8,6 +8,8 @@ import CharacterDataModel from "./modules/datamodels/character-schema.mjs";
 import NPCDataModel from "./modules/datamodels/npc-schema.mjs";
 import PartyDataModel from "./modules/datamodels/party-schema.mjs";
 import TraitDataModel from "./modules/datamodels/trait-schema.mjs";
+import GroupTestMessageSchema from "./modules/datamodels/group-test-message-schema.mjs";
+import BaseMessageSchema from "./modules/datamodels/base-message-schema.mjs";
 
 import DiscworldActors from "./modules/collections/actors.mjs";
 import MembersCollection from "./modules/collections/members-collection.mjs";
@@ -88,6 +90,8 @@ Hooks.once("init", () => {
   // Register Chat classes.
   CONFIG.ui.chat = DiscworldChatLog;
   CONFIG.ChatMessage.documentClass = DiscworldMessage;
+  CONFIG.ChatMessage.dataModels.groupTest = GroupTestMessageSchema;
+  CONFIG.ChatMessage.dataModels.baseTest = BaseMessageSchema;
 
   // Register Dice
   for (const Roll of Object.values(Rolls)) CONFIG.Dice.rolls.push(Roll);

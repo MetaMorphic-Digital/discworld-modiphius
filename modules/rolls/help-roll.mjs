@@ -15,6 +15,6 @@ export default class DWHelpRoll extends DWTraitRoll {
     const roll = new DWHelpRoll(term, rollData, { actor, trait });
     await roll.evaluate();
 
-    return message.addRoll(roll);
+    return message.system.addRoll(roll);
   }
 }

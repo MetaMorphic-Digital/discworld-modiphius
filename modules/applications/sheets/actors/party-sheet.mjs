@@ -1,5 +1,5 @@
 import DiscworldActorSheet from "./base-actor-sheet.mjs";
-import GroupTestDialog from "../apps/group-test-dialog.mjs";
+import GroupTestDialog from "../../apps/group-test-dialog.mjs";
 import { templatePath } from "../../../utils/paths.mjs";
 
 /**
