@@ -11,7 +11,6 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
     tag: "dialog",
     form: {
       handler: GroupTestDialog.#onSubmit,
-      closeOnSubmit: true,
     },
     buttons: [
       {
@@ -84,6 +83,12 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
         .filter(Boolean)
         .map((m) => game.actors.get(m)),
     });
+
+    if (!expanded.members.length) {
+      return ui.notifications.warn("DISCWORLD.dialog.groupTest.noMembersSelected", { localize: true });
+    }
+
+    this.close();
     return expanded;
   }
 }

@@ -42,7 +42,8 @@
         "membersLabel": "Select Party Members for Roll:",
         "prepareRoll": "Prepare Roll",
         "title": "Prepare Group Test",
-        "winConditionsLabel": "Success Condition"
+        "winConditionsLabel": "Success Condition",
+        "noMembersSelected": "No Party Members were selected for the Group Test."
       }
     },
 
