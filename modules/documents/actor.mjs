@@ -4,16 +4,18 @@ import DWTraitRoll from "../rolls/trait-roll.mjs";
 
 export default class DiscworldActor extends foundry.documents.Actor {
   /**
-   * @typedef HelpMode
-   * @property {boolean} enabled                  Whether help mode is enabled.
+   * @typedef WaitMode
+   * @property {boolean} enabled                  Whether wait mode is enabled.
+   * @property {'help' | 'trait'} type            The type of wait mode.
    * @property {object} promise                   The promise that resolves to the selected trait.
    * @property {Function|null} promise.resolve    The function to resolve the promise.
    * @property {Function|null} promise.reject     The function to reject the promise.
    */
 
-  /** @type {HelpMode} */
-  helpMode = {
+  /** @type {WaitMode} */
+  waitMode = {
     enabled: false,
+    type: null,
     promise: {
       resolve: null,
       reject: null,
@@ -58,8 +60,8 @@ export default class DiscworldActor extends foundry.documents.Actor {
    */
   async rollTrait(trait, options = {}) {
     // A help roll will handle its own dialog/roll.
-    if (this.helpMode.enabled) {
-      this.helpMode.promise.resolve(trait);
+    if (this.waitMode.enabled) {
+      this.waitMode.promise.resolve(trait);
       return null;
     }
 
@@ -110,17 +112,17 @@ export default class DiscworldActor extends foundry.documents.Actor {
   /* -------------------------------------------------- */
 
   /**
-   * Enable help mode and render the character sheet, which awaits a trait roll.
-   * @param {DiscworldMessage} message    The message that triggered help mode.
+   * Enable wait mode and render the character sheet, which awaits a trait roll.
+   * @param {DiscworldMessage} message    The message that triggered wait mode.
    * @returns {Promise<DiscworldMessage|null>}
    */
-  async resolveHelpMode(message) {
-    this.helpMode.enabled = true;
+  async resolveWaitMode(message) {
+    this.waitMode.enabled = true;
 
     // Check if sheet is already open
     const close = !this.sheet.rendered;
 
-    // Render (or rerender) sheet in help mode.
+    // Render (or rerender) sheet in wait mode.
     await this.sheet.render({ force: true });
 
     let trait;
@@ -129,23 +131,25 @@ export default class DiscworldActor extends foundry.documents.Actor {
     while (!dialogResult) {
       // Wait for the user to select a trait.
       trait = await this.waitForTraitSelection();
-      // If sheet is closed or help mode is cancelled, return.
+      // If sheet is closed or wait mode is cancelled, return.
       if (!trait) return null;
 
       // Present user with the dice selection dialog.
       dialogResult = await this.rollTraitDialog(trait, { parentWindow: this.sheet.window.windowId });
     }
 
-    // Deduct a luck point (we've already determined the character has at least one).
-    this.update({ "system.luck.value": this.system.luck.value - 1 });
+    if (this.waitMode.type === "help") {
+      // Deduct a luck point (we've already determined the character has at least one).
+      this.update({ "system.luck.value": this.system.luck.value - 1 });
+    }
 
     // Close the sheet if it wasn't already opened.
     if (close) this.sheet.close();
 
-    // Leave help mode.
-    this.leaveHelpMode();
+    // Leave wait mode.
+    this.leaveWaitMode();
 
-    // Create the help roll and send to chat.
+    // Create the wait roll and send to chat.
     return DWHelpRoll.createHelpRoll({
       message,
       trait,
@@ -156,41 +160,41 @@ export default class DiscworldActor extends foundry.documents.Actor {
   /* -------------------------------------------------- */
 
   /**
-   * Returns a promise that resolves to the trait selected while in help mode.
-   * Resolves to null if help mode is cancelled.
+   * Returns a promise that resolves to the trait selected while in wait mode.
+   * Resolves to null if wait mode is cancelled.
    * @returns {Promise<Item|null>}    A promise that resolves to the selected
-   *                                  trait, or null if help mode is cancelled.
+   *                                  trait, or null if wait mode is cancelled.
    */
   waitForTraitSelection() {
     return new Promise((resolve) => {
-      this.helpMode.promise.resolve = (trait) => {
+      this.waitMode.promise.resolve = (trait) => {
         resolve(trait);
       };
-      this.helpMode.promise.reject = () => resolve(null);
+      this.waitMode.promise.reject = () => resolve(null);
     });
   }
 
   /* -------------------------------------------------- */
 
   /**
-   * Leave help mode and re-render the character sheet, if open.
+   * Leave wait mode and re-render the character sheet, if open.
    */
-  leaveHelpMode() {
-    this.resetHelpMode();
+  leaveWaitMode() {
+    this.resetWaitMode();
     this.sheet.render();
   }
 
   /* -------------------------------------------------- */
 
   /**
-   * Resets the help mode flag and rejects any pending help promises.
+   * Resets the wait mode flag and rejects any pending wait promises.
    * This is called when the character sheet is closed,
-   * or when the help mode flag is explicitly toggled off.
+   * or when the wait mode flag is explicitly toggled off.
    */
-  resetHelpMode() {
-    this.helpMode.enabled = false;
-    this.helpMode.promise.reject?.();
-    this.helpMode.promise = {
+  resetWaitMode() {
+    this.waitMode.enabled = false;
+    this.waitMode.promise.reject?.();
+    this.waitMode.promise = {
       resolve: null,
       reject: null,
     };
