@@ -1,4 +1,4 @@
-import DISCWORLD from "../config.mjs";
+import { templatePath } from "../utils/paths.mjs";
 
 export default class DWTraitRoll extends foundry.dice.Roll {
   /**
@@ -30,9 +30,7 @@ export default class DWTraitRoll extends foundry.dice.Roll {
   /* -------------------------------------------------- */
 
   /** @inheritdoc */
-  static CHAT_TEMPLATE = /** @type {const} */ (
-    `systems/${DISCWORLD.id}/templates/roll-card.hbs`
-  );
+  static CHAT_TEMPLATE = templatePath("rolls/roll-card.hbs");
 
   /* -------------------------------------------------- */
 
