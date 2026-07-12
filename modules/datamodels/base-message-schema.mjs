@@ -1,19 +1,67 @@
 import DWHelpRoll from "../rolls/help-roll.mjs";
 import DWNarrativiumRoll from "../rolls/narrativium-roll.mjs";
+import DWTraitRoll from "../rolls/trait-roll.mjs";
 
 export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
+  /**
+   * A bunch of reused type definitions.
+   *
+   * @typedef {'gm' | 'player'} UserRoles
+   * @typedef {'winner' | 'loser' | 'tie' | null} OutcomeClassOptions
+   * @typedef {"inactive" | "shift-center"} BaseRollClassOptions
+   * @typedef {"not-visible" | null} RerollClassOptions
+   *
+   * @typedef {object} RollContext
+   * @property {DWTraitRoll} [mainRoll]
+   * @property {DWHelpRoll} [helpRoll]
+   * @property {DWNarrativiumRoll} [gmRoll]
+   * @property {DWNarrativiumRoll} [gmReroll]
+   *
+   * @typedef {object} CssData
+   * @property {object} css.buttonDisabled
+   * @property {boolean} css.buttonDisabled.help
+   * @property {boolean} css.buttonDisabled.narrativium
+   * @property {"reroll" | null} css.rerollButton
+   * @property {object} css.result
+   * @property {BaseRollClassOptions} css.result.player
+   * @property {RerollClassOptions} css.result.help
+   * @property {BaseRollClassOptions} css.result.gm
+   * @property {RerollClassOptions} css.result.gmReroll
+   * @property {object} css.outcome
+   * @property {OutcomeClassOptions} css.outcome.gm
+   * @property {OutcomeClassOptions} css.outcome.player
+   *
+   * @typedef {RollContext & {css: CssData}} MessageContext
+   */
+
+  /* -------------------------------------------------- */
+
   /** @inheritdoc */
   static defineSchema() {
     return {};
   }
 
+  /* -------------------------------------------------- */
+
+  /**
+   * The rolls in the parent ChatMessage.
+   * @type {Array<DWTraitRoll | DWHelpRoll | DWNarrativiumRoll>}
+   */
   get rolls() {
     return this.parent.rolls;
   }
 
+  /* -------------------------------------------------- */
+
+  /**
+   * The template to use for the `content` of the parent ChatMessage.
+   * @type {string}
+   */
   get template() {
     return this.mainRoll?.template;
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * The main roll of the chat message (null if message is not a Roll type).
@@ -62,6 +110,24 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
         (roll) => (roll instanceof DWNarrativiumRoll) && roll.options.reroll,
       ) || null
     );
+  }
+
+  /* ------------------------------------------------- */
+
+  /** @inheritdoc */
+  async _preCreate(data, options, user) {
+    if ((data.type !== "groupTest") && (!this.parent.rolls.length || !(this.parent.rolls[0] instanceof DWTraitRoll)))
+      return super._preCreate(data, options, user);
+
+    const chatData = await this._prepareContext();
+    const content = await foundry.applications.handlebars.renderTemplate(
+      this.template,
+      chatData,
+    );
+
+    foundry.utils.mergeObject(data, { content });
+    return super._preCreate(data, options, user);
+
   }
 
   /* -------------------------------------------------- */
