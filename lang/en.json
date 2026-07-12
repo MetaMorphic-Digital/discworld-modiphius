@@ -43,7 +43,7 @@
         "prepareRoll": "Prepare Roll",
         "title": "Prepare Group Test",
         "winConditionsLabel": "Success Condition",
-        "noMembersSelected": "No Party Members were selected for the Group Test."
+        "tooFewMembers": "Select at least two party members for the Group Test."
       }
     },
 

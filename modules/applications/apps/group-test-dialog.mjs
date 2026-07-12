@@ -83,8 +83,8 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
         }, {}),
     });
 
-    if (!Object.keys(expanded.members).length) {
-      return ui.notifications.warn("DISCWORLD.dialog.groupTest.noMembersSelected", { localize: true });
+    if (!(Object.keys(expanded.members).length > 1)) {
+      return ui.notifications.warn("DISCWORLD.dialog.groupTest.tooFewMembers", { localize: true });
     }
 
     this.close();
