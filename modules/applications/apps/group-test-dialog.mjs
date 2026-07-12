@@ -3,7 +3,6 @@ import { templatePath } from "../../utils/paths.mjs";
 import DiscworldMessage from "../../chat/chat-message.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
-const { StringField } = foundry.data.fields;
 
 export default class GroupTestDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   /** @inheritdoc */
@@ -57,14 +56,8 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
         list: this.options.party.system.members.toSorted(),
       },
       winCondition: {
-        field: new StringField({
-          required: true,
-          choices: {
-            highestWins: _loc("DISCWORLD.dialog.groupTest.highestWins"),
-            lowestWins: _loc("DISCWORLD.dialog.groupTest.lowestWins"),
-          },
-          initial: "highestWins",
-        }),
+        field:
+          CONFIG.ChatMessage.dataModels.groupTest.schema.getField("winCondition"),
         name: "winCondition",
         label: _loc("DISCWORLD.dialog.groupTest.winConditionsLabel"),
       },

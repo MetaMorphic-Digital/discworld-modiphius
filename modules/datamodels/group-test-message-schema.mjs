@@ -3,6 +3,7 @@ import BaseMessageSchema from "./base-message-schema.mjs";
 import { templatePath } from "../utils/paths.mjs";
 import DWTraitRoll from "../rolls/trait-roll.mjs";
 import DWHelpRoll from "../rolls/help-roll.mjs";
+import DISCWORLD from "../config.mjs";
 
 const { StringField } = foundry.data.fields;
 
@@ -13,10 +14,7 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
       groupMembers: new MembersField(),
       winCondition: new StringField({
         required: true,
-        choices: {
-          highestWins: _loc("DISCWORLD.dialog.groupTest.highestWins"),
-          lowestWins: _loc("DISCWORLD.dialog.groupTest.lowestWins"),
-        },
+        choices: () => DISCWORLD.groupTestConditions,
         initial: "highestWins",
       }),
     };

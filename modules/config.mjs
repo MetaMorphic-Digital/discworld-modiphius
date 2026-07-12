@@ -42,6 +42,11 @@ const DISCWORLD = {
     npc: "TYPES.Actor.npc",
     party: "TYPES.Actor.party",
   },
+
+  groupTestConditions: {
+    highestWins: "DISCWORLD.dialog.groupTest.highestWins",
+    lowestWins: "DISCWORLD.dialog.groupTest.lowestWins",
+  },
 };
 
 export default DISCWORLD;
