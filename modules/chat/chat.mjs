@@ -1,4 +1,5 @@
 import DWNarrativiumRoll from "../rolls/narrativium-roll.mjs";
+import DWTraitRoll from "../rolls/trait-roll.mjs";
 
 /**
  * The Discworld Chat Log. We extend this class to add custom button listeners.
@@ -7,10 +8,19 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
     actions: {
-      narrativium: DiscworldChatLog.#onRollNarrativium,
       help: DiscworldChatLog.#onHelp,
+      trait: DiscworldChatLog.#onRollTrait,
+      narrativium: DiscworldChatLog.#onRollNarrativium,
     },
   };
+
+  /* -------------------------------------------------- */
+
+  static async #onRollTrait(event, target) {
+    const { message } = DiscworldChatLog.getClickedMessageData(event, target);
+    console.info(message);
+    DWTraitRoll.createBaseRoll;
+  }
 
   /* -------------------------------------------------- */
 
