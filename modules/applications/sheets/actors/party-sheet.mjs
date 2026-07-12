@@ -1,4 +1,5 @@
 import DiscworldActorSheet from "./base-actor-sheet.mjs";
+import GroupTestDialog from "../apps/group-test-dialog.mjs";
 import { templatePath } from "../../../utils/paths.mjs";
 
 /**
@@ -13,6 +14,7 @@ export default class PartySheet extends DiscworldActorSheet {
       placeMembers: PartySheet.#placeMembers,
       removeMember: PartySheet.#removeMember,
       showMember: PartySheet.#showMember,
+      prepareGroupRoll: PartySheet.#prepareGroupRoll,
     },
   };
 
@@ -45,6 +47,7 @@ export default class PartySheet extends DiscworldActorSheet {
 
     context.header = await this.#prepareHeader();
     context.members = await this.#prepareMembers();
+    console.log(context, this.id);
 
     return context;
   }
@@ -72,10 +75,7 @@ export default class PartySheet extends DiscworldActorSheet {
     const members = [];
     for (const member of this.document.system.members) {
       const ctx = { ...member };
-      const { recoveries, stamina } = member.actor.system;
       Object.assign(ctx, {
-        recoveries,
-        stamina,
         rootId: [this.id, member.actor.id].join("-"),
         canView: member.actor.testUserPermission(game.user, "OBSERVER"),
       });
@@ -167,5 +167,19 @@ export default class PartySheet extends DiscworldActorSheet {
     const id = target.closest("[data-member-id]").dataset.memberId;
     const actor = game.actors.get(id);
     actor.sheet.render({ force: true });
+  }
+
+  /**
+   * Prepare a group roll by creating a GroupTestDialog.
+   * @this PartySheet
+   * @param {PointerEvent} event    The initiating click event.
+   * @param {HTMLElement} target    The capturing html element that defined the [data-action].
+   */
+  static #prepareGroupRoll(event, target) {
+    const { windowId } = this.window;
+    return new GroupTestDialog({
+      party: this.document,
+      renderOptions: { window: { windowId } },
+    }).render(true);
   }
 }

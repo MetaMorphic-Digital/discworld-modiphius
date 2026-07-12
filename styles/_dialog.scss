@@ -1,3 +1,4 @@
+@use "utils/accessibility" as *;
 @use "utils/callouts" as *;
 @use "utils/dice" as *;
 @use "utils/trait-quote" as *;
@@ -32,5 +33,53 @@ dialog.discworld {
     }
 
     @include dice-backgrounds;
+  }
+
+  &.group-test {
+    fieldset {
+      @include callout-primary;
+
+      .form-group > label,
+      .form-group > .label {
+        font-family: getVar("font", "trattatello");
+        font-size: 1.3em;
+        font-weight: normal;
+      }
+
+      .multi-checkbox {
+        justify-content: center;
+        gap: 8px;
+
+        label.member {
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          align-items: center;
+          gap: 4px;
+
+          font-size: 1em;
+          text-align: center;
+
+          filter: opacity(0.5);
+
+          &:has(input:checked) {
+            filter: none;
+          }
+
+          input {
+            @include screen-reader-only;
+          }
+
+          img {
+            width: 60px;
+          }
+        }
+      }
+    }
+
+    footer button {
+      justify-content: center;
+    }
   }
 }

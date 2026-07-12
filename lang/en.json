@@ -34,7 +34,16 @@
         "title": "Deleting a Trait!"
       },
 
-      "rollTrait.title": "Rolling a Trait!"
+      "rollTrait.title": "Rolling a Trait!",
+      "groupTest": {
+        "cancel": "Cancel",
+        "highestWins": "Use Highest Roll",
+        "lowestWins": "Use Lowest Roll",
+        "membersLabel": "Select Party Members for Roll:",
+        "prepareRoll": "Prepare Roll",
+        "title": "Prepare Group Test",
+        "winConditionsLabel": "Success Condition"
+      }
     },
 
     "roll": {
@@ -51,6 +60,11 @@
           "label": "Story Prompt"
         }
       }
+    },
+
+    "party": {
+      "groupRoll": "Group Roll",
+      "placeMembers": "Place Members"
     },
 
     "sheet": {
