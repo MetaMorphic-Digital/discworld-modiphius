@@ -37,4 +37,14 @@ export default class MembersCollection extends foundry.utils.Collection {
     }
     return this.#documentsByType;
   }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * The members sorted by name.
+   * @type {DiscworldCharacter[]}
+   */
+  toSorted() {
+    return Array.from(this).sort((a, b) => a.actor._source.name.localeCompare(b.actor._source.name));
+  }
 }

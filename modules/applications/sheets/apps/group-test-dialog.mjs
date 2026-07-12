@@ -1,7 +1,7 @@
 import { templatePath } from "../../../utils/paths.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
-const { StringField, SetField, DocumentIdField } = foundry.data.fields;
+const { StringField } = foundry.data.fields;
 
 export default class GroupTestDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   /** @inheritdoc */
@@ -52,7 +52,7 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
       members: {
         name: "members",
         label: _loc("DISCWORLD.dialog.groupTest.membersLabel"),
-        list: this.options.party.system.members,
+        list: this.options.party.system.members.toSorted(),
       },
       winCondition: {
         field: new StringField({

@@ -73,7 +73,7 @@ export default class PartySheet extends DiscworldActorSheet {
    */
   async #prepareMembers() {
     const members = [];
-    for (const member of this.document.system.members) {
+    for (const member of this.document.system.members.toSorted()) {
       const ctx = { ...member };
       Object.assign(ctx, {
         rootId: [this.id, member.actor.id].join("-"),
@@ -81,7 +81,7 @@ export default class PartySheet extends DiscworldActorSheet {
       });
       members.push(ctx);
     }
-    return members.sort((a, b) => a.actor._source.name.localeCompare(b.actor._source.name));
+    return members;
   }
 
   /* -------------------------------------------------- */
