@@ -82,15 +82,16 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
    * @returns {DiscworldActor|null}
    */
   getActorForRoll(event, target) {
-    const { message } = DiscworldChatLog.getClickedMessageData(event, target);
-    if (message.system.helpRoll) return;
+    const { message, memberId } = DiscworldChatLog.getClickedMessageData(event, target);
+    if (memberId && (target.dataset.action === "trait")) return game.actors.get(memberId);
+    if (message.system.helpRoll) return null;
 
-    if (!canvas.ready) return;
+    if (!canvas.ready) return null;
 
     const controlledTokens = canvas.tokens.controlled;
     if (controlledTokens.length > 1) {
       ui.notifications.warn("DISCWORLD.chat.warning.singleTokenSelect", { localize: true });
-      return;
+      return null;
     }
 
     // Get the Actor from either the selected Token, or the User's character.
@@ -99,7 +100,7 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
 
     if (!actor) {
       ui.notifications.warn("DISCWORLD.chat.warning.actorNotFound", { localize: true });
-      return;
+      return null;
     }
 
     return actor;
@@ -110,7 +111,8 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
   /**
    * @typedef ClickedMessageData
    * @property {DiscworldChatMessage} message    The clicked chat message.
-   * @property {boolean} reroll         Whether the message was marked as a reroll.
+   * @property {boolean} reroll                  Whether the message was marked as a reroll.
+   * @property {string} memberId                 The ID of the Actor that initiated the roll.
    */
 
   /**
@@ -125,6 +127,8 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
 
     const message = game.messages.get(messageElem.dataset.messageId);
     const reroll = buttonElem.classList.contains("reroll");
-    return { message, reroll };
+
+    const memberId = target.closest("[data-member-id]")?.getAttribute("data-member-id");
+    return { message, reroll, memberId };
   }
 }
