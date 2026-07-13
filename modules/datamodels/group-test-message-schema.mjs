@@ -77,4 +77,40 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
     Object.assign(context, newRollData);
     return context;
   }
+
+  /**
+   * Aggregate the results of all Trait (help and non-help) rolls in this group roll.
+   * Then, evaluate the outcome of the entire group test.
+   * @inheritdoc
+   */
+  outcome({ gmRoll, gmReroll } = {}) {
+    if (!gmRoll?.total) {
+      return { status: null, winner: null };
+    }
+
+    const traitRolls = Array.from(this.traitRolls);
+    let mainTraitRoll = null;
+    if (traitRolls.length) {
+      mainTraitRoll = traitRolls.reduce?.(([_, acc], [__, { roll }]) => {
+        if (this.winCondition === "lowestWins") {
+          return roll.total < acc.roll.total ? roll : acc.roll;
+        }
+        return roll.total > acc.roll.total ? roll : acc.roll;
+      });
+    }
+
+    const finalGmTotal = gmReroll?.total ?? gmRoll?.total;
+    const finalPlayerTotal = mainTraitRoll?.total;
+
+    if (finalGmTotal === finalPlayerTotal) {
+      return { status: "tie", winner: null };
+    }
+
+    const gmWins = finalGmTotal > finalPlayerTotal;
+
+    return {
+      status: "win",
+      winner: gmWins ? "gm" : "player",
+    };
+  }
 }
