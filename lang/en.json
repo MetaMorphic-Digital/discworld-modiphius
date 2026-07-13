@@ -80,7 +80,10 @@
         }
       },
 
-      "leaveHelpMode": "Leave Help Mode",
+      "leaveWaitMode": {
+        "help": "Leave Help Mode",
+        "trait": "Leave Trait Selection Mode"
+      },
       "rollNameAsTrait": "Roll Name As Trait",
       "toggleSheetMode": "Toggle Between Locked & Edit Mode",
       "tabs": {

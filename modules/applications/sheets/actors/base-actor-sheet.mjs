@@ -96,7 +96,8 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
     context.traitTypeTranslationMap = traitActorGroup;
 
     // Wait mode
-    context.waitMode = this.isWaitMode;
+    context.isWaitMode = this.isWaitMode;
+    context.waitModeType = this.actor.waitMode.isHelpRoll ? "help" : "trait";
 
     return context;
   }

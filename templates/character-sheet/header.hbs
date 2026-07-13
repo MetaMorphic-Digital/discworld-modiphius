@@ -11,10 +11,10 @@
         <i class="fas fa-dice"></i>
       </a>
 
-      {{!-- Leave Help Mode --}}
-      <a class="leave-wait-mode {{#unless waitMode }} not-visible {{/unless}}" data-action="leaveWaitMode">
+      {{!-- Leave Wait Mode --}}
+      <a class="leave-wait-mode {{ifThen (not isWaitMode) "not-visible" ""}}" data-action="leaveWaitMode">
         <i class="fas fa-x"></i>
-        {{localize "DISCWORLD.sheet.leaveHelpMode"}}
+        {{localize (concat "DISCWORLD.sheet.leaveWaitMode." waitModeType) }}
       </a>
 
       {{!-- Toggle Switch --}}
