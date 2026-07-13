@@ -35,8 +35,16 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
 
   /* ------------------------------------------------- */
 
+  /**
+   * The Trait (non-Help) Rolls in the parent ChatMessage.
+   * @type {Map<string, { actor: DiscworldCharacter, roll: DWTraitRoll }>}
+   */
   get traitRolls() {
-    return this.rolls.filter((roll) => (roll instanceof DWTraitRoll) && !roll.isHelpRoll);
+    return this.rolls.filter((roll) => (roll instanceof DWTraitRoll) && !roll.isHelpRoll).reduce(
+      (acc, roll) => {
+        acc.set(roll.actor.id, { actor: roll.actor, roll });
+        return acc;
+      }, new Map());
   }
 
   /* ------------------------------------------------- */
@@ -52,6 +60,11 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
     const context = await super._prepareContext(dataOverrides);
     context.members = this.groupMembers.toSorted();
     context.winCondition = this.winCondition;
+
+    for (const member of context.members) {
+      const memberId = member.actor.id;
+      member.mainRoll = this.traitRolls.get(memberId)?.roll ?? dataOverrides[memberId]?.mainRoll ?? null;
+    }
 
     const newRollData = Object.assign(
       {

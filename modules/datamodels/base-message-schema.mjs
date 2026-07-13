@@ -153,7 +153,10 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
 
     const chatDataOverrides = {};
     switch (true) {
-      case roll.isHelpRoll:
+      case (roll instanceof DWTraitRoll) && !roll.isHelpRoll:
+        Object.assign(chatDataOverrides, { [roll.actor.id]: { mainRoll: roll } });
+        break;
+      case (roll instanceof DWTraitRoll) && roll.isHelpRoll:
         chatDataOverrides.helpRoll = roll;
         break;
 

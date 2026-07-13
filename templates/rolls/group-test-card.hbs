@@ -11,7 +11,7 @@
           <ol class="result {{@root.css.outcome.player}}">
             <li class="playerResult d6 {{mainRoll.term}} flexrow {{@root.css.result.player}}">
               <span>
-                {{ifThen @root.mainRoll.result mainRoll.result "?"}}
+                {{ifThen mainRoll.result mainRoll.result "?"}}
               </span>
             </li>
             <li class="helpResult {{@root.helpRoll.term}} flexrow {{@root.css.result.help}}">
