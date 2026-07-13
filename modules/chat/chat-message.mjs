@@ -1,5 +1,9 @@
-import DWHelpRoll from "../rolls/help-roll.mjs";
 import transitionClass from "../utils/animations.mjs";
+
+/**
+ * @import DWTraitRoll from "../rolls/trait-roll.mjs";
+ * @import DWNarrativiumRoll from "../rolls/narrativium-roll.mjs";
+ */
 
 /**
  * Discworld chat message class.
@@ -21,11 +25,11 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
 
   /**
    * Delegates chat animation of a roll result, based on the type of roll.
-   * @param {DWHelpRoll | DWNarrativiumRoll} roll   The roll to animate.
+   * @param {DWTraitRoll | DWNarrativiumRoll} roll   The roll to animate.
    * @returns {Promise<void>}
    */
   async animateRoll(roll) {
-    if (roll instanceof DWHelpRoll) return this.animateHelp(roll);
+    if (roll.isHelpRoll) return this.animateHelp(roll);
     return this.animateNarrativium(roll);
   }
 
@@ -33,7 +37,7 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
 
   /**
    * Handles animation of a Help roll.
-   * @param {DWHelpRoll} roll   The roll to animate.
+   * @param {DWTraitRoll} roll   The roll to animate.
    * @returns {Promise<void>}
    */
   async animateHelp(roll) {

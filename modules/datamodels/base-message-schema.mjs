@@ -1,4 +1,3 @@
-import DWHelpRoll from "../rolls/help-roll.mjs";
 import DWNarrativiumRoll from "../rolls/narrativium-roll.mjs";
 import DWTraitRoll from "../rolls/trait-roll.mjs";
 
@@ -13,7 +12,7 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
    *
    * @typedef {object} RollContext
    * @property {DWTraitRoll} [mainRoll]
-   * @property {DWHelpRoll} [helpRoll]
+   * @property {DWTraitRoll} [helpRoll]
    * @property {DWNarrativiumRoll} [gmRoll]
    * @property {DWNarrativiumRoll} [gmReroll]
    *
@@ -45,7 +44,7 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
 
   /**
    * The rolls in the parent ChatMessage.
-   * @type {Array<DWTraitRoll | DWHelpRoll | DWNarrativiumRoll>}
+   * @type {Array<DWTraitRoll | DWNarrativiumRoll>}
    */
   get rolls() {
     return this.parent.rolls;
@@ -78,10 +77,10 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
 
   /**
    * The help roll of the chat message (null if Help has not been rolled).
-   * @type {DWHelpRoll | null}
+   * @type {DWTraitRoll | null}
    */
   get helpRoll() {
-    return this.rolls.find((roll) => roll instanceof DWHelpRoll) || null;
+    return this.rolls.find((roll) => roll.isHelpRoll) || null;
   }
 
   /* -------------------------------------------------- */
@@ -135,7 +134,7 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
   /**
    * Add a roll to the chat message. Animate the 3d dice (if present),
    * animate the chat message, finally, update the database.
-   * @param {DWHelpRoll | DWNarrativiumRoll} roll   The roll to add.
+   * @param {DWTraitRoll | DWNarrativiumRoll} roll   The roll to add.
    * @returns {Promise<DiscworldMessage>}
    */
   async addRoll(roll) {
@@ -154,7 +153,7 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
 
     const chatDataOverrides = {};
     switch (true) {
-      case roll instanceof DWHelpRoll:
+      case roll.isHelpRoll:
         chatDataOverrides.helpRoll = roll;
         break;
 

@@ -1,12 +1,10 @@
 import DISCWORLD from "../config.mjs";
-import DWHelpRoll from "../rolls/help-roll.mjs";
 import DWTraitRoll from "../rolls/trait-roll.mjs";
 
 export default class DiscworldActor extends foundry.documents.Actor {
   /**
    * @typedef WaitMode
    * @property {boolean} enabled                  Whether wait mode is enabled.
-   * @property {'help' | 'trait'} type            The type of wait mode.
    * @property {object} promise                   The promise that resolves to the selected trait.
    * @property {Function|null} promise.resolve    The function to resolve the promise.
    * @property {Function|null} promise.reject     The function to reject the promise.
@@ -15,7 +13,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
   /** @type {WaitMode} */
   waitMode = {
     enabled: false,
-    type: null,
+    isHelpRoll: false,
     promise: {
       resolve: null,
       reject: null,
@@ -51,7 +49,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
 
   /**
    * Handles the logic for rolling a trait from the character sheet.
-   * If help mode is enabled, the trait is passed to the help promise.
+   * If wait mode is enabled, the trait is passed to the wait promise.
    * Otherwise, a dialog is shown asking the user to select a die to roll.
    * @param {Item|TraitLike} trait    The trait to be rolled.
    * @param {object} [options]
@@ -59,7 +57,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
    * @returns {Promise<DiscworldMessage|null>}
    */
   async rollTrait(trait, options = {}) {
-    // A help roll will handle its own dialog/roll.
+    // A wait roll will handle its own dialog/roll.
     if (this.waitMode.enabled) {
       this.waitMode.promise.resolve(trait);
       return null;
@@ -114,10 +112,12 @@ export default class DiscworldActor extends foundry.documents.Actor {
   /**
    * Enable wait mode and render the character sheet, which awaits a trait roll.
    * @param {DiscworldMessage} message    The message that triggered wait mode.
+   * @param {boolean} [isHelpRoll=false]  Whether this is a help roll.
    * @returns {Promise<DiscworldMessage|null>}
    */
-  async resolveWaitMode(message) {
+  async resolveWaitMode(message, isHelpRoll) {
     this.waitMode.enabled = true;
+    this.waitMode.isHelpRoll = isHelpRoll;
 
     // Check if sheet is already open
     const close = !this.sheet.rendered;
@@ -138,8 +138,8 @@ export default class DiscworldActor extends foundry.documents.Actor {
       dialogResult = await this.rollTraitDialog(trait, { parentWindow: this.sheet.window.windowId });
     }
 
-    if (this.waitMode.type === "help") {
-      // Deduct a luck point (we've already determined the character has at least one).
+    // Deduct a luck point (we've already determined the character has at least one).
+    if ((this.type === "character") && isHelpRoll) {
       this.update({ "system.luck.value": this.system.luck.value - 1 });
     }
 
@@ -149,11 +149,13 @@ export default class DiscworldActor extends foundry.documents.Actor {
     // Leave wait mode.
     this.leaveWaitMode();
 
-    // Create the wait roll and send to chat.
-    return DWHelpRoll.createHelpRoll({
+    // Create the roll and send to chat.
+    return DWTraitRoll.createWaitRoll({
+      term: dialogResult,
+      actor: this,
       message,
       trait,
-      term: dialogResult,
+      isHelpRoll,
     });
   }
 
@@ -193,6 +195,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
    */
   resetWaitMode() {
     this.waitMode.enabled = false;
+    this.waitMode.isHelpRoll = false;
     this.waitMode.promise.reject?.();
     this.waitMode.promise = {
       resolve: null,

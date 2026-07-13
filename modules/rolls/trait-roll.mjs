@@ -74,6 +74,15 @@ export default class DWTraitRoll extends foundry.dice.Roll {
   /* -------------------------------------------------- */
 
   /**
+   * Whether this is a help roll.
+   * @type {boolean}
+   */
+  get isHelpRoll() {
+    return this.options.isHelpRoll ?? false;
+  }
+  /* -------------------------------------------------- */
+
+  /**
    * Create a base Trait roll and send to chat.
    * @param {DiceTermOptions} formula       The roll formula.
    * @param {object} [options]              The options to pass to the `DiscworldRoll` constructor.
@@ -88,5 +97,25 @@ export default class DWTraitRoll extends foundry.dice.Roll {
       speaker: getDocumentClass("ChatMessage").getSpeaker({ actor: options.actor }),
       type: "baseTest",
     });
+  }
+
+  /* ------------------------------------------------- */
+
+  /**
+   * Create a roll that responds to a Wait Mode activation.
+   * @param {object} options
+   * @param {DiceTermOptions} options.term        The term to be rolled.
+   * @param {DiscworldCharacter} options.actor    The Actor being rolled for.
+   * @param {Item} options.trait                  The trait associated with this roll.
+   * @param {DiscworldMessage} options.message    The chat message to update.
+   * @param {boolean} options.isHelpRoll          Whether this is a help roll.
+   * @returns {Promise<DiscworldMessage>}
+   */
+  static async createWaitRoll({ term, actor, trait, message, isHelpRoll }) {
+    const rollData = actor?.getRollData() ?? {};
+    const roll = new DWTraitRoll(term, rollData, { actor, trait, isHelpRoll });
+    await roll.evaluate();
+
+    return message.system.addRoll(roll);
   }
 }
