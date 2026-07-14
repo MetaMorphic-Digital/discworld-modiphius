@@ -3,6 +3,7 @@ import DISCWORLD from "./modules/config.mjs";
 import * as utils from "./modules/utils/_module.mjs";
 import preloadTemplates, { registerHelpers } from "./modules/utils/handlebars.mjs";
 import registerKeybindings from "./modules/utils/keybindings.mjs";
+import registerSettings from "./modules/utils/settings.mjs";
 
 import CharacterDataModel from "./modules/datamodels/character-schema.mjs";
 import NPCDataModel from "./modules/datamodels/npc-schema.mjs";
@@ -13,6 +14,7 @@ import BaseMessageSchema from "./modules/datamodels/base-message-schema.mjs";
 
 import DiscworldActors from "./modules/collections/actors.mjs";
 import MembersCollection from "./modules/collections/members-collection.mjs";
+import DiscworldActorDirectory from "./modules/applications/sidebar/tabs/actors.mjs";
 
 import DiscworldChatLog from "./modules/chat/chat.mjs";
 import DiscworldMessage from "./modules/chat/chat-message.mjs";
@@ -87,6 +89,9 @@ Hooks.once("init", () => {
     makeDefault: true,
   });
 
+  // Register Actor Directory.
+  CONFIG.ui.actors = DiscworldActorDirectory;
+
   // Register Chat classes.
   CONFIG.ui.chat = DiscworldChatLog;
   CONFIG.ChatMessage.documentClass = DiscworldMessage;
@@ -103,6 +108,7 @@ Hooks.once("init", () => {
   });
 
   // Run various utils.
+  registerSettings();
   registerKeybindings();
   registerHelpers();
   preloadTemplates();

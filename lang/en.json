@@ -65,7 +65,11 @@
 
     "party": {
       "groupRoll": "Group Roll",
-      "placeMembers": "Place Members"
+      "placeMembers": "Place Members",
+      "context": {
+        "assignPrimaryParty": "Assign Primary Party",
+        "removePrimaryParty": "Remove Primary Party"
+      }
     },
 
     "sheet": {
