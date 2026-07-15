@@ -8,19 +8,49 @@ const { StringField } = foundry.data.fields;
 
 export default class GroupTestMessageSchema extends BaseMessageSchema {
   /**
+   * @import { BaseRollClassOptions, OutcomeClassOptions, RerollClassOptions } from "./base-message-schema.mjs"
+   *
+   * @typedef {object} RootCssData
+   * @prop {object} narrativiumButton
+   * @prop {boolean} narrativiumButton.disabled
+   * @prop {"reroll"|null} narrativiumButton.class
+   * @prop {object} result
+   * @prop {BaseRollClassOptions} result.gm
+   * @prop {RerollClassOptions} result.gmReroll
+   * @prop {object} outcome
+   * @prop {OutcomeClassOptions} outcome.player
+   * @prop {OutcomeClassOptions} outcome.gm
+   *
    * @typedef {object} MemberCssData
    * @prop {object} helpButton
    * @prop {boolean} helpButton.disabled
    * @prop {boolean} helpButton.hidden
    * @prop {object} result
-   * @prop {"inactive" | "shift-center"} result.trait
-   * @prop {"not-visible" | null} result.help
+   * @prop {BaseRollClassOptions} result.trait
+   * @prop {RerollClassOptions} result.help
    *
    * @typedef {object} MemberContext
    * @prop {DiscworldCharacter} actor
+   * @prop {MemberCssData} css
    * @prop {DWTraitRoll|null} mainRoll
    * @prop {DWTraitRoll|null} helpRoll
-   * @prop {MemberCssData} css
+   *
+   * @typedef {{actor: DiscworldCharacter, roll: DWTraitRoll}} RollData
+   * @typedef {Map<string, RollData>} RollMap    Mapping of groupMember id to roll data
+   *
+   * @typedef {object} GroupRollContext
+   * @prop {MemberContext[]} members
+   * @prop {"lowestWins" | "highestWins"} winCondition
+   * @prop {RollMap} traitRolls
+   * @prop {RollMap} helpRolls
+   * @prop {DWTraitRoll|null} gmRoll
+   * @prop {DWTraitRoll|null} gmReroll
+   *
+   * @typedef GroupOverrideInner
+   * @prop {DWTraitRoll|null} mainRoll
+   * @prop {DWTraitRoll|null} helpRoll
+   *
+   * @typedef {Record<string, GroupOverrideInner} GroupDataOverrides
    */
 
   /** @inheritdoc */
@@ -52,57 +82,90 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
   /* ------------------------------------------------- */
 
   /**
-   * The Trait (non-Help) Rolls in the parent ChatMessage.
-   * @type {Map<string, { actor: DiscworldCharacter, roll: DWTraitRoll }>}
+   * @inheritdoc
+   * @param {GroupDataOverrides} [dataOverrides]
+   * @returns {Promise<GroupRollContext>}
    */
-  get traitRolls() {
-    return this.rolls.filter((roll) => (roll instanceof DWTraitRoll) && !roll.isHelpRoll).reduce(
-      (acc, roll) => {
-        acc.set(roll.options.groupMember, { actor: roll.actor, roll });
-        return acc;
-      }, new Map());
+  async _prepareContext(dataOverrides = {}) {
+    const { traitRolls, helpRolls } = this.getRollsByType(dataOverrides);
+    const context = {
+      members: this.groupMembers.toSorted(),
+      winCondition: this.winCondition,
+      traitRolls,
+      helpRolls,
+      gmRoll: this.gmRoll,
+      gmReroll: this.gmReroll,
+    };
+
+    Object.assign(context, dataOverrides);
+
+    for (const member of context.members) {
+      const memberId = member.actor.id;
+      member.mainRoll = context.traitRolls.get(memberId)?.roll ?? null;
+      member.helpRoll = context.helpRolls.get(memberId)?.roll ?? null;
+      member.css = this._prepareMemberCssData(member);
+    }
+
+    context.css = this._prepareRootCssData(context);
+
+    return context;
   }
 
   /* ------------------------------------------------- */
 
   /**
-   * The Help Rolls in the parent ChatMessage.
-   * @type {Map<string, { actor: DiscworldCharacter, roll: DWTraitRoll }>}
+   * Get traitRolls and helpRolls all in one go, taking overrides into account.
+   * @param {GroupDataOverrides} dataOverrides
+   * @returns {Pick<GroupRollContext, "traitRolls" | "helpRolls">}}
    */
-  get helpRolls() {
-    return this.rolls.filter((roll) => (roll instanceof DWTraitRoll) && roll.isHelpRoll).reduce(
-      (acc, roll) => {
+  getRollsByType(dataOverrides) {
+    let [traitRolls, helpRolls] = this.rolls.filter((roll) => roll instanceof DWTraitRoll).partition((roll) => roll.isHelpRoll);
+
+    const toRollMap = (rolls) =>
+      rolls.reduce((acc, roll) => {
         acc.set(roll.options.groupMember, { actor: roll.actor, roll });
         return acc;
-      }, new Map(),
-    );
+      }, new Map());
+
+    traitRolls = toRollMap(traitRolls);
+    helpRolls = toRollMap(helpRolls);
+
+    const addOverrideToMap = (map, roll) => {
+      map.set(roll.options.groupMember, { actor: roll.actor, roll });
+    };
+
+    // Assign overrides.
+    Object.values(dataOverrides).forEach(({ mainRoll, helpRoll }) => {
+      if (mainRoll) addOverrideToMap(traitRolls, mainRoll);
+      if (helpRoll) addOverrideToMap(helpRolls, helpRoll);
+    });
+
+    return { traitRolls, helpRolls };
   }
 
   /* ------------------------------------------------- */
 
-  /** @inheritdoc */
-  async _prepareContext(dataOverrides = {}) {
-    const context = await super._prepareContext(dataOverrides);
-    context.members = this.groupMembers.toSorted();
-    context.winCondition = this.winCondition;
-
-    for (const member of context.members) {
-      const memberId = member.actor.id;
-      member.mainRoll = this.traitRolls.get(memberId)?.roll ?? dataOverrides[memberId]?.mainRoll ?? null;
-      member.helpRoll = this.helpRolls.get(memberId)?.roll ?? dataOverrides[memberId]?.helpRoll ?? null;
-      member.css = this._prepareMemberCssData(member);
-    }
-
-    const newRollData = Object.assign(
-      {
-        traitRolls: this.traitRolls,
-        helpRolls: this.helpRolls,
+  /**
+   * Prepare CSS data for the non-member elements of the template.
+   * @param {Omit<GroupRollContext, "css">} context
+   * @returns {RootCssData}
+   */
+  _prepareRootCssData(context) {
+    const { gmRoll, gmReroll } = context;
+    return {
+      narrativiumButton: {
+        disabled: gmReroll?._evaluated,
+        class: gmRoll?._evaluated ? "reroll" : "",
       },
-      dataOverrides,
-    );
-
-    Object.assign(context, newRollData);
-    return context;
+      result: {
+        gm: gmReroll?._evaluated ? "inactive" : "shift-center",
+        gmReroll: gmReroll?._evaluated ? null : "not-visible",
+      },
+      outcome: {
+        player: this.outcomeClass("player", context),
+        gm: this.outcomeClass("gm", context),
+      },
+    };
   }
 
   /* ------------------------------------------------- */
@@ -131,24 +194,29 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
   /**
    * This is the Trait roll that is being used to determine the outcome
    * of this group test, following rules for taking lowest / highest result.
+   * @param {GroupRollContext} context
    * @returns {DWTraitRoll|null}
    */
-  getPrincipalTraitRoll() {
-    const traitRolls = Array.from(this.traitRolls);
+  getPrincipalTraitRoll(context) {
+    const traitRolls = Array.from(context.traitRolls);
 
     let principalTraitRoll = null;
     for (const [_, { roll }] of traitRolls) {
+      const helpRoll = context.helpRolls.get(roll.options.groupMember)?.roll;
+      const finalRoll = helpRoll ?? roll;
+
       if (!principalTraitRoll) {
-        principalTraitRoll = roll;
-        continue;
-      }
-      if ((this.winCondition === "lowestWins") && (roll.total < principalTraitRoll.total)) {
-        principalTraitRoll = roll;
+        principalTraitRoll = finalRoll;
         continue;
       }
 
-      if ((this.winCondition === "highestWins") && (roll.total > principalTraitRoll.total)) {
-        principalTraitRoll = roll;
+      if ((this.winCondition === "lowestWins") && (finalRoll.total < principalTraitRoll.total)) {
+        principalTraitRoll = finalRoll;
+        continue;
+      }
+
+      if ((this.winCondition === "highestWins") && (finalRoll.total > principalTraitRoll.total)) {
+        principalTraitRoll = finalRoll;
         continue;
       }
     }
@@ -158,18 +226,15 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
 
   /* ------------------------------------------------- */
 
-  /**
-   * Aggregate the results of all Trait (help and non-help) rolls in this group roll.
-   * Then, evaluate the outcome of the entire group test.
-   * @inheritdoc
-   */
-  outcome({ gmRoll, gmReroll } = {}) {
+  /** @inheritdoc */
+  outcome(context) {
+    const { gmRoll, gmReroll } = context;
     if (!gmRoll?.total) {
       return { status: null, winner: null };
     }
 
     const finalGmTotal = gmReroll?.total ?? gmRoll?.total;
-    const finalPlayerTotal = this.getPrincipalTraitRoll()?.total;
+    const finalPlayerTotal = this.getPrincipalTraitRoll(context)?.total;
 
     if (finalGmTotal === finalPlayerTotal) {
       return { status: "tie", winner: null };

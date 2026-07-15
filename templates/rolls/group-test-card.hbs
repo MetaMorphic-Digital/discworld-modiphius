@@ -49,9 +49,9 @@
         </li>
       </ol>
       <button data-action="narrativium"
-        class="narrativium {{css.rerollButton}}"
-        {{disabled css.buttonDisabled.narrativium }}>
-        {{#if css.rerollButton }}
+        class="narrativium {{css.narrativiumButton.class}}"
+        {{disabled css.narrativiumButton.disabled }}>
+        {{#if css.rerollButton.class }}
         {{localize "DISCWORLD.chat.postRollActions.reroll"}}
         {{else}}
         {{localize "DISCWORLD.chat.postRollActions.narrativium"}}

@@ -53,7 +53,7 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
     }
 
     // Wait for a Trait to be rolled.
-    actor.resolveWaitMode(message, { isHelpRoll: true, groupMember: member.id });
+    actor.resolveWaitMode(message, { isHelpRoll: true, groupMember: member?.id });
   }
 
   /* -------------------------------------------------- */

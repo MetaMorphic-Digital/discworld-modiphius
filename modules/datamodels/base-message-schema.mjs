@@ -1,37 +1,38 @@
 import DWNarrativiumRoll from "../rolls/narrativium-roll.mjs";
 import DWTraitRoll from "../rolls/trait-roll.mjs";
 
+/**
+ * A bunch of reused type definitions.
+ *
+ * @typedef {'gm' | 'player'} UserRoles
+ * @typedef {'winner' | 'loser' | 'tie' | null} OutcomeClassOptions
+ * @typedef {"inactive" | "shift-center"} BaseRollClassOptions
+ * @typedef {"not-visible" | null} RerollClassOptions
+ *
+ * @typedef {object} RollContext
+ * @property {DWTraitRoll} [mainRoll]
+ * @property {DWTraitRoll} [helpRoll]
+ * @property {DWNarrativiumRoll} [gmRoll]
+ * @property {DWNarrativiumRoll} [gmReroll]
+ *
+ * @typedef {object} CssData
+ * @property {object} css.buttonDisabled
+ * @property {boolean} css.buttonDisabled.help
+ * @property {boolean} css.buttonDisabled.narrativium
+ * @property {"reroll" | null} css.rerollButton
+ * @property {object} css.result
+ * @property {BaseRollClassOptions} css.result.player
+ * @property {RerollClassOptions} css.result.help
+ * @property {BaseRollClassOptions} css.result.gm
+ * @property {RerollClassOptions} css.result.gmReroll
+ * @property {object} css.outcome
+ * @property {OutcomeClassOptions} css.outcome.gm
+ * @property {OutcomeClassOptions} css.outcome.player
+ *
+ * @typedef {RollContext & {css: CssData}} MessageContext
+ */
+
 export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
-  /**
-   * A bunch of reused type definitions.
-   *
-   * @typedef {'gm' | 'player'} UserRoles
-   * @typedef {'winner' | 'loser' | 'tie' | null} OutcomeClassOptions
-   * @typedef {"inactive" | "shift-center"} BaseRollClassOptions
-   * @typedef {"not-visible" | null} RerollClassOptions
-   *
-   * @typedef {object} RollContext
-   * @property {DWTraitRoll} [mainRoll]
-   * @property {DWTraitRoll} [helpRoll]
-   * @property {DWNarrativiumRoll} [gmRoll]
-   * @property {DWNarrativiumRoll} [gmReroll]
-   *
-   * @typedef {object} CssData
-   * @property {object} css.buttonDisabled
-   * @property {boolean} css.buttonDisabled.help
-   * @property {boolean} css.buttonDisabled.narrativium
-   * @property {"reroll" | null} css.rerollButton
-   * @property {object} css.result
-   * @property {BaseRollClassOptions} css.result.player
-   * @property {RerollClassOptions} css.result.help
-   * @property {BaseRollClassOptions} css.result.gm
-   * @property {RerollClassOptions} css.result.gmReroll
-   * @property {object} css.outcome
-   * @property {OutcomeClassOptions} css.outcome.gm
-   * @property {OutcomeClassOptions} css.outcome.player
-   *
-   * @typedef {RollContext & {css: CssData}} MessageContext
-   */
 
   /* -------------------------------------------------- */
 
@@ -188,20 +189,21 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
    * Prepare the context for rendering a chat message by merging roll data
    * with any provided overrides. Additionally, prepare CSS data for styling
    * the message based on the roll results.
-   * @param {RollContext} [dataOverrides={}]    Roll data for a Roll which has not yet been added
-   *                                            to `ChatMessage#rolls`,but will be on next render.
-   * @returns {Promise<MessageContext>}         The prepared context including Roll and CSS data.
+   * @param {RollContext} [dataOverrides]    Roll data for a Roll which has not yet been added
+   *                                         to `ChatMessage#rolls`, but will be on next render.
+   * @returns {Promise<MessageContext>}      The prepared context including Roll and CSS data.
    */
   async _prepareContext(dataOverrides = {}) {
     const { mainRoll, helpRoll, gmRoll, gmReroll } = this;
-    const rollData = {
+    const context = {
       mainRoll,
       helpRoll,
       gmRoll,
       gmReroll,
     };
 
-    const context = Object.assign(rollData, dataOverrides);
+    // Apply overrides to existing roll data.
+    Object.assign(context, dataOverrides);
     context.css = this._prepareCssData(context);
 
     return context;
@@ -215,24 +217,7 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
    * @returns {CssData}                     The prepared CSS data.
    */
   _prepareCssData(context = {}) {
-    /**
-     * Get the class name for a given section of results.
-     *
-     * @param {UserRoles} userRole      The user role to get the class for.
-     * @returns {OutcomeClassOptions}   The class name for the winner,
-     *                                  or null if the role hasn't been evaluated.
-     */
-    const outcomeClass = (userRole) => {
-      const { status, winner } = this.outcome(context);
-
-      if (!status) return null; // Opposed roll hasn't been fully evaluated.
-
-      if (status === "tie") return "tie";
-      return winner === userRole ? "winner" : "loser";
-    };
-
     const { helpRoll, gmRoll, gmReroll } = context;
-
     return {
       buttonDisabled: {
         help: helpRoll?._evaluated,
@@ -246,8 +231,8 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
         gmReroll: gmReroll?._evaluated ? null : "not-visible",
       },
       outcome: {
-        gm: outcomeClass("gm"),
-        player: outcomeClass("player"),
+        gm: this.outcomeClass("gm", context),
+        player: this.outcomeClass("player", context),
       },
     };
   }
@@ -256,15 +241,17 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
 
   /**
    * Evaluate the outcome of a test based on whether the player or GM/Narrativium won.
-   * @param {RollContext} [context]   The context to evaluate.
+   * @param {RollContext} context   The context to evaluate.
    * @returns {{ status: "tie" | "win" | null, winner: UserRoles | null }}
    */
-  outcome({
-    mainRoll = this.mainRoll,
-    helpRoll = this.helpRoll,
-    gmRoll = this.gmRoll,
-    gmReroll = this.gmReroll,
-  } = {}) {
+  outcome(context) {
+    const {
+      mainRoll = this.mainRoll,
+      helpRoll = this.helpRoll,
+      gmRoll = this.gmRoll,
+      gmReroll = this.gmReroll,
+    } = context;
+
     if (!gmRoll?.total) {
       return { status: null, winner: null };
     }
@@ -282,5 +269,21 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
       status: "win",
       winner: gmWins ? "gm" : "player",
     };
+  }
+
+  /**
+   * Get the class name for a given section of results.
+   * @param {UserRoles} userRole      The user role to get the class for.
+   * @param {RollContext} context     The context to evaluate.
+   * @returns {OutcomeClassOptions}   The class name for the winner,
+   *                                  or null if the role hasn't been evaluated.
+   */
+  outcomeClass(userRole, context) {
+    const { status, winner } = this.outcome(context);
+
+    if (!status) return null; // Opposed roll hasn't been fully evaluated.
+
+    if (status === "tie") return "tie";
+    return winner === userRole ? "winner" : "loser";
   }
 }
