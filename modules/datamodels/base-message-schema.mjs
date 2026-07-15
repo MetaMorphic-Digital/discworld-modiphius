@@ -156,8 +156,10 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
       case (roll instanceof DWTraitRoll) && !roll.isHelpRoll:
         Object.assign(chatDataOverrides, { [roll.options.groupMember]: { mainRoll: roll } });
         break;
+
       case (roll instanceof DWTraitRoll) && roll.isHelpRoll:
         chatDataOverrides.helpRoll = roll;
+        Object.assign(chatDataOverrides, { [roll.options.groupMember]: { helpRoll: roll } });
         break;
 
       case roll instanceof DWNarrativiumRoll:

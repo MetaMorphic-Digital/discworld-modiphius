@@ -1,7 +1,7 @@
 <div class="discworld group-test">
   <header class="trait-container">
     <h4 class="divider">{{localize "DISCWORLD.roll.groupRoll"}}</h4>
-    <h3>{{winCondition}}</h3>
+    <h3>{{localize (concat "DISCWORLD.dialog.groupTest." winCondition)}}</h3>
   </header>
   <ol class="members">
     {{#each members}}
@@ -15,8 +15,8 @@
                 {{ifThen mainRoll.result mainRoll.result "?"}}
               </span>
             </li>
-            <li class="helpResult {{@root.helpRoll.term}} flexrow {{css.result.help}}">
-              <span>{{@root.helpRoll.result}}</span>
+            <li class="helpResult {{helpRoll.term}} flexrow {{css.result.help}}">
+              <span>{{helpRoll.result}}</span>
             </li>
           </ol>
           {{#if css.helpButton.hidden }}

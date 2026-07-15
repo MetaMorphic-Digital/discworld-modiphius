@@ -74,7 +74,7 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
    */
   getAnimationTarget(resultClass, groupMember = null) {
     let selector = `li.${resultClass}`;
-    if (groupMember) selector = `li[data-member-id="${groupMember.id}"] ${selector}`;
+    if (groupMember) selector = `li[data-member-id="${groupMember}"] ${selector}`;
     return this.element.querySelector(selector);
   }
 

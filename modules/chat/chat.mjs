@@ -27,7 +27,7 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
   static async #onRollTrait(event, target) {
     const { message } = DiscworldChatLog.getClickedMessageData(event, target);
     const { actor, member } = this.getActorForRoll(event, target);
-    actor.resolveWaitMode(message, { isHelpMode: false, groupMember: member.id });
+    actor.resolveWaitMode(message, { isHelpRoll: false, groupMember: member.id });
   }
 
   /* -------------------------------------------------- */
@@ -53,7 +53,7 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
     }
 
     // Wait for a Trait to be rolled.
-    actor.resolveWaitMode(message, { isHelpMode: true, groupMember: member.id });
+    actor.resolveWaitMode(message, { isHelpRoll: true, groupMember: member.id });
   }
 
   /* -------------------------------------------------- */
@@ -88,7 +88,7 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
       return { actor: member, member };
     }
 
-    if (message.system.helpRoll) return null;
+    if (!member && message.system.helpRoll) return null;
 
     if (!canvas.ready) return null;
 

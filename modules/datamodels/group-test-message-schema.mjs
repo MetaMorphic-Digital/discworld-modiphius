@@ -65,8 +65,17 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
 
   /* ------------------------------------------------- */
 
+  /**
+   * The Help Rolls in the parent ChatMessage.
+   * @type {Map<string, { actor: DiscworldCharacter, roll: DWTraitRoll }>}
+   */
   get helpRolls() {
-    return this.rolls.filter((roll) => (roll instanceof DWTraitRoll) && roll.isHelpRoll);
+    return this.rolls.filter((roll) => (roll instanceof DWTraitRoll) && roll.isHelpRoll).reduce(
+      (acc, roll) => {
+        acc.set(roll.options.groupMember, { actor: roll.actor, roll });
+        return acc;
+      }, new Map(),
+    );
   }
 
   /* ------------------------------------------------- */
@@ -80,6 +89,7 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
     for (const member of context.members) {
       const memberId = member.actor.id;
       member.mainRoll = this.traitRolls.get(memberId)?.roll ?? dataOverrides[memberId]?.mainRoll ?? null;
+      member.helpRoll = this.helpRolls.get(memberId)?.roll ?? dataOverrides[memberId]?.helpRoll ?? null;
       member.css = this._prepareMemberCssData(member);
     }
 
@@ -107,7 +117,7 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
     return {
       helpButton: {
         disabled: helpRoll?._evaluated,
-        hidden: mainRoll?._evaluated,
+        hidden: !mainRoll?._evaluated,
       },
       result: {
         trait: helpRoll?._evaluated ? "inactive" : "shift-center",
