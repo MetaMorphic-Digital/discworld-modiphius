@@ -10,7 +10,7 @@
       <div class="dice-rolls">
         <div class="outcome-container flexrow">
           <ol class="result {{@root.css.outcome.player}}">
-            <li class="playerResult d6 {{mainRoll.term}} flexrow {{css.result.trait}}">
+            <li class="playerResult {{ifThen mainRoll.term mainRoll.term "d6"}} flexrow {{css.result.trait}}">
               <span>
                 {{ifThen mainRoll.result mainRoll.result "?"}}
               </span>

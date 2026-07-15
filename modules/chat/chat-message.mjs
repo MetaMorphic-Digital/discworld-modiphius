@@ -29,8 +29,19 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
    * @returns {Promise<void>}
    */
   async animateRoll(roll) {
+    if (roll.isGroupRoll && !roll.isHelpRoll) return this.animateGroupTrait(roll);
     if (roll.isHelpRoll) return this.animateHelp(roll);
     return this.animateNarrativium(roll);
+  }
+
+  /* ------------------------------------------------- */
+
+  /**
+   * @param {DWTraitRoll} roll   The roll to animate.
+   */
+  async animateGroupTrait(roll) {
+    const { groupMember } = roll.options;
+    await this.fadeDiceAndTextInOut("playerResult", roll.result, roll.term, groupMember);
   }
 
   /* -------------------------------------------------- */
@@ -109,6 +120,26 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
   async fadeDiceIcon(resultClass, rollResult, rollTerm = null, groupMember) {
     const target = this.getAnimationTarget(resultClass, groupMember);
     target.classList.add(rollTerm);
+    const rerollResultText = target.querySelector("span");
+    rerollResultText.textContent = rollResult;
+    return transitionClass(target, { remove: ["not-visible"] });
+  }
+
+  /* -------------------------------------------------- */
+  /**
+   * Fade the dice icon and text out, then back in with the new result.
+   * @param {"playerResult"} resultClass                            The class name of the roll whose icon/text should be faded.
+   * @param {number} rollResult                                     The new result to display.
+   * @param {"d4" | "d6" | "d10" | "d12" | null} [rollTerm=null]    An additional class name to apply to the dice icon.
+   * @param {string} [groupMember]                                  The id for the member whose roll is being animated.
+   * @returns {Promise<HTMLLIElement>}                              A promise that resolves to the transitioning element
+   *                                                                once the transition has ended.
+   */
+  async fadeDiceAndTextInOut(resultClass, rollResult, rollTerm, groupMember) {
+    const target = this.getAnimationTarget(resultClass, groupMember);
+    await transitionClass(target, { add: ["not-visible"] });
+    target.classList.remove("d6"); // Remove default dice icon class.
+    target.classList.add(rollTerm); // Add new dice icon class.
     const rerollResultText = target.querySelector("span");
     rerollResultText.textContent = rollResult;
     return transitionClass(target, { remove: ["not-visible"] });

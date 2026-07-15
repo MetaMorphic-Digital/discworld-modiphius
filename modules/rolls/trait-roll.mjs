@@ -88,6 +88,17 @@ export default class DWTraitRoll extends foundry.dice.Roll {
   get isHelpRoll() {
     return this.options.isHelpRoll ?? false;
   }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Whether this is part of a group roll.
+   * @type {boolean}
+   */
+  get isGroupRoll() {
+    return !!this.options.groupMember;
+  }
+
   /* -------------------------------------------------- */
 
   /**
