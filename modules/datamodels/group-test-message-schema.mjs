@@ -7,6 +7,22 @@ import DISCWORLD from "../config.mjs";
 const { StringField } = foundry.data.fields;
 
 export default class GroupTestMessageSchema extends BaseMessageSchema {
+  /**
+   * @typedef {object} MemberCssData
+   * @prop {object} helpButton
+   * @prop {boolean} helpButton.disabled
+   * @prop {boolean} helpButton.hidden
+   * @prop {object} result
+   * @prop {"inactive" | "shift-center"} result.trait
+   * @prop {"not-visible" | null} result.help
+   *
+   * @typedef {object} MemberContext
+   * @prop {DiscworldCharacter} actor
+   * @prop {DWTraitRoll|null} mainRoll
+   * @prop {DWTraitRoll|null} helpRoll
+   * @prop {MemberCssData} css
+   */
+
   /** @inheritdoc */
   static defineSchema() {
     return {
@@ -64,6 +80,7 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
     for (const member of context.members) {
       const memberId = member.actor.id;
       member.mainRoll = this.traitRolls.get(memberId)?.roll ?? dataOverrides[memberId]?.mainRoll ?? null;
+      member.css = this._prepareMemberCssData(member);
     }
 
     const newRollData = Object.assign(
@@ -78,6 +95,59 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
     return context;
   }
 
+  /* ------------------------------------------------- */
+
+  /**
+   * Prepare CSS data for each member of the group.
+   * @param {Omit<MemberContext, "css">} member    The member to prepare CSS data for
+   * @returns {MemberCssData}                      The prepared CSS data
+   */
+  _prepareMemberCssData(member) {
+    const { mainRoll, helpRoll } = member;
+    return {
+      helpButton: {
+        disabled: helpRoll?._evaluated,
+        hidden: mainRoll?._evaluated,
+      },
+      result: {
+        trait: helpRoll?._evaluated ? "inactive" : "shift-center",
+        help: helpRoll?._evaluated ? null : "not-visible",
+      },
+    };
+  }
+
+  /* ------------------------------------------------- */
+
+  /**
+   * This is the Trait roll that is being used to determine the outcome
+   * of this group test, following rules for taking lowest / highest result.
+   * @returns {DWTraitRoll|null}
+   */
+  getPrincipalTraitRoll() {
+    const traitRolls = Array.from(this.traitRolls);
+
+    let principalTraitRoll = null;
+    for (const [_, { roll }] of traitRolls) {
+      if (!principalTraitRoll) {
+        principalTraitRoll = roll;
+        continue;
+      }
+      if ((this.winCondition === "lowestWins") && (roll.total < principalTraitRoll.total)) {
+        principalTraitRoll = roll;
+        continue;
+      }
+
+      if ((this.winCondition === "highestWins") && (roll.total > principalTraitRoll.total)) {
+        principalTraitRoll = roll;
+        continue;
+      }
+    }
+
+    return principalTraitRoll;
+  }
+
+  /* ------------------------------------------------- */
+
   /**
    * Aggregate the results of all Trait (help and non-help) rolls in this group roll.
    * Then, evaluate the outcome of the entire group test.
@@ -88,19 +158,8 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
       return { status: null, winner: null };
     }
 
-    const traitRolls = Array.from(this.traitRolls);
-    let mainTraitRoll = null;
-    if (traitRolls.length) {
-      mainTraitRoll = traitRolls.reduce?.(([_, acc], [__, { roll }]) => {
-        if (this.winCondition === "lowestWins") {
-          return roll.total < acc.roll.total ? roll : acc.roll;
-        }
-        return roll.total > acc.roll.total ? roll : acc.roll;
-      });
-    }
-
     const finalGmTotal = gmReroll?.total ?? gmRoll?.total;
-    const finalPlayerTotal = mainTraitRoll?.total;
+    const finalPlayerTotal = this.getPrincipalTraitRoll()?.total;
 
     if (finalGmTotal === finalPlayerTotal) {
       return { status: "tie", winner: null };

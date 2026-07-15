@@ -1,6 +1,7 @@
 <div class="discworld group-test">
   <header class="trait-container">
     <h4 class="divider">{{localize "DISCWORLD.roll.groupRoll"}}</h4>
+    <h3>{{winCondition}}</h3>
   </header>
   <ol class="members">
     {{#each members}}
@@ -8,8 +9,8 @@
       <span class="divider">{{actor.name}}</span>
       <div class="dice-rolls">
         <div class="outcome-container flexrow">
-          <ol class="result {{css.outcome.player}}">
-            <li class="playerResult {{ifThen mainRoll.term mainRoll.term "d6"}} flexrow {{css.result.player}}">
+          <ol class="result {{@root.css.outcome.player}}">
+            <li class="playerResult d6 {{mainRoll.term}} flexrow {{css.result.trait}}">
               <span>
                 {{ifThen mainRoll.result mainRoll.result "?"}}
               </span>
@@ -18,10 +19,17 @@
               <span>{{@root.helpRoll.result}}</span>
             </li>
           </ol>
-          <button data-action="trait" class="trait" {{disabled css.buttonDisabled.trait }}>
+          {{#if css.helpButton.hidden }}
+          <button data-action="trait" class="trait">
             {{localize "Roll Trait"}}
             <i class="fas fa-dice"></i>
           </button>
+          {{else}}
+          <button data-action="help" class="help" {{disabled css.helpButton.disabled }}>
+            {{localize "DISCWORLD.chat.postRollActions.help"}}
+            <i class="fas fa-dice"></i>
+          </button>
+          {{/if}}
         </div>
       </div>
     </li>
