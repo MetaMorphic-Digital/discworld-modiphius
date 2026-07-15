@@ -8,17 +8,17 @@
       <span class="divider">{{actor.name}}</span>
       <div class="dice-rolls">
         <div class="outcome-container flexrow">
-          <ol class="result {{@root.css.outcome.player}}">
-            <li class="playerResult d6 {{mainRoll.term}} flexrow {{@root.css.result.player}}">
+          <ol class="result {{css.outcome.player}}">
+            <li class="playerResult {{ifThen mainRoll.term mainRoll.term "d6"}} flexrow {{css.result.player}}">
               <span>
                 {{ifThen mainRoll.result mainRoll.result "?"}}
               </span>
             </li>
-            <li class="helpResult {{@root.helpRoll.term}} flexrow {{@root.css.result.help}}">
+            <li class="helpResult {{@root.helpRoll.term}} flexrow {{css.result.help}}">
               <span>{{@root.helpRoll.result}}</span>
             </li>
           </ol>
-          <button data-action="trait" class="trait" {{disabled @root.css.buttonDisabled.trait }}>
+          <button data-action="trait" class="trait" {{disabled css.buttonDisabled.trait }}>
             {{localize "Roll Trait"}}
             <i class="fas fa-dice"></i>
           </button>

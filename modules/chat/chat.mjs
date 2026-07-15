@@ -26,8 +26,8 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
    */
   static async #onRollTrait(event, target) {
     const { message } = DiscworldChatLog.getClickedMessageData(event, target);
-    const actor = this.getActorForRoll(event, target);
-    actor.resolveWaitMode(message, false);
+    const { actor, member } = this.getActorForRoll(event, target);
+    actor.resolveWaitMode(message, { isHelpMode: false, groupMember: member.id });
   }
 
   /* -------------------------------------------------- */
@@ -44,7 +44,7 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
   static async #onHelp(event, target) {
     const { message } = DiscworldChatLog.getClickedMessageData(event, target);
 
-    const actor = this.getActorForRoll(event, target);
+    const { actor, member } = this.getActorForRoll(event, target);
 
     // Warn and prevent roll if character has no luck remaining.
     if ((actor.type === "character") && !actor.system.luck.value) {
@@ -53,7 +53,7 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
     }
 
     // Wait for a Trait to be rolled.
-    actor.resolveWaitMode(message, true);
+    actor.resolveWaitMode(message, { isHelpMode: true, groupMember: member.id });
   }
 
   /* -------------------------------------------------- */
@@ -79,11 +79,15 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
    * Get the Actor that initiated the roll.
    * @param {PointerEvent} event    The originating click event.
    * @param {HTMLElement} target    The element that defined the [data-action].
-   * @returns {DiscworldActor|null}
+   * @returns {{actor: DiscworldActor|null, member: DiscworldActor|null}}
    */
   getActorForRoll(event, target) {
     const { message, memberId } = DiscworldChatLog.getClickedMessageData(event, target);
-    if (memberId && (target.dataset.action === "trait")) return game.actors.get(memberId);
+    const member = game.actors.get(memberId);
+    if (member && (target.dataset.action === "trait")) {
+      return { actor: member, member };
+    }
+
     if (message.system.helpRoll) return null;
 
     if (!canvas.ready) return null;
@@ -103,7 +107,7 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
       return null;
     }
 
-    return actor;
+    return { actor, member };
   }
 
   /* -------------------------------------------------- */

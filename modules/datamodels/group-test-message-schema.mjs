@@ -42,7 +42,7 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
   get traitRolls() {
     return this.rolls.filter((roll) => (roll instanceof DWTraitRoll) && !roll.isHelpRoll).reduce(
       (acc, roll) => {
-        acc.set(roll.actor.id, { actor: roll.actor, roll });
+        acc.set(roll.options.groupMember, { actor: roll.actor, roll });
         return acc;
       }, new Map());
   }

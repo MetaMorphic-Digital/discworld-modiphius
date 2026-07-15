@@ -112,10 +112,12 @@ export default class DiscworldActor extends foundry.documents.Actor {
   /**
    * Enable wait mode and render the character sheet, which awaits a trait roll.
    * @param {DiscworldMessage} message    The message that triggered wait mode.
-   * @param {boolean} [isHelpRoll=false]  Whether this is a help roll.
+   * @param {object} options              An object with additional options.
+   * @param {boolean} isHelpRoll          Whether this is a help roll.
+   * @param {string} [groupMember]        The group member id this roll targets, if any.
    * @returns {Promise<DiscworldMessage|null>}
    */
-  async resolveWaitMode(message, isHelpRoll) {
+  async resolveWaitMode(message, { isHelpRoll, groupMember }) {
     this.waitMode.enabled = true;
     this.waitMode.isHelpRoll = isHelpRoll;
 
@@ -156,6 +158,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
       message,
       trait,
       isHelpRoll,
+      groupMember,
     });
   }
 

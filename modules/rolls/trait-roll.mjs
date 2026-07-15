@@ -9,9 +9,10 @@ export default class DWTraitRoll extends foundry.dice.Roll {
    * @typedef {"d4"|"d6"|"d10"|"d12"} DiceTermOptions
    *
    * @typedef {object} RollOptions
-   * @property {Item} trait              The Item being rolled.
-   * @property {DiscworldActor} actor    The Actor being rolled for.
-   * @property {Boolean} [isHelpRoll]    Whether this is a help roll.
+   * @property {Item} trait                      The Item being rolled.
+   * @property {DiscworldActor} actor            The Actor being rolled for.
+   * @property {Boolean} [isHelpRoll]            Whether this is a help roll.
+   * @property {DiscworldActor} [groupMember]    If a group roll, the member associated with this roll.
    */
 
   /* -------------------------------------------------- */
@@ -119,9 +120,9 @@ export default class DWTraitRoll extends foundry.dice.Roll {
    * @param {RollOptions & WaitRollOptions} options
    * @returns {Promise<DiscworldMessage>}
    */
-  static async createWaitRoll({ term, actor, trait, message, isHelpRoll }) {
+  static async createWaitRoll({ term, actor, trait, message, isHelpRoll, groupMember }) {
     const rollData = actor?.getRollData() ?? {};
-    const roll = new DWTraitRoll(term, rollData, { actor, trait, isHelpRoll });
+    const roll = new DWTraitRoll(term, rollData, { actor, trait, isHelpRoll, groupMember });
     await roll.evaluate();
 
     return message.system.addRoll(roll);

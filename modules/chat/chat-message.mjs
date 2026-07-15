@@ -41,8 +41,9 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
    * @returns {Promise<void>}
    */
   async animateHelp(roll) {
-    await this.slideDiceIcon("playerResult");
-    await this.fadeDiceIcon("helpResult", roll.result, roll.term);
+    const { groupMember } = roll.options;
+    await this.slideDiceIcon("playerResult", groupMember);
+    await this.fadeDiceIcon("helpResult", roll.result, roll.term, groupMember);
   }
 
   /* -------------------------------------------------- */
@@ -53,6 +54,7 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
    * @returns {Promise<void>}
    */
   async animateNarrativium(roll) {
+    // Don't need to pass groupMember because Narrativium is never a group roll.
     const { reroll } = roll.options;
     if (reroll) {
       await this.slideDiceIcon("gmResult");
@@ -62,17 +64,32 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
     }
   }
 
+  /* ------------------------------------------------- */
+
+  /**
+   * Returns the element that should be animated.
+   * @param {string} resultClass      The class name of the result element whose text should be updated.
+   * @param {string} [groupMember]    The id for the member whose roll is being animated.
+   * @returns {HTMLElement}
+   */
+  getAnimationTarget(resultClass, groupMember = null) {
+    let selector = `li.${resultClass}`;
+    if (groupMember) selector = `li[data-member-id="${groupMember.id}"] ${selector}`;
+    return this.element.querySelector(selector);
+  }
+
   /* -------------------------------------------------- */
 
   /**
    * Slide the dice icon of a given class name to over from the center of its container.
    * @param {"playerResult" | "gmResult"} resultClass   The class name of the roll whose icon should be moved.
+   * @param {string} [groupMember]                      The id for the member whose roll is being animated.
    * @returns {Promise<HTMLLIElement>}                  A promise that resolves to the transitioning element
    *                                                    once the transition has ended.
    */
-  async slideDiceIcon(resultClass) {
-    const dieListItem = this.element.querySelector(`li.${resultClass}`);
-    return transitionClass(dieListItem, {
+  async slideDiceIcon(resultClass, groupMember) {
+    const target = this.getAnimationTarget(resultClass, groupMember);
+    return transitionClass(target, {
       remove: ["shift-center"],
       add: ["inactive"],
     });
@@ -85,15 +102,16 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
    * @param {"helpResult" | "gmRerollResult"} resultClass           The class name of the roll whose icon should be faded.
    * @param {number} rollResult                                     The new result to display.
    * @param {"d4" | "d6" | "d10" | "d12" | null} [rollTerm=null]    An additional class name to apply to the dice icon.
+   * @param {string} [groupMember]                                  The id for the member whose roll is being animated.
    * @returns {Promise<HTMLLIElement>}                              A promise that resolves to the transitioning element
    *                                                                once the transition has ended.
    */
-  async fadeDiceIcon(resultClass, rollResult, rollTerm = null) {
-    const dieListItem = this.element.querySelector(`li.${resultClass}`);
-    dieListItem.classList.add(rollTerm);
-    const rerollResultText = dieListItem.querySelector("span");
+  async fadeDiceIcon(resultClass, rollResult, rollTerm = null, groupMember) {
+    const target = this.getAnimationTarget(resultClass, groupMember);
+    target.classList.add(rollTerm);
+    const rerollResultText = target.querySelector("span");
     rerollResultText.textContent = rollResult;
-    return transitionClass(dieListItem, { remove: ["not-visible"] });
+    return transitionClass(target, { remove: ["not-visible"] });
   }
 
   /* -------------------------------------------------- */
@@ -102,13 +120,14 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
    * Fades a text element out, updates its content with a new roll result, and then fades it back in.
    * @param {"gmResult"} resultClass        The class name of the result element whose text should be updated.
    * @param {number} rollResult             The new result to display within the text element.
+   * @param {string} [groupMember]          The id for the member whose roll is being animated.
    * @returns {Promise<HTMLSpanElement>}    A promise that resolves to the transitioning element
    *                                        once the transition has ended.
    */
-  async fadeTextInOut(resultClass, rollResult) {
-    const resultSpan = this.element.querySelector(`li.${resultClass} span`);
-    await transitionClass(resultSpan, { add: ["not-visible"] });
-    resultSpan.textContent = rollResult;
-    return transitionClass(resultSpan, { remove: ["not-visible"] });
+  async fadeTextInOut(resultClass, rollResult, groupMember) {
+    const target = this.getAnimationTarget(resultClass, groupMember).querySelector("span");
+    await transitionClass(target, { add: ["not-visible"] });
+    target.textContent = rollResult;
+    return transitionClass(target, { remove: ["not-visible"] });
   }
 }
