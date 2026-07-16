@@ -23,6 +23,7 @@
     gap: 8px;
 
     border: 2px rgba(145, 88, 2, 0.24);
+    border-bottom: 0;
     border-style: outset;
     border-radius: 12px;
 
@@ -31,6 +32,10 @@
 
     &:has(.no-members) {
       border-style: dotted;
+    }
+
+    .no-members {
+      margin-block: 12px;
     }
 
     legend {
@@ -65,9 +70,5 @@
 
       border-radius: 6px;
     }
-  }
-
-  nav.tabs a {
-    display: none;
   }
 }

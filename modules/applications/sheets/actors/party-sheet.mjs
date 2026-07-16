@@ -8,7 +8,7 @@ import { templatePath } from "../../../utils/paths.mjs";
 export default class PartySheet extends DiscworldActorSheet {
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
-    position: { width: 650, height: 690 },
+    position: { width: 650, height: 740 },
     classes: ["party-sheet"],
     actions: {
       placeMembers: PartySheet.#placeMembers,
@@ -29,6 +29,7 @@ export default class PartySheet extends DiscworldActorSheet {
     },
     tabs: DiscworldActorSheet.PARTS.tabs,
     traits: DiscworldActorSheet.PARTS.traits,
+    description: DiscworldActorSheet.PARTS.description,
   };
 
   /* -------------------------------------------------- */
@@ -47,7 +48,18 @@ export default class PartySheet extends DiscworldActorSheet {
 
     context.header = await this.#prepareHeader();
     context.members = await this.#prepareMembers();
-    console.log(context, this.id);
+
+    context.fields.description = {
+      field: this.document.system.schema.getField("description.value"),
+      value: this.isEditMode
+        ? this.document._source.system.description.value
+        : this.document.system.description.value,
+    };
+
+    context.fields.description.enriched = await CONFIG.ux.TextEditor.enrichHTML(
+      context.fields.description.value,
+      { rollData: this.document.getRollData(), relativeTo: this.document },
+    );
 
     return context;
   }
