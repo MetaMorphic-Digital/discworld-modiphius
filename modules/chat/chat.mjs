@@ -94,7 +94,7 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
 
     const controlledTokens = canvas.tokens.controlled;
     if (controlledTokens.length > 1) {
-      ui.notifications.warn("DISCWORLD.chat.warning.singleTokenSelect", { localize: true });
+      ui.notifications.warn("DISCWORLD.chat.warning.singleTokenSelect");
       return null;
     }
 
@@ -103,7 +103,7 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
     const actor = token?.actor ?? game.user.character;
 
     if (!actor) {
-      ui.notifications.warn("DISCWORLD.chat.warning.actorNotFound", { localize: true });
+      ui.notifications.warn("DISCWORLD.chat.warning.actorNotFound");
       return null;
     }
 

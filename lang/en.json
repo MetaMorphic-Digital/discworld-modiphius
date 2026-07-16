@@ -67,7 +67,10 @@
 
     "party": {
       "groupRoll": "Group Roll",
+      "dropMembers": "Drop Party Members here.",
+      "partyMembers": "Party Members",
       "placeMembers": "Place Members",
+
       "context": {
         "assignPrimaryParty": "Assign Primary Party",
         "removePrimaryParty": "Remove Primary Party"
@@ -162,6 +165,7 @@
     "CharacterSheet": "Discworld Character Sheet",
     "DiscworldJournalEntrySheet": "Discworld Journal Sheet",
     "NPCSheet": "Discworld NPC Sheet",
-    "TraitSheet": "Discworld Trait Sheet"
+    "TraitSheet": "Discworld Trait Sheet",
+    "PartySheet": "Discworld Party Sheet"
   }
 }

@@ -116,8 +116,9 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
 
   /** @inheritdoc */
   async _preCreate(data, options, user) {
+    if ((await super._preCreate(data, options, user)) === false) return false;
     if ((data.type !== "groupTest") && (!this.parent.rolls.length || !(this.parent.rolls[0] instanceof DWTraitRoll)))
-      return super._preCreate(data, options, user);
+      return;
 
     const chatData = await this._prepareContext();
     const content = await foundry.applications.handlebars.renderTemplate(
@@ -126,8 +127,6 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
     );
 
     foundry.utils.mergeObject(data, { content });
-    return super._preCreate(data, options, user);
-
   }
 
   /* -------------------------------------------------- */

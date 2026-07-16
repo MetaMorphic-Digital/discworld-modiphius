@@ -8,7 +8,7 @@ import PrimaryPartyModel from "../datamodels/primary-party.mjs";
 const systemSettings = {
   primaryParty: {
     type: PrimaryPartyModel,
-    scope: "world",
+    scope: CONST.SETTING_SCOPES.WORLD,
     default: null,
     config: false,
     onChange: () => ui.actors.render(),

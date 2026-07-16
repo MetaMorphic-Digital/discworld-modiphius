@@ -1,8 +1,10 @@
 <fieldset>
-  <legend>Party Members</legend>
+  <legend>
+    {{localize "DISCWORLD.party.partyMembers"}}
+  </legend>
   {{#if (not members.length)}}
   <div class="no-members">
-    Drop Party members here.
+    {{localize "DISCWORLD.party.dropMembers"}}
   </div>
   {{/if}}
   {{#each members}}

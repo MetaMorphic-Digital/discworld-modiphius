@@ -37,9 +37,7 @@ export default class PartyDataModel extends foundry.abstract.TypeDataModel {
 
   /** @inheritdoc */
   async _preCreate(data, options, user) {
-    if ((await super._preCreate(data, options, user)) === false) {
-      return false;
-    }
+    if ((await super._preCreate(data, options, user)) === false) return false;
 
     const update = foundry.utils.mergeObject(
       {
