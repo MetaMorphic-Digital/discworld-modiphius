@@ -159,8 +159,19 @@
     },
     "Item": {
       "trait": "Trait"
+    },
+    "HINTS": {
+      "Actor": {
+        "character": "A player character, exploring the mysteries of the Discworld.",
+        "npc": "One of the ~999,995 non-player characters in Ankh-Morpork, controlled by the GM.",
+        "party": "An organizational actor for tracking and managing a party."
+      },
+      "Item": {
+        "trait": "The central mechanic of the game, representing everything a character is and has. Traits are rolled in tests against the Narrativium."
+      }
     }
   },
+
   "discworld-modiphius": {
     "CharacterSheet": "Discworld Character Sheet",
     "DiscworldJournalEntrySheet": "Discworld Journal Sheet",
