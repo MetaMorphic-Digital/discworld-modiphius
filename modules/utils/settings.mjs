@@ -16,8 +16,8 @@ const systemSettings = {
 };
 
 /**
-   * Helper function called in the `init` hook.
-   */
+ * Helper function called in the `init` hook.
+ */
 export default function registerSettings() {
   for (const [key, value] of Object.entries(systemSettings)) {
     game.settings.register(DISCWORLD.id, key, value);

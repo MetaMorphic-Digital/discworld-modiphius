@@ -74,13 +74,6 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
 
   /* ------------------------------------------------- */
 
-  /** @inheritdoc */
-  get mainRoll() {
-    return this.rolls[0] ?? null;
-  }
-
-  /* ------------------------------------------------- */
-
   /**
    * @inheritdoc
    * @param {GroupDataOverrides} [dataOverrides]
