@@ -95,6 +95,9 @@
       "tabs": {
         "description": "Description",
         "traits": "Traits"
+      },
+      "warning": {
+        "incorrectTraitType": "Trait Type does not match Actor Type."
       }
     },
 

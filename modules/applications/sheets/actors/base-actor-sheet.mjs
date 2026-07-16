@@ -189,6 +189,18 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
     );
   }
 
+  /* ------------------------------------------------- */
+
+  /** @inheritdoc */
+  async _onDropItem(event, item) {
+    if (this.actor.type !== item.system.actorType) {
+      ui.notifications.error("DISCWORLD.sheet.warning.incorrectTraitType");
+      return false;
+    }
+
+    return super._onDropItem(event, item);
+  }
+
   /* -------------------------------------------------- */
 
   /** @inheritdoc */
