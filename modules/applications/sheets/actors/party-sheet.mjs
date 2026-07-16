@@ -8,7 +8,7 @@ import { templatePath } from "../../../utils/paths.mjs";
 export default class PartySheet extends DiscworldActorSheet {
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
-    position: { width: 650, height: 740 },
+    position: { width: 650, height: 750 },
     classes: ["party-sheet"],
     actions: {
       placeMembers: PartySheet.#placeMembers,

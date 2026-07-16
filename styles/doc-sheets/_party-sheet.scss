@@ -71,4 +71,8 @@
       border-radius: 6px;
     }
   }
+
+  [data-application-part="traits"] {
+    margin-block-start: 3rem;
+  }
 }
