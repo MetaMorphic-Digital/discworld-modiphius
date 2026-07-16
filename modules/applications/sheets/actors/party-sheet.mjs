@@ -50,16 +50,13 @@ export default class PartySheet extends DiscworldActorSheet {
     context.members = await this.#prepareMembers();
 
     context.fields.description = {
-      field: this.document.system.schema.getField("description.value"),
-      value: this.isEditMode
-        ? this.document._source.system.description.value
-        : this.document.system.description.value,
+      field: this.document.getFieldForProperty("system.description.value"),
+      value: this.document._source.system.description.value,
+      enriched: await CONFIG.ux.TextEditor.enrichHTML(
+        this.document.system.description.value,
+        { rollData: this.document.getRollData(), relativeTo: this.document },
+      ),
     };
-
-    context.fields.description.enriched = await CONFIG.ux.TextEditor.enrichHTML(
-      context.fields.description.value,
-      { rollData: this.document.getRollData(), relativeTo: this.document },
-    );
 
     return context;
   }
