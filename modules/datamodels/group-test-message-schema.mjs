@@ -95,7 +95,12 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
     for (const member of context.members) {
       const memberId = member.actor.id;
       member.mainRoll = context.traitRolls.get(memberId)?.roll ?? null;
+      if (member.mainRoll) member.mainRollTooltip = member.mainRoll.trait.name;
+
       member.helpRoll = context.helpRolls.get(memberId)?.roll ?? null;
+      if (member.helpRoll)
+        member.helpRollTooltip = `${member.helpRoll.trait.name}<br>— ${member.helpRoll.actor.name}`;
+
       member.css = this._prepareMemberCssData(member);
     }
 

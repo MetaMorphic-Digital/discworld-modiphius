@@ -9,12 +9,12 @@
       <div class="dice-rolls">
         <div class="outcome-container flexrow">
           <ol class="result {{@root.css.outcome.player}}">
-            <li class="playerResult {{ifThen mainRoll.term mainRoll.term "d6"}} flexrow {{css.result.trait}}">
+            <li class="playerResult {{ifThen mainRoll.term mainRoll.term "d6"}} flexrow {{css.result.trait}}" data-tooltip-text="{{mainRollTooltip}}">
               <span>
                 {{ifThen mainRoll.result mainRoll.result "?"}}
               </span>
             </li>
-            <li class="helpResult {{helpRoll.term}} flexrow {{css.result.help}}">
+            <li class="helpResult {{helpRoll.term}} flexrow {{css.result.help}}" data-tooltip="{{{helpRollTooltip}}}">
               <span>{{helpRoll.result}}</span>
             </li>
           </ol>
