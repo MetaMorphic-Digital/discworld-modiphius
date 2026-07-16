@@ -1,6 +1,6 @@
 <div class="discworld group-test">
   <header class="trait-container">
-    <h4 class="divider">{{localize "DISCWORLD.roll.groupRoll"}}</h4>
+    <h4 class="divider">{{localize "DISCWORLD.chat.groupRoll"}}</h4>
     <h3>{{localize (concat "DISCWORLD.dialog.groupTest." winCondition)}}</h3>
   </header>
   <ol class="members">
@@ -21,12 +21,12 @@
           </ol>
           {{#if css.helpButton.hidden }}
           <button data-action="trait" class="trait">
-            {{localize "Roll Trait"}}
+            {{localize "DISCWORLD.chat.rollActions.trait"}}
             <i class="fas fa-dice"></i>
           </button>
           {{else}}
           <button data-action="help" class="help" {{disabled css.helpButton.disabled }}>
-            {{localize "DISCWORLD.chat.postRollActions.help"}}
+            {{localize "DISCWORLD.chat.rollActions.help"}}
             <i class="fas fa-dice"></i>
           </button>
           {{/if}}
@@ -52,9 +52,9 @@
         class="narrativium {{css.narrativiumButton.class}}"
         {{disabled css.narrativiumButton.disabled }}>
         {{#if css.rerollButton.class }}
-        {{localize "DISCWORLD.chat.postRollActions.reroll"}}
+        {{localize "DISCWORLD.chat.rollActions.reroll"}}
         {{else}}
-        {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
+        {{localize "DISCWORLD.chat.rollActions.narrativium"}}
         {{/if}}
         <i class="fas fa-dice"></i>
       </button>

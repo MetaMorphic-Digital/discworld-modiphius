@@ -14,7 +14,9 @@
     },
 
     "chat": {
-      "postRollActions": {
+      "groupRoll": "Group Roll",
+      "rollActions": {
+        "trait": "Roll Trait",
         "help": "Help",
         "narrativium": "Narrativium",
         "reroll": "GM Reroll"
