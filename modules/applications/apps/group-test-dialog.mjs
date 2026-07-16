@@ -13,21 +13,6 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
     form: {
       handler: GroupTestDialog.#onSubmit,
     },
-    buttons: [
-      {
-        action: "submit",
-        label: "DISCWORLD.dialog.groupTest.prepareRoll",
-        icon: "fas fa-check",
-        type: "submit",
-      },
-      {
-        action: "close",
-        label: "DISCWORLD.dialog.groupTest.cancel",
-        icon: "fas fa-times",
-        type: "button",
-        default: true,
-      },
-    ],
     window: {
       title: "DISCWORLD.dialog.groupTest.title",
       contentTag: "form",
@@ -63,7 +48,21 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
       },
     };
 
-    context.buttons = this.options.buttons;
+    context.buttons = [
+      {
+        action: "submit",
+        label: "DISCWORLD.dialog.groupTest.prepareRoll",
+        icon: "fas fa-check",
+        type: "submit",
+      },
+      {
+        action: "close",
+        label: "DISCWORLD.dialog.groupTest.cancel",
+        icon: "fas fa-times",
+        type: "button",
+        default: true,
+      },
+    ];
 
     return context;
   }
