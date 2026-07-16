@@ -39,8 +39,8 @@
       "rollTrait.title": "Rolling a Trait!",
       "groupTest": {
         "cancel": "Cancel",
-        "highestWins": "Use Highest Roll",
-        "lowestWins": "Use Lowest Roll",
+        "highestWins": "Using highest Player Roll",
+        "lowestWins": "Using lowest Player Roll",
         "membersLabel": "Select Party Members for Roll:",
         "prepareRoll": "Prepare Roll",
         "title": "Prepare Group Test",

@@ -67,7 +67,7 @@
           cursor: unset;
         }
 
-        &:hover {
+        &:hover:not(:disabled) {
           background-color: $discworld-sand-light;
           text-shadow: 0 0 10px #1a1a1a;
         }
@@ -167,14 +167,26 @@
   }
 
   &.group-test {
+    h4 {
+      font-size: 1.5em;
+    }
+
     ol.members {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 12px;
 
       margin: 0;
       padding: 0;
+
+      .name {
+        font-size: 1.125em;
+        font-weight: bold;
+        font-style: italic;
+
+        padding-block-end: 2px;
+      }
     }
 
     .outcome-container {
@@ -184,6 +196,14 @@
         height: $-roll-result-height + $-outcome-padding;
         margin: 0;
       }
+    }
+
+    .win-condition {
+      font-family: $font-trattatello;
+      font-size: 1.1em;
+      text-align: center;
+
+      margin-block: 12px -8px;
     }
   }
 }

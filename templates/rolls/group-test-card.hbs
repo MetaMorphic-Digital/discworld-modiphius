@@ -1,12 +1,11 @@
 <div class="discworld group-test">
   <header class="trait-container">
     <h4 class="divider">{{localize "DISCWORLD.chat.groupRoll"}}</h4>
-    <h3>{{localize (concat "DISCWORLD.dialog.groupTest." winCondition)}}</h3>
   </header>
   <ol class="members">
     {{#each members}}
     <li data-member-id="{{actor.id}}">
-      <span class="divider">{{actor.name}}</span>
+      <div class="name">{{actor.name}}</div>
       <div class="dice-rolls">
         <div class="outcome-container flexrow">
           <ol class="result {{@root.css.outcome.player}}">
@@ -35,6 +34,7 @@
     </li>
     {{/each}}
   </ol>
+  <div class="win-condition">{{localize (concat "DISCWORLD.dialog.groupTest." winCondition)}}</div>
   <hr>
   <div class="dice-rolls">
     <div class="outcome-container flexrow">
@@ -51,7 +51,7 @@
       <button data-action="narrativium"
         class="narrativium {{css.narrativiumButton.class}}"
         {{disabled css.narrativiumButton.disabled }}>
-        {{#if css.rerollButton.class }}
+        {{#if css.narrativiumButton.class }}
         {{localize "DISCWORLD.chat.rollActions.reroll"}}
         {{else}}
         {{localize "DISCWORLD.chat.rollActions.narrativium"}}
