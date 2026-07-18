@@ -1,4 +1,5 @@
 @use "../utils/callouts" as *;
+@use "../utils/dice" as *;
 
 @mixin aside {
   aside {
@@ -13,5 +14,7 @@
       text-align: center;
       font-style: oblique;
     }
+
+    @include discworld-dice;
   }
 }
