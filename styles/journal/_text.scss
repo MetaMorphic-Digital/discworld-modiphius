@@ -12,6 +12,12 @@
 
 @mixin text {
   /* --------------- Semantic elements --------------- */
+
+  .trattatello {
+    font-family: $font-trattatello;
+    font-size: 1.1em;
+  }
+
   strong.highlight {
     color: getVar(color, title-alt);
 
@@ -78,6 +84,15 @@
 
       &:first-child {
         @include -fancy-bold;
+      }
+    }
+
+    &.playtesters {
+      p {
+        color: unset;
+        font-weight: unset;
+        font-family: unset;
+        font-size: unset;
       }
     }
   }
