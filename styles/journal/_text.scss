@@ -1,6 +1,7 @@
 @use "../utils/var-utils" as *;
 
 @use "../variables/fonts" as *;
+@use "../variables/generic" as *;
 
 @mixin -fancy-bold {
   color: getVar(color, title-alt);
@@ -57,6 +58,19 @@
     cite::before {
       content: "— ";
     }
+  }
+
+  div.footnote,
+  div.footer {
+    font-family: $font-trattatello;
+
+    background-image: url("#{$assetsPrefix}/sheet/footnote.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    padding-block: 24px 12px;
+    padding-inline: 24px;
+    margin-inline: 24px 12px;
   }
 
   img {
