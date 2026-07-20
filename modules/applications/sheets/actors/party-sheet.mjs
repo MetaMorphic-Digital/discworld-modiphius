@@ -1,5 +1,4 @@
 import DiscworldActorSheet from "./base-actor-sheet.mjs";
-import GroupTestDialog from "../../apps/group-test-dialog.mjs";
 import { templatePath } from "../../../utils/paths.mjs";
 
 /**
@@ -187,7 +186,7 @@ export default class PartySheet extends DiscworldActorSheet {
    * @param {HTMLElement} target    The capturing html element that defined the [data-action].
    */
   static #prepareGroupRoll(event, target) {
-    const application = new GroupTestDialog({ party: this.document });
+    const application = new discworld.applications.apps.GroupTestDialog({ party: this.document });
     this.renderChild(application);
   }
 }

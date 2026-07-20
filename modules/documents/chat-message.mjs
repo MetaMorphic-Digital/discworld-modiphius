@@ -1,5 +1,3 @@
-import transitionClass from "../utils/animations.mjs";
-
 /**
  * @import DWTraitRoll from "../rolls/trait-roll.mjs";
  * @import DWNarrativiumRoll from "../rolls/narrativium-roll.mjs";
@@ -100,7 +98,7 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
    */
   async slideDiceIcon(resultClass, groupMember) {
     const target = this.getAnimationTarget(resultClass, groupMember);
-    return transitionClass(target, {
+    return discworld.utils.transitionClass(target, {
       remove: ["shift-center"],
       add: ["inactive"],
     });
@@ -122,7 +120,7 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
     target.classList.add(rollTerm);
     const rerollResultText = target.querySelector("span");
     rerollResultText.textContent = rollResult;
-    return transitionClass(target, { remove: ["not-visible"] });
+    return discworld.utils.transitionClass(target, { remove: ["not-visible"] });
   }
 
   /* -------------------------------------------------- */
@@ -137,12 +135,12 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
    */
   async fadeDiceAndTextInOut(resultClass, rollResult, rollTerm, groupMember) {
     const target = this.getAnimationTarget(resultClass, groupMember);
-    await transitionClass(target, { add: ["not-visible"] });
+    await discworld.utils.transitionClass(target, { add: ["not-visible"] });
     target.classList.remove("d6"); // Remove default dice icon class.
     target.classList.add(rollTerm); // Add new dice icon class.
     const rerollResultText = target.querySelector("span");
     rerollResultText.textContent = rollResult;
-    return transitionClass(target, { remove: ["not-visible"] });
+    return discworld.utils.transitionClass(target, { remove: ["not-visible"] });
   }
 
   /* -------------------------------------------------- */
@@ -157,8 +155,8 @@ export default class DiscworldMessage extends foundry.documents.ChatMessage {
    */
   async fadeTextInOut(resultClass, rollResult, groupMember) {
     const target = this.getAnimationTarget(resultClass, groupMember).querySelector("span");
-    await transitionClass(target, { add: ["not-visible"] });
+    await discworld.utils.transitionClass(target, { add: ["not-visible"] });
     target.textContent = rollResult;
-    return transitionClass(target, { remove: ["not-visible"] });
+    return discworld.utils.transitionClass(target, { remove: ["not-visible"] });
   }
 }

@@ -1,5 +1,3 @@
-import DISCWORLD from "../config.mjs";
-
 /**
  * @import DiscworldActor from "../documents/actor.mjs";
  */
@@ -13,7 +11,7 @@ export default class DiscworldActors extends foundry.documents.collections.Actor
    * @type {DiscworldActor}
    */
   get party() {
-    return game.settings.get(DISCWORLD.id, "primaryParty")?.actor ?? null;
+    return game.settings.get(discworld.id, "primaryParty")?.actor ?? null;
   }
 
   /* -------------------------------------------------- */
@@ -30,7 +28,7 @@ export default class DiscworldActors extends foundry.documents.collections.Actor
     if (!this.party) {
       return false;
     }
-    await game.settings.set(DISCWORLD.id, "primaryParty", { actor: null });
+    await game.settings.set(discworld.id, "primaryParty", { actor: null });
     return true;
   }
 
@@ -53,7 +51,7 @@ export default class DiscworldActors extends foundry.documents.collections.Actor
       return false;
     }
 
-    await game.settings.set(DISCWORLD.id, "primaryParty", { actor: actor.id });
+    await game.settings.set(discworld.id, "primaryParty", { actor: actor.id });
     return true;
   }
 }

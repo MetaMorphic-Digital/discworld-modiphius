@@ -1,7 +1,5 @@
 import { templatePath } from "../../utils/paths.mjs";
 
-import DiscworldMessage from "../../chat/chat-message.mjs";
-
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 export default class GroupTestDialog extends HandlebarsApplicationMixin(ApplicationV2) {
@@ -94,7 +92,7 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
     }
 
     this.close();
-    DiscworldMessage.create({
+    ChatMessage.implementation.create({
       type: "groupTest",
       system: {
         groupMembers: expanded.members,

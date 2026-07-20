@@ -4,7 +4,7 @@ export default class DWTraitRoll extends foundry.dice.Roll {
   /**
    * @import Item from "@client/documents/item.mjs";
    * @import DiscworldActor from "../documents/actor.mjs"
-   * @import DiscworldMessage from "../chat/chat-message.mjs"
+   * @import DiscworldMessage from "../documents/chat-message.mjs"
    *
    * @typedef {"d4"|"d6"|"d10"|"d12"} DiceTermOptions
    *

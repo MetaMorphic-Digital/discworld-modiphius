@@ -1,11 +1,11 @@
 import MembersField from "./fields/members-field.mjs";
 import BaseMessageSchema from "./base-message-schema.mjs";
 import { templatePath } from "../utils/paths.mjs";
-import DWTraitRoll from "../rolls/trait-roll.mjs";
 import DISCWORLD from "../config.mjs";
 
 /**
  * @import DiscworldActor from "../documents/actor.mjs";
+ * @import DWTraitRoll from "../rolls/trait-roll.mjs";
  */
 
 const { StringField } = foundry.data.fields;
@@ -121,7 +121,7 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
    * @returns {Pick<GroupRollContext, "traitRolls" | "helpRolls">}}
    */
   getRollsByType(dataOverrides) {
-    let [traitRolls, helpRolls] = this.rolls.filter((roll) => roll instanceof DWTraitRoll).partition((roll) => roll.isHelpRoll);
+    let [traitRolls, helpRolls] = this.rolls.filter((roll) => roll instanceof discworld.rolls.DWTraitRoll).partition((roll) => roll.isHelpRoll);
 
     const toRollMap = (rolls) =>
       rolls.reduce((acc, roll) => {
