@@ -17,6 +17,7 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
     actions: {
       traitAction: DiscworldActorSheet.#traitAction,
       rollNameAsTrait: DiscworldActorSheet.#rollNameAsTrait,
+      leaveWaitMode: DiscworldActorSheet.#leaveWaitMode,
     },
   };
 
@@ -54,11 +55,11 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
   /* -------------------------------------------------- */
 
   /**
-   * Helper to check if the actor is currently in help mode.
+   * Helper to check if the actor is currently in wait mode.
    * @type {boolean}
    */
-  get isHelpMode() {
-    return this.actor.helpMode.enabled;
+  get isWaitMode() {
+    return this.actor.waitMode.enabled;
   }
 
   /* ------------------------------------------------- */
@@ -93,6 +94,10 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
 
     // Translation of trait types.
     context.traitTypeTranslationMap = traitActorGroup;
+
+    // Wait mode
+    context.isWaitMode = this.isWaitMode;
+    context.waitModeType = this.actor.waitMode.isHelpRoll ? "help" : "trait";
 
     return context;
   }
@@ -156,6 +161,13 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
       },
     );
 
+    // Add/remove class depending on Wait Mode.
+    if (this.isWaitMode) {
+      this.element.classList.add("wait-mode");
+    } else {
+      this.element.classList.remove("wait-mode");
+    }
+
     // Add Trait by double-clicking trait category label.
     const sheetBody = this.element.querySelector("section.traits");
     sheetBody.addEventListener("dblclick", (event) => {
@@ -175,6 +187,29 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
         DiscworldActorSheet.#rollDescriptionAsTrait.call(this, html);
       }),
     );
+  }
+
+  /* ------------------------------------------------- */
+
+  /** @inheritdoc */
+  async _onDropItem(event, item) {
+    if (this.actor.type !== item.system.actorType) {
+      ui.notifications.error("DISCWORLD.sheet.warning.incorrectTraitType");
+      return false;
+    }
+
+    return super._onDropItem(event, item);
+  }
+
+  /* -------------------------------------------------- */
+
+  /** @inheritdoc */
+  async close() {
+    const result = await super.close();
+
+    if (this.isWaitMode) this.actor.leaveWaitMode();
+
+    return result;
   }
 
   /* -------------------------------------------------- */
@@ -343,4 +378,15 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
     });
     actor.rollTrait({ actor, name: enrichedText });
   }
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Leave wait mode and re-render the character sheet, if open.
+   * @this DiscworldActorSheet
+   */
+  static #leaveWaitMode() {
+    this.actor.leaveWaitMode();
+  }
+
 }

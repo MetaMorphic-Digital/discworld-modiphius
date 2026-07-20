@@ -11,8 +11,7 @@ body.theme-light,
   @include setVars(
     image,
     (
-      sheet-background:
-        url("#{$assetsPrefix}/sheet/sheet-background-light.webp"),
+      sheet-background: url("#{$assetsPrefix}/sheet/sheet-background-light.webp"),
     )
   );
 
@@ -20,7 +19,7 @@ body.theme-light,
   @include setVars(
     color,
     (
-      help-mode: $purple-dark,
+      wait-mode: $purple-dark,
       input-outline: $discworld-brown,
       portrait-shadow: $red-dark,
       title: $discworld-brown,

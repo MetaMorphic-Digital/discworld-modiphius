@@ -46,12 +46,19 @@
       },
       "npc": {
         "htmlFields": ["description", "storyPrompt"]
+      },
+      "party": {
+        "htmlFields": ["description.value"]
       }
     },
     "Item": {
       "trait": {
         "htmlFields": ["notes"]
       }
+    },
+    "ChatMessage": {
+      "baseTest": {},
+      "groupTest": {}
     }
   },
   "packs": [

@@ -10,5 +10,8 @@
 
   "i18n-ally.localesPaths": ["foundry/lang", "lang"],
   "i18n-ally.keystyle": "nested",
-  "cSpell.words": ["DISCWORLD"]
+  "cSpell.words": ["DISCWORLD", "Morpork", "narrativium", "trattatello"],
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

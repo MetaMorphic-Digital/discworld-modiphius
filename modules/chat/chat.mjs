@@ -7,50 +7,53 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
     actions: {
-      narrativium: DiscworldChatLog.#onRollNarrativium,
       help: DiscworldChatLog.#onHelp,
+      trait: DiscworldChatLog.#onRollTrait,
+      narrativium: DiscworldChatLog.#onRollNarrativium,
     },
   };
 
   /* -------------------------------------------------- */
 
   /**
+   * Respond to a user clicking the "Roll Trait" button in Group Rolls by:
+   *   1. Opening the user's character sheet in "wait mode".
+   *   2. Waiting for a Trait to be clicked.
+   *   3. Creating the Trait roll.
+   * @this {DiscworldChatLog}
+   * @param {PointerEvent} event    The originating click event.
+   * @param {HTMLElement} target    The element that defined the [data-action].
+   */
+  static async #onRollTrait(event, target) {
+    const { message } = DiscworldChatLog.getClickedMessageData(event, target);
+    const { actor, member } = this.getActorForRoll(event, target);
+    actor.resolveWaitMode(message, { isHelpRoll: false, groupMember: member.id });
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
    * Respond to a user clicking the "Help" button by:
-   *   1. Opening the user's character sheet in "help mode".
+   *   1. Opening the user's character sheet in "wait mode".
    *   2. Waiting for a Trait to be clicked.
    *   3. Creating the Trait help roll.
+   * @this {DiscworldChatLog}
    * @param {PointerEvent} event    The originating click event.
    * @param {HTMLElement} target    The element that defined the [data-action].
    */
   static async #onHelp(event, target) {
     const { message } = DiscworldChatLog.getClickedMessageData(event, target);
-    if (message.helpRoll) return;
 
-    if (!canvas.ready) return;
-
-    const controlledTokens = canvas.tokens.controlled;
-    if (controlledTokens.length > 1) {
-      ui.notifications.warn("DISCWORLD.chat.warning.singleTokenSelect", { localize: true });
-      return;
-    }
-
-    // Get the Actor from either the selected Token, or the User's character.
-    const [token] = controlledTokens;
-    const actor = token?.actor ?? game.user.character;
-
-    if (!actor) {
-      ui.notifications.warn("DISCWORLD.chat.warning.actorNotFound", { localize: true });
-      return;
-    }
+    const { actor, member } = this.getActorForRoll(event, target);
 
     // Warn and prevent roll if character has no luck remaining.
-    if (!actor.system.luck.value) {
+    if ((actor.type === "character") && !actor.system.luck.value) {
       ui.notifications.warn("DISCWORLD.chat.warning.noLuck", { format: { actorName: actor.name } });
       return;
     }
 
     // Wait for a Trait to be rolled.
-    actor.resolveHelpMode(message);
+    actor.resolveWaitMode(message, { isHelpRoll: true, groupMember: member?.id });
   }
 
   /* -------------------------------------------------- */
@@ -73,9 +76,47 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
   /* -------------------------------------------------- */
 
   /**
+   * Get the Actor that initiated the roll.
+   * @param {PointerEvent} event    The originating click event.
+   * @param {HTMLElement} target    The element that defined the [data-action].
+   * @returns {{actor: DiscworldActor|null, member: DiscworldActor|null}}
+   */
+  getActorForRoll(event, target) {
+    const { message, memberId } = DiscworldChatLog.getClickedMessageData(event, target);
+    const member = game.actors.get(memberId);
+    if (member && (target.dataset.action === "trait")) {
+      return { actor: member, member };
+    }
+
+    if (!member && message.system.helpRoll) return null;
+
+    if (!canvas.ready) return null;
+
+    const controlledTokens = canvas.tokens.controlled;
+    if (controlledTokens.length > 1) {
+      ui.notifications.warn("DISCWORLD.chat.warning.singleTokenSelect");
+      return null;
+    }
+
+    // Get the Actor from either the selected Token, or the User's character.
+    const [token] = controlledTokens;
+    const actor = token?.actor ?? game.user.character;
+
+    if (!actor) {
+      ui.notifications.warn("DISCWORLD.chat.warning.actorNotFound");
+      return null;
+    }
+
+    return { actor, member };
+  }
+
+  /* -------------------------------------------------- */
+
+  /**
    * @typedef ClickedMessageData
-   * @property {ChatMessage} message    The clicked chat message.
-   * @property {boolean} reroll         Whether the message was marked as a reroll.
+   * @property {DiscworldChatMessage} message    The clicked chat message.
+   * @property {boolean} reroll                  Whether the message was marked as a reroll.
+   * @property {string} memberId                 The ID of the Actor that initiated the roll.
    */
 
   /**
@@ -90,6 +131,8 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
 
     const message = game.messages.get(messageElem.dataset.messageId);
     const reroll = buttonElem.classList.contains("reroll");
-    return { message, reroll };
+
+    const memberId = target.closest("[data-member-id]")?.getAttribute("data-member-id");
+    return { message, reroll, memberId };
   }
 }

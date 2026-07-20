@@ -9,11 +9,11 @@ export default class DWNarrativiumRoll extends foundry.dice.Roll {
   static async createNarrativiumRoll({ message, reroll = false }) {
     // Determine the type of narrativium roll (regular or reroll).
     const resultKey = reroll ? "gmReroll" : "gmRoll";
-    if (foundry.utils.getProperty(message, resultKey)) return null;
+    if (foundry.utils.getProperty(message, `system.${resultKey}`)) return null;
 
     // Create Narrativium roll.
     const roll = await new DWNarrativiumRoll("d8", {}, { reroll }).evaluate();
 
-    return message.addRoll(roll);
+    return message.system.addRoll(roll);
   }
 }

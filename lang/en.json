@@ -14,7 +14,9 @@
     },
 
     "chat": {
-      "postRollActions": {
+      "groupRoll": "Group Roll",
+      "rollActions": {
+        "trait": "Roll Trait",
         "help": "Help",
         "narrativium": "Narrativium",
         "reroll": "GM Reroll"
@@ -34,7 +36,17 @@
         "title": "Deleting a Trait!"
       },
 
-      "rollTrait.title": "Rolling a Trait!"
+      "rollTrait.title": "Rolling a Trait!",
+      "groupTest": {
+        "cancel": "Cancel",
+        "highestWins": "Using highest Player Roll",
+        "lowestWins": "Using lowest Player Roll",
+        "membersLabel": "Select Party Members for Roll:",
+        "prepareRoll": "Prepare Roll",
+        "title": "Prepare Group Test",
+        "winConditionsLabel": "Success Condition",
+        "tooFewMembers": "Select at least two party members for the Group Test."
+      }
     },
 
     "roll": {
@@ -53,6 +65,18 @@
       }
     },
 
+    "party": {
+      "groupRoll": "Group Roll",
+      "dropMembers": "Drop Party Members here.",
+      "partyMembers": "Party Members",
+      "placeMembers": "Place Members",
+
+      "context": {
+        "assignPrimaryParty": "Assign Primary Party",
+        "removePrimaryParty": "Remove Primary Party"
+      }
+    },
+
     "sheet": {
       "context": {
         "actor": {
@@ -65,12 +89,18 @@
         }
       },
 
-      "leaveHelpMode": "Leave Help Mode",
+      "leaveWaitMode": {
+        "help": "Leave Help Mode",
+        "trait": "Leave Trait Selection Mode"
+      },
       "rollNameAsTrait": "Roll Name As Trait",
       "toggleSheetMode": "Toggle Between Locked & Edit Mode",
       "tabs": {
         "description": "Description",
         "traits": "Traits"
+      },
+      "warning": {
+        "incorrectTraitType": "Trait Type does not match Actor Type."
       }
     },
 
@@ -87,10 +117,13 @@
         "consequences": "Consequences",
         "core": "Core",
         "features": "Features",
+        "goal": "Party Goal",
         "mannerism": "Mannerism",
         "niche": "Niche",
         "organization": "Organization",
         "other": "Other",
+        "past": "Party Past",
+        "present": "Party Present",
         "quirks": "Quirks",
         "species": "Species",
         "spellbook": "Spellbook"
@@ -121,16 +154,29 @@
   "TYPES": {
     "Actor": {
       "character": "Character",
-      "npc": "NPC"
+      "npc": "NPC",
+      "party": "Party"
     },
     "Item": {
       "trait": "Trait"
+    },
+    "HINTS": {
+      "Actor": {
+        "character": "A player character, exploring the mysteries of the Discworld.",
+        "npc": "One of the ~999,995 non-player characters in Ankh-Morpork, controlled by the GM.",
+        "party": "An organizational actor for tracking and managing a party."
+      },
+      "Item": {
+        "trait": "The central mechanic of the game, representing everything a character is and has. Traits are rolled in tests against the Narrativium."
+      }
     }
   },
+
   "discworld-modiphius": {
     "CharacterSheet": "Discworld Character Sheet",
     "DiscworldJournalEntrySheet": "Discworld Journal Sheet",
     "NPCSheet": "Discworld NPC Sheet",
-    "TraitSheet": "Discworld Trait Sheet"
+    "TraitSheet": "Discworld Trait Sheet",
+    "PartySheet": "Discworld Party Sheet"
   }
 }

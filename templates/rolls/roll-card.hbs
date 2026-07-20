@@ -11,8 +11,8 @@
     <!-- Player Results -->
     <div class="outcome-container">
       <button data-action="help" class="help" {{disabled css.buttonDisabled.help }}>
-        {{localize "DISCWORLD.chat.postRollActions.help"}}
-        <i class="fas fa-dice"></i>
+        {{localize "DISCWORLD.chat.rollActions.help"}}
+        <i class="fa-solid fa-dice fa-fw" inert></i>
       </button>
 
       <ol class="result {{css.outcome.player}}">
@@ -31,11 +31,11 @@
               class="narrativium {{css.rerollButton}}"
               {{disabled css.buttonDisabled.narrativium }}>
         {{#if css.rerollButton }}
-          {{localize "DISCWORLD.chat.postRollActions.reroll"}}
+          {{localize "DISCWORLD.chat.rollActions.reroll"}}
         {{else}}
-          {{localize "DISCWORLD.chat.postRollActions.narrativium"}}
+          {{localize "DISCWORLD.chat.rollActions.narrativium"}}
         {{/if}}
-        <i class="fas fa-dice"></i>
+        <i class="fa-solid fa-dice fa-fw" inert></i>
       </button>
 
       <ol class="result {{css.outcome.gm }}">

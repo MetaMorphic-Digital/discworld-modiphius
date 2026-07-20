@@ -3,17 +3,25 @@ import DISCWORLD from "./modules/config.mjs";
 import * as utils from "./modules/utils/_module.mjs";
 import preloadTemplates, { registerHelpers } from "./modules/utils/handlebars.mjs";
 import registerKeybindings from "./modules/utils/keybindings.mjs";
+import registerSettings from "./modules/utils/settings.mjs";
 
 import CharacterDataModel from "./modules/datamodels/character-schema.mjs";
 import NPCDataModel from "./modules/datamodels/npc-schema.mjs";
+import PartyDataModel from "./modules/datamodels/party-schema.mjs";
 import TraitDataModel from "./modules/datamodels/trait-schema.mjs";
+import GroupTestMessageSchema from "./modules/datamodels/group-test-message-schema.mjs";
+import BaseMessageSchema from "./modules/datamodels/base-message-schema.mjs";
+
+import DiscworldActors from "./modules/collections/actors.mjs";
+import MembersCollection from "./modules/collections/members-collection.mjs";
+import DiscworldActorDirectory from "./modules/applications/sidebar/tabs/actors.mjs";
 
 import DiscworldChatLog from "./modules/chat/chat.mjs";
 import DiscworldMessage from "./modules/chat/chat-message.mjs";
 
 import * as Rolls from "./modules/rolls/index.mjs";
 
-import DiscworldCharacter from "./modules/documents/character.mjs";
+import DiscworldActor from "./modules/documents/actor.mjs";
 
 import DiscworldSheetMixin from "./modules/applications/sheets/base-document-sheet.mjs";
 import TraitSheet from "./modules/applications/sheets/trait-sheet.mjs";
@@ -21,6 +29,7 @@ import DiscworldJournalEntrySheet from "./modules/applications/sheets/journal-en
 
 import DiscworldActorSheet from "./modules/applications/sheets/actors/base-actor-sheet.mjs";
 import CharacterSheet from "./modules/applications/sheets/actors/character-sheet.mjs";
+import PartySheet from "./modules/applications/sheets/actors/party-sheet.mjs";
 import NPCSheet from "./modules/applications/sheets/actors/npc-sheet.mjs";
 
 // Export globals.
@@ -29,6 +38,8 @@ globalThis.discworld = {
   config: DISCWORLD,
   data: {
     CharacterDataModel,
+    NPCDataModel,
+    PartyDataModel,
     TraitDataModel,
   },
   sheets: {
@@ -36,6 +47,9 @@ globalThis.discworld = {
     DiscworldActorSheet,
     CharacterSheet,
     TraitSheet,
+  },
+  collections: {
+    MembersCollection,
   },
 };
 
@@ -48,7 +62,9 @@ Hooks.once("init", () => {
   CONFIG.Discworld = DISCWORLD;
 
   // Register Actor classes.
-  CONFIG.Actor.documentClass = DiscworldCharacter;
+  CONFIG.Actor.collection = DiscworldActors;
+
+  CONFIG.Actor.documentClass = DiscworldActor;
   CONFIG.Actor.dataModels.character = CharacterDataModel;
   Actors.registerSheet(DISCWORLD.id, CharacterSheet, {
     types: ["character"],
@@ -61,15 +77,26 @@ Hooks.once("init", () => {
     makeDefault: true,
   });
 
+  CONFIG.Actor.dataModels.party = PartyDataModel;
+  Actors.registerSheet(DISCWORLD.id, PartySheet, {
+    types: ["party"],
+    makeDefault: true,
+  });
+
   // Register Item classes.
   CONFIG.Item.dataModels.trait = TraitDataModel;
   Items.registerSheet(DISCWORLD.id, TraitSheet, {
     makeDefault: true,
   });
 
+  // Register Actor Directory.
+  CONFIG.ui.actors = DiscworldActorDirectory;
+
   // Register Chat classes.
   CONFIG.ui.chat = DiscworldChatLog;
   CONFIG.ChatMessage.documentClass = DiscworldMessage;
+  CONFIG.ChatMessage.dataModels.groupTest = GroupTestMessageSchema;
+  CONFIG.ChatMessage.dataModels.baseTest = BaseMessageSchema;
 
   // Register Dice
   for (const Roll of Object.values(Rolls)) CONFIG.Dice.rolls.push(Roll);
@@ -81,6 +108,7 @@ Hooks.once("init", () => {
   });
 
   // Run various utils.
+  registerSettings();
   registerKeybindings();
   registerHelpers();
   preloadTemplates();

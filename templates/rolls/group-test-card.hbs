@@ -1,0 +1,63 @@
+<div class="discworld group-test">
+  <header class="trait-container">
+    <h4 class="divider">{{localize "DISCWORLD.chat.groupRoll"}}</h4>
+  </header>
+  <ol class="members">
+    {{#each members}}
+    <li data-member-id="{{actor.id}}">
+      <div class="name">{{actor.name}}</div>
+      <div class="dice-rolls">
+        <div class="outcome-container flexrow">
+          <ol class="result {{@root.css.outcome.player}}">
+            <li class="playerResult {{ifThen mainRoll.term mainRoll.term "d6"}} flexrow {{css.result.trait}}" data-tooltip-text="{{mainRollTooltip}}">
+              <span>
+                {{ifThen mainRoll.result mainRoll.result "?"}}
+              </span>
+            </li>
+            <li class="helpResult {{helpRoll.term}} flexrow {{css.result.help}}" data-tooltip="{{{helpRollTooltip}}}">
+              <span>{{helpRoll.result}}</span>
+            </li>
+          </ol>
+          {{#if css.helpButton.hidden }}
+          <button data-action="trait" class="trait">
+            {{localize "DISCWORLD.chat.rollActions.trait"}}
+            <i class="fa-solid fa-dice fa-fw" inert></i>
+          </button>
+          {{else}}
+          <button data-action="help" class="help" {{disabled css.helpButton.disabled }}>
+            {{localize "DISCWORLD.chat.rollActions.help"}}
+            <i class="fa-solid fa-dice fa-fw" inert></i>
+          </button>
+          {{/if}}
+        </div>
+      </div>
+    </li>
+    {{/each}}
+  </ol>
+  <div class="win-condition">{{localize (concat "DISCWORLD.dialog.groupTest." winCondition)}}</div>
+  <hr>
+  <div class="dice-rolls">
+    <div class="outcome-container flexrow">
+      <ol class="result {{css.outcome.gm }}">
+        <li class="gmResult d8 flexrow {{css.result.gm}}">
+          <span>
+            {{ifThen gmRoll.result gmRoll.result "?"}}
+          </span>
+        </li>
+        <li class="gmRerollResult d8 flexrow {{css.result.gmReroll}}">
+          <span>{{gmReroll.result}}</span>
+        </li>
+      </ol>
+      <button data-action="narrativium"
+        class="narrativium {{css.narrativiumButton.class}}"
+        {{disabled css.narrativiumButton.disabled }}>
+        {{#if css.narrativiumButton.class }}
+        {{localize "DISCWORLD.chat.rollActions.reroll"}}
+        {{else}}
+        {{localize "DISCWORLD.chat.rollActions.narrativium"}}
+        {{/if}}
+        <i class="fa-solid fa-dice fa-fw" inert></i>
+      </button>
+    </div>
+  </div>
+</div>
