@@ -34,6 +34,14 @@ body.theme-light,
       callout-secondary-shadow: $blue-very-light,
       callout-secondary-shadow-inset: #eee,
 
+      callout-consequences: #ffc0c0,
+      callout-consequences-shadow-inset: rgba(238, 238, 238, 0.75),
+      callout-consequences-header: #843639,
+
+      callout-clues: #c0cad4,
+      callout-clues-shadow-inset: transparent,
+      callout-clues-header: #003e4f,
+
       dialog-button-background: rgba(0, 0, 0, 0.1),
       dialog-button-background-hover: $discworld-sand-light,
       dialog-button-text: var(--color-dark-2),

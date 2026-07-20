@@ -1,5 +1,6 @@
 @use "../utils/callouts" as *;
 @use "../utils/dice" as *;
+@use "../utils/var-utils" as *;
 
 @mixin aside {
   aside {
@@ -16,5 +17,24 @@
     }
 
     @include discworld-dice;
+
+    &.consequences {
+      @include callout-consequences;
+
+      strong.highlight,
+      h3 {
+        color: getVar(color, callout-consequences-header);
+      }
+    }
+
+    &.clues {
+      @include callout-clues;
+
+      .subclue,
+      strong.highlight,
+      h3 {
+        color: getVar(color, callout-clues-header);
+      }
+    }
   }
 }
