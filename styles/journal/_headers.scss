@@ -38,4 +38,10 @@
     color: getVar(color, title-alt);
     font-size: 1.5rem;
   }
+
+  h4 {
+    font-family: $font-caslon;
+    font-size: 1.125rem;
+    font-weight: bold;
+  }
 }

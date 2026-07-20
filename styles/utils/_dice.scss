@@ -20,3 +20,26 @@
     }
   }
 }
+
+@mixin discworld-dice {
+  &.discworld-dice {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-evenly;
+    text-align: center;
+
+    margin-block: 36px;
+
+    figure {
+      flex: 0 0 18ch;
+      width: unset;
+    }
+
+    img {
+      width: 48px;
+      border: none;
+      box-shadow: none;
+    }
+  }
+}

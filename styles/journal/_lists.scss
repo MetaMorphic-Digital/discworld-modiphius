@@ -1,4 +1,5 @@
 @use "../variables/fonts" as *;
+@use "../variables/color" as *;
 
 @mixin lists {
   ol {
@@ -8,6 +9,12 @@
 
     li {
       padding-left: 0.5rem;
+    }
+
+    &.test-steps {
+      ol {
+        list-style-type: lower-alpha;
+      }
     }
   }
 
@@ -21,6 +28,7 @@
     ::marker {
       content: "\25C6";
       font-size: 0.6em;
+      color: $discworld-brown;
     }
   }
 }

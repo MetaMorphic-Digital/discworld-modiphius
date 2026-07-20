@@ -1,6 +1,7 @@
 @use "../utils/var-utils" as *;
 
 @use "../variables/fonts" as *;
+@use "../variables/generic" as *;
 
 @mixin -fancy-bold {
   color: getVar(color, title-alt);
@@ -12,6 +13,12 @@
 
 @mixin text {
   /* --------------- Semantic elements --------------- */
+
+  .trattatello {
+    font-family: $font-trattatello;
+    font-size: 1.1em;
+  }
+
   strong.highlight {
     color: getVar(color, title-alt);
 
@@ -53,6 +60,19 @@
     }
   }
 
+  div.footnote,
+  div.footer {
+    font-family: $font-trattatello;
+
+    background-image: url("#{$assetsPrefix}/sheet/footnote.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    padding-block: 24px 12px;
+    padding-inline: 24px;
+    margin-inline: 24px 12px;
+  }
+
   img {
     margin: 0 auto;
   }
@@ -78,6 +98,15 @@
 
       &:first-child {
         @include -fancy-bold;
+      }
+    }
+
+    &.playtesters {
+      p {
+        color: unset;
+        font-weight: unset;
+        font-family: unset;
+        font-size: unset;
       }
     }
   }
@@ -114,6 +143,13 @@
       margin-top: 10px;
       margin-bottom: unset;
     }
+  }
+
+  .recommended-reading {
+    text-align: center;
+    font-family: $font-trattatello;
+    font-size: 1.2em;
+    font-weight: normal;
   }
 
   div.example-of-play {
