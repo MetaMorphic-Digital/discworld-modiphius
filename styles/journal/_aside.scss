@@ -2,21 +2,44 @@
 @use "../utils/dice" as *;
 @use "../utils/var-utils" as *;
 
+@use "../variables/generic" as *;
+
 @mixin aside {
   aside {
-    @include callout-primary;
+    $-decoration-height: 40px;
 
+    @include callout-primary;
+    position: relative;
     font-style: italic;
 
     padding: 1rem;
     border-radius: 8px;
 
+    margin-block: calc($-decoration-height / 2 + 8px);
+
     h3 {
       text-align: center;
       font-style: oblique;
+
+      margin-block-start: calc($-decoration-height / 4);
     }
 
     @include discworld-dice;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 100%;
+      height: $-decoration-height;
+      transform: translateX(-50%) translateY(-50%);
+
+      background-image: url("#{$assetsPrefix}/sheet/banner-decoration-01.webp");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
 
     &.consequences {
       @include callout-consequences;
