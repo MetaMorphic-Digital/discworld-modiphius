@@ -1,5 +1,9 @@
 import MembersField from "./fields/members-field.mjs";
 
+/**
+ * @import DiscworldActor from "../documents/actor.mjs";
+ */
+
 const { HTMLField, SchemaField } = foundry.data.fields;
 
 export default class PartyDataModel extends foundry.abstract.TypeDataModel {
@@ -64,7 +68,7 @@ export default class PartyDataModel extends foundry.abstract.TypeDataModel {
 
   /**
    * Is a given actor valid to be a member of a party?
-   * @param {DiscworldCharacter} actor
+   * @param {DiscworldActor} actor
    * @returns {boolean}
    */
   static validMember(actor) {
@@ -80,8 +84,8 @@ export default class PartyDataModel extends foundry.abstract.TypeDataModel {
 
   /**
    * Add members to the party.
-   * @param {DiscworldCharacter[]} [actors]    The actors to add.
-   * @returns {Promise<DiscworldCharacter>}    A promise that resolves to the updated party actor.
+   * @param {DiscworldActor[]} [actors]    The actors to add.
+   * @returns {Promise<DiscworldActor>}    A promise that resolves to the updated party actor.
    */
   async addMembers(actors = []) {
     actors = new Set(actors.filter(this.constructor.validMember)).filter(
@@ -103,8 +107,8 @@ export default class PartyDataModel extends foundry.abstract.TypeDataModel {
 
   /**
    * Remove members from the party.
-   * @param {DiscworldCharacter[]} [actors]    The actors to remove.
-   * @returns {Promise<DiscworldCharacter>}    A promise that resolves to the updated party actor.
+   * @param {DiscworldActor[]} [actors]    The actors to remove.
+   * @returns {Promise<DiscworldActor>}    A promise that resolves to the updated party actor.
    */
   async removeMembers(actors = []) {
     const update = {};

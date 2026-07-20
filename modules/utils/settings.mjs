@@ -15,6 +15,8 @@ const systemSettings = {
   },
 };
 
+/* -------------------------------------------------- */
+
 /**
  * Helper function called in the `init` hook.
  */

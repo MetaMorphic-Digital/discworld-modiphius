@@ -1,11 +1,16 @@
 import DISCWORLD from "../config.mjs";
+
+/**
+ * @import DiscworldActor from "../documents/actor.mjs";
+ */
+
 /**
  * An extension of the core Actors collection with extra convenience functions.
  */
 export default class DiscworldActors extends foundry.documents.collections.Actors {
   /**
    * The primary party.
-   * @type {DiscworldCharacter}
+   * @type {DiscworldActor}
    */
   get party() {
     return game.settings.get(DISCWORLD.id, "primaryParty")?.actor ?? null;
@@ -33,7 +38,7 @@ export default class DiscworldActors extends foundry.documents.collections.Actor
 
   /**
    * Set the primary party.
-   * @param {DiscworldCharacter} actor    The actor to assign as the primary party.
+   * @param {DiscworldActor} actor    The actor to assign as the primary party.
    * @returns {Promise<boolean>}      A promise that resolves to whether the modification was successful.
    */
   async setParty(actor) {

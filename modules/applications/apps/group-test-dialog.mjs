@@ -9,16 +9,17 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
   static DEFAULT_OPTIONS = {
     classes: ["dialog", "discworld", "group-test"],
     position: { width: 500 },
-    tag: "dialog",
+    tag: "form",
     form: {
       handler: GroupTestDialog.#onSubmit,
     },
     window: {
       title: "DISCWORLD.dialog.groupTest.title",
-      contentTag: "form",
       contentClasses: ["dialog-form", "standard-form"],
     },
   };
+
+  /* -------------------------------------------------- */
 
   /** @inheritdoc */
   static PARTS = {
@@ -30,6 +31,8 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
       template: "templates/generic/form-footer.hbs",
     },
   };
+
+  /* -------------------------------------------------- */
 
   /** @inheritdoc */
   async _prepareContext(options) {
@@ -54,13 +57,13 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
       {
         action: "submit",
         label: "DISCWORLD.dialog.groupTest.prepareRoll",
-        icon: "fas fa-check",
+        icon: "fa-solid fa-check",
         type: "submit",
       },
       {
         action: "close",
         label: "DISCWORLD.dialog.groupTest.cancel",
-        icon: "fas fa-times",
+        icon: "fa-solid fa-times",
         type: "button",
         default: true,
       },
@@ -69,9 +72,10 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
     return context;
   }
 
+  /* -------------------------------------------------- */
+
   /**
-   * @this {GroupTestDialog}
-   * @inheritdoc
+   * @this GroupTestDialog
   */
   static async #onSubmit(event, form, formData) {
     const expanded = foundry.utils.expandObject(formData.object);
@@ -85,7 +89,8 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
     });
 
     if (!(Object.keys(expanded.members).length > 1)) {
-      return ui.notifications.warn("DISCWORLD.dialog.groupTest.tooFewMembers");
+      ui.notifications.warn("DISCWORLD.dialog.groupTest.tooFewMembers");
+      return;
     }
 
     this.close();

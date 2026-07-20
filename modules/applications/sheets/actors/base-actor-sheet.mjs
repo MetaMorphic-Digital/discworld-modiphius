@@ -219,12 +219,13 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
    * @returns {object[]}    Context options.
    */
   #prepareTraitContextOptions() {
+    if (!this.isEditable) return [];
+
     const getItem = (target) => this.document.items.get(target.dataset.itemId);
     return [
       {
         label: "DISCWORLD.sheet.context.actor.trait.use",
         icon: "fa-solid fa-hand-fist",
-        visible: () => this.document.isOwner,
         onClick: (event, target) => this.document.rollTrait(
           getItem(target),
           { parentWindow: this.window.windowId },
@@ -233,13 +234,11 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
       {
         label: "DISCWORLD.sheet.context.actor.trait.edit",
         icon: "fa-solid fa-edit",
-        visible: () => this.document.isOwner,
         onClick: (event, target) => getItem(target).sheet.render({ force: true }),
       },
       {
         label: "DISCWORLD.sheet.context.actor.trait.delete",
         icon: "fa-solid fa-trash",
-        visible: () => this.document.isOwner,
         onClick: (event, target) => getItem(target).deleteDialog({
           renderOptions: { window: { windowId: this.window.windowId } },
         }),
@@ -247,7 +246,6 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
       {
         label: "DISCWORLD.sheet.context.actor.trait.duplicate",
         icon: "fa-solid fa-copy",
-        visible: () => this.document.isOwner,
         onClick: (event, target) => {
           const item = getItem(target);
           item.clone(
@@ -295,6 +293,7 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
    * Add a new trait of the given type to the character.
    * @this DiscworldActorSheet
    * @param {string} traitType    The type of trait to add. Must be one of the {@link DISCWORLD.traitTypes} constants.
+   * @param {object} [extraData]
    */
   static async #addTrait(traitType, extraData = {}) {
     const createData = foundry.utils.mergeObject(
@@ -369,7 +368,7 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
    * Rolls a part of the character's description as a trait (TraitLike).
    * @this DiscworldActorSheet
    * @param {string} html   The html of the TraitLike to be rolled.
-   * @see DiscworldCharacter.rollTrait
+   * @see DiscworldActor.rollTrait
    */
   static async #rollDescriptionAsTrait(html) {
     const { actor } = this;

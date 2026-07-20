@@ -137,6 +137,8 @@ export default class PartySheet extends DiscworldActorSheet {
 
   /**
    * @this PartySheet
+   * @param {PointerEvent} event    The initiating click event.
+   * @param {HTMLElement} target    The capturing html element that defined the [data-action].
    */
   static async #placeMembers() {
     if (!this.document.system.members.size) {

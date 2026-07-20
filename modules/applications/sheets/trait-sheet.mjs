@@ -98,20 +98,18 @@ export default class TraitSheet extends DiscworldSheetMixin(ItemSheetV2) {
     return renderedApp;
   }
 
-  /* ------------------------------------------------- */
+  /* -------------------------------------------------- */
 
   /** @inheritdoc */
-  async _onChangeForm(formConfig, event) {
-    const { target } = event;
+  _processFormData(event, form, formData) {
+    formData = super._processFormData(event, form, formData);
 
-    // Handle changes to actorType, assigning a valid trait type.
-    if (target?.name === "system.actorType") {
-      const [defaultType] = Object.keys(DISCWORLD.traitTypes[target.value]);
-      this.document.update(
-        { "system.type": defaultType },
-        { render: false },
-      );
+    if (foundry.utils.hasProperty(formData, "system.actorType")) {
+      const sat = foundry.utils.getProperty(formData, "system.actorType");
+      const [defaultType] = Object.keys(DISCWORLD.traitTypes[sat]);
+      foundry.utils.setProperty(formData, "system.type", defaultType);
     }
-    return super._onChangeForm(formConfig, event);
+
+    return formData;
   }
 }

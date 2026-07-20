@@ -2,7 +2,6 @@
   "DISCWORLD": {
     "character": {
       "luck": "Luck",
-
       "FIELDS": {
         "description": {
           "label": "Description"
@@ -12,7 +11,6 @@
         }
       }
     },
-
     "chat": {
       "groupRoll": "Group Roll",
       "rollActions": {
@@ -21,7 +19,6 @@
         "narrativium": "Narrativium",
         "reroll": "GM Reroll"
       },
-
       "warning": {
         "actorNotFound": "No token selected and no character assigned to User. Cannot determine Actor to help.",
         "gmOnly": "Only GMs can roll Narrativium!",
@@ -29,13 +26,11 @@
         "singleTokenSelect": "You must select a single token to roll for."
       }
     },
-
     "dialog": {
       "deleteTrait": {
         "content": "Are you sure you want to delete the trait, \"{traitName}\"?",
         "title": "Deleting a Trait!"
       },
-
       "rollTrait.title": "Rolling a Trait!",
       "groupTest": {
         "cancel": "Cancel",
@@ -48,12 +43,10 @@
         "tooFewMembers": "Select at least two party members for the Group Test."
       }
     },
-
     "roll": {
       "traitRoll": "Trait Roll",
       "helpRoll": "Help Roll"
     },
-
     "npc": {
       "FIELDS": {
         "fullName": {
@@ -64,19 +57,16 @@
         }
       }
     },
-
     "party": {
       "groupRoll": "Group Roll",
       "dropMembers": "Drop Party Members here.",
       "partyMembers": "Party Members",
       "placeMembers": "Place Members",
-
       "context": {
         "assignPrimaryParty": "Assign Primary Party",
         "removePrimaryParty": "Remove Primary Party"
       }
     },
-
     "sheet": {
       "context": {
         "actor": {
@@ -88,7 +78,6 @@
           }
         }
       },
-
       "leaveWaitMode": {
         "help": "Leave Help Mode",
         "trait": "Leave Trait Selection Mode"
@@ -103,7 +92,6 @@
         "incorrectTraitType": "Trait Type does not match Actor Type."
       }
     },
-
     "trait": {
       "severity": {
         "inconsequential": "Inconsequential",
@@ -111,7 +99,6 @@
         "major": "Major",
         "exceptional": "Exceptional"
       },
-
       "type": {
         "background": "Background",
         "consequences": "Consequences",
@@ -128,7 +115,6 @@
         "species": "Species",
         "spellbook": "Spellbook"
       },
-
       "FIELDS": {
         "actorType": {
           "label": "Actor Type"
@@ -144,13 +130,17 @@
         }
       }
     },
-
     "PACKS": {
       "PREGENS": "Pre-Generated Characters",
       "QUICKSTART": "Quickstart"
+    },
+    "keybindings": {
+      "toggleEditMode": {
+        "name": "Toggle Edit Mode",
+        "hint": "Turn character sheet 'edit mode' on or off."
+      }
     }
   },
-
   "TYPES": {
     "Actor": {
       "character": "Character",
@@ -171,7 +161,6 @@
       }
     }
   },
-
   "discworld-modiphius": {
     "CharacterSheet": "Discworld Character Sheet",
     "DiscworldJournalEntrySheet": "Discworld Journal Sheet",

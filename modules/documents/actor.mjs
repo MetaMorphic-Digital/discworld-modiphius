@@ -25,6 +25,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
   /** @inheritdoc */
   async _preCreate(data, options, user) {
     if ((await super._preCreate(data, options, user)) === false) return false;
+
     const update = foundry.utils.mergeObject(
       {
         actorLink: true,
@@ -34,6 +35,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
       data.prototypeToken ?? {},
       { insertKeys: false, insertValues: false, overwrite: true },
     );
+
     this.updateSource({ prototypeToken: update });
   }
 
@@ -42,7 +44,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
   /**
    * In Discworld, everything is a trait. So, you can pass anything that has a `name` property to `rollTrait`.
    * @typedef TraitLike
-   * @prop {string} name
+   * @property {string} name
    */
 
   /* -------------------------------------------------- */

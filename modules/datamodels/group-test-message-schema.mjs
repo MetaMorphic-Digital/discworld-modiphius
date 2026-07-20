@@ -4,6 +4,10 @@ import { templatePath } from "../utils/paths.mjs";
 import DWTraitRoll from "../rolls/trait-roll.mjs";
 import DISCWORLD from "../config.mjs";
 
+/**
+ * @import DiscworldActor from "../documents/actor.mjs";
+ */
+
 const { StringField } = foundry.data.fields;
 
 export default class GroupTestMessageSchema extends BaseMessageSchema {
@@ -11,44 +15,44 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
    * @import { BaseRollClassOptions, OutcomeClassOptions, RerollClassOptions } from "./base-message-schema.mjs"
    *
    * @typedef {object} RootCssData
-   * @prop {object} narrativiumButton
-   * @prop {boolean} narrativiumButton.disabled
-   * @prop {"reroll"|null} narrativiumButton.class
-   * @prop {object} result
-   * @prop {BaseRollClassOptions} result.gm
-   * @prop {RerollClassOptions} result.gmReroll
-   * @prop {object} outcome
-   * @prop {OutcomeClassOptions} outcome.player
-   * @prop {OutcomeClassOptions} outcome.gm
+   * @property {object} narrativiumButton
+   * @property {boolean} narrativiumButton.disabled
+   * @property {"reroll"|null} narrativiumButton.class
+   * @property {object} result
+   * @property {BaseRollClassOptions} result.gm
+   * @property {RerollClassOptions} result.gmReroll
+   * @property {object} outcome
+   * @property {OutcomeClassOptions} outcome.player
+   * @property {OutcomeClassOptions} outcome.gm
    *
    * @typedef {object} MemberCssData
-   * @prop {object} helpButton
-   * @prop {boolean} helpButton.disabled
-   * @prop {boolean} helpButton.hidden
-   * @prop {object} result
-   * @prop {BaseRollClassOptions} result.trait
-   * @prop {RerollClassOptions} result.help
+   * @property {object} helpButton
+   * @property {boolean} helpButton.disabled
+   * @property {boolean} helpButton.hidden
+   * @property {object} result
+   * @property {BaseRollClassOptions} result.trait
+   * @property {RerollClassOptions} result.help
    *
    * @typedef {object} MemberContext
-   * @prop {DiscworldCharacter} actor
-   * @prop {MemberCssData} css
-   * @prop {DWTraitRoll|null} mainRoll
-   * @prop {DWTraitRoll|null} helpRoll
+   * @property {DiscworldActor} actor
+   * @property {MemberCssData} css
+   * @property {DWTraitRoll|null} mainRoll
+   * @property {DWTraitRoll|null} helpRoll
    *
-   * @typedef {{actor: DiscworldCharacter, roll: DWTraitRoll}} RollData
+   * @typedef {{actor: DiscworldActor, roll: DWTraitRoll}} RollData
    * @typedef {Map<string, RollData>} RollMap    Mapping of groupMember id to roll data
    *
    * @typedef {object} GroupRollContext
-   * @prop {MemberContext[]} members
-   * @prop {"lowestWins" | "highestWins"} winCondition
-   * @prop {RollMap} traitRolls
-   * @prop {RollMap} helpRolls
-   * @prop {DWTraitRoll|null} gmRoll
-   * @prop {DWTraitRoll|null} gmReroll
+   * @property {MemberContext[]} members
+   * @property {"lowestWins" | "highestWins"} winCondition
+   * @property {RollMap} traitRolls
+   * @property {RollMap} helpRolls
+   * @property {DWTraitRoll|null} gmRoll
+   * @property {DWTraitRoll|null} gmReroll
    *
    * @typedef GroupOverrideInner
-   * @prop {DWTraitRoll|null} mainRoll
-   * @prop {DWTraitRoll|null} helpRoll
+   * @property {DWTraitRoll|null} mainRoll
+   * @property {DWTraitRoll|null} helpRoll
    *
    * @typedef {Record<string, GroupOverrideInner} GroupDataOverrides
    */

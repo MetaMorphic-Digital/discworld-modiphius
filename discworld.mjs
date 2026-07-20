@@ -19,7 +19,7 @@ import DiscworldActorDirectory from "./modules/applications/sidebar/tabs/actors.
 import DiscworldChatLog from "./modules/chat/chat.mjs";
 import DiscworldMessage from "./modules/chat/chat-message.mjs";
 
-import * as Rolls from "./modules/rolls/index.mjs";
+import * as Rolls from "./modules/rolls/_module.mjs";
 
 import DiscworldActor from "./modules/documents/actor.mjs";
 
