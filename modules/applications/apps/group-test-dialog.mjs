@@ -85,7 +85,7 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
     });
 
     if (!(Object.keys(expanded.members).length > 1)) {
-      return ui.notifications.warn("DISCWORLD.dialog.groupTest.tooFewMembers", { localize: true });
+      return ui.notifications.warn("DISCWORLD.dialog.groupTest.tooFewMembers");
     }
 
     this.close();

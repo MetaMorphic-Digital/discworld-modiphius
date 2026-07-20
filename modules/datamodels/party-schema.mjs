@@ -3,13 +3,6 @@ import MembersField from "./fields/members-field.mjs";
 const { HTMLField, SchemaField } = foundry.data.fields;
 
 export default class PartyDataModel extends foundry.abstract.TypeDataModel {
-  /** @inheritdoc */
-  static get metadata() {
-    return foundry.utils.mergeObject(super.metadata, {
-      type: "party",
-    });
-  }
-
   /**
    * The Actor subtypes allowed as members of a party.
    * @type {Set<string>}
