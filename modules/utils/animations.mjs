@@ -14,7 +14,7 @@
  * @returns {Promise<HTMLElement>}      A promise that resolves with the element
  *                                      once the CSS transition has ended or timed out.
  */
-export default function transitionClass(element, { remove = [], add = [] } = {}, timeout = 1000) {
+export default function transitionClass(element, { remove = [], add = [] }, timeout = 1000) {
   const { promise, resolve } = Promise.withResolvers();
   let eventFired = false;
 
