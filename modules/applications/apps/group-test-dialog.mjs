@@ -7,12 +7,13 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
   static DEFAULT_OPTIONS = {
     classes: ["dialog", "discworld", "group-test"],
     position: { width: 500 },
-    tag: "form",
+    tag: "dialog",
     form: {
       handler: GroupTestDialog.#onSubmit,
     },
     window: {
       title: "DISCWORLD.dialog.groupTest.title",
+      contentTag: "form",
       contentClasses: ["dialog-form", "standard-form"],
     },
   };
