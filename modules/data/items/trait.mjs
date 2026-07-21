@@ -1,8 +1,8 @@
-import DISCWORLD from "../config.mjs";
+import DISCWORLD from "../../config.mjs";
 
 const { HTMLField, StringField } = foundry.data.fields;
 
-export default class TraitDataModel extends foundry.abstract.TypeDataModel {
+export default class TraitData extends foundry.abstract.TypeDataModel {
   /** @inheritdoc */
   static defineSchema() {
 

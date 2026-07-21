@@ -1,6 +1,6 @@
 /**
- * @import DWNarrativiumRoll from "../rolls/narrativium-roll.mjs";
- * @import DWTraitRoll from "../rolls/trait-roll.mjs";
+ * @import DWNarrativiumRoll from "../../rolls/narrativium-roll.mjs";
+ * @import DWTraitRoll from "../../rolls/trait-roll.mjs";
  */
 
 /**
@@ -34,7 +34,7 @@
  * @typedef {RollContext & {css: CssData}} MessageContext
  */
 
-export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
+export default class BaseMessageData extends foundry.abstract.TypeDataModel {
 
   /* -------------------------------------------------- */
 

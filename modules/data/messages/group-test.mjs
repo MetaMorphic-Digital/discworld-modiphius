@@ -1,18 +1,17 @@
-import MembersField from "./fields/members-field.mjs";
-import BaseMessageSchema from "./base-message-schema.mjs";
-import { templatePath } from "../utils/paths.mjs";
-import DISCWORLD from "../config.mjs";
+import BaseMessageData from "./base-message.mjs";
+import { templatePath } from "../../utils/paths.mjs";
+import DISCWORLD from "../../config.mjs";
 
 /**
- * @import DiscworldActor from "../documents/actor.mjs";
- * @import DWTraitRoll from "../rolls/trait-roll.mjs";
+ * @import DiscworldActor from "../../documents/actor.mjs";
+ * @import DWTraitRoll from "../../rolls/trait-roll.mjs";
  */
 
 const { StringField } = foundry.data.fields;
 
-export default class GroupTestMessageSchema extends BaseMessageSchema {
+export default class GroupTestData extends BaseMessageData {
   /**
-   * @import { BaseRollClassOptions, OutcomeClassOptions, RerollClassOptions } from "./base-message-schema.mjs"
+   * @import { BaseRollClassOptions, OutcomeClassOptions, RerollClassOptions } from "./base-message.mjs"
    *
    * @typedef {object} RootCssData
    * @property {object} narrativiumButton
@@ -60,7 +59,7 @@ export default class GroupTestMessageSchema extends BaseMessageSchema {
   /** @inheritdoc */
   static defineSchema() {
     return {
-      groupMembers: new MembersField(),
+      groupMembers: new discworld.data.fields.MembersField(),
       winCondition: new StringField({
         required: true,
         choices: () => DISCWORLD.groupTestConditions,

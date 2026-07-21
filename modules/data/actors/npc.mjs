@@ -1,7 +1,6 @@
-import CharacterDataModel from "./character-schema.mjs";
 const { HTMLField, StringField } = foundry.data.fields;
 
-export default class NPCDataModel extends foundry.abstract.TypeDataModel {
+export default class NPCData extends foundry.abstract.TypeDataModel {
   /** @inheritdoc */
   static defineSchema() {
     return {
@@ -16,7 +15,7 @@ export default class NPCDataModel extends foundry.abstract.TypeDataModel {
 
   /** @inheritdoc */
   static LOCALIZATION_PREFIXES = [
-    ...CharacterDataModel.LOCALIZATION_PREFIXES,
+    "DISCWORLD.character",
     "DISCWORLD.npc",
   ];
 }

@@ -1,12 +1,10 @@
-import MembersField from "./fields/members-field.mjs";
-
 /**
- * @import DiscworldActor from "../documents/actor.mjs";
+ * @import DiscworldActor from "../../documents/actor.mjs";
  */
 
 const { HTMLField, SchemaField } = foundry.data.fields;
 
-export default class PartyDataModel extends foundry.abstract.TypeDataModel {
+export default class PartyData extends foundry.abstract.TypeDataModel {
   /**
    * The Actor subtypes allowed as members of a party.
    * @type {Set<string>}
@@ -21,7 +19,7 @@ export default class PartyDataModel extends foundry.abstract.TypeDataModel {
       description: new SchemaField({
         value: new HTMLField(),
       }),
-      members: new MembersField(),
+      members: new discworld.data.fields.MembersField(),
     };
   }
 
@@ -74,7 +72,7 @@ export default class PartyDataModel extends foundry.abstract.TypeDataModel {
   static validMember(actor) {
     return (
       (actor instanceof foundry.documents.Actor) &&
-      PartyDataModel.ALLOWED_ACTOR_TYPES.has(actor.type) &&
+      PartyData.ALLOWED_ACTOR_TYPES.has(actor.type) &&
       !actor.inCompendium &&
       !actor.isToken
     );

@@ -35,7 +35,7 @@ export default class MembersCollection extends foundry.utils.Collection {
   get documentsByType() {
     if (!this.#documentsByType) {
       this.#documentsByType = Object.groupBy(this, (m) => m.actor.type);
-      discworld.data.PartyDataModel.ALLOWED_ACTOR_TYPES.forEach(
+      discworld.data.actors.PartyData.ALLOWED_ACTOR_TYPES.forEach(
         (key) => (this.#documentsByType[key] ??= []),
       );
     }
