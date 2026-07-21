@@ -7,6 +7,8 @@ export function systemPath(path = null) {
   return `systems/${DISCWORLD.id}/${path}`;
 }
 
+/* -------------------------------------------------- */
+
 export function templatePath(path) {
   return `${systemPath()}/templates/${path}`;
 }

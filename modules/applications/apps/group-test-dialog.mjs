@@ -1,7 +1,5 @@
 import { templatePath } from "../../utils/paths.mjs";
 
-import DiscworldMessage from "../../chat/chat-message.mjs";
-
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 export default class GroupTestDialog extends HandlebarsApplicationMixin(ApplicationV2) {
@@ -20,6 +18,8 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
     },
   };
 
+  /* -------------------------------------------------- */
+
   /** @inheritdoc */
   static PARTS = {
     main: {
@@ -30,6 +30,8 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
       template: "templates/generic/form-footer.hbs",
     },
   };
+
+  /* -------------------------------------------------- */
 
   /** @inheritdoc */
   async _prepareContext(options) {
@@ -54,13 +56,13 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
       {
         action: "submit",
         label: "DISCWORLD.dialog.groupTest.prepareRoll",
-        icon: "fas fa-check",
+        icon: "fa-solid fa-check",
         type: "submit",
       },
       {
         action: "close",
         label: "DISCWORLD.dialog.groupTest.cancel",
-        icon: "fas fa-times",
+        icon: "fa-solid fa-times",
         type: "button",
         default: true,
       },
@@ -69,9 +71,10 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
     return context;
   }
 
+  /* -------------------------------------------------- */
+
   /**
-   * @this {GroupTestDialog}
-   * @inheritdoc
+   * @this GroupTestDialog
   */
   static async #onSubmit(event, form, formData) {
     const expanded = foundry.utils.expandObject(formData.object);
@@ -85,11 +88,12 @@ export default class GroupTestDialog extends HandlebarsApplicationMixin(Applicat
     });
 
     if (!(Object.keys(expanded.members).length > 1)) {
-      return ui.notifications.warn("DISCWORLD.dialog.groupTest.tooFewMembers");
+      ui.notifications.warn("DISCWORLD.dialog.groupTest.tooFewMembers");
+      return;
     }
 
     this.close();
-    DiscworldMessage.create({
+    ChatMessage.implementation.create({
       type: "groupTest",
       system: {
         groupMembers: expanded.members,

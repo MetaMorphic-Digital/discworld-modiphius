@@ -3,12 +3,17 @@
  */
 const DISCWORLD = {
   id: "discworld-modiphius",
+
+  /* -------------------------------------------------- */
+
   consequenceSeverity: {
     inconsequential: "DISCWORLD.trait.severity.inconsequential",
     minor: "DISCWORLD.trait.severity.minor",
     major: "DISCWORLD.trait.severity.major",
     exceptional: "DISCWORLD.trait.severity.exceptional",
   },
+
+  /* -------------------------------------------------- */
 
   traitTypes: {
     character: {
@@ -37,11 +42,15 @@ const DISCWORLD = {
     },
   },
 
+  /* -------------------------------------------------- */
+
   actorTypes: {
     character: "TYPES.Actor.character",
     npc: "TYPES.Actor.npc",
     party: "TYPES.Actor.party",
   },
+
+  /* -------------------------------------------------- */
 
   groupTestConditions: {
     highestWins: "DISCWORLD.dialog.groupTest.highestWins",

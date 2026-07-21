@@ -1,5 +1,3 @@
-import createElement from "../../utils/dom-manipulation.mjs";
-
 /**
  * Adds basic sheet methods that all actor sheets should have,
  * e.g. drag-and-drop support, image editing, etc.
@@ -108,7 +106,7 @@ const DiscworldSheetMixin = (Base) => {
 
       if (buttons.length > 0) {
         // Create a new wrapper div
-        const wrapper = createElement("div", { classes: ["button-wrapper"] });
+        const wrapper = discworld.utils.createElement("div", { classes: ["button-wrapper"] });
 
         // Insert the wrapper before the first button
         buttons[0].parentNode.insertBefore(wrapper, buttons[0]);
@@ -125,14 +123,14 @@ const DiscworldSheetMixin = (Base) => {
      * @param {HTMLElement} element The sheet element.
      */
     static _injectFrameDecoration(element) {
-      const decorationContainer = createElement("div", {
+      const decorationContainer = discworld.utils.createElement("div", {
         classes: ["decoration-container"],
       });
 
       const corners = ["ul", "ur", "bl", "br"];
 
       corners.forEach((corner) => {
-        const childDecoration = createElement("div", {
+        const childDecoration = discworld.utils.createElement("div", {
           classes: ["decoration", `corner-${corner}`],
         });
         decorationContainer.appendChild(childDecoration);

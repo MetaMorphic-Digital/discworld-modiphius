@@ -1,7 +1,7 @@
 /**
  * Handle a delta input for a number value from a form.
  * @param {HTMLInputElement} input    Input that contains the modified value.
- * @param {Document} target           Target document to be updated.
+ * @param {ClientDocument} target     Target document to be updated.
  * @returns {number|void}             The new value.
  */
 export default function parseInputDelta(input, target) {

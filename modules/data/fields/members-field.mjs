@@ -28,10 +28,10 @@ export default class MembersField extends TypedObjectField {
     return () =>
       Object.entries(object).reduce((acc, [id, data]) => {
         const actor = game.actors.get(id);
-        if (discworld.data.PartyDataModel.validMember(actor)) {
+        if (discworld.data.actors.PartyData.validMember(actor)) {
           acc.set(actor.id, { ...data, actor });
         }
         return acc;
-      }, new discworld.collections.MembersCollection());
+      }, new discworld.documents.collections.MembersCollection());
   }
 }

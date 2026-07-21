@@ -14,6 +14,8 @@ export default class NPCSheet extends DiscworldActorSheet {
     },
   };
 
+  /* -------------------------------------------------- */
+
   /** @inheritdoc */
   static PARTS = {
     ...DiscworldActorSheet.PARTS,
@@ -21,6 +23,8 @@ export default class NPCSheet extends DiscworldActorSheet {
       template: templatePath("npc-sheet/description.hbs"),
     },
   };
+
+  /* -------------------------------------------------- */
 
   /** @inheritdoc */
   async _prepareContext(options) {
@@ -48,6 +52,8 @@ export default class NPCSheet extends DiscworldActorSheet {
     return context;
   }
 
+  /* -------------------------------------------------- */
+
   /** @inheritdoc */
   async _onRender(context, options) {
     await super._onRender(context, options);
@@ -63,6 +69,8 @@ export default class NPCSheet extends DiscworldActorSheet {
     luckContainer.remove();
     documentDetails.insertAdjacentHTML("afterbegin", fullNameContainer);
   }
+
+  /* -------------------------------------------------- */
 
   /**
    * Rolls the NPC's full name as a Trait.

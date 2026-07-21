@@ -1,5 +1,3 @@
-import DWNarrativiumRoll from "../rolls/narrativium-roll.mjs";
-
 /**
  * The Discworld Chat Log. We extend this class to add custom button listeners.
  */
@@ -70,7 +68,7 @@ export default class DiscworldChatLog extends foundry.applications.sidebar.tabs.
       return;
     }
     const messageData = DiscworldChatLog.getClickedMessageData(event, target);
-    DWNarrativiumRoll.createNarrativiumRoll(messageData);
+    discworld.rolls.DWNarrativiumRoll.createNarrativiumRoll(messageData);
   }
 
   /* -------------------------------------------------- */

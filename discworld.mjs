@@ -1,111 +1,143 @@
-import DISCWORLD from "./modules/config.mjs";
-
+import * as applications from "./modules/applications/_module.mjs";
+import * as data from "./modules/data/_module.mjs";
+import * as documents from "./modules/documents/_module.mjs";
+import * as rolls from "./modules/rolls/_module.mjs";
 import * as utils from "./modules/utils/_module.mjs";
+
+import DISCWORLD from "./modules/config.mjs";
 import preloadTemplates, { registerHelpers } from "./modules/utils/handlebars.mjs";
 import registerKeybindings from "./modules/utils/keybindings.mjs";
 import registerSettings from "./modules/utils/settings.mjs";
 
-import CharacterDataModel from "./modules/datamodels/character-schema.mjs";
-import NPCDataModel from "./modules/datamodels/npc-schema.mjs";
-import PartyDataModel from "./modules/datamodels/party-schema.mjs";
-import TraitDataModel from "./modules/datamodels/trait-schema.mjs";
-import GroupTestMessageSchema from "./modules/datamodels/group-test-message-schema.mjs";
-import BaseMessageSchema from "./modules/datamodels/base-message-schema.mjs";
-
-import DiscworldActors from "./modules/collections/actors.mjs";
-import MembersCollection from "./modules/collections/members-collection.mjs";
-import DiscworldActorDirectory from "./modules/applications/sidebar/tabs/actors.mjs";
-
-import DiscworldChatLog from "./modules/chat/chat.mjs";
-import DiscworldMessage from "./modules/chat/chat-message.mjs";
-
-import * as Rolls from "./modules/rolls/index.mjs";
-
-import DiscworldActor from "./modules/documents/actor.mjs";
-
-import DiscworldSheetMixin from "./modules/applications/sheets/base-document-sheet.mjs";
-import TraitSheet from "./modules/applications/sheets/trait-sheet.mjs";
-import DiscworldJournalEntrySheet from "./modules/applications/sheets/journal-entry-sheet.mjs";
-
-import DiscworldActorSheet from "./modules/applications/sheets/actors/base-actor-sheet.mjs";
-import CharacterSheet from "./modules/applications/sheets/actors/character-sheet.mjs";
-import PartySheet from "./modules/applications/sheets/actors/party-sheet.mjs";
-import NPCSheet from "./modules/applications/sheets/actors/npc-sheet.mjs";
-
 // Export globals.
 globalThis.discworld = {
+  id: DISCWORLD.id,
+  applications,
+  // Spread operator allows for `Object.defineProperties`. Can be removed in 2.1.0.
+  data: { ...data },
+  documents,
+  rolls,
   utils,
   config: DISCWORLD,
-  data: {
-    CharacterDataModel,
-    NPCDataModel,
-    PartyDataModel,
-    TraitDataModel,
-  },
-  sheets: {
-    DiscworldSheetMixin,
-    DiscworldActorSheet,
-    CharacterSheet,
-    TraitSheet,
-  },
-  collections: {
-    MembersCollection,
-  },
 };
+
+Object.defineProperty(globalThis.discworld, "sheets", {
+  get() {
+    foundry.utils.logCompatibilityWarning("globalThis.discworld.sheets should now be accessed under globalThis.discworld.applications.sheets.", {
+      since: "2.0.0",
+      until: "2.1.0",
+      once: true,
+    });
+    return { ...this.applications.sheets, ...this.applications.sheets.actors };
+  },
+});
+
+Object.defineProperties(globalThis.discworld.data, {
+  CharacterDataModel: {
+    get() {
+      foundry.utils.logCompatibilityWarning("globalThis.discworld.data.CharacterDataModel should now be accessed under globalTHis.discworld.data.actors.CharacterData.", {
+        since: "2.0.0",
+        until: "2.1.0",
+        once: true,
+      });
+      return discworld.data.actors.CharacterData;
+    },
+  },
+  NPCDataModel: {
+    get() {
+      foundry.utils.logCompatibilityWarning("globalThis.discworld.data.NPCDataModel should now be accessed under globalTHis.discworld.data.actors.NPCData.", {
+        since: "2.0.0",
+        until: "2.1.0",
+        once: true,
+      });
+      return discworld.data.actors.NPCData;
+    },
+  },
+  PartyDataModel: {
+    get() {
+      foundry.utils.logCompatibilityWarning("globalThis.discworld.data.PartyDataModel should now be accessed under globalTHis.discworld.data.actors.PartyData.", {
+        since: "2.0.0",
+        until: "2.1.0",
+        once: true,
+      });
+      return discworld.data.actors.PartyData;
+    },
+  },
+  TraitDataModel: {
+    get() {
+      foundry.utils.logCompatibilityWarning("globalThis.discworld.data.TraitDataModel should now be accessed under globalTHis.discworld.data.items.TraitData.", {
+        since: "2.0.0",
+        until: "2.1.0",
+        once: true,
+      });
+      return discworld.data.items.TraitData;
+    },
+  },
+});
 
 /* -------------------------------------------------- */
 
 Hooks.once("init", () => {
-  const { Actors, Items, Journal } = foundry.documents.collections;
-
   // Configuration.
   CONFIG.Discworld = DISCWORLD;
 
   // Register Actor classes.
-  CONFIG.Actor.collection = DiscworldActors;
+  CONFIG.Actor.collection = documents.collections.DiscworldActors;
 
-  CONFIG.Actor.documentClass = DiscworldActor;
-  CONFIG.Actor.dataModels.character = CharacterDataModel;
-  Actors.registerSheet(DISCWORLD.id, CharacterSheet, {
-    types: ["character"],
-    makeDefault: true,
-  });
+  CONFIG.Actor.documentClass = documents.DiscworldActor;
+  CONFIG.Actor.dataModels.character = data.actors.CharacterData;
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(
+    foundry.documents.Actor,
+    DISCWORLD.id,
+    applications.sheets.actors.CharacterSheet,
+    { types: ["character"], makeDefault: true },
+  );
 
-  CONFIG.Actor.dataModels.npc = NPCDataModel;
-  Actors.registerSheet(DISCWORLD.id, NPCSheet, {
-    types: ["npc"],
-    makeDefault: true,
-  });
+  CONFIG.Actor.dataModels.npc = data.actors.NPCData;
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(
+    foundry.documents.Actor,
+    DISCWORLD.id,
+    applications.sheets.actors.NPCSheet,
+    { types: ["npc"], makeDefault: true },
+  );
 
-  CONFIG.Actor.dataModels.party = PartyDataModel;
-  Actors.registerSheet(DISCWORLD.id, PartySheet, {
-    types: ["party"],
-    makeDefault: true,
-  });
+  CONFIG.Actor.dataModels.party = data.actors.PartyData;
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(
+    foundry.documents.Actor,
+    DISCWORLD.id,
+    applications.sheets.actors.PartySheet,
+    { types: ["party"], makeDefault: true },
+  );
 
   // Register Item classes.
-  CONFIG.Item.dataModels.trait = TraitDataModel;
-  Items.registerSheet(DISCWORLD.id, TraitSheet, {
-    makeDefault: true,
-  });
+  CONFIG.Item.dataModels.trait = data.items.TraitData;
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(
+    foundry.documents.Item,
+    DISCWORLD.id,
+    applications.sheets.TraitSheet,
+    { makeDefault: true },
+  );
 
   // Register Actor Directory.
-  CONFIG.ui.actors = DiscworldActorDirectory;
+  CONFIG.ui.actors = applications.sidebar.tabs.DiscworldActorDirectory;
 
   // Register Chat classes.
-  CONFIG.ui.chat = DiscworldChatLog;
-  CONFIG.ChatMessage.documentClass = DiscworldMessage;
-  CONFIG.ChatMessage.dataModels.groupTest = GroupTestMessageSchema;
-  CONFIG.ChatMessage.dataModels.baseTest = BaseMessageSchema;
+  CONFIG.ui.chat = applications.sidebar.tabs.DiscworldChatLog;
+  CONFIG.ChatMessage.documentClass = documents.DiscworldMessage;
+  CONFIG.ChatMessage.dataModels.groupTest = data.messages.GroupTestData;
+  CONFIG.ChatMessage.dataModels.baseTest = data.messages.BaseMessageData;
 
   // Register Dice
-  for (const Roll of Object.values(Rolls)) CONFIG.Dice.rolls.push(Roll);
-  Object.assign(CONFIG.Dice, Rolls);
+  for (const RollCls of Object.values(discworld.rolls)) CONFIG.Dice.rolls.push(RollCls);
+  Object.assign(CONFIG.Dice, discworld.rolls);
 
   // Register Journal
-  Journal.registerSheet(DISCWORLD.id, DiscworldJournalEntrySheet, {
-    makeDefault: true,
-  });
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(
+    foundry.documents.JournalEntry,
+    DISCWORLD.id,
+    applications.sheets.DiscworldJournalEntrySheet,
+    { makeDefault: true },
+  );
 
   // Run various utils.
   registerSettings();

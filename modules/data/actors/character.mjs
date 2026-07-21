@@ -1,6 +1,6 @@
 const { HTMLField, NumberField, SchemaField, StringField } = foundry.data.fields;
 
-export default class CharacterDataModel extends foundry.abstract.TypeDataModel {
+export default class CharacterData extends foundry.abstract.TypeDataModel {
   /** @inheritdoc */
   static defineSchema() {
     return {

@@ -1,5 +1,7 @@
-import DWNarrativiumRoll from "../rolls/narrativium-roll.mjs";
-import DWTraitRoll from "../rolls/trait-roll.mjs";
+/**
+ * @import DWNarrativiumRoll from "../../rolls/narrativium-roll.mjs";
+ * @import DWTraitRoll from "../../rolls/trait-roll.mjs";
+ */
 
 /**
  * A bunch of reused type definitions.
@@ -32,7 +34,7 @@ import DWTraitRoll from "../rolls/trait-roll.mjs";
  * @typedef {RollContext & {css: CssData}} MessageContext
  */
 
-export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
+export default class BaseMessageData extends foundry.abstract.TypeDataModel {
 
   /* -------------------------------------------------- */
 
@@ -93,7 +95,7 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
   get gmRoll() {
     return (
       this.rolls.find(
-        (roll) => (roll instanceof DWNarrativiumRoll) && !roll.options.reroll,
+        (roll) => (roll instanceof discworld.rolls.DWNarrativiumRoll) && !roll.options.reroll,
       ) || null
     );
   }
@@ -107,7 +109,7 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
   get gmReroll() {
     return (
       this.rolls.find(
-        (roll) => (roll instanceof DWNarrativiumRoll) && roll.options.reroll,
+        (roll) => (roll instanceof discworld.rolls.DWNarrativiumRoll) && roll.options.reroll,
       ) || null
     );
   }
@@ -117,7 +119,7 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
   /** @inheritdoc */
   async _preCreate(data, options, user) {
     if ((await super._preCreate(data, options, user)) === false) return false;
-    if ((data.type !== "groupTest") && (!this.parent.rolls.length || !(this.parent.rolls[0] instanceof DWTraitRoll)))
+    if ((data.type !== "groupTest") && (!this.parent.rolls.length || !(this.parent.rolls[0] instanceof discworld.rolls.DWTraitRoll)))
       return;
 
     const chatData = await this._prepareContext();
@@ -153,16 +155,16 @@ export default class BaseMessageSchema extends foundry.abstract.TypeDataModel {
 
     const chatDataOverrides = {};
     switch (true) {
-      case (roll instanceof DWTraitRoll) && !roll.isHelpRoll:
+      case (roll instanceof discworld.rolls.DWTraitRoll) && !roll.isHelpRoll:
         Object.assign(chatDataOverrides, { [roll.options.groupMember]: { mainRoll: roll } });
         break;
 
-      case (roll instanceof DWTraitRoll) && roll.isHelpRoll:
+      case (roll instanceof discworld.rolls.DWTraitRoll) && roll.isHelpRoll:
         chatDataOverrides.helpRoll = roll;
         Object.assign(chatDataOverrides, { [roll.options.groupMember]: { helpRoll: roll } });
         break;
 
-      case roll instanceof DWNarrativiumRoll:
+      case roll instanceof discworld.rolls.DWNarrativiumRoll:
         chatDataOverrides[roll.options.reroll ? "gmReroll" : "gmRoll"] = roll;
         break;
 

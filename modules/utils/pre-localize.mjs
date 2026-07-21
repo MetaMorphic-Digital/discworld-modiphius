@@ -8,7 +8,7 @@ export default function preLocalize(localeScope, object) {
     const type = foundry.utils.getType(v);
     if ((type === "string") && v.startsWith(localeScope)) {
 
-      o[k] = game.i18n.localize(v);
+      o[k] = _loc(v);
     } else if (type === "Object") {
       for (const [x, y] of Object.entries(v)) {
         localize(v, x, y);

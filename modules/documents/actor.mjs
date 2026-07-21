@@ -1,5 +1,4 @@
 import DISCWORLD from "../config.mjs";
-import DWTraitRoll from "../rolls/trait-roll.mjs";
 
 export default class DiscworldActor extends foundry.documents.Actor {
   /**
@@ -25,6 +24,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
   /** @inheritdoc */
   async _preCreate(data, options, user) {
     if ((await super._preCreate(data, options, user)) === false) return false;
+
     const update = foundry.utils.mergeObject(
       {
         actorLink: true,
@@ -34,6 +34,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
       data.prototypeToken ?? {},
       { insertKeys: false, insertValues: false, overwrite: true },
     );
+
     this.updateSource({ prototypeToken: update });
   }
 
@@ -42,7 +43,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
   /**
    * In Discworld, everything is a trait. So, you can pass anything that has a `name` property to `rollTrait`.
    * @typedef TraitLike
-   * @prop {string} name
+   * @property {string} name
    */
 
   /* -------------------------------------------------- */
@@ -66,7 +67,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
     const dialogResult = await this.rollTraitDialog(trait, options);
     if (!dialogResult) return null;
 
-    return DWTraitRoll.createBaseRoll(dialogResult, { actor: this, trait });
+    return discworld.rolls.DWTraitRoll.createBaseRoll(dialogResult, { actor: this, trait });
   }
 
   /* -------------------------------------------------- */
@@ -152,7 +153,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
     this.leaveWaitMode();
 
     // Create the roll and send to chat.
-    return DWTraitRoll.createWaitRoll({
+    return discworld.rolls.DWTraitRoll.createWaitRoll({
       term: dialogResult,
       actor: this,
       message,

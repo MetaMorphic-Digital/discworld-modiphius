@@ -1,11 +1,15 @@
 /**
+ * @import DiscworldActor from "../documents/actor.mjs";
+ */
+
+/**
  * Simplistic extension of Collection to allow splitting contents by type.
- * @extends {foundry.utils.Collection<string, { actor: DiscworldCharacter }>}
+ * @extends {foundry.utils.Collection<string, { actor: DiscworldActor }>}
  */
 export default class MembersCollection extends foundry.utils.Collection {
   /**
    * The actors in the party.
-   * @type {Collection<string, DiscworldCharacter>}
+   * @type {Collection<string, DiscworldActor>}
    */
   get actors() {
     return this.reduce(
@@ -18,7 +22,7 @@ export default class MembersCollection extends foundry.utils.Collection {
 
   /**
    * Cached members by type.
-   * @type {Record<string, DiscworldCharacter[]>|void}
+   * @type {Record<string, DiscworldActor[]>|void}
    */
   #documentsByType;
 
@@ -26,12 +30,12 @@ export default class MembersCollection extends foundry.utils.Collection {
 
   /**
    * The members by type.
-   * @type {Record<string, DiscworldCharacter[]>}
+   * @type {Record<string, DiscworldActor[]>}
    */
   get documentsByType() {
     if (!this.#documentsByType) {
       this.#documentsByType = Object.groupBy(this, (m) => m.actor.type);
-      discworld.data.PartyDataModel.ALLOWED_ACTOR_TYPES.forEach(
+      discworld.data.actors.PartyData.ALLOWED_ACTOR_TYPES.forEach(
         (key) => (this.#documentsByType[key] ??= []),
       );
     }
@@ -42,7 +46,7 @@ export default class MembersCollection extends foundry.utils.Collection {
 
   /**
    * The members sorted by name.
-   * @type {DiscworldCharacter[]}
+   * @type {DiscworldActor[]}
    */
   toSorted() {
     return Array.from(this).sort((a, b) => a.actor._source.name.localeCompare(b.actor._source.name));
