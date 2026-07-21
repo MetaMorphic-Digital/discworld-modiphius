@@ -44,17 +44,6 @@ Object.defineProperty(globalThis.discworld, "sheets", {
   },
 });
 
-Object.defineProperty(globalThis.discworld, "collections", {
-  get() {
-    foundry.utils.logCompatibilityWarning("globalThis.discworld.collections should now be accessed under globalThis.discworld.documents.collections.", {
-      since: "2.0.0",
-      until: "2.1.0",
-      once: true,
-    });
-    return this.documents.collections;
-  },
-});
-
 /* -------------------------------------------------- */
 
 Hooks.once("init", () => {
