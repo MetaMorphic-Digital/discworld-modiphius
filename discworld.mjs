@@ -1,11 +1,10 @@
 import * as applications from "./modules/applications/_module.mjs";
-import * as documents from "./modules/documents/_module.mjs";
-import * as utils from "./modules/utils/_module.mjs";
-import * as rolls from "./modules/rolls/_module.mjs";
 import * as data from "./modules/data/_module.mjs";
+import * as documents from "./modules/documents/_module.mjs";
+import * as rolls from "./modules/rolls/_module.mjs";
+import * as utils from "./modules/utils/_module.mjs";
 
 import DISCWORLD from "./modules/config.mjs";
-
 import preloadTemplates, { registerHelpers } from "./modules/utils/handlebars.mjs";
 import registerKeybindings from "./modules/utils/keybindings.mjs";
 import registerSettings from "./modules/utils/settings.mjs";
@@ -14,6 +13,7 @@ import registerSettings from "./modules/utils/settings.mjs";
 globalThis.discworld = {
   id: DISCWORLD.id,
   applications,
+  // Spread operator allows for `Object.defineProperties`. Can be removed in 2.1.0.
   data: { ...data },
   documents,
   rolls,
