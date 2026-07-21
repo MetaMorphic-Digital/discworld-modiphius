@@ -4,6 +4,7 @@
 @use "aside" as *;
 @use "headers" as *;
 @use "lists" as *;
+@use "tables" as *;
 @use "text" as *;
 
 .discworld.journal-sheet .journal-entry-content {
@@ -12,5 +13,6 @@
   @include aside;
   @include headers;
   @include lists;
+  @include tables;
   @include text;
 }
