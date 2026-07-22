@@ -2,6 +2,7 @@
 @use "../utils/var-utils" as *;
 
 @use "aside" as *;
+@use "embeds" as *;
 @use "headers" as *;
 @use "lists" as *;
 @use "tables" as *;
@@ -11,6 +12,7 @@
   @include sheet-background;
 
   @include aside;
+  @include embeds;
   @include headers;
   @include lists;
   @include tables;
