@@ -1,9 +1,9 @@
 <h1>
-  <a 
-   class="content-link"
-   draggable="true"
-   data-link
-   data-uuid="{{document.uuid}}"
+  <a
+    class="content-link"
+    draggable="true"
+    data-link
+    data-uuid="{{document.uuid}}"
   >
     {{document.name}}
   </a>
@@ -12,7 +12,7 @@
   ({{document.system.pronouns}})
 </div>
 <div class="traits">
-  <strong>{{localize "DISCWORLD.npc.FIELDS.fullName.label"}}:</strong> 
+  <strong>{{localize "DISCWORLD.npc.FIELDS.fullName.label"}}:</strong>
   <span class="trattatello">{{document.system.fullName}}</span>
 
   <strong>{{localize "DISCWORLD.trait.type.species"}}:</strong>
@@ -61,7 +61,9 @@
 <div class="description">
   {{{description}}}
 </div>
+{{#if storyPrompt}}
 <div class="story-prompt">
   <strong>{{localize "DISCWORLD.npc.FIELDS.storyPrompt.label"}}</strong>:
   {{{storyPrompt}}}
 </div>
+{{/if}}
