@@ -1,54 +1,52 @@
-<h1>
+<h3 {{ifThen showToc "" "data-no-toc"}}>
   <a
     class="content-link"
     draggable="true"
     data-link
     data-uuid="{{document.uuid}}"
   >
-    {{document.name}}
+    {{name}}
   </a>
-</h1>
+</h3>
 <div class="pronouns">
   ({{document.system.pronouns}})
 </div>
 <div class="traits">
   <strong>{{localize "DISCWORLD.npc.FIELDS.fullName.label"}}:</strong>
-  <span class="trattatello">{{document.system.fullName}}</span>
+  <span>{{document.system.fullName}}</span>
 
   <strong>{{localize "DISCWORLD.trait.type.species"}}:</strong>
   <div>
     {{#each document.system.traits.species as |species|}}
-    <span class="trattatello">{{species.name}}{{ifThen @last "" ","}}</span>
+    <span>{{species.name}}{{ifThen @last "" ","}}</span>
     {{/each}}
   </div>
 
   <strong>{{localize "DISCWORLD.trait.type.niche"}}:</strong>
   <div>
     {{#each document.system.traits.niche as |niche|}}
-    <span class="trattatello">{{niche.name}}{{ifThen @last "" ","}}</span>
+    <span>{{niche.name}}{{ifThen @last "" ","}}</span>
     {{/each}}
   </div>
 
   <strong>{{localize "DISCWORLD.trait.type.features"}}:</strong>
-  <ul class="trattatello">
-    <div>
-      {{#each document.system.traits.features as |feature|}}
-      <li>{{feature.name}}{{ifThen @last "" ";"}}</li>
-      {{/each}}
-    </div>
+  <ul>
+    {{#each document.system.traits.features as |feature|}}
+    <li>{{feature.name}}{{ifThen @last "" ";"}}</li>
+    {{/each}}
   </ul>
 
   <strong>{{localize "DISCWORLD.trait.type.mannerism"}}:</strong>
   <div>
     {{#each document.system.traits.mannerism as |mannerism|}}
-    <span class="trattatello">{{mannerism.name}}{{ifThen @last "" ","}}</span>
+    <span>{{mannerism.name}}{{ifThen @last "" ","}}</span>
     {{/each}}
   </div>
   {{#if document.system.traits.other.length}}
   <strong>{{localize "DISCWORLD.trait.type.other"}}:</strong>
   <div>
     {{#each document.system.traits.other}}
-    <span class="trattatello">{{this.name}}{{ifThen @last "" ","}}</span>
+    <span>{{this.name}}{{ifThen @last "" ","}}</span>
     {{/each}}
   </div>
   {{/if}}

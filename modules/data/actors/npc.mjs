@@ -35,7 +35,6 @@ export default class NPCData extends foundry.abstract.TypeDataModel {
   /** @inheritdoc */
   async toEmbed(config, options) {
     config.inline = true;
-
     const embed = discworld.utils.createElement("aside", { classes: ["discworld-npc"] });
     embed.innerHTML = await foundry.applications.handlebars.renderTemplate(
       templatePath("embeds/npc.hbs"),
@@ -43,11 +42,13 @@ export default class NPCData extends foundry.abstract.TypeDataModel {
         document: this.parent,
         description: await CONFIG.ux.TextEditor.enrichHTML(this.description, options),
         storyPrompt: await CONFIG.ux.TextEditor.enrichHTML(this.storyPrompt, options),
+        name: config.label ?? this.parent.name,
         img: {
-          altText: config.alt ?? this.parent.name,
+          altText: config.alt ?? config.label ?? this.parent.name,
           src: this.parent.img,
           hide: config.hideImage,
         },
+        showToc: config.values.includes("toc"),
       },
     );
     return embed;

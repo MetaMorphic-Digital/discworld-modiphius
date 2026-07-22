@@ -19,9 +19,12 @@
         font-size: 1.3em;
       }
 
-      h1 {
+      h3 {
         font-size: 2.75rem;
+        font-style: normal;
+        text-align: start;
         text-decoration: none;
+
         border-block-end: dotted 1px currentColor;
         margin-block-end: 4px;
 
@@ -44,6 +47,14 @@
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 1.5ch;
+
+        font-family: $font-trattatello;
+        font-size: 1rem;
+        line-height: 1;
+
+        :nth-child(even) {
+          align-self: center;
+        }
 
         strong {
           text-align: end;
