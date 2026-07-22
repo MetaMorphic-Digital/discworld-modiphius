@@ -1,0 +1,38 @@
+@use "../utils/var-utils" as *;
+@use "../variables/fonts" as *;
+
+@mixin tables {
+  table {
+    --table-row-color-even: #{getVar(color, callout-primary)};
+    font-family: $font-libertine;
+    font-style: italic;
+
+    thead {
+      color: getVar(color, title-alt);
+      font-size: 0.9em;
+      text-transform: uppercase;
+
+      border: none;
+      border-bottom: 1px dotted currentColor;
+      background-color: unset;
+    }
+
+    tr > td:first-child,
+    tr > th:first-child {
+      border-right: 1px dotted currentColor;
+    }
+
+    td > h4 {
+      font-family: $font-libertine;
+      font-size: 1em;
+      font-weight: normal;
+    }
+
+    &.roll-table-embed {
+      tr > td:first-child,
+      tr > th:first-child {
+        color: getVar(color, title-alt);
+      }
+    }
+  }
+}

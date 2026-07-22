@@ -2,15 +2,19 @@
 @use "../utils/var-utils" as *;
 
 @use "aside" as *;
+@use "embeds" as *;
 @use "headers" as *;
 @use "lists" as *;
+@use "tables" as *;
 @use "text" as *;
 
 .discworld.journal-sheet .journal-entry-content {
   @include sheet-background;
 
   @include aside;
+  @include embeds;
   @include headers;
   @include lists;
+  @include tables;
   @include text;
 }

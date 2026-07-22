@@ -1,0 +1,82 @@
+@use "../variables/fonts" as *;
+@use "../utils/var-utils" as *;
+
+@mixin embeds {
+  document-embed {
+    aside.discworld-npc {
+      font-style: normal;
+
+      padding-inline: 8ch;
+      margin-inline: 4ch;
+
+      &::before {
+        content: none;
+      }
+
+      strong {
+        color: getVar(color, title-alt);
+        font-family: $font-caslon;
+        font-size: 1.3em;
+      }
+
+      h1 {
+        text-decoration: none;
+        border-block-end: dotted 1px currentColor;
+        margin-block-end: 4px;
+
+        a {
+          font-family: $font-caslon;
+        }
+      }
+
+      .pronouns {
+        color: getVar(color, title-alt);
+        font-family: $font-caslon;
+        font-size: 1.1em;
+        font-weight: bold;
+        text-align: end;
+
+        padding-inline-end: 4ch;
+      }
+
+      .traits {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1.5ch;
+
+        strong {
+          text-align: end;
+        }
+
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+
+          li {
+            padding: 0;
+          }
+
+          ::marker {
+            content: none;
+          }
+        }
+      }
+
+      img {
+        width: 45%;
+        float: inline-end;
+
+        box-shadow: none;
+        border: none;
+
+        margin-block: 12px;
+        margin-inline-start: 8px;
+      }
+
+      .description {
+        margin-block-start: 1.5em;
+      }
+    }
+  }
+}
