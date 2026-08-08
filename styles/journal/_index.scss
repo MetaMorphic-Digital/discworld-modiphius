@@ -4,6 +4,7 @@
 @use "aside" as *;
 @use "embeds" as *;
 @use "headers" as *;
+@use "images" as *;
 @use "lists" as *;
 @use "tables" as *;
 @use "text" as *;
@@ -14,6 +15,7 @@
   @include aside;
   @include embeds;
   @include headers;
+  @include images;
   @include lists;
   @include tables;
   @include text;

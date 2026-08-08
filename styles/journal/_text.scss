@@ -11,8 +11,6 @@
   letter-spacing: 0.5px;
 }
 
-// filter: hue-rotate(225deg) brightness(0.9);
-
 @mixin text {
   /* --------------- Semantic elements --------------- */
 
@@ -69,6 +67,8 @@
     background-image: url("#{$assetsPrefix}/sheet/footnote.webp");
     background-size: cover;
     background-repeat: no-repeat;
+
+    filter: getVar(filter, sepia-image);
 
     padding-block: 24px 12px;
     padding-inline: 24px;

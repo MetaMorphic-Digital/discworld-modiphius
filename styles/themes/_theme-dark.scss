@@ -49,6 +49,7 @@ body.theme-dark,
     (
       discworld-logo: invert(0.8),
       modiphius-logo: invert(0.75) sepia(0.3),
+      sepia-image: hue-rotate(225deg) brightness(0.9),
     )
   );
 }
