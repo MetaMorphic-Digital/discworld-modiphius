@@ -199,8 +199,7 @@
     }
 
     .win-condition {
-      font-family: $font-trattatello;
-      font-size: 1.1em;
+      @include font-trattatello(1.1em);
       text-align: center;
 
       margin-block: 12px -8px;

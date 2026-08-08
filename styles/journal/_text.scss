@@ -11,12 +11,13 @@
   letter-spacing: 0.5px;
 }
 
+// filter: hue-rotate(225deg) brightness(0.9);
+
 @mixin text {
   /* --------------- Semantic elements --------------- */
 
   .trattatello {
-    font-family: $font-trattatello;
-    font-size: 1.1em;
+    @include font-trattatello(1.1em);
   }
 
   strong.highlight {
@@ -32,7 +33,7 @@
 
     &.content-link,
     &.entity-link {
-      font-family: $font-trattatello;
+      @include font-trattatello;
 
       background: unset;
       padding: unset;
@@ -63,8 +64,7 @@
   div.footnote,
   div.footer {
     color: var(--color-dark-1);
-    font-family: $font-trattatello;
-    letter-spacing: 0.2px;
+    @include font-trattatello;
 
     background-image: url("#{$assetsPrefix}/sheet/footnote.webp");
     background-size: cover;
@@ -148,10 +148,9 @@
   }
 
   .recommended-reading {
+    @include font-trattatello(1.2em);
+    font-weight: 300;
     text-align: center;
-    font-family: $font-trattatello;
-    font-size: 1.2em;
-    font-weight: normal;
   }
 
   div.example-of-play {

@@ -12,16 +12,14 @@
 
 @font-face {
   font-family: "Caslon Antique";
-  src: url("#{$assetsPrefix}/fonts/caslon/CaslonAntique-Bold.ttf")
-    format("truetype");
+  src: url("#{$assetsPrefix}/fonts/caslon/CaslonAntique-Bold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Caslon Antique";
-  src: url("#{$assetsPrefix}/fonts/caslon/CaslonAntique-BoldItalic.ttf")
-    format("truetype");
+  src: url("#{$assetsPrefix}/fonts/caslon/CaslonAntique-BoldItalic.ttf") format("truetype");
   font-weight: bold;
   font-style: italic;
 }
@@ -32,32 +30,28 @@ $font-caslon: "Caslon Antique";
 
 @font-face {
   font-family: "Linux Libertine";
-  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_R.ttf")
-    format("truetype");
+  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_R.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Linux Libertine";
-  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_RI.ttf")
-    format("truetype");
+  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_RI.ttf") format("truetype");
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "Linux Libertine";
-  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_RB.ttf")
-    format("truetype");
+  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_RB.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Linux Libertine";
-  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_RBI.ttf")
-    format("truetype");
+  src: url("#{$assetsPrefix}/fonts/lin-libertine/LinLibertine_RBI.ttf") format("truetype");
   font-weight: bold;
   font-style: italic;
 }
@@ -74,6 +68,12 @@ $font-libertine: "Linux Libertine";
 }
 
 $font-trattatello: "Trattatello";
+
+@mixin font-trattatello($font-size: 1em, $letter-spacing: 0.2px) {
+  font-family: getVar("font", "trattatello");
+  font-size: $font-size;
+  letter-spacing: $letter-spacing;
+}
 
 :root {
   @include setVars(

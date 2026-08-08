@@ -104,8 +104,7 @@
           flex: 0 0 7.5rem;
 
           label {
-            font-family: $font-trattatello;
-            font-size: 1.15rem;
+            @include font-trattatello(1.15rem);
           }
         }
 
