@@ -62,7 +62,9 @@
 
   div.footnote,
   div.footer {
+    color: var(--color-dark-1);
     font-family: $font-trattatello;
+    letter-spacing: 0.2px;
 
     background-image: url("#{$assetsPrefix}/sheet/footnote.webp");
     background-size: cover;
