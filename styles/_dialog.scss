@@ -3,6 +3,7 @@
 @use "utils/dice" as *;
 @use "utils/trait-quote" as *;
 @use "utils/var-utils" as *;
+@use "variables/fonts" as *;
 
 dialog.discworld {
   @include trait-quote;
@@ -41,9 +42,8 @@ dialog.discworld {
 
       .form-group > label,
       .form-group > .label {
-        font-family: getVar("font", "trattatello");
-        font-size: 1.3em;
-        font-weight: normal;
+        @include font-trattatello(1.3em);
+        font-weight: 300;
       }
 
       .multi-checkbox {

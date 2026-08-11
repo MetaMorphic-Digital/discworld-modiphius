@@ -1,4 +1,5 @@
 @use "../utils/var-utils" as *;
+@use "../variables/fonts" as *;
 @use "../variables/generic" as *;
 
 .#{$packageCssClass}.application.actor-sheet.party-sheet {
@@ -39,8 +40,7 @@
     }
 
     legend {
-      font-family: getVar("font", "trattatello");
-      font-size: 1.375em;
+      @include font-trattatello(1.375em);
     }
 
     .member {

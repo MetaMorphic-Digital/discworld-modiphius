@@ -48,8 +48,7 @@
         grid-template-columns: auto 1fr;
         gap: 1.5ch;
 
-        font-family: $font-trattatello;
-        font-size: 1rem;
+        @include font-trattatello(1rem);
         line-height: 1;
 
         :nth-child(even) {

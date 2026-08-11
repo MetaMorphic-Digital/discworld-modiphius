@@ -1,0 +1,16 @@
+@use "../utils/var-utils" as *;
+
+@mixin images {
+  img {
+    margin: 0 auto;
+
+    &[src*="discworld-core/assets/actor-art"],
+    &[src*="discworld-core/assets/layout/sepia"] {
+      filter: getVar(filter, sepia-image);
+    }
+
+    &.dw-logo {
+      filter: getVar(filter, discworld-logo);
+    }
+  }
+}
