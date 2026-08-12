@@ -9,9 +9,7 @@
 @use "tables" as *;
 @use "text" as *;
 
-.discworld.journal-sheet .journal-entry-content {
-  @include sheet-background;
-
+@mixin typography {
   @include aside;
   @include embeds;
   @include headers;
@@ -19,4 +17,9 @@
   @include lists;
   @include tables;
   @include text;
+}
+
+.discworld.journal-sheet .journal-entry-content {
+  @include sheet-background;
+  @include typography;
 }
