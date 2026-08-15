@@ -38,9 +38,9 @@
     display: grid;
     // These adjustments frame the logo a little better.
     grid-template-columns:
-      calc($corner-ul-intrustion - 20px)
+      calc($corner-ul-intrusion - 20px)
       1fr
-      calc($corner-ur-intrustion - 9px);
+      calc($corner-ur-intrusion - 9px);
     gap: unset;
 
     overflow: unset;

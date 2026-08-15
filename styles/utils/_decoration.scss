@@ -7,8 +7,8 @@ $-corner-br-width: 101px;
 
 // These vars are exported.
 $corner-horizontal-offset: -15px;
-$corner-ul-intrustion: $-corner-ul-width + $corner-horizontal-offset;
-$corner-ur-intrustion: $-corner-ur-width + $corner-horizontal-offset;
+$corner-ul-intrusion: $-corner-ul-width + $corner-horizontal-offset;
+$corner-ur-intrusion: $-corner-ur-width + $corner-horizontal-offset;
 
 @mixin sheet-decoration {
   .decoration {
