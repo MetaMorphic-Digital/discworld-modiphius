@@ -48,12 +48,6 @@ export default class GroupTestData extends BaseMessageData {
    * @property {RollMap} helpRolls
    * @property {DWTraitRoll|null} gmRoll
    * @property {DWTraitRoll|null} gmReroll
-   *
-   * @typedef GroupOverrideInner
-   * @property {DWTraitRoll|null} mainRoll
-   * @property {DWTraitRoll|null} helpRoll
-   *
-   * @typedef {Record<string, GroupOverrideInner> & {isSpell: boolean}} GroupDataOverrides
    */
 
   /** @inheritdoc */
@@ -79,11 +73,10 @@ export default class GroupTestData extends BaseMessageData {
 
   /**
    * @inheritdoc
-   * @param {GroupDataOverrides} [dataOverrides]
    * @returns {Promise<GroupRollContext>}
    */
-  async _prepareContext(dataOverrides = {}) {
-    const { traitRolls, helpRolls } = this.getRollsByType(dataOverrides);
+  async _prepareContext() {
+    const { traitRolls, helpRolls } = this.getRollsByType();
     const context = {
       members: this.groupMembers.toSorted(),
       winCondition: this.winCondition,
@@ -92,8 +85,6 @@ export default class GroupTestData extends BaseMessageData {
       gmRoll: this.gmRoll,
       gmReroll: this.gmReroll,
     };
-
-    Object.assign(context, dataOverrides);
 
     for (const member of context.members) {
       const memberId = member.actor.id;
@@ -115,12 +106,11 @@ export default class GroupTestData extends BaseMessageData {
   /* ------------------------------------------------- */
 
   /**
-   * Get traitRolls and helpRolls all in one go, taking overrides into account.
-   * @param {GroupDataOverrides} dataOverrides
+   * Get traitRolls and helpRolls all in one go.
    * @returns {Pick<GroupRollContext, "traitRolls" | "helpRolls">}}
    */
-  getRollsByType(dataOverrides) {
-    let [traitRolls, helpRolls] = this.rolls.filter((roll) => roll instanceof discworld.rolls.DWTraitRoll).partition((roll) => roll.isHelpRoll);
+  getRollsByType() {
+    const [traitRolls, helpRolls] = this.rolls.filter((roll) => roll instanceof discworld.rolls.DWTraitRoll).partition((roll) => roll.isHelpRoll);
 
     const toRollMap = (rolls) =>
       rolls.reduce((acc, roll) => {
@@ -128,20 +118,10 @@ export default class GroupTestData extends BaseMessageData {
         return acc;
       }, new Map());
 
-    traitRolls = toRollMap(traitRolls);
-    helpRolls = toRollMap(helpRolls);
-
-    const addOverrideToMap = (map, roll) => {
-      map.set(roll.options.groupMember, { actor: roll.actor, roll });
+    return {
+      traitRolls: toRollMap(traitRolls),
+      helpRolls: toRollMap(helpRolls),
     };
-
-    // Assign overrides.
-    Object.values(dataOverrides).forEach(({ mainRoll, helpRoll }) => {
-      if (mainRoll) addOverrideToMap(traitRolls, mainRoll);
-      if (helpRoll) addOverrideToMap(helpRolls, helpRoll);
-    });
-
-    return { traitRolls, helpRolls };
   }
 
   /* ------------------------------------------------- */
@@ -166,6 +146,7 @@ export default class GroupTestData extends BaseMessageData {
         player: this.outcomeClass("player", context),
         gm: this.outcomeClass("gm", context),
       },
+      isSpell: this.isSpell,
     };
   }
 

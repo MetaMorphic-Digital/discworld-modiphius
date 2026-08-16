@@ -159,57 +159,34 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
     // However, the dice animation and the chat animation must happen before the database update (which occurs last).
     // So, we manually trigger it first, using DiceSoNice's API and *then* hide the dice from DSN, so it doesn't get
     // triggered a 2nd time when the chat message is updated.
-    if (game.dice3d) await game.dice3d.showForRoll(roll, game.user, true); // Roll Dice So Nice if present.
-    roll.dice[0].results[0].hidden = true; // Hide from DSN.
+    const firstResult = roll.dice[0].results[0];
+    firstResult.hidden = true; // Hide from DSN.
+    await this.parent.update({ rolls: [...this.rolls, roll] }); // Add the roll to ChatMessage#rolls.
 
+    firstResult.hidden = false; // Show via DSN.
+    if (game.dice3d) await game.dice3d.showForRoll(roll, game.user, true); // Roll Dice So Nice if present.
     await this.parent.animateRoll(roll);
 
-    const chatDataOverrides = { isSpell: roll.options.isSpell };
-    switch (true) {
-      case (roll instanceof discworld.rolls.DWTraitRoll) && !roll.isHelpRoll:
-        Object.assign(chatDataOverrides, { [roll.options.groupMember]: { mainRoll: roll } });
-        break;
-
-      case (roll instanceof discworld.rolls.DWTraitRoll) && roll.isHelpRoll:
-        chatDataOverrides.helpRoll = roll;
-        Object.assign(chatDataOverrides, { [roll.options.groupMember]: { helpRoll: roll } });
-        break;
-
-      case roll instanceof discworld.rolls.DWNarrativiumRoll:
-        chatDataOverrides[roll.options.reroll ? "gmReroll" : "gmRoll"] = roll;
-        break;
-
-      default:
-        break;
-    }
-
-    const chatData = await this._prepareContext(chatDataOverrides);
+    const chatData = await this._prepareContext();
     const content = await foundry.applications.handlebars.renderTemplate(
       this.template,
       chatData,
     );
 
-    return this.parent.update({
-      content,
-      rolls: [...this.rolls, roll],
-    });
+    return this.parent.update({ content });
   }
 
   /* ------------------------------------------------- */
 
   /**
-   * Prepare the context for rendering a chat message by merging roll data
-   * with any provided overrides. Additionally, prepare CSS data for styling
-   * the message based on the roll results.
-   * @param {RollContext} [dataOverrides]    Roll data for a Roll which has not yet been added
-   *                                         to `ChatMessage#rolls`, but will be on next render.
-   * @returns {Promise<MessageContext>}      The prepared context including Roll and CSS data.
+   * Prepare the context for rendering a chat message. Additionally,
+   * prepare CSS data for styling the message based on the roll results.
+   * @returns {Promise<MessageContext>}    The prepared context including Roll and CSS data.
    */
   async _prepareContext() {
     const { mainRoll, helpRoll, gmRoll, gmReroll } = this;
     const context = { mainRoll, helpRoll, gmRoll, gmReroll };
     context.css = this._prepareCssData(context);
-
     return context;
   }
 
