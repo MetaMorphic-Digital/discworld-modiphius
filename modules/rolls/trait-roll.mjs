@@ -11,8 +11,10 @@ export default class DWTraitRoll extends foundry.dice.Roll {
    * @typedef {object} RollOptions
    * @property {Item} trait                      The Item being rolled.
    * @property {DiscworldActor} actor            The Actor being rolled for.
-   * @property {Boolean} [isHelpRoll]            Whether this is a help roll.
+   * @property {boolean} [isHelpRoll]            Whether this is a help roll.
    * @property {DiscworldActor} [groupMember]    If a group roll, the member associated with this roll.
+   * @property {boolean} [isSpell]               Whether this roll is a Spell.
+   * @property {number} [luckCost]               The amount of luck spent to roll this Spell.
    */
 
   /* -------------------------------------------------- */
@@ -131,9 +133,10 @@ export default class DWTraitRoll extends foundry.dice.Roll {
    * @param {RollOptions & WaitRollOptions} options
    * @returns {Promise<DiscworldMessage>}
    */
-  static async createWaitRoll({ term, actor, trait, message, isHelpRoll, groupMember }) {
+  static async createWaitRoll(options) {
+    const { actor, term, message } = options;
     const rollData = actor?.getRollData() ?? {};
-    const roll = new DWTraitRoll(term, rollData, { actor, trait, isHelpRoll, groupMember });
+    const roll = new DWTraitRoll(term, rollData, options);
     await roll.evaluate();
 
     return message.system.addRoll(roll);

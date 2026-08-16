@@ -1,0 +1,5 @@
+{{> (systemFilePath "templates/mixins/trait-quote.hbs")}}
+{{formGroup fields.isSpell.field name=fields.isSpell.name rootId=rootId}}
+{{#if fields.luckCost.show }}
+{{formGroup fields.luckCost.field name=fields.luckCost.name classes="luck-cost hidden" rootId=rootId}}
+{{/if}}

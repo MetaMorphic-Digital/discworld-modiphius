@@ -30,6 +30,7 @@
  * @property {object} css.outcome
  * @property {OutcomeClassOptions} css.outcome.gm
  * @property {OutcomeClassOptions} css.outcome.player
+ * @property {boolean} css.isSpell
  *
  * @typedef {RollContext & {css: CssData}} MessageContext
  */
@@ -116,6 +117,16 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
 
   /* ------------------------------------------------- */
 
+  /**
+   * Whether the chat message contains a Spell roll, to give custom styling.
+   * @type {boolean}
+   */
+  get isSpell() {
+    return this.rolls.some((roll) => roll.options.isSpell);
+  }
+
+  /* ------------------------------------------------- */
+
   /** @inheritdoc */
   async _preCreate(data, options, user) {
     if ((await super._preCreate(data, options, user)) === false) return false;
@@ -153,7 +164,7 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
 
     await this.parent.animateRoll(roll);
 
-    const chatDataOverrides = {};
+    const chatDataOverrides = { isSpell: roll.options.isSpell };
     switch (true) {
       case (roll instanceof discworld.rolls.DWTraitRoll) && !roll.isHelpRoll:
         Object.assign(chatDataOverrides, { [roll.options.groupMember]: { mainRoll: roll } });
@@ -194,17 +205,9 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
    *                                         to `ChatMessage#rolls`, but will be on next render.
    * @returns {Promise<MessageContext>}      The prepared context including Roll and CSS data.
    */
-  async _prepareContext(dataOverrides = {}) {
+  async _prepareContext() {
     const { mainRoll, helpRoll, gmRoll, gmReroll } = this;
-    const context = {
-      mainRoll,
-      helpRoll,
-      gmRoll,
-      gmReroll,
-    };
-
-    // Apply overrides to existing roll data.
-    Object.assign(context, dataOverrides);
+    const context = { mainRoll, helpRoll, gmRoll, gmReroll };
     context.css = this._prepareCssData(context);
 
     return context;
@@ -235,6 +238,7 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
         gm: this.outcomeClass("gm", context),
         player: this.outcomeClass("player", context),
       },
+      isSpell: this.isSpell,
     };
   }
 

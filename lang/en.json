@@ -31,7 +31,11 @@
         "content": "Are you sure you want to delete the trait, \"{traitName}\"?",
         "title": "Deleting a Trait!"
       },
-      "rollTrait.title": "Rolling a Trait!",
+      "rollTrait": {
+        "isSpell": "Roll as Spell?",
+        "spendLuck": "Spend Luck?",
+        "title": "Rolling a Trait!"
+      },
       "groupTest": {
         "cancel": "Cancel",
         "highestWins": "Using highest Player Roll",

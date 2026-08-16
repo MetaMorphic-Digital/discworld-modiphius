@@ -53,7 +53,7 @@ export default class GroupTestData extends BaseMessageData {
    * @property {DWTraitRoll|null} mainRoll
    * @property {DWTraitRoll|null} helpRoll
    *
-   * @typedef {Record<string, GroupOverrideInner} GroupDataOverrides
+   * @typedef {Record<string, GroupOverrideInner> & {isSpell: boolean}} GroupDataOverrides
    */
 
   /** @inheritdoc */
