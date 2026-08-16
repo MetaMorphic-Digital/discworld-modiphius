@@ -116,8 +116,7 @@
         "past": "Party Past",
         "present": "Party Present",
         "quirks": "Quirks",
-        "species": "Species",
-        "spellbook": "Spellbook"
+        "species": "Species"
       },
       "FIELDS": {
         "actorType": {
