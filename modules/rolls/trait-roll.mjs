@@ -3,7 +3,7 @@ import { templatePath } from "../utils/paths.mjs";
 export default class DWTraitRoll extends foundry.dice.Roll {
   /**
    * @import Item from "@client/documents/item.mjs";
-   * @import DiscworldActor from "../documents/actor.mjs"
+   * @import DiscworldActor, { TraitLike } from "../documents/actor.mjs"
    * @import DiscworldMessage from "../documents/chat-message.mjs"
    *
    * @typedef {"d4"|"d6"|"d10"|"d12"} DiceTermOptions
@@ -64,11 +64,11 @@ export default class DWTraitRoll extends foundry.dice.Roll {
 
   /**
    * The trait used for this roll.
-   * @type {Item|null}
+   * @type {Item|TraitLike|null}
    */
   get trait() {
-    const item = fromUuidSync(this.options.trait);
-    return (item instanceof foundry.documents.Item) ? item : null;
+    const trait = fromUuidSync(this.options.trait);
+    return (trait instanceof foundry.documents.Item ? trait : this.options.trait) ?? null;
   }
 
   /* -------------------------------------------------- */

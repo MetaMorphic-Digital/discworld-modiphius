@@ -1,5 +1,14 @@
 import DISCWORLD from "../config.mjs";
 
+/**
+ * In Discworld, everything is a trait. So, you can pass anything that
+ * has a `name` property to roll functions.
+ * @typedef TraitLike
+ * @property {string} name
+ */
+
+/* -------------------------------------------------- */
+
 export default class DiscworldActor extends foundry.documents.Actor {
   /**
    * @typedef WaitMode
@@ -37,14 +46,6 @@ export default class DiscworldActor extends foundry.documents.Actor {
 
     this.updateSource({ prototypeToken: update });
   }
-
-  /* -------------------------------------------------- */
-
-  /**
-   * In Discworld, everything is a trait. So, you can pass anything that has a `name` property to `rollTrait`.
-   * @typedef TraitLike
-   * @property {string} name
-   */
 
   /* -------------------------------------------------- */
 
