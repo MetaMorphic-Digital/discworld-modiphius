@@ -21,6 +21,7 @@
  * @typedef {object} RollOutcome
  * @property {OutcomeStatusOptions} status
  * @property {UserRoles | null} winner
+ * @property {number | null} difference
  *
  * @typedef {object} CssData
  * @property {object} css.buttonDisabled
@@ -188,6 +189,7 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
   async _prepareContext() {
     const { mainRoll, helpRoll, gmRoll, gmReroll } = this;
     const context = { mainRoll, helpRoll, gmRoll, gmReroll };
+    context.outcome = this.outcome(context);
     context.css = this._prepareCssData(context);
     return context;
   }
@@ -200,8 +202,7 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
    * @returns {CssData}                     The prepared CSS data.
    */
   _prepareCssData(context = {}) {
-    const { helpRoll, gmRoll, gmReroll } = context;
-    const outcome = this.outcome(context);
+    const { helpRoll, gmRoll, gmReroll, outcome } = context;
     return {
       buttonDisabled: {
         help: helpRoll?._evaluated,
@@ -239,14 +240,14 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
     } = context;
 
     if (!gmRoll?.total) {
-      return { status: null, winner: null };
+      return { status: null, winner: null, difference: null };
     }
 
     const finalGmTotal = gmReroll?.total ?? gmRoll?.total;
     if (!finalPlayerTotal) finalPlayerTotal = helpRoll?.total ?? mainRoll?.total;
 
     if (finalGmTotal === finalPlayerTotal) {
-      return { status: "tie", winner: null };
+      return { status: "tie", winner: null, difference: 0 };
     }
 
     const gmWins = finalGmTotal > finalPlayerTotal;
@@ -254,6 +255,7 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
     return {
       status: "win",
       winner: gmWins ? "gm" : "player",
+      difference: Math.abs(finalGmTotal - finalPlayerTotal),
     };
   }
 

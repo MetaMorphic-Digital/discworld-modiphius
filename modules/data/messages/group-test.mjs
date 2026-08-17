@@ -86,6 +86,8 @@ export default class GroupTestData extends BaseMessageData {
       gmReroll: this.gmReroll,
     };
 
+    context.outcome = this.outcome(context);
+
     for (const member of context.members) {
       const memberId = member.actor.id;
       member.mainRoll = context.traitRolls.get(memberId)?.roll ?? null;
@@ -132,8 +134,7 @@ export default class GroupTestData extends BaseMessageData {
    * @returns {RootCssData}
    */
   _prepareRootCssData(context) {
-    const { gmRoll, gmReroll } = context;
-    const outcome = this.outcome(context);
+    const { gmRoll, gmReroll, outcome } = context;
     return {
       narrativiumButton: {
         disabled: gmReroll?._evaluated,

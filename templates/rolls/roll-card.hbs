@@ -7,6 +7,7 @@
       {{> (systemFilePath "templates/mixins/trait-quote.hbs") traitName=helpRoll.trait.name actorName=helpRoll.actor.name}}
     {{/if}}
   </header>
+
   <div class="flexrow dice-rolls">
     <!-- Player Results -->
     <div class="outcome-container">
@@ -25,6 +26,7 @@
         </li>
       </ol>
     </div>
+
     <!-- Narrativium Results -->
     <div class="outcome-container">
       <button data-action="narrativium"
@@ -55,4 +57,7 @@
       </ol>
     </div>
   </div>
+
+  <!-- Degree of Success -->
+  {{> (systemFilePath "templates/rolls/degree-of-success.hbs") }}
 </div>

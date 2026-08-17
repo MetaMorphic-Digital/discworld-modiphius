@@ -166,6 +166,24 @@
     }
   }
 
+  .degree-of-success {
+    margin-block: 8px -2px;
+    text-align: center;
+
+    > span {
+      font-weight: bold;
+
+      &.label {
+        font-family: $font-caslon;
+        font-size: 1rem;
+      }
+
+      &.value {
+        @include font-trattatello(1.1em);
+      }
+    }
+  }
+
   &.group-test {
     h4 {
       font-size: 1.5em;
