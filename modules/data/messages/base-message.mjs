@@ -7,6 +7,7 @@
  * A bunch of reused type definitions.
  *
  * @typedef {'gm' | 'player'} UserRoles
+ * @typedef {'tie' | 'win' | null} OutcomeStatusOptions
  * @typedef {'winner' | 'loser' | 'tie' | null} OutcomeClassOptions
  * @typedef {"inactive" | "shift-center"} BaseRollClassOptions
  * @typedef {"not-visible" | null} RerollClassOptions
@@ -16,6 +17,10 @@
  * @property {DWTraitRoll} [helpRoll]
  * @property {DWNarrativiumRoll} [gmRoll]
  * @property {DWNarrativiumRoll} [gmReroll]
+ *
+ * @typedef {object} RollOutcome
+ * @property {OutcomeStatusOptions} status
+ * @property {UserRoles | null} winner
  *
  * @typedef {object} CssData
  * @property {object} css.buttonDisabled
@@ -36,9 +41,6 @@
  */
 
 export default class BaseMessageData extends foundry.abstract.TypeDataModel {
-
-  /* -------------------------------------------------- */
-
   /** @inheritdoc */
   static defineSchema() {
     return {};
@@ -73,7 +75,7 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
    */
   get mainRoll() {
     const roll = this.rolls[0];
-    if (!roll) throw new Error("DiscworldMessage does not contain a Roll.");
+    if (!roll) console.warn("DiscworldMessage does not contain a Roll.");
     return roll;
   }
 
@@ -199,6 +201,7 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
    */
   _prepareCssData(context = {}) {
     const { helpRoll, gmRoll, gmReroll } = context;
+    const outcome = this.outcome(context);
     return {
       buttonDisabled: {
         help: helpRoll?._evaluated,
@@ -212,8 +215,8 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
         gmReroll: gmReroll?._evaluated ? null : "not-visible",
       },
       outcome: {
-        gm: this.outcomeClass("gm", context),
-        player: this.outcomeClass("player", context),
+        gm: this.outcomeClass("gm", outcome),
+        player: this.outcomeClass("player", outcome),
       },
       isSpell: this.isSpell,
     };
@@ -224,9 +227,10 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
   /**
    * Evaluate the outcome of a test based on whether the player or GM/Narrativium won.
    * @param {RollContext} context   The context to evaluate.
-   * @returns {{ status: "tie" | "win" | null, winner: UserRoles | null }}
+   * @param {number} [finalPlayerTotal]   The final total of the player's roll.
+   * @returns {RollOutcome}
    */
-  outcome(context) {
+  outcome(context, finalPlayerTotal = null) {
     const {
       mainRoll = this.mainRoll,
       helpRoll = this.helpRoll,
@@ -239,7 +243,7 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
     }
 
     const finalGmTotal = gmReroll?.total ?? gmRoll?.total;
-    const finalPlayerTotal = helpRoll?.total ?? mainRoll?.total;
+    if (!finalPlayerTotal) finalPlayerTotal = helpRoll?.total ?? mainRoll?.total;
 
     if (finalGmTotal === finalPlayerTotal) {
       return { status: "tie", winner: null };
@@ -256,12 +260,12 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
   /**
    * Get the class name for a given section of results.
    * @param {UserRoles} userRole      The user role to get the class for.
-   * @param {RollContext} context     The context to evaluate.
+   * @param {RollOutcome} outcome     The outcome to get the class for.
    * @returns {OutcomeClassOptions}   The class name for the winner,
    *                                  or null if the role hasn't been evaluated.
    */
-  outcomeClass(userRole, context) {
-    const { status, winner } = this.outcome(context);
+  outcomeClass(userRole, outcome) {
+    const { status, winner } = outcome;
 
     if (!status) return null; // Opposed roll hasn't been fully evaluated.
 

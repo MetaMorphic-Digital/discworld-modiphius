@@ -133,6 +133,7 @@ export default class GroupTestData extends BaseMessageData {
    */
   _prepareRootCssData(context) {
     const { gmRoll, gmReroll } = context;
+    const outcome = this.outcome(context);
     return {
       narrativiumButton: {
         disabled: gmReroll?._evaluated,
@@ -143,8 +144,8 @@ export default class GroupTestData extends BaseMessageData {
         gmReroll: gmReroll?._evaluated ? null : "not-visible",
       },
       outcome: {
-        player: this.outcomeClass("player", context),
-        gm: this.outcomeClass("gm", context),
+        player: this.outcomeClass("player", outcome),
+        gm: this.outcomeClass("gm", outcome),
       },
       isSpell: this.isSpell,
     };
@@ -210,23 +211,7 @@ export default class GroupTestData extends BaseMessageData {
 
   /** @inheritdoc */
   outcome(context) {
-    const { gmRoll, gmReroll } = context;
-    if (!gmRoll?.total) {
-      return { status: null, winner: null };
-    }
-
-    const finalGmTotal = gmReroll?.total ?? gmRoll?.total;
     const finalPlayerTotal = this.getPrincipalTraitRoll(context)?.total;
-
-    if (finalGmTotal === finalPlayerTotal) {
-      return { status: "tie", winner: null };
-    }
-
-    const gmWins = finalGmTotal > finalPlayerTotal;
-
-    return {
-      status: "win",
-      winner: gmWins ? "gm" : "player",
-    };
+    return super.outcome(context, finalPlayerTotal);
   }
 }
