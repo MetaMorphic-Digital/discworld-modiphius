@@ -68,7 +68,7 @@ export default class DiscworldActor extends foundry.documents.Actor {
     const dialogResult = await this.rollTraitDialog(trait, options);
     if (!dialogResult) return null;
 
-    if (dialogResult.isSpell) {
+    if (dialogResult.isSpell && this.system.luck) {
       this.update({ "system.luck.value": this.system.luck.value - dialogResult.luckCost });
     }
 
