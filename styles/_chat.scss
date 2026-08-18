@@ -11,6 +11,13 @@
   overflow: visible;
 }
 
+.chat-message:has(.discworld.spell-roll) {
+  box-shadow:
+    inset 0 0 8px $red-dark,
+    inset 0 0 10px $blue-very-light,
+    inset 0 0 20px $purple-light;
+}
+
 .chat-message .discworld {
   $-roll-result-height: 2.25rem;
   $-outcome-padding: 0.125rem;
@@ -163,6 +170,38 @@
 
     .dice-roll + .dice-roll {
       margin-top: unset;
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+
+    padding-inline: 1ch;
+    margin-block: 8px -2px;
+
+    .degree-of-success {
+      &:only-child {
+        text-align: center;
+      }
+
+      > span {
+        font-weight: bold;
+
+        &.label {
+          font-family: $font-caslon;
+          font-size: 1rem;
+        }
+
+        &.value {
+          @include font-trattatello(1.1em);
+        }
+      }
+    }
+
+    .spell-icon {
+      text-align: end;
+      color: $purple-dark;
     }
   }
 

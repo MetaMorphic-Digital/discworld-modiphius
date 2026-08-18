@@ -1,5 +1,14 @@
 import DISCWORLD from "../config.mjs";
 
+/**
+ * In Discworld, everything is a trait. So, you can pass anything that
+ * has a `name` property to roll functions.
+ * @typedef TraitLike
+ * @property {string} name
+ */
+
+/* -------------------------------------------------- */
+
 export default class DiscworldActor extends foundry.documents.Actor {
   /**
    * @typedef WaitMode
@@ -41,14 +50,6 @@ export default class DiscworldActor extends foundry.documents.Actor {
   /* -------------------------------------------------- */
 
   /**
-   * In Discworld, everything is a trait. So, you can pass anything that has a `name` property to `rollTrait`.
-   * @typedef TraitLike
-   * @property {string} name
-   */
-
-  /* -------------------------------------------------- */
-
-  /**
    * Handles the logic for rolling a trait from the character sheet.
    * If wait mode is enabled, the trait is passed to the wait promise.
    * Otherwise, a dialog is shown asking the user to select a die to roll.
@@ -67,7 +68,19 @@ export default class DiscworldActor extends foundry.documents.Actor {
     const dialogResult = await this.rollTraitDialog(trait, options);
     if (!dialogResult) return null;
 
-    return discworld.rolls.DWTraitRoll.createBaseRoll(dialogResult, { actor: this, trait });
+    if (dialogResult.isSpell && this.system.luck) {
+      this.update({ "system.luck.value": this.system.luck.value - dialogResult.luckCost });
+    }
+
+    return discworld.rolls.DWTraitRoll.createBaseRoll(
+      dialogResult.die,
+      {
+        actor: this,
+        trait,
+        isSpell: dialogResult.isSpell,
+        luckCost: dialogResult.luckCost,
+      },
+    );
   }
 
   /* -------------------------------------------------- */
@@ -81,17 +94,49 @@ export default class DiscworldActor extends foundry.documents.Actor {
    *                                                  or null if the dialog is cancelled.
    */
   async rollTraitDialog(trait, options) {
-    const { Dialog } = foundry.applications.api;
+    const fields = {
+      isSpell: {
+        field: new foundry.data.fields.BooleanField({
+          initial: false,
+          label: _loc("DISCWORLD.dialog.rollTrait.isSpell"),
+        }),
+        name: "isSpell",
+      },
+      luckCost: {
+        field: new foundry.data.fields.NumberField({
+          label: _loc("DISCWORLD.dialog.rollTrait.spendLuck"),
+          initial: 1,
+          min: 0,
+          max: this.system.luck?.value ?? 0,
+          step: 1,
+        }),
+        name: "luckCost",
+        show: this.type === "character",
+      },
+    };
+
     const content = await foundry.applications.handlebars.renderTemplate(
-      `systems/${DISCWORLD.id}/templates/mixins/trait-quote.hbs`,
-      { traitName: trait.name, actorName: this.name },
+      `systems/${DISCWORLD.id}/templates/rolls/test-dialog.hbs`,
+      {
+        traitName: trait.name,
+        actorName: this.name,
+        fields,
+        rootId: `${this.id}-rollTrait`,
+      },
     );
 
-    const playerDice = ["d4", "d6", "d10", "d12"];
+    const playerDice = /** @type {const} */ (["d4", "d6", "d10", "d12"]);
+    /** @inheritdoc */
+    const callback = (event, button) => ({
+      die: button.dataset.action,
+      isSpell: button.form.isSpell.checked,
+      luckCost: button.form.luckCost?.value,
+    });
     const buttons = playerDice.map((die) => {
-      return { class: [die], label: die, action: die, default: die === "d6" };
+      return { class: [die], label: die, action: die, default: die === "d6", callback };
     });
 
+    const { Dialog } = foundry.applications.api;
     return Dialog.wait({
       buttons,
       content,
@@ -99,6 +144,15 @@ export default class DiscworldActor extends foundry.documents.Actor {
       position: { width: 400 },
       window: {
         title: "DISCWORLD.dialog.rollTrait.title",
+      },
+      /** @inheritdoc */
+      render(event, dialog) {
+        const isSpellInput = dialog.element.querySelector("input[name='isSpell']");
+        const luckCostFormGroup = dialog.element.querySelector(".form-group.luck-cost");
+        isSpellInput.addEventListener("change", () => {
+          if (!luckCostFormGroup) return;
+          luckCostFormGroup.classList.toggle("hidden", !isSpellInput.checked);
+        });
       },
       renderOptions: {
         window: {
@@ -154,12 +208,14 @@ export default class DiscworldActor extends foundry.documents.Actor {
 
     // Create the roll and send to chat.
     return discworld.rolls.DWTraitRoll.createWaitRoll({
-      term: dialogResult,
+      term: dialogResult.die,
       actor: this,
       message,
       trait,
       isHelpRoll,
       groupMember,
+      isSpell: dialogResult.isSpell,
+      luckCost: dialogResult.luckCost,
     });
   }
 

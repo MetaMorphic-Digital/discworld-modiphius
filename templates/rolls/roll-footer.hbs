@@ -1,0 +1,12 @@
+<footer class="flexrow">
+  <div class="degree-of-success">
+    <span class="label">{{localize "DISCWORLD.roll.degreeOfSuccess"}}:</span>
+    <span class="value">{{ifThen outcome.status outcome.difference "?"}}</span>
+  </div>
+
+  {{#if css.spell}}
+  <div class="spell-icon">
+    <i class="fa-solid fa-wand-sparkles" data-tooltip="{{localize "DISCWORLD.roll.magicTest"}}"></i>
+  </div>
+  {{/if}}
+</footer>

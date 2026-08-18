@@ -22,7 +22,6 @@ const DISCWORLD = {
       niche: "DISCWORLD.trait.type.niche",
       core: "DISCWORLD.trait.type.core",
       quirks: "DISCWORLD.trait.type.quirks",
-      spellbook: "DISCWORLD.trait.type.spellbook",
       consequences: "DISCWORLD.trait.type.consequences",
       other: "DISCWORLD.trait.type.other",
     },

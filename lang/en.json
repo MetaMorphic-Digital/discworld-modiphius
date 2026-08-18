@@ -31,7 +31,11 @@
         "content": "Are you sure you want to delete the trait, \"{traitName}\"?",
         "title": "Deleting a Trait!"
       },
-      "rollTrait.title": "Rolling a Trait!",
+      "rollTrait": {
+        "isSpell": "Roll as Spell?",
+        "spendLuck": "Spend Luck?",
+        "title": "Rolling a Trait!"
+      },
       "groupTest": {
         "cancel": "Cancel",
         "highestWins": "Using highest Player Roll",
@@ -44,8 +48,10 @@
       }
     },
     "roll": {
-      "traitRoll": "Trait Roll",
-      "helpRoll": "Help Roll"
+      "degreeOfSuccess": "Degree of Success",
+      "helpRoll": "Help Roll",
+      "magicTest": "One or more tests were made using Magic.",
+      "traitRoll": "Trait Roll"
     },
     "npc": {
       "FIELDS": {
@@ -112,8 +118,7 @@
         "past": "Party Past",
         "present": "Party Present",
         "quirks": "Quirks",
-        "species": "Species",
-        "spellbook": "Spellbook"
+        "species": "Species"
       },
       "FIELDS": {
         "actorType": {

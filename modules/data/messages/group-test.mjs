@@ -5,13 +5,14 @@ import DISCWORLD from "../../config.mjs";
 /**
  * @import DiscworldActor from "../../documents/actor.mjs";
  * @import DWTraitRoll from "../../rolls/trait-roll.mjs";
+ * @import { RollOutcome } from "./base-message.mjs";
  */
 
 const { StringField } = foundry.data.fields;
 
 export default class GroupTestData extends BaseMessageData {
   /**
-   * @import { BaseRollClassOptions, OutcomeClassOptions, RerollClassOptions } from "./base-message.mjs"
+   * @import { BaseRollClassOptions, OutcomeClassOptions, RerollClassOptions, SpellRollClassOptions } from "./base-message.mjs"
    *
    * @typedef {object} RootCssData
    * @property {object} narrativiumButton
@@ -23,6 +24,7 @@ export default class GroupTestData extends BaseMessageData {
    * @property {object} outcome
    * @property {OutcomeClassOptions} outcome.player
    * @property {OutcomeClassOptions} outcome.gm
+   * @property {SpellRollClassOptions} spell
    *
    * @typedef {object} MemberCssData
    * @property {object} helpButton
@@ -48,12 +50,8 @@ export default class GroupTestData extends BaseMessageData {
    * @property {RollMap} helpRolls
    * @property {DWTraitRoll|null} gmRoll
    * @property {DWTraitRoll|null} gmReroll
-   *
-   * @typedef GroupOverrideInner
-   * @property {DWTraitRoll|null} mainRoll
-   * @property {DWTraitRoll|null} helpRoll
-   *
-   * @typedef {Record<string, GroupOverrideInner} GroupDataOverrides
+   * @property {RollOutcome} outcome
+   * @property {RootCssData} css
    */
 
   /** @inheritdoc */
@@ -79,11 +77,11 @@ export default class GroupTestData extends BaseMessageData {
 
   /**
    * @inheritdoc
-   * @param {GroupDataOverrides} [dataOverrides]
    * @returns {Promise<GroupRollContext>}
    */
-  async _prepareContext(dataOverrides = {}) {
-    const { traitRolls, helpRolls } = this.getRollsByType(dataOverrides);
+  async _prepareContext() {
+    const { traitRolls, helpRolls } = this.getRollsByType();
+    /** @type {GroupRollContext} */
     const context = {
       members: this.groupMembers.toSorted(),
       winCondition: this.winCondition,
@@ -93,7 +91,7 @@ export default class GroupTestData extends BaseMessageData {
       gmReroll: this.gmReroll,
     };
 
-    Object.assign(context, dataOverrides);
+    context.outcome = this.outcome(context);
 
     for (const member of context.members) {
       const memberId = member.actor.id;
@@ -115,12 +113,11 @@ export default class GroupTestData extends BaseMessageData {
   /* ------------------------------------------------- */
 
   /**
-   * Get traitRolls and helpRolls all in one go, taking overrides into account.
-   * @param {GroupDataOverrides} dataOverrides
+   * Get traitRolls and helpRolls all in one go.
    * @returns {Pick<GroupRollContext, "traitRolls" | "helpRolls">}}
    */
-  getRollsByType(dataOverrides) {
-    let [traitRolls, helpRolls] = this.rolls.filter((roll) => roll instanceof discworld.rolls.DWTraitRoll).partition((roll) => roll.isHelpRoll);
+  getRollsByType() {
+    const [traitRolls, helpRolls] = this.rolls.filter((roll) => roll instanceof discworld.rolls.DWTraitRoll).partition((roll) => roll.isHelpRoll);
 
     const toRollMap = (rolls) =>
       rolls.reduce((acc, roll) => {
@@ -128,31 +125,21 @@ export default class GroupTestData extends BaseMessageData {
         return acc;
       }, new Map());
 
-    traitRolls = toRollMap(traitRolls);
-    helpRolls = toRollMap(helpRolls);
-
-    const addOverrideToMap = (map, roll) => {
-      map.set(roll.options.groupMember, { actor: roll.actor, roll });
+    return {
+      traitRolls: toRollMap(traitRolls),
+      helpRolls: toRollMap(helpRolls),
     };
-
-    // Assign overrides.
-    Object.values(dataOverrides).forEach(({ mainRoll, helpRoll }) => {
-      if (mainRoll) addOverrideToMap(traitRolls, mainRoll);
-      if (helpRoll) addOverrideToMap(helpRolls, helpRoll);
-    });
-
-    return { traitRolls, helpRolls };
   }
 
   /* ------------------------------------------------- */
 
   /**
    * Prepare CSS data for the non-member elements of the template.
-   * @param {Omit<GroupRollContext, "css">} context
+   * @param {Pick<GroupRollContext, "gmRoll" | "gmReroll" | "outcome">} context
    * @returns {RootCssData}
    */
   _prepareRootCssData(context) {
-    const { gmRoll, gmReroll } = context;
+    const { gmRoll, gmReroll, outcome } = context;
     return {
       narrativiumButton: {
         disabled: gmReroll?._evaluated,
@@ -163,9 +150,10 @@ export default class GroupTestData extends BaseMessageData {
         gmReroll: gmReroll?._evaluated ? null : "not-visible",
       },
       outcome: {
-        player: this.outcomeClass("player", context),
-        gm: this.outcomeClass("gm", context),
+        player: this.outcomeClass("player", outcome),
+        gm: this.outcomeClass("gm", outcome),
       },
+      isSpell: this.isSpell,
     };
   }
 
@@ -173,8 +161,8 @@ export default class GroupTestData extends BaseMessageData {
 
   /**
    * Prepare CSS data for each member of the group.
-   * @param {Omit<MemberContext, "css">} member    The member to prepare CSS data for
-   * @returns {MemberCssData}                      The prepared CSS data
+   * @param {Omit<MemberContext, "css">} member   The member to prepare CSS data for
+   * @returns {MemberCssData}                     The prepared CSS data
    */
   _prepareMemberCssData(member) {
     const { mainRoll, helpRoll } = member;
@@ -195,7 +183,7 @@ export default class GroupTestData extends BaseMessageData {
   /**
    * This is the Trait roll that is being used to determine the outcome
    * of this group test, following rules for taking lowest / highest result.
-   * @param {GroupRollContext} context
+   * @param {Omit<GroupRollContext, "css" | "outcome">} context
    * @returns {DWTraitRoll|null}
    */
   getPrincipalTraitRoll(context) {
@@ -227,25 +215,12 @@ export default class GroupTestData extends BaseMessageData {
 
   /* ------------------------------------------------- */
 
-  /** @inheritdoc */
+  /**
+   * @override
+   * @param {Omit<GroupRollContext, "css" | "outcome">} context   The context to evaluate.
+   */
   outcome(context) {
-    const { gmRoll, gmReroll } = context;
-    if (!gmRoll?.total) {
-      return { status: null, winner: null };
-    }
-
-    const finalGmTotal = gmReroll?.total ?? gmRoll?.total;
     const finalPlayerTotal = this.getPrincipalTraitRoll(context)?.total;
-
-    if (finalGmTotal === finalPlayerTotal) {
-      return { status: "tie", winner: null };
-    }
-
-    const gmWins = finalGmTotal > finalPlayerTotal;
-
-    return {
-      status: "win",
-      winner: gmWins ? "gm" : "player",
-    };
+    return super.outcome(context, finalPlayerTotal);
   }
 }

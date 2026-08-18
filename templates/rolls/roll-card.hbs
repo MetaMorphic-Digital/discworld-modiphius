@@ -1,4 +1,4 @@
-<div class="discworld">
+<div class="discworld {{css.spell}}">
   <header class="trait-container">
     <h4 class="divider">{{localize "DISCWORLD.roll.traitRoll"}}</h4>
     {{> (systemFilePath "templates/mixins/trait-quote.hbs") traitName=mainRoll.trait.name actorName=mainRoll.actor.name}}
@@ -7,6 +7,7 @@
       {{> (systemFilePath "templates/mixins/trait-quote.hbs") traitName=helpRoll.trait.name actorName=helpRoll.actor.name}}
     {{/if}}
   </header>
+
   <div class="flexrow dice-rolls">
     <!-- Player Results -->
     <div class="outcome-container">
@@ -25,6 +26,7 @@
         </li>
       </ol>
     </div>
+
     <!-- Narrativium Results -->
     <div class="outcome-container">
       <button data-action="narrativium"
@@ -55,4 +57,6 @@
       </ol>
     </div>
   </div>
+
+  {{> (systemFilePath "templates/rolls/roll-footer.hbs") }}
 </div>

@@ -1,7 +1,8 @@
-<div class="discworld group-test">
+<div class="discworld group-test {{css.spell}}">
   <header class="trait-container">
     <h4 class="divider">{{localize "DISCWORLD.chat.groupRoll"}}</h4>
   </header>
+
   <ol class="members">
     {{#each members}}
     <li data-member-id="{{actor.id}}">
@@ -34,8 +35,10 @@
     </li>
     {{/each}}
   </ol>
+
   <div class="win-condition">{{localize (concat "DISCWORLD.dialog.groupTest." winCondition)}}</div>
   <hr>
+
   <div class="dice-rolls">
     <div class="outcome-container flexrow">
       <ol class="result {{css.outcome.gm }}">
@@ -60,4 +63,6 @@
       </button>
     </div>
   </div>
+
+  {{> (systemFilePath "templates/rolls/roll-footer.hbs") }}
 </div>
