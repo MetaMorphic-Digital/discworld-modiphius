@@ -73,7 +73,6 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
   /**
    * The main roll of the chat message (null if message is not a Roll type).
    * @type {DWTraitRoll}
-   * @throws    If the message does not contain a roll.
    */
   get mainRoll() {
     const roll = this.rolls[0];
