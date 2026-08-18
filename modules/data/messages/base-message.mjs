@@ -11,12 +11,7 @@
  * @typedef {'winner' | 'loser' | 'tie' | null} OutcomeClassOptions
  * @typedef {"inactive" | "shift-center"} BaseRollClassOptions
  * @typedef {"not-visible" | null} RerollClassOptions
- *
- * @typedef {object} RollContext
- * @property {DWTraitRoll} [mainRoll]
- * @property {DWTraitRoll} [helpRoll]
- * @property {DWNarrativiumRoll} [gmRoll]
- * @property {DWNarrativiumRoll} [gmReroll]
+ * @typedef {"spell-roll" | null} SpellRollClassOptions
  *
  * @typedef {object} RollOutcome
  * @property {OutcomeStatusOptions} status
@@ -36,9 +31,15 @@
  * @property {object} css.outcome
  * @property {OutcomeClassOptions} css.outcome.gm
  * @property {OutcomeClassOptions} css.outcome.player
- * @property {boolean} css.isSpell
+ * @property {SpellRollClassOptions} css.spell
  *
- * @typedef {RollContext & {css: CssData}} MessageContext
+ * @typedef {object} MessageContext
+ * @property {DWTraitRoll} [mainRoll]
+ * @property {DWTraitRoll} [helpRoll]
+ * @property {DWNarrativiumRoll} [gmRoll]
+ * @property {DWNarrativiumRoll} [gmReroll]
+ * @property {RollOutcome} outcome
+ * @property {CssData} css
  */
 
 export default class BaseMessageData extends foundry.abstract.TypeDataModel {
@@ -198,8 +199,8 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
 
   /**
    * Prepare CSS data for styling a chat message based on the roll results.
-   * @param {RollContext} [context = {}]    The context to evaluate.
-   * @returns {CssData}                     The prepared CSS data.
+   * @param {Omit<MessageContext, "mainRoll" | "css">} context   The context to evaluate.
+   * @returns {CssData}                                          The prepared CSS data.
    */
   _prepareCssData(context = {}) {
     const { helpRoll, gmRoll, gmReroll, outcome } = context;
@@ -219,7 +220,7 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
         gm: this.outcomeClass("gm", outcome),
         player: this.outcomeClass("player", outcome),
       },
-      isSpell: this.isSpell,
+      spell: this.isSpell ? "spell-roll" : null,
     };
   }
 
@@ -227,8 +228,8 @@ export default class BaseMessageData extends foundry.abstract.TypeDataModel {
 
   /**
    * Evaluate the outcome of a test based on whether the player or GM/Narrativium won.
-   * @param {RollContext} context   The context to evaluate.
-   * @param {number} [finalPlayerTotal]   The final total of the player's roll.
+   * @param {Omit<MessageContext, "css" | "outcome">} context   The context to evaluate.
+   * @param {number} [finalPlayerTotal]                         The final total of the player's roll.
    * @returns {RollOutcome}
    */
   outcome(context, finalPlayerTotal = null) {

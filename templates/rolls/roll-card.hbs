@@ -1,4 +1,4 @@
-<div class="discworld {{ifThen css.isSpell "spell-roll" ""}}">
+<div class="discworld {{css.spell}}">
   <header class="trait-container">
     <h4 class="divider">{{localize "DISCWORLD.roll.traitRoll"}}</h4>
     {{> (systemFilePath "templates/mixins/trait-quote.hbs") traitName=mainRoll.trait.name actorName=mainRoll.actor.name}}

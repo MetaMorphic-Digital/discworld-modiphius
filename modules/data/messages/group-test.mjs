@@ -5,13 +5,14 @@ import DISCWORLD from "../../config.mjs";
 /**
  * @import DiscworldActor from "../../documents/actor.mjs";
  * @import DWTraitRoll from "../../rolls/trait-roll.mjs";
+ * @import { RollOutcome } from "./base-message.mjs";
  */
 
 const { StringField } = foundry.data.fields;
 
 export default class GroupTestData extends BaseMessageData {
   /**
-   * @import { BaseRollClassOptions, OutcomeClassOptions, RerollClassOptions } from "./base-message.mjs"
+   * @import { BaseRollClassOptions, OutcomeClassOptions, RerollClassOptions, SpellRollClassOptions } from "./base-message.mjs"
    *
    * @typedef {object} RootCssData
    * @property {object} narrativiumButton
@@ -23,6 +24,7 @@ export default class GroupTestData extends BaseMessageData {
    * @property {object} outcome
    * @property {OutcomeClassOptions} outcome.player
    * @property {OutcomeClassOptions} outcome.gm
+   * @property {SpellRollClassOptions} spell
    *
    * @typedef {object} MemberCssData
    * @property {object} helpButton
@@ -48,6 +50,8 @@ export default class GroupTestData extends BaseMessageData {
    * @property {RollMap} helpRolls
    * @property {DWTraitRoll|null} gmRoll
    * @property {DWTraitRoll|null} gmReroll
+   * @property {RollOutcome} outcome
+   * @property {RootCssData} css
    */
 
   /** @inheritdoc */
@@ -77,6 +81,7 @@ export default class GroupTestData extends BaseMessageData {
    */
   async _prepareContext() {
     const { traitRolls, helpRolls } = this.getRollsByType();
+    /** @type {GroupRollContext} */
     const context = {
       members: this.groupMembers.toSorted(),
       winCondition: this.winCondition,
@@ -130,7 +135,7 @@ export default class GroupTestData extends BaseMessageData {
 
   /**
    * Prepare CSS data for the non-member elements of the template.
-   * @param {Omit<GroupRollContext, "css">} context
+   * @param {Pick<GroupRollContext, "gmRoll" | "gmReroll" | "outcome">} context
    * @returns {RootCssData}
    */
   _prepareRootCssData(context) {
@@ -156,8 +161,8 @@ export default class GroupTestData extends BaseMessageData {
 
   /**
    * Prepare CSS data for each member of the group.
-   * @param {Omit<MemberContext, "css">} member    The member to prepare CSS data for
-   * @returns {MemberCssData}                      The prepared CSS data
+   * @param {Omit<MemberContext, "css">} member   The member to prepare CSS data for
+   * @returns {MemberCssData}                     The prepared CSS data
    */
   _prepareMemberCssData(member) {
     const { mainRoll, helpRoll } = member;
@@ -178,7 +183,7 @@ export default class GroupTestData extends BaseMessageData {
   /**
    * This is the Trait roll that is being used to determine the outcome
    * of this group test, following rules for taking lowest / highest result.
-   * @param {GroupRollContext} context
+   * @param {Omit<GroupRollContext, "css" | "outcome">} context
    * @returns {DWTraitRoll|null}
    */
   getPrincipalTraitRoll(context) {
@@ -210,7 +215,10 @@ export default class GroupTestData extends BaseMessageData {
 
   /* ------------------------------------------------- */
 
-  /** @inheritdoc */
+  /**
+   * @override
+   * @param {Omit<GroupRollContext, "css" | "outcome">} context   The context to evaluate.
+   */
   outcome(context) {
     const finalPlayerTotal = this.getPrincipalTraitRoll(context)?.total;
     return super.outcome(context, finalPlayerTotal);
