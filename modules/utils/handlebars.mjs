@@ -11,7 +11,7 @@ export default async function preloadTemplates() {
     // Mixins
     `systems/${DISCWORLD.id}/templates/mixins/toggle-switch.hbs`,
     `systems/${DISCWORLD.id}/templates/mixins/trait-quote.hbs`,
-    `systems/${DISCWORLD.id}/templates/rolls/degree-of-success.hbs`,
+    `systems/${DISCWORLD.id}/templates/rolls/roll-footer.hbs`,
   ]);
 }
 
