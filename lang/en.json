@@ -48,10 +48,10 @@
       }
     },
     "roll": {
-      "traitRoll": "Trait Roll",
-      "helpRoll": "Help Roll",
       "degreeOfSuccess": "Degree of Success",
-      "magicTest": "One or more tests were made using Magic."
+      "helpRoll": "Help Roll",
+      "magicTest": "One or more tests were made using Magic.",
+      "traitRoll": "Trait Roll"
     },
     "npc": {
       "FIELDS": {
