@@ -2,7 +2,7 @@
   <header class="trait-container">
     <h4 class="divider">{{localize "DISCWORLD.chat.groupRoll"}}</h4>
   </header>
-  
+
   <ol class="members">
     {{#each members}}
     <li data-member-id="{{actor.id}}">
@@ -64,6 +64,5 @@
     </div>
   </div>
 
-  <!-- Degree of Success -->
   {{> (systemFilePath "templates/rolls/roll-footer.hbs") }}
 </div>
