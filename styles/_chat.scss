@@ -11,6 +11,13 @@
   overflow: visible;
 }
 
+.chat-message:has(.discworld.spell-roll) {
+  box-shadow:
+    inset 0 0 8px $red-dark,
+    inset 0 0 10px $blue-very-light,
+    inset 0 0 20px $purple-light;
+}
+
 .chat-message .discworld {
   $-roll-result-height: 2.25rem;
   $-outcome-padding: 0.125rem;
@@ -194,7 +201,7 @@
 
     .spell-icon {
       text-align: end;
-      color: $discworld-brown;
+      color: $purple-dark;
     }
   }
 
