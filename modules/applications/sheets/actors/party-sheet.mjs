@@ -97,6 +97,8 @@ export default class PartySheet extends DiscworldActorSheet {
   /** @inheritdoc */
   async _onRender(context, options) {
     await super._onRender(context, options);
+    if (!this.isEditable) return;
+
     for (const actor of this.#appActors) {
       delete actor.apps[this.id];
     }

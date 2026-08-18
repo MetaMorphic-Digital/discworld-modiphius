@@ -149,6 +149,7 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
   /** @inheritdoc */
   async _onRender(context, options) {
     await super._onRender(context, options);
+    if (!this.isEditable) return;
 
     this._createContextMenu(
       this.#prepareTraitContextOptions,
@@ -266,6 +267,8 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
    * @param {HTMLElement} target    The element that defined the [data-action].
    */
   static #traitAction(event, target) {
+    if (!this.isEditable) return;
+
     const { actionType, itemId } = target.dataset;
     const trait = this.actor.items.get(itemId);
 
@@ -351,6 +354,8 @@ export default class DiscworldActorSheet extends DiscworldSheetMixin(ActorSheetV
    * @this DiscworldActorSheet
    */
   static #rollNameAsTrait() {
+    if (!this.isEditable) return;
+
     const { actor } = this;
 
     // Add pronouns if field is non-empty.

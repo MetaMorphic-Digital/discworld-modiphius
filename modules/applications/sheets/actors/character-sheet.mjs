@@ -29,6 +29,7 @@ export default class CharacterSheet extends DiscworldActorSheet {
   /** @inheritdoc */
   async _onRender(context, options) {
     await super._onRender(context, options);
+    if (!this.isEditable) return;
 
     // Select luck input fields on focus.
     this.element

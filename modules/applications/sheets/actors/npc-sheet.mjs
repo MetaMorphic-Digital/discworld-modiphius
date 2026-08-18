@@ -77,6 +77,8 @@ export default class NPCSheet extends DiscworldActorSheet {
    * @this NPCSheet
    */
   static #rollFullNameAsTrait() {
+    if (!this.isEditable) return;
+
     const { actor } = this;
     actor.rollTrait({ actor, name: actor.system.fullName });
   }
