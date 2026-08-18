@@ -166,21 +166,35 @@
     }
   }
 
-  .degree-of-success {
+  footer {
+    display: flex;
+    justify-content: space-between;
+
+    padding-inline: 1ch;
     margin-block: 8px -2px;
-    text-align: center;
 
-    > span {
-      font-weight: bold;
-
-      &.label {
-        font-family: $font-caslon;
-        font-size: 1rem;
+    .degree-of-success {
+      &:only-child {
+        text-align: center;
       }
 
-      &.value {
-        @include font-trattatello(1.1em);
+      > span {
+        font-weight: bold;
+
+        &.label {
+          font-family: $font-caslon;
+          font-size: 1rem;
+        }
+
+        &.value {
+          @include font-trattatello(1.1em);
+        }
       }
+    }
+
+    .spell-icon {
+      text-align: end;
+      color: $discworld-brown;
     }
   }
 
